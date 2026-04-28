@@ -21,8 +21,9 @@ if (!dir.exists(SAVE_DIR)) {
 counties <- read_csv(paste0(DATA_DIR, "common_county_fips.csv.gz"))$county
 fips <- read_csv(paste0(DATA_DIR, "common_county_fips.csv.gz"))$fip
 
-# units
+YEARS_TO_ENSURE <- 2020:2024
 
+# units
 BBtu_to_EJ <- 1.055e-6 # billion British thermal units to exajoules
 MMBtu_to_EJ <- 1.055e-9
 kWh_to_EJ <- 3.6e-12 # 1 kWh = 3.6e6 J = 3.6e-12 EJ

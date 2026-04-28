@@ -52,7 +52,8 @@ en_losses <- en_gen_agg %>% filter(gentype == "gross") %>%
   en_gen_agg_s <- en_gen_agg %>% filter(gentype == "gross") %>% mutate(target = "electricity", units = "EJ") %>% select(county, source=facility_name, target, year, value, units)
   en_gen_onsite_EJ_s <- en_gen_onsite_EJ %>% mutate(source = "onsiteBTM", units = "EJ") %>% select(county, source, target=class, year, value, units)
   en_efficiency_losses_s <- en_losses %>% mutate(source = facility_name, target = "elec_own_use", units = "EJ") %>% select(county, source, target, year, value = losses, units)
-  en_use_agg_s <- en_use_agg %>% mutate(source = "electricity", target = enduse, units = "EJ") %>% select(source, target, year, value, units)
+  en_use_agg_s <- en_use_agg %>% mutate(source = "electricity", target = enduse, units = "EJ") %>% select(source, target, year, value, units) %>%
+    filter(year %in% YEARS_TO_ENSURE)
 }
 
 
@@ -70,9 +71,10 @@ df_sankey_en_soco <- rbind(en_fuels_agg_s %>% select(-county),
                       en_gen_onsite_EJ_s %>% select(-county),
                       en_efficiency_losses_s %>% select(-county),
                       # use isn't by county (yet, downscaled later)
-                      en_use_agg_s) %>% filter(year < 2025)
+                      en_use_agg_s)
 
-plot_sankey_enhanced(df_sankey_en_soco)
+# SOCO data plot
+# plot_sankey_enhanced(df_sankey_en_soco)
 
 
 ###############################################################################%
@@ -136,26 +138,23 @@ plot_sankey_enhanced(df_sankey_en_soco_all %>% mutate(value = value * EJ_to_PJ, 
 # location/county mapping for the plants. it also has fuel type info but not
 # fuel consumption or generation data, so we need to merge with 923 to get that info.
 # - we need 860 because 923 doesn't have county mapping
-eia860_sch31_generator_operable <- read_csv(paste0(DATA_DIR, "eia860_3_1_Generator_Y2024_operable.csv.gz")) %>% clean_col_names()
-
 # TODO: bring schedule 2 to get plant level info - specifically lat longs
-# TODO: make this a function and call on all years
 
-get_860 <- function(year) {
-  read_csv(paste0(DATA_DIR, "eia860_3_1_Generator_Y", year, "_operable.csv.gz")) %>% clean_col_names()
-}
-
-eia860_sch31_generator_operable_GA <- eia860_sch31_generator_operable %>%
-  filter(state == "GA") %>%
-  filter(county %in% counties) %>%  # only metro atlanta counties
-  mutate(year = 2024) %>%
-  select(state, county, year,
-         utility_id, utility_name, plant_code, plant_name,
-         generator_id, technology, prime_mover,
-         nameplate_capacity_mw, nameplate_power_factor,
-         status, operating_year, sector_name, sector,
-         energy_source_1, energy_source_2, startup_source_1, carbon_capture_technology,
-         multiple_fuels, cofire_fuels, switch_between_oil_and_natural_gas)
+eia860_sch31_generator_operable_GA <- map_dfr(2020:2024, function(yr) {
+  read_csv(paste0(DATA_DIR, "eia860_3_1_Generator_Y", yr, "_operable.csv.gz"),
+           show_col_types = FALSE) %>% clean_col_names() %>%
+    mutate(across(c(utility_id, carbon_capture_technology, cofire_fuels,
+                    switch_between_oil_and_natural_gas), as.character)) %>%
+    filter(state == "GA", county %in% counties) %>%
+    mutate(year = yr) %>%
+    select(state, county, year,
+           utility_id, utility_name, plant_code, plant_name,
+           generator_id, technology, prime_mover,
+           nameplate_capacity_mw, nameplate_power_factor,
+           status, operating_year, sector_name, sector,
+           energy_source_1, energy_source_2, startup_source_1, carbon_capture_technology,
+           multiple_fuels, cofire_fuels, switch_between_oil_and_natural_gas)
+})
 
 # TODO: brought in solar but but 923 doesn't have anything on solar production so nothing changed on fuel inputs side
 eia860_sch33_solar_operable <- read_csv(paste0(DATA_DIR, "eia860_3_3_Solar_Y2024_operable.csv.gz")) %>% clean_col_names() %>%
@@ -195,30 +194,20 @@ plants_GA <- eia860_sch31_generator_operable_GA %>%
 # info but not lat longs or county, so we can merge with 860 to get that info.
 # - let's start with 923 data (plant operational details) and see if we need more info
 
-# EIA-923 Monthly Generation and Fuel Consumption Time Series File,  2024 Final Data
-eia923_sch2pg1_genfuel <- read_csv(paste0(DATA_DIR, "eia923_Schedule_2_3_4_5_M_12_2024_Final_pg1.csv.gz")) %>% clean_col_names()
-
-# TODO: make this a function and call on all years
-
-get_923 <- function(year) {
-  read_csv(paste0(DATA_DIR, "eia923_Schedule_2_3_4_5_M_12_", year, "_Final_pg1.csv.gz")) %>% clean_col_names()
-
-  eia923_sch2pg1_genfuel_GA <- eia923_sch2pg1_genfuel %>% filter(plant_state == "GA") %>%
-    filter(plant_id %in% plants_GA$plant_id) %>%
+# EIA-923 Monthly Generation and Fuel Consumption Time Series File
+eia923_sch2pg1_genfuel_GA <- map_dfr(2020:2024, function(yr) {
+  df <- read_csv(paste0(DATA_DIR, "eia923_Schedule_2_3_4_5_M_12_", yr, "_Final_pg1.csv.gz"),
+                 show_col_types = FALSE) %>% clean_col_names()
+  # aer_fuel_type_code renamed to mer_fuel_type_code in 2022
+  if ("aer_fuel_type_code" %in% names(df)) df <- df %>% rename(mer_fuel_type_code = aer_fuel_type_code)
+  df %>%
+    filter(plant_state == "GA", plant_id %in% plants_GA$plant_id) %>%
     select(state=plant_state, year, plant_id, plant_name, operator_id, operator_name,
            nerc_region, balancing_authority_code,
            naics_code, eia_sector_number, sector_name,
            reported_prime_mover, reported_fuel_type_code, mer_fuel_type_code,
            total_fuel_consumption_mmbtu, elec_fuel_consumption_mmbtu, net_generation_megawatthours)
-}
-
-eia923_sch2pg1_genfuel_GA <- eia923_sch2pg1_genfuel %>% filter(plant_state == "GA") %>%
-  filter(plant_id %in% plants_GA$plant_id) %>%
-  select(state=plant_state, year, plant_id, plant_name, operator_id, operator_name,
-         nerc_region, balancing_authority_code,
-         naics_code, eia_sector_number, sector_name,
-         reported_prime_mover, reported_fuel_type_code, mer_fuel_type_code,
-         total_fuel_consumption_mmbtu, elec_fuel_consumption_mmbtu, net_generation_megawatthours)
+})
 
 # all(eia923_sch2pg1_genfuel_GA %>% mutate(fueldiff = total_fuel_consumption_mmbtu - elec_fuel_consumption_mmbtu) %>% pull(fueldiff) == 0) # should be true
 # names(eia923_sch2pg1_genfuel_GA)
@@ -265,19 +254,29 @@ eia923_electricity_gen <- eia923_sch2pg1_genfuel_GA_C %>%
 
 # EIA SEDS use data ----
 
-eiaseds_codes <- read_csv(paste0(DATA_DIR, "eia_seds_codes.csv.gz")) %>% rename_with(tolower)
+eiaseds_codes <- read_csv(paste0(DATA_DIR, "eia_seds_codes_2024.csv.gz")) %>% rename_with(tolower)
 # The MSNs are five-character codes, most of which are structured as follows:
 #   First and second characters - describes an energy source (for example, NG for natural gas, MG for motor gasoline)
 # Third and fourth characters - describes an energy sector or an energy activity (for example, RC for residential consumption, PR for production)
 # Fifth character - describes a type of data (for example, P for data in physical unit, B for data in billion Btu)
 
 
-eiaseds <- read_csv(paste0(DATA_DIR, "eia_seds_Complete_SEDS.csv.gz")) %>% rename_with(tolower) %>%
-  filter(year >= 2020, statecode == "GA") %>%
+# if filtered seds file doesn't exist, create it from the full file
+seds_filtered_file <- paste0(DATA_DIR, "eia_seds_GA_2020_2024.csv.gz")
+if (!file.exists(seds_filtered_file)) {
+  seds_full_file <- paste0(DATA_DIR, EIA_SEDS_FILE)
+  if (!file.exists(seds_full_file)) stop("EIA SEDS file not found: ", seds_full_file)
+  read_csv(seds_full_file) %>% rename_with(tolower) %>%
+    filter(year >= 2020 & year <= 2024, statecode == "GA") %>%
+    write_csv(seds_filtered_file)
+}
+
+eiaseds <- read_csv(seds_filtered_file) %>%
   left_join(eiaseds_codes, by = "msn") %>%
-  filter(data > 0) %>% filter(year == 2023) %>%
+  filter(data > 0) %>%
   # filter msn where the last character is B (Btu data)
   filter(substr(msn,5,5) == "B")
+
 
 # EIA SEDS self-generated sources and target consumption
 eiasedsGA <- eiaseds %>%
@@ -288,25 +287,27 @@ eiasedsGA <- eiaseds %>%
 ## downscale use ----
 # disaggregate all consumption to counties using population
 # TODO: can improve industrial downscaling using some other data
-census_pop_2024_agesex_all <- read_csv(paste0(DATA_DIR, "cc-est2024-agesex-all.csv.gz")) %>% clean_col_names() %>%
-  filter(stname == "Georgia", year == 6) %>% # year 6 is 2024; the data goes from 2020 to 2024
-  mutate(ctyname = str_replace(ctyname, " County", ""), year = 2024, statecode = "GA") %>%
+census_pop <- read_csv(paste0(DATA_DIR, "cc-est2024-agesex-all.csv.gz")) %>% clean_col_names() %>%
+  # year 2-6 = July estimates 2020-2024. # year 6 is 2024; the data goes from 2020 to 2024
+  filter(stname == "Georgia", year >= 2) %>%
+  mutate(ctyname = str_replace(ctyname, " County", ""),
+         year = year + 2018, # 2->2020, 3->2021, ..., 6->2024
+         statecode = "GA") %>%
   select(state=statecode, county = ctyname, year, pop = popestimate) %>%
   group_by(state, year) %>%
   mutate(pop_share = pop / sum(pop)) %>% ungroup() %>%
   filter(county %in% counties) # only metro atlanta counties
 
 # disaggregate EIA SEDS consumption data
-eiaseds_use <- eiasedsGA %>% mutate(year = 2024) %>% # TODO: hack, actual year is 2023. Need to update the data in Nov 2025
-  left_join(census_pop_2024_agesex_all %>% select(state, county, year, pop_share), by = c("statecode" = "state", "year")) %>%
+eiaseds_use <- eiasedsGA %>%
+  left_join(census_pop %>% select(state, county, year, pop_share), by = c("statecode" = "state", "year")) %>%
   mutate(value_county = value * pop_share) %>%
   select(county, year, source=source, target=target, value=value_county, units)
 
 # disaggregate stakeholder consumption data.
 # TODO: is this everything? or do we need data from other utilities?
 en_use_agg_C <- en_use_agg_s %>% mutate(state = "GA", units = "EJ") %>%
-  filter(year == 2024) %>%
-  left_join(census_pop_2024_agesex_all %>% select(state, county, year, pop_share), by = c("state", "year")) %>%
+  left_join(census_pop %>% select(state, county, year, pop_share), by = c("state", "year")) %>%
   mutate(value_county = value * pop_share) %>%
   select(county, year, source, target, value=value_county, units)
 
@@ -340,6 +341,11 @@ plot_sankey_enhanced(en_fuel_gen_use_loss %>%
                        summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% pretty_labels(),
                      yr = 2024, animate = F, show_values_in_labels = T, label_units = "PJ")
 
+# animated
+plot_sankey_enhanced(en_fuel_gen_use_loss %>%
+                       group_by(year, source, target, units) %>%
+                       summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% pretty_labels(),
+                     show_values_in_labels = T, label_units = "PJ")
 
 # plot_sankey_enhanced(en_fuel_gen_use_loss %>% group_by(county, year, source, target, units) %>% summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% pretty_labels(),
 #                      reg = "Cobb", yr = 2024, animate = F, show_values_in_labels = T, label_units = "PJ")
@@ -363,7 +369,7 @@ en_fuel_gen_use_loss_all <- rbind(en_fuel_gen_use_loss, en_transmission_losses)
 plot_sankey_enhanced(en_fuel_gen_use_loss_all %>%
                        group_by(year, source, target, units) %>%
                        summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% pretty_labels(),
-                     yr = 2024, animate = F, show_values_in_labels = T, label_units = "PJ")
+                     yr = 2024, animate = T, show_values_in_labels = T, label_units = "PJ")
 
 
 ###############################################################################%
@@ -379,13 +385,13 @@ en_fuel_gen_use_loss_loop <- rbind(eia923_fuel_input, # fuel input
 plot_sankey_enhanced(en_fuel_gen_use_loss_loop %>%
                        group_by(year, source, target, units) %>%
                        summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% pretty_labels(),
-                     yr = 2024, animate = F, show_values_in_labels = T, label_units = "PJ")
+                     yr = 2024, animate = T, show_values_in_labels = T, label_units = "PJ")
 
 
 plot_sankey_enhanced(en_fuel_gen_use_loss_loop %>%
                        group_by(county, year, source, target, units) %>%
                        summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% pretty_labels(),
-                     reg = "Cobb", yr = 2024, animate = F, show_values_in_labels = T, label_units = "PJ")
+                     reg = "Cobb", yr = 2024, animate = T, show_values_in_labels = T, label_units = "PJ")
 
 
 ###############################################################################%
@@ -474,12 +480,10 @@ plot_sankey_enhanced(en_fuel_gen_use_loss_all_trade %>%
 plot_sankey_enhanced(en_fuel_gen_use_loss_all_trade %>%
                        group_by(county, year, source, target, units) %>%
                        summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% pretty_labels(),
-                     reg = "Fulton", yr = 2024, animate = F, show_values_in_labels = T, label_units = "PJ")
+                     reg = "Fulton", yr = 2024, animate = T, show_values_in_labels = T, label_units = "PJ")
 
 # save this
 
-# TODO: align years some have 2023 some have 2024. bring in new 2024 eia
-# TODO: bring all EIA years to have complete 2020-2024 data product
 # TODO: complete energy-water simplified diagram (?)
 # TODO: create ew by county
 # TODO: create ew simplified by county
@@ -502,7 +506,7 @@ energy_water <- rbind(en_fuel_gen_use_loss_all_trade_metro, en4water %>% select(
   rbind(df_water_metro_linear_wSW_discharge_type) # from water script
 
 plot_sankey_enhanced(energy_water %>% pretty_labels(),
-                     yr = 2024, animate = F, show_values_in_labels = T, label_units = "")
+                     yr = 2024, animate = T, show_values_in_labels = T, label_units = "")
 
 
 # simplified energy-water ----
@@ -521,7 +525,7 @@ energy_water_simplified <- energy_water %>%
   summarise(value = sum(value), .groups = "drop")
 
 plot_sankey_enhanced(energy_water_simplified %>% pretty_labels(),
-                     yr = 2024, animate = F, show_values_in_labels = T, label_units = "")
+                     yr = 2024, animate = T, show_values_in_labels = T, label_units = "")
 
 # save energy-water simplified diagram as html
 # write_csv(energy_water_simplified, paste0(SAVE_DIR, "energy_water_simplified_flows.csv"))
