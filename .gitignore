@@ -1,0 +1,19 @@
+# R
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+
+# macOS
+.DS_Store
+
+# data - keep compressed, ignore raw CSVs
+data/uncompressed_csvs
+data/*.csv
+!data/*.csv.gz
+
+# ignore fill SEDS and only commit GA 2020-2024 
+data/eia_seds_Complete_*.csv.gz
+
+# outputs
+outputs/
