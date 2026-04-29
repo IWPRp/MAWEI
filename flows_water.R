@@ -507,7 +507,7 @@ df_sankey <- rbind(df_water_sup_waste_fix, df_water_losses_fix, df_wastewater_se
 plot_sankey(df_sankey)
 
 # single county (all)
-plot_sankey_enhanced(df_sankey, reg = "Bartow", show_values_in_labels = TRUE, animate = F)
+plot_sankey_enhanced(df_sankey, reg = "Bartow", show_values_in_labels = TRUE, animate = T)
 plot_sankey_enhanced(df_sankey, reg = "Bartow")
 # plot_sankey(df_sankey, reg = "Cherokee")
 # plot_sankey(df_sankey, reg = "Clayton")
@@ -556,7 +556,7 @@ df_sankey_agg <- rbind(df_water_sup_waste_fix, df_water_losses_fix, df_wastewate
 
 
 plot_sankey(df_sankey_agg)
-plot_sankey_enhanced(df_sankey_agg, show_values_in_labels = TRUE, animate = F, label_units = "MGD")
+plot_sankey_enhanced(df_sankey_agg, show_values_in_labels = TRUE, animate = T, label_units = "MGD")
 
 
 
@@ -667,7 +667,7 @@ plot_sankey(df_sankey_wwtrade_c_f, reg = "Cobb")
 # plot_sankey(df_sankey_wwtrade_c_f, reg = "DeKalb")
 # plot_sankey(df_sankey_wwtrade_c_f, reg = "Fulton")
 # plot_sankey(df_sankey_wwtrade_c_f, reg = "Douglas")
-plot_sankey_enhanced(df_sankey_wwtrade_c_f, reg = "Douglas", show_values_in_labels = TRUE, animate = F, label_units = "MGD")
+plot_sankey_enhanced(df_sankey_wwtrade_c_f, reg = "Douglas", show_values_in_labels = TRUE, animate = T, label_units = "MGD")
 
 # save the county sankeys
 if (F) {
@@ -701,7 +701,7 @@ df_sankey_wwtrade <- df_sankey_agg <- rbind(df_water_sup_waste_fix, df_water_los
 plot_sankey(df_sankey_wwtrade %>% pretty_labels())
 
 plot_sankey_enhanced(df_sankey_wwtrade %>% pretty_labels(),
-                     show_values_in_labels = TRUE, animate = F, label_units = "MGD")
+                     show_values_in_labels = TRUE, animate = T, label_units = "MGD")
 
 
 ###############################################################################%
@@ -855,7 +855,7 @@ mgmtplan_ground <- p_water_mgmtplan_ground %>%
   expand_grid(year = 2019:2025) %>% # expand to all years
   select(county, year, basin, source, target, value, units)
 
-plot_sankey(mgmtplan_ground, yr = 2020, animate = F)
+plot_sankey(mgmtplan_ground, animate = T)
 
 # Notes: major difference between Atlanta region commission data for
 # 'self-supply' use 45.9 , which is assumed to be from groundwater, and this
@@ -961,7 +961,7 @@ ww_sink_downstream <- ww_sink %>%
   mutate(target = if_else(grepl("River|Stream|Creek|Lake|Reservoir|Basin|Branch", target),
                           paste0(target, "_ds"), target))
 
-ww_sink_downstream %>% filter(!grepl("_ds", target)) %>% plot_sankey(yr = 2020, animate = F)
+ww_sink_downstream %>% filter(!grepl("_ds", target)) %>% plot_sankey(animate = T)
 
 plot_sankey(ww_sink_downstream)
 
@@ -1012,11 +1012,11 @@ df_sankey_ww_mgmt_C_ind <- rbind(df_sankey_ww_mgmt_C, industrial_discharge)
 # plot_sankey(rbind(df_sankey, thermoelec_water_use, ww_trade_comb, mgmtplan_all_downstream %>% select(-basin)))
 plot_sankey_enhanced(df_sankey_ww_mgmt_C_ind)
 plot_sankey_enhanced(df_sankey_ww_mgmt_C_ind, reg = "Cobb")
-plot_sankey_enhanced(df_sankey_ww_mgmt_C_ind, reg = "Cobb", show_values_in_labels = TRUE, animate = F, yr = 2024, label_units = "MGD")
-plot_sankey_enhanced(df_sankey_ww_mgmt_C_ind, reg = "Gwinnett", show_values_in_labels = TRUE, animate = F, yr = 2024, label_units = "MGD")
-plot_sankey_enhanced(df_sankey_ww_mgmt_C_ind, reg = "Fulton", show_values_in_labels = TRUE, animate = F, yr = 2024, label_units = "MGD")
-plot_sankey_enhanced(df_sankey_ww_mgmt_C_ind, reg = "DeKalb", show_values_in_labels = TRUE, animate = F, yr = 2024, label_units = "MGD")
-plot_sankey_enhanced(df_sankey_ww_mgmt_C_ind, reg = "Douglas", show_values_in_labels = TRUE, animate = F, yr = 2024, label_units = "MGD")
+plot_sankey_enhanced(df_sankey_ww_mgmt_C_ind, reg = "Cobb", show_values_in_labels = TRUE, animate = T, label_units = "MGD")
+plot_sankey_enhanced(df_sankey_ww_mgmt_C_ind, reg = "Gwinnett", show_values_in_labels = TRUE, animate = T, label_units = "MGD")
+plot_sankey_enhanced(df_sankey_ww_mgmt_C_ind, reg = "Fulton", show_values_in_labels = TRUE, animate = T, label_units = "MGD")
+plot_sankey_enhanced(df_sankey_ww_mgmt_C_ind, reg = "DeKalb", show_values_in_labels = TRUE, animate = T, label_units = "MGD")
+plot_sankey_enhanced(df_sankey_ww_mgmt_C_ind, reg = "Douglas", show_values_in_labels = TRUE, animate = T, label_units = "MGD")
 
 
 # balance PWS ----
@@ -1084,7 +1084,7 @@ df_sankey_ww_mgmt_C_ind %>%
 #          value = abs(diff),
 #          units = "MGD") # %>% select(county, year, source, target, value, units)
 
-# plot_sankey_enhanced(pws_diff, reg = "Fulton", show_values_in_labels = TRUE, animate = F, yr = 2024, label_units = "MGD")
+# plot_sankey_enhanced(pws_diff, reg = "Fulton", show_values_in_labels = TRUE, animate = T, label_units = "MGD")
 
 # linear:
 # this is truly the core table for water with all details
@@ -1098,13 +1098,13 @@ df_sankey_county_pws_balanced <- df_sankey_ww_mgmt_C_ind %>%
 plot_sankey_enhanced(df_sankey_county_pws_balanced %>%
                        group_by(year, source, target, units) %>%
                        summarise(value = sum(value), .groups = "drop") %>% pretty_labels(),
-                     animate = F, yr = 2024, label_units = "MGD")
+                     animate = T, label_units = "MGD")
 plot_sankey_enhanced(df_sankey_county_pws_balanced, reg = "Cobb")
-plot_sankey_enhanced(df_sankey_county_pws_balanced, reg = "Cobb", show_values_in_labels = TRUE, animate = F, yr = 2024, label_units = "MGD")
-plot_sankey_enhanced(df_sankey_county_pws_balanced, reg = "Gwinnett", show_values_in_labels = TRUE, animate = F, yr = 2024, label_units = "MGD")
-plot_sankey_enhanced(df_sankey_county_pws_balanced, reg = "Fulton", show_values_in_labels = TRUE, animate = F, yr = 2024, label_units = "MGD")
-plot_sankey_enhanced(df_sankey_county_pws_balanced, reg = "DeKalb", show_values_in_labels = TRUE, animate = F, yr = 2024, label_units = "MGD")
-plot_sankey_enhanced(df_sankey_county_pws_balanced, reg = "Douglas", show_values_in_labels = TRUE, animate = F, yr = 2024, label_units = "MGD")
+plot_sankey_enhanced(df_sankey_county_pws_balanced, reg = "Cobb", show_values_in_labels = TRUE, animate = T, label_units = "MGD")
+plot_sankey_enhanced(df_sankey_county_pws_balanced, reg = "Gwinnett", show_values_in_labels = TRUE, animate = T, label_units = "MGD")
+plot_sankey_enhanced(df_sankey_county_pws_balanced, reg = "Fulton", show_values_in_labels = TRUE, animate = T, label_units = "MGD")
+plot_sankey_enhanced(df_sankey_county_pws_balanced, reg = "DeKalb", show_values_in_labels = TRUE, animate = T, label_units = "MGD")
+plot_sankey_enhanced(df_sankey_county_pws_balanced, reg = "Douglas", show_values_in_labels = TRUE, animate = T, label_units = "MGD")
 
 
 # loopy:
@@ -1114,7 +1114,7 @@ plot_sankey_enhanced(df_sankey_county_pws_balanced %>%
                        mutate(target = gsub("_ds", "", target))%>%
                        group_by(year, source, target, units) %>%
                        summarise(value = sum(value), .groups = "drop") %>% pretty_labels(),
-                     animate = F, yr = 2024, label_units = "MGD")
+                     animate = T, label_units = "MGD")
 
 # basins as loops ----
 mgmtplan_all_basin <- rbind(mgmtplan_surface_pws_scaled %>% # mgmtplan_surface is unbalanced table
@@ -1137,9 +1137,9 @@ df_sankey_water_county <- rbind(df_sankey, thermoelec_water_use, ww_trade_comb, 
 plot_sankey_enhanced(df_sankey_water_county %>%
                        group_by(year, source, target, units) %>%
                        summarise(value = sum(value), .groups = "drop") %>% pretty_labels(),
-                     show_values_in_labels = TRUE, animate = F, yr = 2024, label_units = "MGD")
+                     show_values_in_labels = TRUE, animate = T, label_units = "MGD")
 
-plot_sankey_enhanced(df_sankey_water_county %>% pretty_labels(), reg = "Cobb", show_values_in_labels = TRUE, animate = F, yr = 2024, label_units = "MGD")
+plot_sankey_enhanced(df_sankey_water_county %>% pretty_labels(), reg = "Cobb", show_values_in_labels = TRUE, animate = T, label_units = "MGD")
 
 
 ###############################################################################%
@@ -1162,7 +1162,7 @@ mgmtplan_all_basin_agg <- mgmtplan_all_basin_metro_nosink %>%
 # plot_sankey_enhanced(mgmtplan_all_basin_agg %>%
 #                        group_by(year, source, target, units) %>%
 #                        summarise(value = sum(value), .groups = "drop") %>% pretty_labels(),
-#                      show_values_in_labels = TRUE, animate = F, yr = 2024, label_units = "MGD")
+#                      show_values_in_labels = TRUE, animate = T, label_units = "MGD")
 
 
 # loopy diagram
@@ -1175,7 +1175,7 @@ df_water_metro_loopy <- rbind(df_sankey_wwtrade,
   mutate(units = "MGD")
 
 plot_sankey_enhanced(df_water_metro_loopy %>% pretty_labels(),
-                     show_values_in_labels = TRUE, yr = 2024, animate = F, label_units = "MGD")
+                     show_values_in_labels = TRUE, animate = T, label_units = "MGD")
 
 # linear diagram
 df_water_metro_linear_nosink <- rbind(df_sankey_wwtrade,
@@ -1187,7 +1187,7 @@ df_water_metro_linear_nosink <- rbind(df_sankey_wwtrade,
   mutate(units = "MGD")
 
 plot_sankey_enhanced(df_water_metro_linear_nosink %>% pretty_labels(),
-                     show_values_in_labels = T, yr = 2024, animate = F, label_units = "MGD")
+                     show_values_in_labels = T, animate = T, label_units = "MGD")
 
 
 ## add surface water as a source node ----
@@ -1203,7 +1203,7 @@ df_water_metro_linear_wSW <- df_water_metro_linear_nosink %>%
 
 
 plot_sankey_enhanced(df_water_metro_linear_wSW %>% pretty_labels(),
-                     show_values_in_labels = T, yr = 2024, animate = F, label_units = "MGD")
+                     show_values_in_labels = T, animate = T, label_units = "MGD")
 
 # unique source-target pairs for documentation later
 df_water_metro_linear_wSW %>% select(source, target) %>% distinct()
@@ -1227,7 +1227,7 @@ ww_sink_discharge <- ww_sink_downstream %>%
   mutate(target = sinktype) %>%
   select(county, year, source, target, value, units)
 
-# plot_sankey_enhanced(ww_sink_discharge %>% group_by(year, source, target, units) %>% summarise(value = sum(value), .groups = "drop") %>% pretty_labels(), show_values_in_labels = TRUE, animate = F, yr = 2024, label_units = "MGD")
+# plot_sankey_enhanced(ww_sink_discharge %>% group_by(year, source, target, units) %>% summarise(value = sum(value), .groups = "drop") %>% pretty_labels(), show_values_in_labels = TRUE, animate = T, label_units = "MGD")
 
 
 # combine with metro diagram to get sources of in-county treatment and exports. the sinks will be sinktypes
@@ -1242,7 +1242,7 @@ df_water_metro_linear_wSW_discharge <- df_water_metro_linear_wSW %>%
           select(source, target, year, value, units))
 
 plot_sankey_enhanced(df_water_metro_linear_wSW_discharge %>% pretty_labels(),
-                     show_values_in_labels = T, yr = 2024, animate = F, label_units = "MGD")
+                     show_values_in_labels = T, animate = T, label_units = "MGD")
 
 # for documentation later
 df_water_metro_linear_wSW_discharge %>% select(source, target) %>% distinct()
@@ -1259,7 +1259,7 @@ ww_sink_discharge_type <- ww_sink_downstream %>% mutate(target = gsub("_ds", "",
   mutate(target = receiving_type) %>%
   select(county, year, source, target, value, units)
 
-plot_sankey_enhanced(ww_sink_discharge_type %>% group_by(year, source, target, units) %>% summarise(value = sum(value), .groups = "drop") %>% pretty_labels(), show_values_in_labels = TRUE, animate = F, yr = 2024, label_units = "MGD")
+plot_sankey_enhanced(ww_sink_discharge_type %>% group_by(year, source, target, units) %>% summarise(value = sum(value), .groups = "drop") %>% pretty_labels(), show_values_in_labels = TRUE, animate = T, label_units = "MGD")
 
 
 # combine with metro diagram. the sinks will be receiving types
@@ -1271,9 +1271,10 @@ df_water_metro_linear_wSW_discharge_type <- df_water_metro_linear_wSW %>%
                     by = c("year")) %>%
           mutate(value = value * ww_src_share, source = target.y, target = target.x) %>%
           select(source, target, year, value, units))
+validate_flows(df_water_metro_linear_wSW_discharge_type, "water_metro_flows")
 
 plot_sankey_enhanced(df_water_metro_linear_wSW_discharge_type %>% pretty_labels(),
-                     show_values_in_labels = T, yr = 2024, animate = F, label_units = "MGD")
+                     show_values_in_labels = T, animate = T, label_units = "MGD")
 
 # write_csv(df_water_metro_linear_wSW_discharge_type, paste0(SAVE_DIR, "water_metro_linear_wSW_discharge_receivingtype.csv"))
 
@@ -1287,7 +1288,7 @@ plot_sankey_enhanced(df_water_metro_linear_wSW_discharge_type %>% pretty_labels(
 
 # sample before E4W
 plot_sankey_enhanced(df_sankey_county_pws_balanced %>% pretty_labels(),
-                     reg = "Fulton", show_values_in_labels = TRUE, animate = F, yr = 2024, label_units = "MGD")
+                     reg = "Fulton", show_values_in_labels = TRUE, animate = T, label_units = "MGD")
 
 
 en4swflows <- df_sankey_county_pws_balanced %>%
@@ -1408,10 +1409,10 @@ plot_sankey_enhanced(en4water_all %>% group_by(source, target, year) %>%
                        summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>%
                        mutate(units = "PJ") %>%
                        pretty_labels(),
-                     show_values_in_labels = TRUE, animate = F, yr = 2024, label_units = "PJ")
+                     show_values_in_labels = TRUE, animate = T, label_units = "PJ")
 
 plot_sankey_enhanced(en4water_all %>% mutate(value = value * EJ_to_PJ) %>% pretty_labels(),
-                     reg = "Fulton", show_values_in_labels = TRUE, animate = F, yr = 2024, label_units = "PJ")
+                     reg = "Fulton", show_values_in_labels = TRUE, animate = T, label_units = "PJ")
 
 
 ###############################################################################%
@@ -1424,7 +1425,7 @@ plot_sankey_enhanced(en4water_all %>% mutate(value = value * EJ_to_PJ) %>% prett
 WW_TREATMENT_ENERGY_INT <- 2080 # kWh/mg
 
 # check facilities and flows (do !grepl to see which are not included)
-# plot_sankey_enhanced(df_sankey_county_pws_balanced %>% filter(grepl("wastewater|inFrom", source)) %>% group_by(year, source, target, units) %>% summarise(value = sum(value), .groups = "drop") %>% pretty_labels(), show_values_in_labels = TRUE, animate = F, yr = 2024, label_units = "MGD")
+# plot_sankey_enhanced(df_sankey_county_pws_balanced %>% filter(grepl("wastewater|inFrom", source)) %>% group_by(year, source, target, units) %>% summarise(value = sum(value), .groups = "drop") %>% pretty_labels(), show_values_in_labels = TRUE, animate = T, label_units = "MGD")
 
 # treatment energy
 en4ww_treat_facility <- df_sankey_county_pws_balanced %>%
@@ -1452,7 +1453,7 @@ en4ww_distribute_facility <- df_sankey_county_pws_balanced %>%
 
 en4ww_treat_dist_facility <- rbind(en4ww_treat_facility, en4ww_distribute_facility)
 
-plot_sankey_enhanced(en4ww_treat_dist_facility %>% group_by(source, target, year) %>% summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% mutate(units = "PJ") %>% pretty_labels(), show_values_in_labels = TRUE, animate = F, yr = 2024, label_units = "PJ")
+plot_sankey_enhanced(en4ww_treat_dist_facility %>% group_by(source, target, year) %>% summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% mutate(units = "PJ") %>% pretty_labels(), show_values_in_labels = TRUE, animate = T, label_units = "PJ")
 
 # add treatment vs distribution node as a source
 en4ww_treat_dist_facility_type <- en4ww_treat_dist_facility %>% select(-en_wwtype) %>%
@@ -1462,7 +1463,7 @@ en4ww_treat_dist_facility_type <- en4ww_treat_dist_facility %>% select(-en_wwtyp
           summarise(value = sum(value), .groups = "drop") %>%
           select(county, source, target, year, value, units))
 
-plot_sankey_enhanced(en4ww_treat_dist_facility_type %>% group_by(source, target, year) %>% summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% mutate(units = "PJ") %>% pretty_labels(), show_values_in_labels = TRUE, animate = F, yr = 2024, label_units = "PJ")
+plot_sankey_enhanced(en4ww_treat_dist_facility_type %>% group_by(source, target, year) %>% summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% mutate(units = "PJ") %>% pretty_labels(), show_values_in_labels = TRUE, animate = T, label_units = "PJ")
 
 
 # lump in-county treatment vs exports
@@ -1477,13 +1478,13 @@ en4ww_treat_dist_cat <- en4ww_treat_dist_facility_type %>%
   summarise(value = sum(value), .groups = "drop")
 
 
-plot_sankey_enhanced(en4ww_treat_dist_cat %>% group_by(source, target, year) %>% summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% mutate(units = "PJ") %>% pretty_labels(), show_values_in_labels = TRUE, animate = F, yr = 2024, label_units = "PJ")
+plot_sankey_enhanced(en4ww_treat_dist_cat %>% group_by(source, target, year) %>% summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% mutate(units = "PJ") %>% pretty_labels(), show_values_in_labels = TRUE, animate = T, label_units = "PJ")
 
 
 # combine water and ww energy
 en4water_ww <- rbind(en4water_all, en4ww_treat_dist_cat)
 
-plot_sankey_enhanced(en4water_ww %>% group_by(source, target, year) %>% summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% mutate(units = "PJ") %>% pretty_labels(), show_values_in_labels = TRUE, animate = F, yr = 2024, label_units = "PJ")
+plot_sankey_enhanced(en4water_ww %>% group_by(source, target, year) %>% summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% mutate(units = "PJ") %>% pretty_labels(), show_values_in_labels = TRUE, animate = T, label_units = "PJ")
 
 # assign electricity as a source
 en4water_ww_elec_facility <- en4water_ww %>%
@@ -1497,17 +1498,18 @@ en4water_ww_elec_facility <- en4water_ww %>%
 ###############################################################################%
 
 ## COUNTY E4W ----
-# plot_sankey_enhanced(en4water_ww_elec_facility %>% group_by(source, target, year) %>% summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% mutate(units = "PJ") %>% pretty_labels(), show_values_in_labels = TRUE, animate = F, yr = 2024, label_units = "PJ")
+# plot_sankey_enhanced(en4water_ww_elec_facility %>% group_by(source, target, year) %>% summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% mutate(units = "PJ") %>% pretty_labels(), show_values_in_labels = TRUE, animate = T, label_units = "PJ")
 
 plot_sankey_enhanced(en4water_ww_elec_facility %>% pretty_labels() %>% mutate(value = value * EJ_to_TJ, units = "TJ", .groups = "drop"),
-                     reg = "Cobb", show_values_in_labels = TRUE, animate = F, yr = 2024, label_units = "TJ")
+                     reg = "Cobb", show_values_in_labels = TRUE, animate = T, label_units = "TJ")
 
 ## METRO E4W ----
 # without ww facilities: remove targets where sources are in-county treatment and ww_exports
 en4water_ww_elec_use <- en4water_ww_elec_facility %>%
   filter(!(grepl("in-county treatment|ww_exports", source)))
+validate_flows(en4water_ww_elec_use, "en4water_ww_elec_use")
 
-plot_sankey_enhanced(en4water_ww_elec_use %>% group_by(source, target, year) %>% summarise(value = sum(value) * EJ_to_TJ, .groups = "drop") %>% mutate(units = "TJ") %>% pretty_labels(), show_values_in_labels = TRUE, animate = F, yr = 2024, label_units = "TJ")
+plot_sankey_enhanced(en4water_ww_elec_use %>% group_by(source, target, year) %>% summarise(value = sum(value) * EJ_to_TJ, .groups = "drop") %>% mutate(units = "TJ") %>% pretty_labels(), show_values_in_labels = TRUE, animate = T, label_units = "TJ")
 
 # simple table for energy calcs
 # make elec flow direct into sectors
@@ -1517,7 +1519,7 @@ en4water <- en4water_ww_elec_use %>%
   group_by(county, source, target, year, units) %>%
   summarise(value = sum(value), .groups = "drop")
 
-plot_sankey_enhanced(en4water %>% group_by(source, target, year) %>% summarise(value = sum(value) * EJ_to_TJ, .groups = "drop") %>% mutate(units = "TJ") %>% pretty_labels(), show_values_in_labels = TRUE, animate = F, yr = 2024, label_units = "TJ")
+plot_sankey_enhanced(en4water %>% group_by(source, target, year) %>% summarise(value = sum(value) * EJ_to_TJ, .groups = "drop") %>% mutate(units = "TJ") %>% pretty_labels(), show_values_in_labels = TRUE, animate = T, label_units = "TJ")
 
 
 ###############################################################################%
@@ -1527,7 +1529,7 @@ plot_sankey_enhanced(en4water %>% group_by(source, target, year) %>% summarise(v
 # # add thermoelectric water with EFW
 # en_water_ww_elec_thermo <- rbind(en4water_ww_elec %>% mutate(value = value * EJ_to_PJ), thermoelec_water_use %>% mutate(value = value /10))
 #
-# plot_sankey_enhanced(en_water_ww_elec_thermo %>% group_by(source, target, year) %>% summarise(value = sum(value), .groups = "drop") %>% pretty_labels(), show_values_in_labels = TRUE, animate = F, yr = 2024)
+# plot_sankey_enhanced(en_water_ww_elec_thermo %>% group_by(source, target, year) %>% summarise(value = sum(value), .groups = "drop") %>% pretty_labels(), show_values_in_labels = TRUE, animate = T)
 
 
 

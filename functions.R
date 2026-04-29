@@ -44,6 +44,30 @@ repeats <- function(df) {
     filter(n() > 1) %>% ungroup()
 }
 
+# validate flow data frames for completeness and correctness
+validate_flows <- function(df, label = "flows") {
+  required <- c("source", "target", "year", "value")
+  missing <- setdiff(required, names(df))
+  if (length(missing) > 0) stop(label, ": missing columns: ", paste(missing, collapse = ", "))
+
+  for (col in required) {
+    n_na <- sum(is.na(df[[col]]))
+    if (n_na > 0) stop(label, ": ", n_na, " NA values in '", col, "'")
+  }
+
+  group_cols <- intersect(c("county", "year", "source", "target", "units"), names(df))
+  dupes <- df %>% group_by(across(all_of(group_cols))) %>% filter(n() > 1) %>% ungroup()
+  if (nrow(dupes) > 0) stop(label, ": ", nrow(dupes), " duplicate rows found")
+
+  if (any(df$value < 0)) stop(label, ": ", sum(df$value < 0), " negative values")
+
+  years_present <- sort(unique(df$year))
+  years_missing <- setdiff(YEARS_TO_ENSURE, years_present)
+  if (length(years_missing) > 0) stop(label, ": missing years: ", paste(years_missing, collapse = ", "))
+
+  invisible(df)
+}
+
 clean_col_names <- function(df) {
   names(df) <- tolower(names(df))
   # replace parentheses with underscores and clean up spaces
@@ -644,9 +668,9 @@ pretty_labels <- function(df_sankey) {
     )
 }
 
-plot_sankey <- function(df_sankey, title = "Metro Atlanta Flows", yr = 2024,
-                        animate = T, animateby = year, showFut = T,
-                        reg = counties, agg = T, pretty_label = T
+plot_sankey <- function(df_sankey, title = "Metro Atlanta Flows", yr = max(YEARS_TO_ENSURE),
+                        animate = TRUE, animateby = year, years = YEARS_TO_ENSURE,
+                        reg = counties, agg = TRUE, pretty_label = TRUE
                         ) {
 
   # stop if the data has multiple flows
@@ -660,6 +684,9 @@ plot_sankey <- function(df_sankey, title = "Metro Atlanta Flows", yr = 2024,
     head(df_sankey %>% filter(value < 0))
     stop("Data has negative values. Please check the data.")
   }
+
+  # validate yr
+  if (!animate && !yr %in% years) stop("yr = ", yr, " not in years: ", paste(years, collapse = ", "))
 
   # if pretty label
   if (pretty_label) {
@@ -679,25 +706,22 @@ plot_sankey <- function(df_sankey, title = "Metro Atlanta Flows", yr = 2024,
   # generate node label before filtering
   node_labels <- unique(c(as.character(df_sankey$source), as.character(df_sankey$target)))
 
-  # only show future
-  if (showFut) {
-    df_sankey <- df_sankey %>% filter(year >= 2020 & year <= 2035)
-  }
+  # filter to selected years
+  df_sankey <- df_sankey %>% filter(year %in% years)
 
   # filter to counties regions
   if ("county" %in% colnames(df_sankey)) {
     df_sankey <- df_sankey %>% filter(county %in% reg)
-    # df_sankey <- df_sankey %>% filter(region %in% all_regions | region %in% reg)
   }
 
   # aggregate over counties
-  if (agg == T & "county" %in% colnames(df_sankey)) {
+  if (agg == TRUE & "county" %in% colnames(df_sankey)) {
     df_sankey <- df_sankey %>%
       group_by(across(-county)) %>% # groups by year, source, target
       summarise(value = sum(value), .groups = "drop")
   }
 
-  if (animate == F) {
+  if (animate == FALSE) {
     df_sankey <- df_sankey %>% filter(year == yr)
   }
 
@@ -707,12 +731,7 @@ plot_sankey <- function(df_sankey, title = "Metro Atlanta Flows", yr = 2024,
     type = "sankey",
     arrangement = "snap",
     node = list(
-      # group = 2,
-      # pad = 15,
-      # thickness = 20,
       label = node_labels,
-      # color = df_sankey$source_color,
-      # color = node_colors,
       line = list(color = "black", width = 0.5)
     ),
     link = list(
@@ -720,17 +739,17 @@ plot_sankey <- function(df_sankey, title = "Metro Atlanta Flows", yr = 2024,
       target = match(df_sankey$target, node_labels) - 1,
       value = df_sankey$value,
       year = df_sankey$year
-      # color = df_sankey$flow_color
     ),
-    frame = ~df_sankey$year
+    frame = if(animate) ~df_sankey$year else NULL
   ) %>%
     layout(
-      title = paste0(title, " for ", paste(reg, collapse = ", "), if_else(animate == T, "", paste0(" in ", yr))),
+      title = paste0(title, " for ", paste(reg, collapse = ", "),
+                     if(!animate) paste0(" in ", yr) else paste0(" (", min(years), "-", max(years), ")")),
       font = list(size = 11)
     )
 
-  if (animate == T) {
-    p <- p %>% animation_opts(2000, redraw = T) %>%
+  if (animate == TRUE) {
+    p <- p %>% animation_opts(2000, redraw = TRUE) %>%
       animation_slider(currentvalue = list(prefix = "Year ", font = list(color="red")))
   }
 
@@ -1095,12 +1114,14 @@ prepare_sankey_enhanced <- function(df_sankey, node_colors = NULL, link_colors =
 }
 
 # Enhanced main function
-plot_sankey_enhanced <- function(df_sankey, title = "Metro Atlanta Flows", yr = 2024,
-                                 animate = TRUE, animateby = "year", showFut = TRUE,
+plot_sankey_enhanced <- function(df_sankey, title = "Metro Atlanta Flows", yr = max(YEARS_TO_ENSURE),
+                                 animate = TRUE, animateby = "year", years = YEARS_TO_ENSURE,
                                  reg = NULL, agg = TRUE, pretty_label = TRUE,
                                  node_colors = NULL, link_colors = NULL,
                                  show_values_in_labels = T, label_units = "",
                                  label_year = NULL) {
+
+  if (!animate && !yr %in% years) stop("yr = ", yr, " not in years: ", paste(years, collapse = ", "))
 
   # Existing validation code
   if (any(duplicated(df_sankey))) {
@@ -1125,10 +1146,8 @@ plot_sankey_enhanced <- function(df_sankey, title = "Metro Atlanta Flows", yr = 
       complete(year, nesting(source, target), fill = list(value = 0))
   }
 
-  # Filter future years
-  if (showFut) {
-    df_sankey <- df_sankey %>% filter(year >= 2020 & year <= 2035)
-  }
+  # Filter to selected years
+  df_sankey <- df_sankey %>% filter(year %in% years)
 
   # Filter to counties/regions if specified
   if ("county" %in% colnames(df_sankey) && !is.null(reg)) {
@@ -1234,9 +1253,9 @@ plot_sankey_enhanced(df_sankey_wwtrade,
 # try 2 ----
 plot_sankey_advanced <- function(df_sankey,
                                  title = "Metro Atlanta Flows",
-                                 yr = 2025,
+                                 yr = max(YEARS_TO_ENSURE),
                                  animate = TRUE,
-                                 showFut = TRUE,
+                                 years = YEARS_TO_ENSURE,
                                  reg = NULL,
                                  agg = TRUE,
                                  node_colors = NULL,
@@ -1262,6 +1281,8 @@ plot_sankey_advanced <- function(df_sankey,
   }
 
   # data validation
+  if (!animate && !yr %in% years) stop("yr = ", yr, " not in years: ", paste(years, collapse = ", "))
+
   df_check <- df_sankey %>% select(source, target, year)
   if (any(duplicated(df_check))) {
     stop("data has multiple flows / repeated rows. Please check the data.")
@@ -1281,9 +1302,7 @@ plot_sankey_advanced <- function(df_sankey,
   }
 
   # filter data based on parameters
-  if (showFut) {
-    df_sankey <- df_sankey %>% filter(year >= 2020 & year <= 2035)
-  }
+  df_sankey <- df_sankey %>% filter(year %in% years)
 
   if ("county" %in% colnames(df_sankey) && !is.null(reg)) {
     df_sankey <- df_sankey %>% filter(county %in% reg)

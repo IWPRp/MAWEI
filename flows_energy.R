@@ -122,7 +122,7 @@ df_sankey_en_soco_all <- rbind(df_sankey_en_soco, en_rejected %>% select(-county
 
 # plot_sankey(df_sankey_en_soco_all %>% mutate(value = value * EJ_to_PJ, units = "PJ"))
 plot_sankey_enhanced(df_sankey_en_soco_all %>% mutate(value = value * EJ_to_PJ, units = "PJ"),
-                     animate = F, yr = 2024, show_values_in_labels = T, label_units = "PJ")
+                     animate = T, show_values_in_labels = T, label_units = "PJ")
 
 
 ###############################################################################%
@@ -233,7 +233,7 @@ eia923_fuel_input <- eia923_fuel_input_C %>%
   group_by(county, year, source, target, units) %>%
   summarise(value = sum(value), .groups = "drop")
 
-# plot_sankey(eia923_fuel_input, yr=2024, animate = F)
+# plot_sankey(eia923_fuel_input, yr=2024, animate = T)
 
 ## electricity generation ----
 eia923_electricity_gen <- eia923_sch2pg1_genfuel_GA_C %>%
@@ -246,7 +246,7 @@ eia923_electricity_gen <- eia923_sch2pg1_genfuel_GA_C %>%
   mutate(target = ifelse(grepl("site", source, ignore.case = T), "commercial", target)) %>%
   filter(value > 0) # 3 plants have negative net generation
 
-# plot_sankey(rbind(eia923_fuel_input, eia923_electricity_gen), yr=2024, animate = F)
+# plot_sankey(rbind(eia923_fuel_input, eia923_electricity_gen), yr=2024, animate = T)
 
 
 
@@ -315,13 +315,13 @@ en_use_agg_C <- en_use_agg_s %>% mutate(state = "GA", units = "EJ") %>%
 ###############################################################################%
 
 # energy for water ----
-# linearize it by assigning the target ot EfW for the energy diagram
+# linearize it by assigning the target to EfW for the energy diagram
 en4water_ww_elec_use_linear <- en4water_ww_elec_use %>%
   filter(grepl("electricity", source, ignore.case = T)) %>%
   mutate(target = "en4water", units = "EJ") %>%
   group_by(county, year, source, target, units) %>%
-  select(county, year, source, target, value, units)
-
+  summarise(value = sum(value), .groups = "drop")
+validate_flows(en4water_ww_elec_use_linear, "en4water_ww_elec_use_linear")
 
 ###############################################################################%
 
@@ -339,16 +339,10 @@ en_fuel_gen_use_loss <- rbind(eia923_fuel_input, # fuel input
 plot_sankey_enhanced(en_fuel_gen_use_loss %>%
                        group_by(year, source, target, units) %>%
                        summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% pretty_labels(),
-                     yr = 2024, animate = F, show_values_in_labels = T, label_units = "PJ")
-
-# animated
-plot_sankey_enhanced(en_fuel_gen_use_loss %>%
-                       group_by(year, source, target, units) %>%
-                       summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% pretty_labels(),
-                     show_values_in_labels = T, label_units = "PJ")
+                     animate = T, show_values_in_labels = T, label_units = "PJ")
 
 # plot_sankey_enhanced(en_fuel_gen_use_loss %>% group_by(county, year, source, target, units) %>% summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% pretty_labels(),
-#                      reg = "Cobb", yr = 2024, animate = F, show_values_in_labels = T, label_units = "PJ")
+#                      reg = "Cobb", animate = T, show_values_in_labels = T, label_units = "PJ")
 
 
 ###############################################################################%
@@ -369,7 +363,7 @@ en_fuel_gen_use_loss_all <- rbind(en_fuel_gen_use_loss, en_transmission_losses)
 plot_sankey_enhanced(en_fuel_gen_use_loss_all %>%
                        group_by(year, source, target, units) %>%
                        summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% pretty_labels(),
-                     yr = 2024, animate = T, show_values_in_labels = T, label_units = "PJ")
+                     animate = T, show_values_in_labels = T, label_units = "PJ")
 
 
 ###############################################################################%
@@ -385,13 +379,13 @@ en_fuel_gen_use_loss_loop <- rbind(eia923_fuel_input, # fuel input
 plot_sankey_enhanced(en_fuel_gen_use_loss_loop %>%
                        group_by(year, source, target, units) %>%
                        summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% pretty_labels(),
-                     yr = 2024, animate = T, show_values_in_labels = T, label_units = "PJ")
+                     animate = T, show_values_in_labels = T, label_units = "PJ")
 
 
 plot_sankey_enhanced(en_fuel_gen_use_loss_loop %>%
                        group_by(county, year, source, target, units) %>%
                        summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% pretty_labels(),
-                     reg = "Cobb", yr = 2024, animate = T, show_values_in_labels = T, label_units = "PJ")
+                     reg = "Cobb", animate = T, show_values_in_labels = T, label_units = "PJ")
 
 
 ###############################################################################%
@@ -431,7 +425,7 @@ en_fuel_gen_use_loss_all_trade_metro <- en_fuel_gen_use_loss_all %>% select(-cou
 plot_sankey_enhanced(en_fuel_gen_use_loss_all_trade_metro %>%
                        group_by(year, source, target, units) %>%
                        summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% pretty_labels(),
-                     yr = 2024, animate = F, show_values_in_labels = T, label_units = "PJ")
+                     animate = T, show_values_in_labels = T, label_units = "PJ")
 
 # metro level without transportation target and Petroleum source
 plot_sankey_enhanced(en_fuel_gen_use_loss_all_trade_metro %>%
@@ -439,7 +433,7 @@ plot_sankey_enhanced(en_fuel_gen_use_loss_all_trade_metro %>%
                        filter(!(grepl("transport", target, ignore.case = T) & grepl("petroleum", source, ignore.case = T))) %>%
                        group_by(year, source, target, units) %>%
                        summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% pretty_labels(),
-                     yr = 2024, animate = F, show_values_in_labels = T, label_units = "PJ")
+                     animate = T, show_values_in_labels = T, label_units = "PJ")
 
 
 ## county-level ----
@@ -470,17 +464,18 @@ en_elec_trade_county <- en_fuel_gen_use_loss_all %>%
 
 
 en_fuel_gen_use_loss_all_trade <- rbind(en_fuel_gen_use_loss_all, en_elec_trade_county)
+validate_flows(en_fuel_gen_use_loss_all_trade, "en_fuel_gen_use_loss_all_trade")
 
 
 plot_sankey_enhanced(en_fuel_gen_use_loss_all_trade %>%
                        group_by(year, source, target, units) %>%
                        summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% pretty_labels(),
-                     yr = 2024, animate = F, show_values_in_labels = T, label_units = "PJ")
+                     animate = T, show_values_in_labels = T, label_units = "PJ")
 
 plot_sankey_enhanced(en_fuel_gen_use_loss_all_trade %>%
                        group_by(county, year, source, target, units) %>%
                        summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% pretty_labels(),
-                     reg = "Fulton", yr = 2024, animate = T, show_values_in_labels = T, label_units = "PJ")
+                     reg = "Fulton", animate = T, show_values_in_labels = T, label_units = "PJ")
 
 # save this
 
@@ -506,7 +501,7 @@ energy_water <- rbind(en_fuel_gen_use_loss_all_trade_metro, en4water %>% select(
   rbind(df_water_metro_linear_wSW_discharge_type) # from water script
 
 plot_sankey_enhanced(energy_water %>% pretty_labels(),
-                     yr = 2024, animate = T, show_values_in_labels = T, label_units = "")
+                     animate = T, show_values_in_labels = T, label_units = "")
 
 
 # simplified energy-water ----
@@ -525,13 +520,13 @@ energy_water_simplified <- energy_water %>%
   summarise(value = sum(value), .groups = "drop")
 
 plot_sankey_enhanced(energy_water_simplified %>% pretty_labels(),
-                     yr = 2024, animate = T, show_values_in_labels = T, label_units = "")
+                     animate = T, show_values_in_labels = T, label_units = "")
 
 # save energy-water simplified diagram as html
 # write_csv(energy_water_simplified, paste0(SAVE_DIR, "energy_water_simplified_flows.csv"))
 # htmlwidgets::saveWidget(
 #   plot_sankey_enhanced(energy_water_simplified %>% pretty_labels(),
-#                        yr = 2024, animate = F, show_values_in_labels = T, label_units = ""),
+#                        animate = T, show_values_in_labels = T, label_units = ""),
 #   file = paste0(SAVE_DIR, "energy_water_simple.html"),
 #   selfcontained = TRUE
 # )
@@ -545,13 +540,13 @@ plot_sankey_enhanced(energy_water_simplified %>% pretty_labels(),
 #                            en_rejected, en_elec_imports %>% mutate(county = "GA")) %>%
 #                        group_by(year, source, target, units) %>%
 #                        summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% pretty_labels(),
-#                      yr = 2024, animate = F, show_values_in_labels = T, label_units = "PJ")
+#                      animate = T, show_values_in_labels = T, label_units = "PJ")
 #
 # plot_sankey_enhanced(rbind(eia923_fuel_input, eia923_electricity_gen, eiaseds_use, en_use_agg_C, en_gen_onsite_EJ_s, en_efficiency_losses_s,
 #                            # these two need to be revised after everything else is calculated
 #                            en_rejected, en_elec_imports %>% mutate(county = "GA")) %>%
 #                        mutate(value = value * EJ_to_PJ) %>% pretty_labels(), reg = "Cobb",
-# yr = 2024, animate = F, show_values_in_labels = T, label_units = "PJ")
+# animate = T, show_values_in_labels = T, label_units = "PJ")
 #
 #
 #
@@ -563,7 +558,7 @@ plot_sankey_enhanced(energy_water_simplified %>% pretty_labels(),
 #                   # en_use_agg %>% mutate(source = "electricity", target = enduse, units="EJ") %>% select(source, target, year, value, units),
 #                   en_losses %>% mutate(source = facility_name, target = "losses", units="EJ") %>% select(source, target, year, value = losses, units),
 #                   # en_elec_imports %>% mutate(units = "EJ"),
-#                   en_rejected), yr = 2024, animate = F)
+#                   en_rejected), animate = T)
 #
 #
 # plot_sankey_enhanced(rbind(eia923_fuel_input %>% select(-county), eia923_electricity_gen %>% select(-county),
@@ -575,7 +570,7 @@ plot_sankey_enhanced(energy_water_simplified %>% pretty_labels(),
 #                      en_rejected %>% mutate(units = "EJ")) %>%
 #                        group_by(year, source, target, units) %>%
 #                        summarise(value = sum(value) * 1000, .groups = "drop") %>% pretty_labels()
-#                      , show_values_in_labels = T, yr = 2024, animate = F, label_units = "PJ")
+#                      , show_values_in_labels = T, animate = T, label_units = "PJ")
 
 
 
