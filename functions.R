@@ -18,8 +18,8 @@ if (!dir.exists(SAVE_DIR)) {
 }
 
 # county names
-counties <- read_csv(paste0(DATA_DIR, "common_county_fips.csv.gz"))$county
-fips <- read_csv(paste0(DATA_DIR, "common_county_fips.csv.gz"))$fip
+counties <- read_csv(paste0(DATA_DIR, "common_county_fips.csv"))$county
+fips <- read_csv(paste0(DATA_DIR, "common_county_fips.csv"))$fip
 
 YEARS_TO_ENSURE <- 2020:2024
 

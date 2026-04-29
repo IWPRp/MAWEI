@@ -1,0 +1,100 @@
+county,FACILITY NAME,PERMIT NO,LEVEL OF TREATMENT,UNITS OF MEASUREMENT,PERMITTED CAPACITY,Basin,25th Percentile,Average,75th Percentile
+Cherokee,CCWSA ROSE CREEK WPCP,GA0046451,0,MGD,6.00,Coosa,2.40,2.770617797,2.892741756
+Cherokee,CCWSA FITZGERALD CREEK WPCP,GA0038555,0,MGD,5.00,Coosa,3.10,3.440717429,4.123679167
+Cherokee,CCWSA ROSE CREEK - REUSE,GA02-015,REUSE,MGD,0.00,Coosa,0.78,1.429472851,1.586727131
+Cherokee,CCWSA RIVER BEND ENVIR. COMPLEX,GA0050242,0.5,MGD,0.00,Coosa,0.00,0.026704167,0
+Cherokee,WOODSTOCK RUBES CREEK WRF,GA0026263,0,MGD,2.50,Coosa,0.99,1.124342685,1.227
+Cherokee,CANTON WPCP,GA0025674,0,0,4.00,Coosa,1.96,2.270098214,2.42294375
+Cherokee,Fulton Co Little River WRF,GA0033251,Advanced,MGD,1.00,Coosa,0.77,0.826590413,0.899702871
+Cherokee,CANTON WPCP SECOND ROW,0,0,0,0.00,Coosa,0.00,0,0
+Bartow,CARTERSVILLE JAMES R. STAFFORD WPCP,GA0024091,0,MGD,15.00,Coosa,6.71,7.199074074,7.75
+Bartow,EMERSON HENRY JORDAN WWTP,GA0026115,Activated Sludge,MGD,0.45,Coosa,0.10,0.11305,0.131
+Bartow,ADAIRSVILLE NORTH WPCP,GA0046035,0,MGD,1.00,Coosa,0.59,0.670033333,0.7485
+Bartow,ADAIRSVILLE SOUTH WPCP,GA0032832,0,MGD,0.50,Coosa,0.21,0.227138393,0.28075
+Bartow,BARTOW SOUTHEAST WPCP,GA0037664,0,MGD,0.10,Coosa,0.01,0.007685064,0.007883333
+Bartow,BARTOW TWO RUN WPCP,GA0020702,0,MGD,0.10,Coosa,0.04,0.048274687,0.056559524
+Clayton,CLAYTON W.B. CASEY WRF,GA0038423,Advanced,MGD,24.00,Ocmulgee,14.09,14.90895833,15.8269375
+Clayton,CLAYTON NORTHEAST WRF,GA0020575,Advanced,MGD,10.00,Ocmulgee,3.86,4.013886905,4.23175
+Clayton,CLAYTON SHOAL CREEK WRF,GA0038369,Advanced,MGD,4.40,Flint,1.49,1.640553571,1.776083333
+Cobb,COBB NOONDAY CREEK WRF,GA0024988,Advanced,MGD,20,Coosa,9.23,9.56,10.20
+Cobb,COBB NORTHWEST WRF,GA0046761,Advanced,MGD,12,Coosa,6.08,6.39,6.65
+Cobb,COBB RL SUTTON WRF,GA0026140,Advanced,MGD,40,Chattahoochee,25.39,26.23,27.50
+Cobb,COBB SOUTH COBB WRF,GA0026158,Advanced,MGD,40,Chattahoochee,22.36,23.45,24.95
+Coweta,COWETA SHENANDOAH WPCP,GA0038822,Advanced,MGD,2,Flint,0.67,0.88,1.10
+Coweta,COWETA ARNCO WPCP,GA0000311,Secondary,MGD,0.1,Chattahoochee,0.03,0.04,0.05
+Coweta,COWETA ARNALL/SARGENT WPCP,GA0000299,Secondary,MGD,0.06,Chattahoochee,0.02,0.03,0.03
+Coweta,NEWNAN WAHOO CREEK,GA0031721,Secondary,MGD,3,Chattahoochee,2.19,2.26,2.33
+Coweta,NEWNAN MINERAL SPRINGS,GA0021423,Secondary,MGD,0.75,Chattahoochee,0.52,0.61,0.68
+Coweta,SENOIA LAS,GA4020135,LAS,MGD,0.49,Flint,0.25,0.26,0.29
+Coweta,GRANTVILLE COLLEY STREET LAS,0,LAS,MGD,0.15,Chattahoochee,0.05,0.06,0.08
+Coweta,GRANTVILLE PONDS,Multiple,0,MGD,0.13,Chattahoochee,0.06,0.06,0.07
+DeKalb,Pole Bridge Creek,GA0026816,Advanced,MGD,20,Ocmulgee,7.55,9.02,10.36
+DeKalb,Snapfinger Creek,GA0024147,Advanced,MGD,36,Ocmulgee,23.22,24.45,25.50
+Douglas,Douglas SouthCentral WPCP,GA0038709,Advanced,MGD,6,Chattahoochee,2.78,2.91,3.11
+Douglas,Douglas Sweetwater Creek WPCP,GA0047201,Advanced,MGD,3,Chattahoochee,2.25,2.47,2.74
+Douglas,Douglas Northside WPCP,GA0030350,Advanced,MGD,0.6,Chattahoochee,0.19,0.23,0.27
+Douglas,Douglas Rebel Trails WPCP,GA0049786,Secondary,MGD,0.04,Chattahoochee,0.01,0.01,0.01
+Douglas,Douglas Southside WPCP,GA0030341,Advanced,MGD,0,Chattahoochee,0,0,0
+Douglas,Douglas South Central Urban Water Reuse Facility,GAJ02057,LAS,MGD,0,Chattahoochee,0,0,0
+Douglas,Douglas Beaver Estates WPCP,GA0031402,Advanced,MGD,0,Chattahoochee,0,0,0
+Douglas,Douglas St. Andrews LAS,GA02-048,LAS,MGD,0,Chattahoochee,0,0,0
+Douglas,Villa Rica North Sweetwater WPCP,GA0027171,Advanced,MGD,0.52,Chattahoochee,0.33,0.39,0.43
+Douglas,Villa Rica Tallapoosa West WPCP(1/2 assumed from Douglas Co),GA0027162,Advanced,MGD,2.15,Tallapoosa,0.27,0.58,0.97
+Fayette,FAYETTEVILLE WHITEWATER CREEK WPCP,GA0035807,0,MGD,5,Flint,1.62,1.76,1.99
+Fayette,PEACHTREE CITY ROCKAWAY WWTP,GA0046655,0,MGD,4,Flint,1.72,1.76,1.81
+Fayette,PEACHTREE CITY LINE CREEK / LARRY B. TURNER WWTP,GA0035777,0,MGD,2,Flint,1.24,1.26,1.35
+Forsyth,Forsyth Fowler WRF + Shakerag WRF,GA0038695;GA0038954,Advanced,MGD,3.75,Chattahoochee,0.75,0.80,0.87
+Forsyth,Forsyth James Creek,GA02-186;GA0050238,Advanced,MGD,1,Chattahoochee,0.22,0.30,0.36
+Forsyth,Forsyth Dick Creek,GA02-082;GA0038563,Advanced,MGD,0.76,Chattahoochee,0.56,0.59,0.62
+Forsyth,Forsyth Windermere,GA0039128,Advanced,MGD,0.55,Chattahoochee,0.29,0.31,0.33
+Forsyth,Forsyth Parkstone,GA03-936;GAJ030936,LAS,MGD,0.1,Coosa,0.03,0.04,0.04
+Forsyth,Forsyth Manor,GA03-921,Advanced,MGD,0.5,Coosa,0.06,0.09,0.09
+Forsyth,Cumming Bethelview Rd AWRF,GA0046019,Advanced,MGD,8,Chattahoochee,1.87,1.95,1.95
+Forsyth,Fowler and James Creek,GAJ020186,LAS,MGD,0.00,Chattahoochee,0.00,0.00,0.00
+Forsyth,Small Permits,GAJ030917;GAJ030805;GAJ030980;GAJ030950,LAS,MGD,0.00,Chattahoochee,0.00,0.00,0.00
+Forsyth,Hampton Creek WRF,GA0039128,LAS,MGD,0.45,Coosa,0.20,0.21,0.22
+Fulton,Fulton Big Creek WRF,GA0024333,Advanced,MGD,24,Chattahoochee,18.36,19.40,20.09
+Fulton,Little River WRF (SEE CHEROKEE CO),0,0,0,0,0,0.00,0.00,0.00
+Fulton,Johns Creek Environmental Campus,GA0038831,Advanced,MGD,15,Chattahoochee,3.56,5.15,7.38
+Fulton,Camp Creek WRF,GA0025381,Advanced,MGD,24,Chattahoochee,14.33,15.06,15.67
+Fulton,Little Bear WRF,GA0047104,Secondary,MGD,0.1,Chattahoochee,0.02,0.02,0.02
+Fulton,Fulton Cauley Creek,GA0038440,0,0,0,Chattahoochee,0,0,0
+Fulton,Atlanta RM Clayton WRC,GA039012,Primary Secondary and Tertiary,MGD,100,Chattahoochee,69.25,73.77,77.78
+Fulton,Atlanta South River WRC,GA039012,Primary Secondary and Tertiary,MGD,40,Chattahoochee,23.14,25.04,26.23
+Fulton,Atlanta Utoy Creek WRC,GA039012,Primary Secondary and Tertiary,MGD,48,Chattahoochee,20.13,22.38,24.15
+Gwinnett,Gwinnett  F.W. Hill,GA0038130,Advanced,MGD,60,Chattahoochee,27.71,29.17,32.94
+Gwinnett,Gwinnett Yellow River,GA0047911,Advanced,MGD,22,Ocmulgee,7.91,10.85,13.50
+Gwinnett,Gwinnett Crooked Creek,GA0026433,Advanced,MGD,16,Chattahoochee,7.45,8.67,9.32
+Gwinnett,Gwinnett Jack's Creek,0,0,MGD,0,Ocmulgee,0.37,0.41,0.45
+Gwinnett,Gwinnett Jackson Creek,GA0030732,Advanced,MGD,0,Ocmulgee,2.72,2.76,2.83
+Gwinnett,Buford Southside WPCP,GA0023167,Extended Air,MGD,2,Chattahoochee,1.36,1.43,1.48
+Gwinnett,Buford Westside WPCP,GA0023175,Extended Air,MGD,0.25,Chattahoochee,0.11,0.13,0.14
+Hall,FLOWERY BRANCH WPCP,GA0031933,0,0,0.4,Chattahoochee,0.14,0.23,0.28
+Hall,GAINESVILLE FLAT CREEK WRF,GA0021156,Advanced,MGD,12,Chattahoochee,5.93,6.41,6.55
+Hall,GAINESVILLE LINWOOD WRF,GA0020168,Advanced,MGD,5,Chattahoochee,2.02,2.08,2.41
+Hall,HALL COUNTY SPOUT SPRINGS ,GAJ030807,Aqua-Aerobic SBR AdvancedTreatment,MGD,0.75,Chattahoochee,0.17,0.21,0.24
+Hall,LULA FACULTATIVE POND,GA0024767,Primary,MGD,0,Chattahoochee,0,0,0
+Hall,LULA WRF,GA0039039,Tertiary ,MGD,0.375,Chattahoochee,0.06,0.07,0.08
+Henry,HENRY COUNTY SPRINGDALE,GA0037214,Advanced,MGD,0.5,Ocmulgee,0.11,0.19,0.29
+Henry,HENRY COUNTY SPRINGDALE LAS,GA-02-239,LAS,MGD,1.1,Ocmulgee,0.21,0.41,0.61
+Henry,HENRY COUNTY SPRINGDALE WALNUT,Ga0037869,Advanced,MGD,0.4,Ocmulgee,0.12,0.20,0.29
+Henry,HENRY COUNTY INDIAN CREEK,GA-02-250;GA0050241,LAS;NPDES,MGD,4.5,Ocmulgee,0.79,0.84,0.94
+Henry,HENRY COUNTY WALNUT CREEK,GA02-137,LAS,MGD,8,Ocmulgee,2.92,3.49,3.86
+Henry,HENRY COUNTY BEAR CREEK,GA-02-095,LAS,MGD,0.25,Flint,0.18,0.20,0.21
+Henry,HAMPTON WPCP,GA0020320,0,MGD,0.5,Flint,0.38,0.41,0.44
+Henry,LOCUST GROVE INDIAN CREEK WPCP,GA0038571,0,MGD,1.5,Ocmulgee,0.38,0.34,0.38
+Henry,MCDONOUGH WALNUT CREEK WPCP,GA0023949,Secondary,MGD,2,Ocmulgee,1.00,1.02,1.04
+Henry,STOCKBRIDGE WPCP,GA0023337,0,MGD,1.5,Ocmulgee,0.62,0.62,0.62
+Paulding,Paulding Coppermine WRF,GA0038865,Advanced,MGD,1,Chattahoochee,0.44,0.53,0.60
+Paulding,Paulding Coppermine LAS,GA02-297,LAS,MGD,1.033,Chattahoochee,0.79,0.85,0.94
+Paulding,Paulding Pumpkinvine WRF,GA0039021,Advanced,MGD,1.5,Coosa,0.49,0.52,0.55
+Paulding,Paulding Pumpkinvine LAS,GA02-296,LAS (re-use),MGD,1,Coosa,0.29,0.57,0.78
+Paulding,Paulding Upper Sweetwater ,GA0038890,LAS (re-use),MGD,0.3,Chattahoochee,0.03,0.04,0.04
+Paulding,Dallas North WPCP,GA0026034,Secondary,MGD,0.5,Coosa,0.30,0.35,0.39
+Paulding,Dallas West WPCP,GA026026,Secondary,MGD,0.9,Coosa,0.39,0.42,0.45
+Paulding,Dallas Pumpkinvine Ck WPCP,GA0039241,0,MGD,1.5,0,0,0,0
+Rockdale,ROCKDALE ALMAND BRANCH,GA0021610,Advanced,MGD,1.25,Ocmulgee,0.63,0.72,0.81
+Rockdale,ROCKDALE QUIGG BRANCH,GA0047678,Advanced,MGD,8,Ocmulgee,4.10,4.47,4.71
+Rockdale,ROCKDALE HONEY CREEK,GA0022659,Secondary,MGD,0.3,Ocmulgee,0.15,0.17,0.18
+Rockdale,ROCKDALE SNAPPING SHOALS,GA0023035,Secondary,MGD,0.45,Ocmulgee,0.24,0.26,0.30
+Rockdale,ROCKDALE SCOTT CREEK,GA0026239,Secondary,MGD,0.22,Ocmulgee,0.09,0.10,0.10

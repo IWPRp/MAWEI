@@ -9,10 +9,10 @@ source("functions.R")
 
 # SOCO data ----
 # read in fuels, generation, onsite gen, demand, water use
-en_fuels <- read_csv(paste0(DATA_DIR, "energy_fuels.csv.gz")) %>% clean_names()
-en_gen <- read_csv(paste0(DATA_DIR, "energy_gen.csv.gz")) %>% clean_names()
-en_gen_onsite <- read_csv(paste0(DATA_DIR, "energy_gen_onsite.csv.gz")) %>% clean_names()
-en_use <- read_csv(paste0(DATA_DIR, "energy_use.csv.gz")) %>% pivot_longer(cols = !c(month, year, units), names_to = "enduse", values_to = "value")
+en_fuels <- read_csv(paste0(DATA_DIR, "energy_fuels.csv")) %>% clean_names()
+en_gen <- read_csv(paste0(DATA_DIR, "energy_gen.csv")) %>% clean_names()
+en_gen_onsite <- read_csv(paste0(DATA_DIR, "energy_gen_onsite.csv")) %>% clean_names()
+en_use <- read_csv(paste0(DATA_DIR, "energy_use.csv")) %>% pivot_longer(cols = !c(month, year, units), names_to = "enduse", values_to = "value")
 
 ## aggregate data ----
 # interpolating/coping values, aggregating years, and converting units
@@ -254,7 +254,7 @@ eia923_electricity_gen <- eia923_sch2pg1_genfuel_GA_C %>%
 
 # EIA SEDS use data ----
 
-eiaseds_codes <- read_csv(paste0(DATA_DIR, "eia_seds_codes_2024.csv.gz")) %>% rename_with(tolower)
+eiaseds_codes <- read_csv(paste0(DATA_DIR, "eia_seds_codes_2024.csv")) %>% rename_with(tolower)
 # The MSNs are five-character codes, most of which are structured as follows:
 #   First and second characters - describes an energy source (for example, NG for natural gas, MG for motor gasoline)
 # Third and fourth characters - describes an energy sector or an energy activity (for example, RC for residential consumption, PR for production)
@@ -262,7 +262,7 @@ eiaseds_codes <- read_csv(paste0(DATA_DIR, "eia_seds_codes_2024.csv.gz")) %>% re
 
 
 # if filtered seds file doesn't exist, create it from the full file
-seds_filtered_file <- paste0(DATA_DIR, "eia_seds_GA_2020_2024.csv.gz")
+seds_filtered_file <- paste0(DATA_DIR, "eia_seds_GA_2020_2024.csv")
 if (!file.exists(seds_filtered_file)) {
   seds_full_file <- paste0(DATA_DIR, EIA_SEDS_FILE)
   if (!file.exists(seds_full_file)) stop("EIA SEDS file not found: ", seds_full_file)
@@ -516,7 +516,7 @@ energy_water %>% select(source, target) %>% distinct() -> energy_water_nodes
 
 
 # read common_energy_water_simplified_map.csv and aggreagate using source_agg and target_agg
-energy_water_simplified_map <- read_csv(paste0(DATA_DIR, "common_energy_water_simplified_map.csv.gz")) %>% clean_col_names()
+energy_water_simplified_map <- read_csv(paste0(DATA_DIR, "common_energy_water_simplified_map.csv")) %>% clean_col_names()
 
 energy_water_simplified <- energy_water %>%
   left_join(energy_water_simplified_map %>% select(source, source_agg) %>% distinct(), by = "source") %>%

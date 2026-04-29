@@ -7,13 +7,13 @@
 # macOS
 .DS_Store
 
-# data - keep compressed, ignore raw CSVs
-data/uncompressed_csvs
-data/*.csv
-!data/*.csv.gz
+# data - raw CSVs for bulky files kept in main_csvs/
+data/all_csvs/
+# ignore bulky raw CSVs (only their .gz versions are tracked)
 
-# ignore fill SEDS and only commit GA 2020-2024 
+# the full SEDS national file is never tracked (only the GA extract is)
 data/eia_seds_Complete_*.csv.gz
 
-# outputs
+# folders
+.*
 outputs/

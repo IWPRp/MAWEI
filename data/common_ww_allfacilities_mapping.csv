@@ -1,0 +1,132 @@
+county_o,target_o,County,Facility_Name,Matched_Target
+Bartow,CARTERSVILLE JAMES R. STAFFORD WPCP,Bartow,Adairsville North WPCP,ADAIRSVILLE NORTH WPCP
+Bartow,EMERSON HENRY JORDAN WWTP,Bartow,Bartow Southeast WPCP,BARTOW SOUTHEAST WPCP
+Bartow,ADAIRSVILLE NORTH WPCP,Bartow,Bartow Two Run WPCP,BARTOW TWO RUN WPCP
+Bartow,ADAIRSVILLE SOUTH WPCP,Bartow,Cartersville WPCP,CARTERSVILLE JAMES R. STAFFORD WPCP
+Bartow,BARTOW SOUTHEAST WPCP,Bartow,Emerson Henry Jordan WWTP,EMERSON HENRY JORDAN WWTP
+Bartow,BARTOW TWO RUN WPCP,Cherokee,Canton WPCP,CANTON WPCP
+Cherokee,CCWSA ROSE CREEK WPCP,Cherokee,CCWSA Fitzgerald Creek WPCP,CCWSA FITZGERALD CREEK WPCP
+Cherokee,CCWSA FITZGERALD CREEK WPCP,Cherokee,CCWSA Riverbend WWTP,CCWSA RIVER BEND ENVIR. COMPLEX
+Cherokee,CCWSA ROSE CREEK - REUSE,Cherokee,CCWSA Rose Creek WPCP,CCWSA ROSE CREEK WPCP
+Cherokee,CCWSA RIVER BEND ENVIR. COMPLEX,Cherokee,Woodstock Rubes Creek WPCP,WOODSTOCK RUBES CREEK WRF
+Cherokee,WOODSTOCK RUBES CREEK WRF,Clayton,Clayton Shoal Creek WRF,CLAYTON SHOAL CREEK WRF
+Cherokee,CANTON WPCP,Clayton,Clayton W.B. Casey WRF,CLAYTON W.B. CASEY WRF
+Cherokee,Fulton Co Little River WRF,Clayton,Clayton Northeast WRF,CLAYTON NORTHEAST WRF
+Cherokee,CANTON WPCP SECOND ROW,Cobb,Cobb South Cobb WRF,COBB SOUTH COBB WRF
+Clayton,CLAYTON W.B. CASEY WRF,Cobb,Cobb R.L. Sutton WRF,COBB RL SUTTON WRF
+Clayton,CLAYTON NORTHEAST WRF,Cobb,Cobb Noonday Creek WPCP,COBB NOONDAY CREEK WRF
+Clayton,CLAYTON SHOAL CREEK WRF,Cobb,Cobb Northwest WRF,COBB NORTHWEST WRF
+Cobb,COBB NOONDAY CREEK WRF,Coweta,Coweta Arnall/Sargent WPCP,COWETA ARNALL/SARGENT WPCP
+Cobb,COBB NORTHWEST WRF,Coweta,Coweta Arnco WPCP,COWETA ARNCO WPCP
+Cobb,COBB RL SUTTON WRF,Coweta,Coweta Grantville Ponds,GRANTVILLE PONDS
+Cobb,COBB SOUTH COBB WRF,Coweta,Grantville Colley Street LAS,GRANTVILLE COLLEY STREET LAS
+Coweta,COWETA SHENANDOAH WPCP,Coweta,Newnan Mineral Springs WPCP,NEWNAN MINERAL SPRINGS
+Coweta,COWETA ARNCO WPCP,Coweta,Newnan Wahoo Creek WPCP,NEWNAN WAHOO CREEK
+Coweta,COWETA ARNALL/SARGENT WPCP,Coweta,Coweta Shenandoah WPCP,COWETA SHENANDOAH WPCP
+Coweta,NEWNAN WAHOO CREEK,Coweta,Senoia LAS,SENOIA LAS
+Coweta,NEWNAN MINERAL SPRINGS,DeKalb,Pole Bridge Creek,Pole Bridge Creek
+Coweta,SENOIA LAS,DeKalb,Snapfinger Creek,Snapfinger Creek
+Coweta,GRANTVILLE COLLEY STREET LAS,Douglas,Douglas Rebel Trails WPCP,Douglas Rebel Trails WPCP
+Coweta,GRANTVILLE PONDS,Douglas,Douglasville South Central WPCP,Douglas SouthCentral WPCP
+DeKalb,Pole Bridge Creek,Douglas,Douglas Northside WPCP,Douglas Northside WPCP
+DeKalb,Snapfinger Creek,Douglas,Douglas Sweetwater Creek WPCP,Douglas Sweetwater Creek WPCP
+Douglas,Douglas SouthCentral WPCP,Douglas,Douglas South Central UWRF,Douglas South Central Urban Water Reuse Facility
+Douglas,Douglas Sweetwater Creek WPCP,Douglas,Villa Rica North Sweetwater WPCP,Villa Rica North Sweetwater WPCP
+Douglas,Douglas Northside WPCP,Douglas,Villa Rica West WPCP,Villa Rica Tallapoosa West WPCP(1/2 assumed from Douglas Co)
+Douglas,Douglas Rebel Trails WPCP,Fayette,Fayetteville Whitewater Creek WPCP,FAYETTEVILLE WHITEWATER CREEK WPCP
+Douglas,Douglas Southside WPCP,Fayette,Peachtree City Rockaway WRF,PEACHTREE CITY ROCKAWAY WWTP
+Douglas,Douglas South Central Urban Water Reuse Facility,Fayette,Peachtree City Larry B. Turner WRF,PEACHTREE CITY LINE CREEK / LARRY B. TURNER WWTP
+Douglas,Douglas Beaver Estates WPCP,Forsyth,Cumming Bethelview Road AWRF,Cumming Bethelview Rd AWRF
+Douglas,Douglas St. Andrews LAS,Forsyth,Forsyth Dick Creek WRF,Forsyth Dick Creek
+Douglas,Villa Rica North Sweetwater WPCP,Forsyth,Forsyth Fowler WRF,Forsyth Fowler WRF + Shakerag WRF
+Douglas,Villa Rica Tallapoosa West WPCP(1/2 assumed from Douglas Co),Forsyth,Forsyth James Creek,Forsyth James Creek
+Fayette,FAYETTEVILLE WHITEWATER CREEK WPCP,Forsyth,Forsyth Shakerag WRF,Forsyth Fowler WRF + Shakerag WRF
+Fayette,PEACHTREE CITY ROCKAWAY WWTP,Forsyth,Forsyth The Manor WRF,Forsyth Manor
+Fayette,PEACHTREE CITY LINE CREEK / LARRY B. TURNER WWTP,Forsyth,Forsyth Parkstone LAS,Forsyth Parkstone
+Forsyth,Forsyth Fowler WRF + Shakerag WRF,Forsyth,"""Settendown Public Utility, LLC (Hampton Creek WRF)""",Hampton Creek WRF
+Forsyth,Forsyth James Creek,Forsyth,Cumming Habersham WPCP,Small Permits
+Forsyth,Forsyth Dick Creek,Fulton,"""Atlanta R.M. Clayton, Utoy Creek and South River WRC""",Atlanta RM Clayton WRC
+Forsyth,Forsyth Windermere,Fulton,Fulton Big Creek WPCP,Fulton Big Creek WRF
+Forsyth,Forsyth Parkstone,Fulton,Fulton Camp Creek WRF,Camp Creek WRF
+Forsyth,Forsyth Manor,Fulton,Fulton Johns Creek Environmental Campus,Johns Creek Environmental Campus
+Forsyth,Cumming Bethelview Rd AWRF,Fulton,Fulton Little Bear WRF,Little Bear WRF
+Forsyth,Fowler and James Creek,Fulton,Fulton Little River WPCP,Little River WRF (SEE CHEROKEE CO)
+Forsyth,Small Permits,Gwinnett,Buford Southside WPCP,Buford Southside WPCP
+Forsyth,Hampton Creek WRF,Gwinnett,Buford Westside WPCP,Buford Westside WPCP
+Fulton,Fulton Big Creek WRF,Gwinnett,Gwinnett Crooked Creek WPCP,Gwinnett Crooked Creek
+Fulton,Little River WRF (SEE CHEROKEE CO),Gwinnett,Gwinnett F. Wayne Hill WRC,Gwinnett  F.W. Hill
+Fulton,Johns Creek Environmental Campus,Gwinnett,Gwinnett Yellow River WPCP,Gwinnett Yellow River
+Fulton,Camp Creek WRF,Hall,Flowery Branch WPCP,FLOWERY BRANCH WPCP
+Fulton,Little Bear WRF,Hall,Gainesville Flat Creek WRF,GAINESVILLE FLAT CREEK WRF
+Fulton,Fulton Cauley Creek,Hall,Gainesville Linwood WRF,GAINESVILLE LINWOOD WRF
+Fulton,Atlanta RM Clayton WRC,Hall,Lula WRF,LULA WRF
+Fulton,Atlanta South River WRC,Hall,Hall Spout Springs,HALL COUNTY SPOUT SPRINGS
+Fulton,Atlanta Utoy Creek WRC,Henry,Hampton WPCP,HAMPTON WPCP
+Gwinnett,Gwinnett  F.W. Hill,Henry,Henry Bear Creek LAS,HENRY COUNTY BEAR CREEK
+Gwinnett,Gwinnett Yellow River,Henry,Henry Walnut Creek LAS,HENRY COUNTY WALNUT CREEK
+Gwinnett,Gwinnett Crooked Creek,Henry,Henry Indian Creek WRF,HENRY COUNTY INDIAN CREEK
+Gwinnett,Gwinnett Jack's Creek,Henry,Locust Grove Indian Creek WPCP,LOCUST GROVE INDIAN CREEK WPCP
+Gwinnett,Gwinnett Jackson Creek,Henry,McDonough Walnut Creek WPCP,MCDONOUGH WALNUT CREEK WPCP
+Gwinnett,Buford Southside WPCP,Henry,Stockbridge Stephen D. Peurifoy WPCP,STOCKBRIDGE WPCP
+Gwinnett,Buford Westside WPCP,Paulding,Paulding Coppermine LAS,Paulding Coppermine LAS
+Hall,FLOWERY BRANCH WPCP,Paulding,Paulding Coppermine Road WRF,Paulding Coppermine WRF
+Hall,GAINESVILLE FLAT CREEK WRF,Paulding,Paulding Upper Sweetwater WRF,Paulding Upper Sweetwater
+Hall,GAINESVILLE LINWOOD WRF,Paulding,Dallas Pumpkinvine Creek WPCP,Dallas Pumpkinvine Ck WPCP
+Hall,HALL COUNTY SPOUT SPRINGS,Paulding,Paulding Pumpkinvine WRF,Paulding Pumpkinvine WRF
+Hall,LULA FACULTATIVE POND,Rockdale,Rockdale Almand Branch WPCP,ROCKDALE ALMAND BRANCH
+Hall,LULA WRF,Rockdale,Rockdale Honey Creek WPCP,ROCKDALE HONEY CREEK
+Henry,HENRY COUNTY SPRINGDALE,Rockdale,Rockdale Quigg Branch WPCP,ROCKDALE QUIGG BRANCH
+Henry,HENRY COUNTY SPRINGDALE LAS,Rockdale,Rockdale Scott Creek WPCP,ROCKDALE SCOTT CREEK
+Henry,HENRY COUNTY SPRINGDALE WALNUT,Rockdale,Rockdale Snapping Shoals WPCP,ROCKDALE SNAPPING SHOALS
+Henry,HENRY COUNTY INDIAN CREEK,Bartow,ADAIRSVILLE SOUTH WPCP,ADAIRSVILLE SOUTH WPCP
+Henry,HENRY COUNTY WALNUT CREEK,DeKalb,Atlanta RM Clayton WRC,Atlanta RM Clayton WRC
+Henry,HENRY COUNTY BEAR CREEK,Fayette,Atlanta RM Clayton WRC,Atlanta RM Clayton WRC
+Henry,HAMPTON WPCP,Fulton,Atlanta South River WRC,Atlanta South River WRC
+Henry,LOCUST GROVE INDIAN CREEK WPCP,Clayton,Atlanta South River WRC,Atlanta South River WRC
+Henry,MCDONOUGH WALNUT CREEK WPCP,DeKalb,Atlanta South River WRC,Atlanta South River WRC
+Henry,STOCKBRIDGE WPCP,Fulton,Atlanta Utoy Creek WRC,Atlanta Utoy Creek WRC
+Paulding,Paulding Coppermine WRF,Cherokee,CANTON WPCP SECOND ROW,CANTON WPCP SECOND ROW
+Paulding,Paulding Coppermine LAS,Cherokee,CCWSA ROSE CREEK - REUSE,CCWSA ROSE CREEK - REUSE
+Paulding,Paulding Pumpkinvine WRF,DeKalb,CLAYTON NORTHEAST WRF,CLAYTON NORTHEAST WRF
+Paulding,Paulding Pumpkinvine LAS,Fulton,CLAYTON W.B. CASEY WRF,CLAYTON W.B. CASEY WRF
+Paulding,Paulding Upper Sweetwater,Henry,CLAYTON W.B. CASEY WRF,CLAYTON W.B. CASEY WRF
+Paulding,Dallas North WPCP,Cherokee,COBB NOONDAY CREEK WRF,COBB NOONDAY CREEK WRF
+Paulding,Dallas West WPCP,Bartow,COBB NORTHWEST WRF,COBB NORTHWEST WRF
+Paulding,Dallas Pumpkinvine Ck WPCP,Paulding,COBB NORTHWEST WRF,COBB NORTHWEST WRF
+Rockdale,ROCKDALE ALMAND BRANCH,Cherokee,COBB RL SUTTON WRF,COBB RL SUTTON WRF
+Rockdale,ROCKDALE QUIGG BRANCH,DeKalb,COBB RL SUTTON WRF,COBB RL SUTTON WRF
+Rockdale,ROCKDALE HONEY CREEK,Douglas,COBB RL SUTTON WRF,COBB RL SUTTON WRF
+Rockdale,ROCKDALE SNAPPING SHOALS,Fulton,COBB RL SUTTON WRF,COBB RL SUTTON WRF
+Rockdale,ROCKDALE SCOTT CREEK,Douglas,COBB SOUTH COBB WRF,COBB SOUTH COBB WRF
+Cherokee,Little River WRF (SEE CHEROKEE CO),Paulding,COBB SOUTH COBB WRF,COBB SOUTH COBB WRF
+Bartow,COBB NORTHWEST WRF,Paulding,Dallas North WPCP,Dallas North WPCP
+Cherokee,COBB NOONDAY CREEK WRF,Paulding,Dallas West WPCP,Dallas West WPCP
+Cherokee,COBB RL SUTTON WRF,Douglas,Douglas Beaver Estates WPCP,Douglas Beaver Estates WPCP
+Cherokee,Fulton Big Creek WRF,Cobb,Douglas SouthCentral WPCP,Douglas SouthCentral WPCP
+Clayton,Atlanta South River WRC,Douglas,Douglas Southside WPCP,Douglas Northside WPCP
+Clayton,Snapfinger Creek,Douglas,Douglas St. Andrews LAS,Douglas St. Andrews LAS
+Cobb,Douglas SouthCentral WPCP,Forsyth,Forsyth Windermere,Forsyth Windermere
+Cobb,Fulton Big Creek WRF,Forsyth,Fowler and James Creek,Fowler and James Creek
+Cobb,Paulding Pumpkinvine WRF,Cherokee,Fulton Big Creek WRF,Fulton Big Creek WRF
+DeKalb,Atlanta RM Clayton WRC,Cobb,Fulton Big Creek WRF,Fulton Big Creek WRF
+DeKalb,Atlanta South River WRC,DeKalb,Fulton Big Creek WRF,Fulton Big Creek WRF
+DeKalb,COBB RL SUTTON WRF,Forsyth,Fulton Big Creek WRF,Fulton Big Creek WRF
+DeKalb,Fulton Big Creek WRF,Fulton,Fulton Cauley Creek,Fulton Cauley Creek
+DeKalb,Johns Creek Environmental Campus,Cherokee,Fulton Co Little River WRF,Fulton Co Little River WRF
+DeKalb,Gwinnett  F.W. Hill,DeKalb,Gwinnett  F.W. Hill,Gwinnett  F.W. Hill
+DeKalb,CLAYTON NORTHEAST WRF,Gwinnett,Gwinnett Jack's Creek,Gwinnett Jack's Creek
+Douglas,COBB RL SUTTON WRF,Gwinnett,Gwinnett Jackson Creek,Gwinnett Jackson Creek
+Douglas,COBB SOUTH COBB WRF,Henry,HENRY COUNTY SPRINGDALE,HENRY COUNTY SPRINGDALE
+Fayette,Atlanta RM Clayton WRC,Henry,HENRY COUNTY SPRINGDALE LAS,HENRY COUNTY SPRINGDALE LAS
+Forsyth,Fulton Big Creek WRF,Henry,HENRY COUNTY SPRINGDALE WALNUT,HENRY COUNTY SPRINGDALE WALNUT
+Forsyth,Johns Creek Environmental Campus,DeKalb,Johns Creek Environmental Campus,Johns Creek Environmental Campus
+Fulton,COBB RL SUTTON WRF,Forsyth,Johns Creek Environmental Campus,Johns Creek Environmental Campus
+Fulton,CLAYTON W.B. CASEY WRF,Cherokee,Little River WRF (SEE CHEROKEE CO),Little River WRF (SEE CHEROKEE CO)
+Fulton,Pole Bridge Creek,Hall,LULA FACULTATIVE POND,LULA FACULTATIVE POND
+Gwinnett,Pole Bridge Creek,Paulding,Paulding Pumpkinvine LAS,Paulding Pumpkinvine WRF
+Henry,CLAYTON W.B. CASEY WRF,Cobb,Paulding Pumpkinvine WRF,Paulding Pumpkinvine WRF
+Henry,Snapfinger Creek,Fulton,Pole Bridge Creek,Pole Bridge Creek
+Paulding,COBB NORTHWEST WRF,Gwinnett,Pole Bridge Creek,Pole Bridge Creek
+Paulding,COBB SOUTH COBB WRF,Rockdale,Pole Bridge Creek,Pole Bridge Creek
+Rockdale,Pole Bridge Creek,Clayton,Snapfinger Creek,Snapfinger Creek
+,,Henry,Snapfinger Creek,Snapfinger Creek

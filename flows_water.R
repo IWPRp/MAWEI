@@ -9,7 +9,7 @@ source("functions.R")
 
 # public water supply ----
 # load pubic water supply data
-df_pws <- read_csv(paste0(DATA_DIR, "water_publicwatersupply.csv.gz")) %>%
+df_pws <- read_csv(paste0(DATA_DIR, "water_publicwatersupply.csv")) %>%
   rename_all(tolower) %>%
   rename_with(~ gsub(" |-", "_", .), everything())
 
@@ -140,7 +140,7 @@ df_pws_self_supplied <- df_pws %>%
 ## ag self supply ----
 # the data in only for 2020 so let's write zeros for missing counties and extend for all years. the data should be complete
 
-df_ag_self_supplied <- read_csv(paste0(DATA_DIR, "water_selfsupply_ag.csv.gz")) %>% rename_all(tolower) %>%
+df_ag_self_supplied <- read_csv(paste0(DATA_DIR, "water_selfsupply_ag.csv")) %>% rename_all(tolower) %>%
   select(county, year, value = total) %>%
   complete(county = counties, year = unique(df_pws$year)) %>%  # add missing counties and years
   group_by(county) %>%
@@ -170,7 +170,7 @@ df_pws_nrw <- df_pws %>%
 # discharges
 
 # read wastewater
-df_wastewater <- read_csv(paste0(DATA_DIR, "water_wastewater.csv.gz")) %>%
+df_wastewater <- read_csv(paste0(DATA_DIR, "water_wastewater.csv")) %>%
   rename_all(tolower) %>%
   rename_with(~ gsub(" |-|\\.+|/", "_", .), everything()) %>% # replace spaces \ - dots "\\.+" with underscores
   rename_with(~ gsub("_+", "_", .), everything()) %>%  # replace duplicate underscores
@@ -420,7 +420,7 @@ if (F) {
 # (averages or 75%) and apply to wastewater VOLUMES calculated above (after I/I calculation)
 
 # read wastewater treatment data (esp facility, treatment fraction, level of treatment, permit cap)
-df_wastewater_treatment <- read_csv(paste0(DATA_DIR, "water_wastewater_treatment.csv.gz")) %>%
+df_wastewater_treatment <- read_csv(paste0(DATA_DIR, "water_wastewater_treatment.csv")) %>%
   rename_all(tolower) %>%
   rename_with(~ gsub(" |-|\\.+|/", "_", .), everything()) %>% # replace spaces \ - dots "\\.+" with underscores
   rename_with(~ gsub("_+", "_", .), everything()) %>%  # replace duplicate underscores
@@ -569,7 +569,7 @@ plot_sankey_enhanced(df_sankey_agg, show_values_in_labels = TRUE, animate = F, l
 # complete the data for each year; assign zeros to missing values
 
 # read water_wastewater_connections.csv
-df_ww_conn <- read_csv(paste0(DATA_DIR, "water_wastewater_connections.csv.gz")) %>%
+df_ww_conn <- read_csv(paste0(DATA_DIR, "water_wastewater_connections.csv")) %>%
   rename_all(tolower) %>% rename(value = flow)
 
 # diagnostic
@@ -708,7 +708,7 @@ plot_sankey_enhanced(df_sankey_wwtrade %>% pretty_labels(),
 
 # thermoelectric ----
 
-thermoplants_water_use <- read_csv(paste0(DATA_DIR, "water_thermoplants.csv.gz")) %>% clean_names() %>%
+thermoplants_water_use <- read_csv(paste0(DATA_DIR, "water_thermoplants.csv")) %>% clean_names() %>%
   # assign basins based on river names
   mutate(basin = case_when(grepl("Chattahoochee", water_source, ignore.case = TRUE) ~ "Chattahoochee Basin",
                            grepl("Etowah", water_source, ignore.case = TRUE) ~ "Coosa_Etowah Basin",
@@ -774,7 +774,7 @@ if (F) {
 
 ## surface water sources ----
 # only 2019 data so need to use 2019 shares to determine each year's flows
-p_water_mgmtplan_surface <- read_csv(paste0(DATA_DIR, "water_mgmtplan_surface.csv.gz")) %>% clean_col_names()
+p_water_mgmtplan_surface <- read_csv(paste0(DATA_DIR, "water_mgmtplan_surface.csv")) %>% clean_col_names()
 
 
 mgmtplan_surface <- p_water_mgmtplan_surface %>%
@@ -829,7 +829,7 @@ plot_sankey_enhanced(rbind(df_sankey_wwtrade, mgmtplan_surface %>% select(!c(bas
 
 ## groundwater sources ----
 # only 2019 data so need to use 2019 shares to determine each year's flows
-p_water_mgmtplan_ground <- read_csv(paste0(DATA_DIR, "water_mgmtplan_ground.csv.gz")) %>% clean_col_names()
+p_water_mgmtplan_ground <- read_csv(paste0(DATA_DIR, "water_mgmtplan_ground.csv")) %>% clean_col_names()
 
 # mgmtplan_ground <- p_water_mgmtplan_ground %>%
 #   # all GW to self-supply; SW and PWS will follow
@@ -870,7 +870,7 @@ plot_sankey(mgmtplan_ground, yr = 2020, animate = F)
 # only permitted data, not actual withdrawals, so will just assume 0.85 of permit of permitted is used
 # need to breakout by counties -> based on industrial use by county
 # need to determine surface to groundwater ratio for this - let's say 50 50 for now
-p_water_mgmtplan_self <- read_csv(paste0(DATA_DIR, "water_mgmtplan_self.csv.gz")) %>% clean_col_names()
+p_water_mgmtplan_self <- read_csv(paste0(DATA_DIR, "water_mgmtplan_self.csv")) %>% clean_col_names()
 
 PERMIT_USE_FACTOR <- 0.85
 
@@ -907,9 +907,9 @@ mgmtplan_self_c_s_y <- map_df(2019:2025, # add a year column; copy the data from
 ###############################################################################%
 
 ## wastewater sinks mgmt plan ----
-water_mgmtplan_wastewater <- read_csv(paste0(DATA_DIR, "water_mgmtplan_wastewater.csv.gz")) %>% clean_col_names()
+water_mgmtplan_wastewater <- read_csv(paste0(DATA_DIR, "water_mgmtplan_wastewater.csv")) %>% clean_col_names()
 
-ww_allfacilities <- read_csv(paste0(DATA_DIR, "common_ww_allfacilities_mapping.csv.gz")) %>% clean_col_names()
+ww_allfacilities <- read_csv(paste0(DATA_DIR, "common_ww_allfacilities_mapping.csv")) %>% clean_col_names()
 
 # prepare a mapping of wastewater treatment facilities to receiving water bodies
 water_mgmtplan_wastewater_map <- water_mgmtplan_wastewater %>%
@@ -931,7 +931,7 @@ water_mgmtplan_wastewater_map <- water_mgmtplan_wastewater %>%
 # if (F) {write_csv(water_mgmtplan_wastewater_map, "common_ww_facility_sink_map_initial.csv")}
 
 # read the filled data
-ww_facility_sink_map <- read_csv(paste0(DATA_DIR, "common_ww_facility_sink_map.csv.gz"))
+ww_facility_sink_map <- read_csv(paste0(DATA_DIR, "common_ww_facility_sink_map.csv"))
 
 # calculate disposal shares to a sink from each facility
 ww_facility_sink_map_s <- ww_facility_sink_map %>%

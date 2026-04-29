@@ -1,0 +1,81 @@
+Basin,Wastewater Treatment Facilities,Receiving Water Body,Receiving Type,County,Permitted Treatment Capacity 2021 (MMF-MGD)
+Coosa_Etowah Basin,Adairsville North WPCP,Oothkalooga Creek,Creek,Bartow,2
+Coosa_Etowah Basin,Bartow Southeast WPCP,Etowah River,River,Bartow,0.1
+Coosa_Etowah Basin,Bartow Two Run WPCP,Two Run Creek,Creek,Bartow,0.1
+Coosa_Etowah Basin,Cartersville WPCP,Etowah River,River,Bartow,15
+Coosa_Etowah Basin,Emerson Henry Jordan WWTP,Pumpkinvine Creek,Creek,Bartow,0.45
+Coosa_Etowah Basin,Canton WPCP,Etowah River,River,Cherokee,4
+Coosa_Etowah Basin,CCWSA Fitzgerald Creek WPCP,Little River to Allatoona Lake,Lake,Cherokee,6
+Coosa_Etowah Basin,CCWSA Riverbend WWTP,Etowah River,River,Cherokee,1
+Coosa_Etowah Basin,CCWSA Rose Creek WPCP,Etowah River Arm of Allatoona Lake,River,Cherokee,6
+Coosa_Etowah Basin,Woodstock Rubes Creek WPCP,"Rubes Creek, Tributary to Little River",Creek,Cherokee,2.5
+Flint Basin,Clayton Shoal Creek WRF,"Shoal Creek Reservoir, Tributary to Flint River",Reservoir,Clayton,4.4
+Flint Basin,Clayton W.B. Casey WRF,Flint River,River,Clayton,6.6
+Ocmulgee Basin,Clayton W.B. Casey WRF,Huie Constructed Wetlands to Shamrock Lake,Wetland,Clayton,17.4
+Ocmulgee Basin,Clayton Northeast WRF,Panther Creek,Creek,Clayton,64
+Chattahoochee Basin,Cobb South Cobb WRF,Chattahoochee River,River,Cobb,40
+Chattahoochee Basin,Cobb R.L. Sutton WRF,Chattahoochee River,River,Cobb,50
+Coosa_Etowah Basin,Cobb Noonday Creek WPCP,Noonday Creek Tributary,Creek,Cobb,20
+Coosa_Etowah Basin,Cobb Northwest WRF,Allatoona Lake,Lake,Cobb,12
+Chattahoochee Basin,Coweta Arnall/Sargent WPCP,Wahoo Creek,Creek,Coweta,0.06
+Chattahoochee Basin,Coweta Arnco WPCP,Wahoo Creek,Creek,Coweta,0.1
+Chattahoochee Basin,Coweta Grantville Ponds,Various,Reservoir,Coweta,0.12
+Chattahoochee Basin,Grantville Colley Street LAS,Land Application,Land,Coweta,0.15
+Chattahoochee Basin,Newnan Mineral Springs WPCP,Mineral Springs Branch/Mountain Creek,Creek,Coweta,1.2
+Chattahoochee Basin,Newnan Wahoo Creek WPCP,Wahoo Creek Tributary,Creek,Coweta,3
+Flint Basin,Coweta Shenandoah WPCP,"White Oak Creek, Tributary to Flint River",Creek,Coweta,2
+Flint Basin,Senoia LAS,Land Application,Land,Coweta,0.49
+Ocmulgee Basin,Pole Bridge Creek,South River Tributary,River,DeKalb,20
+Ocmulgee Basin,Snapfinger Creek,South River,River,DeKalb,36
+Chattahoochee Basin,Douglas Rebel Trails WPCP,Anneewakee Creek Tributary,Creek,Douglas,0.04
+Chattahoochee Basin,Douglasville South Central WPCP,Chattahoochee River,River,Douglas,6
+Chattahoochee Basin,Douglas Northside WPCP,Gothards Creek to Sweetwater Creek,Creek,Douglas,0.6
+Chattahoochee Basin,Douglas Sweetwater Creek WPCP,Chattahoochee River,River,Douglas,3
+Chattahoochee Basin,Douglas South Central UWRF,Reuse,Reuse,Douglas,0.5
+Chattahoochee Basin,Villa Rica North Sweetwater WPCP,Town Branch to Sweetwater Creek,Creek,Douglas,0.52
+Tallapoosa Basin,Villa Rica West WPCP,Little Tallapoosa Creek,Creek,Douglas,2.15
+Flint Basin,Fayetteville Whitewater Creek WPCP,Whitewater Creek,Creek,Fayette,5
+Flint Basin,Peachtree City Rockaway WRF,Line Creek Tributary,Creek,Fayette,4
+Flint Basin,Peachtree City Larry B. Turner WRF,Line Creek,Creek,Fayette,2
+Chattahoochee Basin,Cumming Bethelview Road AWRF,Big Creek,Creek,Forsyth,8
+Chattahoochee Basin,Forsyth Dick Creek WRF,Dick Creek,Creek,Forsyth,0.76
+Chattahoochee Basin,Forsyth Fowler WRF,"Big Creek, Chattahoochee River, Land Application, Reuse",Creek,Forsyth,5
+Chattahoochee Basin,Forsyth James Creek,"James Creek, Reuse",Reuse,Forsyth,2.55
+Chattahoochee Basin,Forsyth Shakerag WRF,Chattahoochee River,River,Forsyth,1.25
+Coosa_Etowah Basin,Forsyth The Manor WRF,Reuse,Reuse,Forsyth,0.5
+Coosa_Etowah Basin,Forsyth Parkstone LAS,Land Application,Land,Forsyth,0.1
+Coosa_Etowah Basin,"Settendown Public Utility, LLC (Hampton Creek WRF)","Settendown Creek, Reuse",Reuse,Forsyth,0.5
+Chattahoochee Basin,Cumming Habersham WPCP,Lake Lanier,Lake,Forsyth,0.11
+Chattahoochee Basin,"Atlanta R.M. Clayton, Utoy Creek and South River WRC",Chattahoochee River,River,Fulton,188
+Chattahoochee Basin,Fulton Big Creek WPCP,Chattahoochee River,River,Fulton,24
+Chattahoochee Basin,Fulton Camp Creek WRF,Chattahoochee River,River,Fulton,24
+Chattahoochee Basin,Fulton Johns Creek Environmental Campus,Chattahoochee River,River,Fulton,15
+Chattahoochee Basin,Fulton Little Bear WRF,Little Bear Creek,Creek,Fulton,0.1
+Coosa_Etowah Basin,Fulton Little River WPCP,Little River,River,Fulton,2.6
+Chattahoochee Basin,Buford Southside WPCP,Little Suwanee Creek,Creek,Gwinnett,2
+Chattahoochee Basin,Buford Westside WPCP,Richland Creek,Creek,Gwinnett,0.25
+Chattahoochee Basin,Gwinnett Crooked Creek WPCP,Chattahoochee River,River,Gwinnett,16
+Chattahoochee Basin,Gwinnett F. Wayne Hill WRC,"Lake Lanier, Chattahoochee River",Lake,Gwinnett,60
+Ocmulgee Basin,Gwinnett Yellow River WPCP,Yellow River,River,Gwinnett,22
+Chattahoochee Basin,Flowery Branch WPCP,Lake Lanier,Lake,Hall,0.4
+Chattahoochee Basin,Gainesville Flat Creek WRF,Flat Creek,Creek,Hall,12
+Chattahoochee Basin,Gainesville Linwood WRF,Lake Lanier,Lake,Hall,5
+Chattahoochee Basin,Lula WRF,Hagen Creek,Creek,Hall,0.375
+Oconee Basin,Hall Spout Springs,Lollis Creek,Creek,Hall,0.75
+Flint Basin,Hampton WPCP,Bear Creek Tributary,Creek,Henry,1.75
+Flint Basin,Henry Bear Creek LAS,Land Application,Land,Henry,1.25
+Ocmulgee Basin,Henry Walnut Creek LAS,Land Application,Land,Henry,8
+Ocmulgee Basin,Henry Indian Creek WRF,Indian Creek,Creek,Henry,3
+Ocmulgee Basin,Locust Grove Indian Creek WPCP,Indian Creek to Towaliga River,Creek,Henry,1.5
+Ocmulgee Basin,McDonough Walnut Creek WPCP,Walnut Creek,Creek,Henry,2
+Ocmulgee Basin,Stockbridge Stephen D. Peurifoy WPCP,Bush Creek Tributary,Creek,Henry,1.5
+Chattahoochee Basin,Paulding Coppermine LAS,Land Application,Land,Paulding,1.033
+Chattahoochee Basin,Paulding Coppermine Road WRF,Mill Creek,Creek,Paulding,1
+Chattahoochee Basin,Paulding Upper Sweetwater WRF,Reuse,Reuse,Paulding,0.3
+Coosa_Etowah Basin,Dallas Pumpkinvine Creek WPCP,Pumpkinvine Creek,Creek,Paulding,1.5
+Coosa_Etowah Basin,Paulding Pumpkinvine WRF,"Pumpkinvine Creek, Reuse",Reuse,Paulding,1.5
+Ocmulgee Basin,Rockdale Almand Branch WPCP,Almand Creek to South River,River,Rockdale,1.25
+Ocmulgee Basin,Rockdale Honey Creek WPCP,McClains Branch,Creek,Rockdale,0.3
+Ocmulgee Basin,Rockdale Quigg Branch WPCP,Yellow River,River,Rockdale,7
+Ocmulgee Basin,Rockdale Scott Creek WPCP,Scott Creek to South River,River,Rockdale,0.45
+Ocmulgee Basin,Rockdale Snapping Shoals WPCP,Snapping Shoals Creek,Creek,Rockdale,3

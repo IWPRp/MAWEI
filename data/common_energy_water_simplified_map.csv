@@ -1,0 +1,127 @@
+source,source_agg,target,target_agg
+electricity,electricity,en4water,en4water
+electricity,electricity,in-county treatment,in-county treatment
+electricity,electricity,td_losses,Energy Losses
+electricity,electricity,ww_exports,ww_exports
+electricity,electricity,Bowen Plant,Bowen Plant
+electricity,electricity,Jack McDonough Plant,Jack McDonough Plant
+electricity,electricity,Yates Plant,Yates Plant
+onsiteBTM,Renewables,commercial,commercial
+onsiteBTM,Renewables,industrial,industrial
+onsiteBTM,Renewables,residential,residential
+Bowen,Bowen,efficiency_losses,Energy Losses
+Bowen,Bowen,elec_own_use,elec_own_use
+Jack McDonough,Jack McDonough,efficiency_losses,Energy Losses
+Jack McDonough,Jack McDonough,elec_own_use,elec_own_use
+Yates,Yates,efficiency_losses,Energy Losses
+Yates,Yates,elec_own_use,elec_own_use
+electricity,electricity,industrial,industrial
+electricity,electricity,publicWatSup,publicWatSup
+electricity,electricity,agricultural,agricultural
+electricity,electricity,residential,residential
+Biomass,Biomass,Distributed-scale Generation,Small-scale generation
+Biomass,Biomass,commercial,commercial
+Biomass,Biomass,industrial,industrial
+Biomass,Biomass,residential,residential
+Biomass,Biomass,transport,transport
+Bowen Plant,Bowen Plant,electricity,electricity
+Coal,Coal,Bowen Plant,Bowen Plant
+Coal,Coal,industrial,industrial
+Distributed-scale Generation,Small-scale generation,electricity,electricity
+Energy Storage,Energy Storage,Distributed-scale Generation,Small-scale generation
+Geothermal,Renewables,commercial,commercial
+Geothermal,Renewables,industrial,industrial
+Geothermal,Renewables,residential,residential
+Hydroelectric Water,Renewables,Utility-scale Generation,Small-scale generation
+Jack McDonough,Jack McDonough,electricity,electricity
+Natural Gas,Natural Gas,Distributed-scale Generation,Small-scale generation
+Natural Gas,Natural Gas,Jack McDonough,Jack McDonough
+Natural Gas,Natural Gas,Yates Plant,Yates Plant
+Natural Gas,Natural Gas,commercial,commercial
+Natural Gas,Natural Gas,industrial,industrial
+Natural Gas,Natural Gas,residential,residential
+Natural Gas,Natural Gas,transport,transport
+On-Site Backup Generation,Small-scale generation,commercial,commercial
+Petroleum,Petroleum,Bowen Plant,Bowen Plant
+Petroleum,Petroleum,Distributed-scale Generation,Small-scale generation
+Petroleum,Petroleum,Jack McDonough,Jack McDonough
+Petroleum,Petroleum,On-Site Backup Generation,Small-scale generation
+Petroleum,Petroleum,Yates Plant,Yates Plant
+Petroleum,Petroleum,commercial,commercial
+Petroleum,Petroleum,industrial,industrial
+Petroleum,Petroleum,residential,residential
+Petroleum,Petroleum,transport,transport
+Solar,Renewables,Distributed-scale Generation,Small-scale generation
+Solar,Renewables,On-Site Backup Generation,Small-scale generation
+Solar,Renewables,commercial,commercial
+Solar,Renewables,residential,residential
+Utility-scale Generation,Small-scale generation,electricity,electricity
+Yates Plant,Yates Plant,electricity,electricity
+electricity,electricity,commercial,commercial
+electricity,electricity,government,government
+electricity,electricity,transport,transport
+out_metro_elec_import,out_metro_elec_import,electricity,electricity
+Bowen Plant,Bowen Plant,Discharge,Disposal
+Bowen Plant,Bowen Plant,Losses,Water Losses
+Chattahoochee Basin,Basins,Jack McDonough Plant,Jack McDonough Plant
+Chattahoochee Basin,Basins,Yates Plant,Yates Plant
+Chattahoochee Basin,Basins,industrial,industrial
+Chattahoochee Basin,Basins,publicWatSup,publicWatSup
+Coosa_Etowah Basin,Basins,Bowen Plant,Bowen Plant
+Coosa_Etowah Basin,Basins,industrial,industrial
+Coosa_Etowah Basin,Basins,publicWatSup,publicWatSup
+Flint Basin,Basins,industrial,industrial
+Flint Basin,Basins,publicWatSup,publicWatSup
+Jack McDonough Plant,Jack McDonough Plant,Discharge,Disposal
+Jack McDonough Plant,Jack McDonough Plant,Losses,Water Losses
+Ocmulgee Basin,Basins,industrial,industrial
+Ocmulgee Basin,Basins,publicWatSup,publicWatSup
+Oconee Basin,Basins,industrial,industrial
+Oconee Basin,Basins,publicWatSup,publicWatSup
+Tallapoosa Basin,Basins,industrial,industrial
+Tallapoosa Basin,Basins,publicWatSup,publicWatSup
+Yates Plant,Yates Plant,Discharge,Disposal
+Yates Plant,Yates Plant,Losses,Water Losses
+agricultural,agricultural,losses,Water Losses
+agricultural,agricultural,wastewater,wastewater
+commercial,commercial,losses,Water Losses
+commercial,commercial,wastewater,wastewater
+groundwaterAllBasins,groundwaterAllBasins,agricultural,agricultural
+groundwaterAllBasins,groundwaterAllBasins,industrial,industrial
+groundwaterAllBasins,groundwaterAllBasins,publicWatSup,publicWatSup
+groundwaterAllBasins,groundwaterAllBasins,residential,residential
+industrial,industrial,discharge,Disposal
+industrial,industrial,losses,Disposal
+industrial,industrial,wastewater,wastewater
+publicWatSup,publicWatSup,agricultural,agricultural
+publicWatSup,publicWatSup,commercial,commercial
+publicWatSup,publicWatSup,industrial,industrial
+publicWatSup,publicWatSup,losses,Water Losses
+publicWatSup,publicWatSup,residential,residential
+residential,residential,losses,Water Losses
+residential,residential,septic,septic
+residential,residential,wastewater,wastewater
+subsurface,subsurface,wastewater,wastewater
+wastewater,wastewater,in-county treatment,in-county treatment
+wastewater,wastewater,ww_exports,ww_exports
+ww_imports,ww_imports,wastewater,wastewater
+surfaceWater,surfaceWater,Chattahoochee Basin,Basins
+surfaceWater,surfaceWater,Coosa_Etowah Basin,Basins
+surfaceWater,surfaceWater,Flint Basin,Basins
+surfaceWater,surfaceWater,Ocmulgee Basin,Basins
+surfaceWater,surfaceWater,Oconee Basin,Basins
+surfaceWater,surfaceWater,Tallapoosa Basin,Basins
+ww_exports,ww_exports,Creek,Disposal
+ww_exports,ww_exports,Lake,Disposal
+ww_exports,ww_exports,River,Disposal
+ww_exports,ww_exports,Wetland,Disposal
+ww_exports,ww_exports,Reuse,Disposal
+in-county treatment,in-county treatment,Creek,Disposal
+in-county treatment,in-county treatment,Lake,Disposal
+in-county treatment,in-county treatment,Land,Disposal
+ww_exports,ww_exports,Land,Disposal
+in-county treatment,in-county treatment,Reservoir,Disposal
+ww_exports,ww_exports,Reservoir,Disposal
+in-county treatment,in-county treatment,Reuse,Disposal
+in-county treatment,in-county treatment,River,Disposal
+in-county treatment,in-county treatment,Wetland,Disposal
