@@ -140,14 +140,27 @@ df_pws_self_supplied <- df_pws %>%
 ## ag self supply ----
 # the data in only for 2020 so let's write zeros for missing counties and extend for all years. the data should be complete
 
+# df_ag_self_supplied <- read_csv(paste0(DATA_DIR, "water_selfsupply_ag.csv")) %>% rename_all(tolower) %>%
+#   # filter(source=="total") %>%
+#   select(county, year, value = total) %>%
+#   complete(county = counties, year = unique(df_pws$year)) %>%  # add missing counties and years
+#   group_by(county) %>%
+#   mutate(value = value[year == 2020]) %>% # copy 2020 values forward to all years
+#   ungroup() %>% replace_na(list(value = 0)) %>%
+#   mutate(target = "agricultural")  %>%
+#   select(county, year, target, value)
+
 df_ag_self_supplied <- read_csv(paste0(DATA_DIR, "water_selfsupply_ag.csv")) %>% rename_all(tolower) %>%
-  select(county, year, value = total) %>%
-  complete(county = counties, year = unique(df_pws$year)) %>%  # add missing counties and years
-  group_by(county) %>%
-  mutate(value = value[year == 2020]) %>% # copy 2020 values forward to all years
+  filter(source %in% c("surface", "ground")) %>%
+  mutate(source = case_when(source == "surface" ~ "surfaceWater",
+                            source == "ground"  ~ "groundwater")) %>%
+  select(county, year, source, value = total) %>%
+  complete(county = counties, year = unique(df_pws$year), source = c("surfaceWater", "groundwater")) %>%
+  group_by(county, source) %>%
+  mutate(value = value[year == 2020]) %>%
   ungroup() %>% replace_na(list(value = 0)) %>%
-  mutate(target = "agricultural")  %>%
-  select(county, year, target, value)
+  mutate(target = "agricultural") %>%
+  select(county, year, source, target, value)
 
 
 # nrw / losses ----
@@ -280,7 +293,8 @@ if (any(df_pws_$value <= 0)) {
 #                names_to = "target", values_to = "value") %>%
 #   mutate(source = "selfWatSup")
 
-df_ss_ <- rbind(df_pws_self_supplied, df_ag_self_supplied) %>% mutate(source = "groundwater")
+# df_ss_ <- rbind(df_pws_self_supplied, df_ag_self_supplied) %>% mutate(source = "groundwater")
+df_ss_ <- rbind(df_pws_self_supplied %>% mutate(source = "groundwater"), df_ag_self_supplied)
 
 
 ## water supply ----
@@ -308,7 +322,7 @@ plot_sankey(df_water_sup_waste, reg = "Hall") # losses not fully visible
 # losses ----
 # difference of total water supplied and total wastewater produced
 total_water_supply <- df_water_sup_waste %>%
-  filter(source %in% c("publicWatSup", "groundwater")) %>%
+  filter(source %in% c("publicWatSup", "groundwater", "surfaceWater")) %>%
   filter(target != "losses") %>% # losses are a terminal node, not requiring another losses calculation
   group_by(county, year, target) %>%
   summarise(total_supply = sum(value), .groups = "drop")
@@ -349,7 +363,7 @@ df_water_sup_waste_fix <- df_water_sup_waste %>%
   select(county, year, source, target, value = supply_adj)
 
 total_water_supply_fix <- df_water_sup_waste_fix %>%
-  filter(source %in% c("publicWatSup", "groundwater")) %>%
+  filter(source %in% c("publicWatSup", "groundwater", "surfaceWater")) %>%
   filter(target != "losses") %>% # losses are a terminal node, not requiring another losses calculation
   group_by(county, year, target) %>%
   summarise(total_supply = sum(value), .groups = "drop")
@@ -1292,9 +1306,9 @@ plot_sankey_enhanced(df_sankey_county_pws_balanced %>% pretty_labels(),
 
 
 en4swflows <- df_sankey_county_pws_balanced %>%
-  filter(!grepl("ground", source) & # anything but groundwater
-           grepl("publicWatSup|industrial|Plant|plant", target) & # uses of SW
-           !grepl("publicWatSup", source) # but not PWS to industrial to avoid double counting
+  filter((!grepl("ground", source) & # anything but groundwater
+           grepl("publicWatSup|industrial|agricultural|Plant|plant", target) & # uses of SW
+           !grepl("publicWatSup", source)) # but not PWS to industrial/ag to avoid double counting
   ) %>%
   mutate(watertype = "surfaceWater")
 # plot_sankey(en4swflows)
