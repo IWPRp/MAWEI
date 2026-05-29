@@ -517,6 +517,8 @@ plot_sankey_enhanced(en_fuel_gen_use_loss_all_trade %>%
                        summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% pretty_labels(),
                      animate = T, show_values_in_labels = T, label_units = "PJ")
 
+plot_sankey_pro(en_fuel_gen_use_loss_all_trade)
+
 plot_sankey_enhanced(en_fuel_gen_use_loss_all_trade %>%
                        group_by(county, year, source, target, units) %>%
                        summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% pretty_labels(),
@@ -524,98 +526,12 @@ plot_sankey_enhanced(en_fuel_gen_use_loss_all_trade %>%
 
 # save this
 
-# TODO: complete energy-water simplified diagram (?)
-# TODO: create ew by county
-# TODO: create ew simplified by county
-# TODO: en-water deep dive calcs
-# TODO: do the energy for water going to cross-county ww facilities bugfix
+
 # TODO: improve colors; ability to pass on units column to have both MGD and PJ in labels
-# TODO: see if we can do a static filter in htmls
 # TODO: remove ww trade labeling but have insights of energy, water movement
-# TODO: push to repository
+# TODO: push to repository; then to pnnl github
 # TODO: reporting
 # TODO: paper draft
-
-
-
-# energy water ----
-
-energy_water <- rbind(en_fuel_gen_use_loss_all_trade_metro, en4water %>% select(-county)) %>%
-  group_by(year, source, target, units) %>%
-  summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>%
-  rbind(df_water_metro_linear_wSW_discharge_type) # from water script
-
-plot_sankey_enhanced(energy_water %>% pretty_labels(),
-                     animate = T, show_values_in_labels = T, label_units = "")
-
-
-# simplified energy-water ----
-# aggregate some details for a cleaner diagram
-energy_water %>% select(source, target) %>% distinct() -> energy_water_nodes
-# write_csv(energy_water_nodes, "energy_water_nodes.csv")
-
-
-# read common_energy_water_simplified_map.csv and aggreagate using source_agg and target_agg
-energy_water_simplified_map <- read_csv(paste0(DATA_DIR, "common_energy_water_simplified_map.csv")) %>% clean_col_names()
-
-energy_water_simplified <- energy_water %>%
-  left_join(energy_water_simplified_map %>% select(source, source_agg) %>% distinct(), by = "source") %>%
-  left_join(energy_water_simplified_map %>% select(target, target_agg) %>% distinct(), by = "target") %>%
-  group_by(year, source = source_agg, target = target_agg, units) %>%
-  summarise(value = sum(value), .groups = "drop")
-
-plot_sankey_enhanced(energy_water_simplified %>% pretty_labels(),
-                     animate = T, show_values_in_labels = T, label_units = "")
-
-# save energy-water simplified diagram as html
-# write_csv(energy_water_simplified, paste0(SAVE_DIR, "energy_water_simplified_flows.csv"))
-# htmlwidgets::saveWidget(
-#   plot_sankey_enhanced(energy_water_simplified %>% pretty_labels(),
-#                        animate = T, show_values_in_labels = T, label_units = ""),
-#   file = paste0(SAVE_DIR, "energy_water_simple.html"),
-#   selfcontained = TRUE
-# )
-
-###############################################################################%
-# archive
-# plot_sankey_enhanced(rbind(eia923_fuel_input, eia923_electricity_gen, eiaseds_use, en_use_agg_C, en_gen_onsite_EJ_s,
-#                            en_efficiency_losses_s,
-#                            # en4water_ww_elec_use,
-#                            # these two need to be revised after everything else is calculated
-#                            en_rejected, en_elec_imports %>% mutate(county = "GA")) %>%
-#                        group_by(year, source, target, units) %>%
-#                        summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% pretty_labels(),
-#                      animate = T, show_values_in_labels = T, label_units = "PJ")
-#
-# plot_sankey_enhanced(rbind(eia923_fuel_input, eia923_electricity_gen, eiaseds_use, en_use_agg_C, en_gen_onsite_EJ_s, en_efficiency_losses_s,
-#                            # these two need to be revised after everything else is calculated
-#                            en_rejected, en_elec_imports %>% mutate(county = "GA")) %>%
-#                        mutate(value = value * EJ_to_PJ) %>% pretty_labels(), reg = "Cobb",
-# animate = T, show_values_in_labels = T, label_units = "PJ")
-#
-#
-#
-#
-# plot_sankey(rbind(eia923_fuel_input %>% select(-county),
-#                   eia923_electricity_gen %>% select(-county),
-#                   eiaseds_use %>% select(-county),
-#                   en_use_agg_C %>% select(-county),
-#                   # en_use_agg %>% mutate(source = "electricity", target = enduse, units="EJ") %>% select(source, target, year, value, units),
-#                   en_losses %>% mutate(source = facility_name, target = "losses", units="EJ") %>% select(source, target, year, value = losses, units),
-#                   # en_elec_imports %>% mutate(units = "EJ"),
-#                   en_rejected), animate = T)
-#
-#
-# plot_sankey_enhanced(rbind(eia923_fuel_input %>% select(-county), eia923_electricity_gen %>% select(-county),
-#                      eiaseds_use %>% select(-county),
-#                      en_use_agg_C %>% select(-county),
-#                      # en_use_agg %>% mutate(source = "electricity", target = enduse, units="EJ") %>% select(source, target, year, value, units),
-#                      en_losses %>% mutate(source = facility_name, target = "losses", units="EJ") %>% select(source, target, year, value = losses, units),
-#                      # en_elec_imports %>% mutate(units = "EJ"),
-#                      en_rejected %>% mutate(units = "EJ")) %>%
-#                        group_by(year, source, target, units) %>%
-#                        summarise(value = sum(value) * 1000, .groups = "drop") %>% pretty_labels()
-#                      , show_values_in_labels = T, animate = T, label_units = "PJ")
 
 
 

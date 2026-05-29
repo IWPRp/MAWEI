@@ -68,6 +68,21 @@ validate_flows <- function(df, label = "flows") {
   invisible(df)
 }
 
+simplify_sankey <- function(df, map, bin_ww_imports = TRUE) {
+  if (bin_ww_imports) {
+    df <- df %>%
+      mutate(source = if_else(grepl("inFrom", source), "ww_imports", source),
+             target = if_else(grepl("inFrom", target), "ww_imports", target))
+  }
+  df %>%
+    left_join(map, by = c("source", "target")) %>%
+    mutate(source = coalesce(source_agg, source),
+           target = coalesce(target_agg, target)) %>%
+    select(-source_agg, -target_agg) %>%
+    group_by(across(c(-value))) %>%
+    summarise(value = sum(value), .groups = "drop")
+}
+
 clean_col_names <- function(df) {
   names(df) <- tolower(names(df))
   # replace parentheses with underscores and clean up spaces
