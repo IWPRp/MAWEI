@@ -1044,6 +1044,8 @@ pws_out <- df_sankey_ww_mgmt_C_ind %>%
   group_by(county, year) %>%
   summarise(pws_out = sum(value), .groups = "drop")
 
+# write_csv(pws_out, paste0(SAVE_DIR, "pws_outflows_by_county_year.csv"))
+
 mgmtplan_surface_pws_scaled <- df_sankey_ww_mgmt_C_ind %>%
   filter(year >= 2020) %>%
   filter(source != "groundwater") %>% # exclude groundwater for now
@@ -1054,9 +1056,13 @@ mgmtplan_surface_pws_scaled <- df_sankey_ww_mgmt_C_ind %>%
   mutate(pws_in_scaled = source_share * pws_out) %>%
   select(county, year, source, target, value = pws_in_scaled, units)
 
+# check total surface water supply across all counties before scaling
+df_sankey_ww_mgmt_C_ind %>%
+  filter(year == 2024) %>%
+  filter(grepl("surfaceWater", source) | grepl("publicWatSup", target)) %>%
+  summarise(total_sw_supply = sum(value))
 
 # check total PWS before and after scaling for 2024
-
 df_sankey_ww_mgmt_C_ind %>%
   filter(year == 2024) %>%
   filter(grepl("publicWatSup", source) | grepl("publicWatSup", target)) %>%
@@ -1258,6 +1264,9 @@ df_water_metro_linear_wSW_discharge <- df_water_metro_linear_wSW %>%
 plot_sankey_enhanced(df_water_metro_linear_wSW_discharge %>% pretty_labels(),
                      show_values_in_labels = T, animate = T, label_units = "MGD")
 
+# plot_sankey_enhanced(df_water_metro_linear_wSW_discharge %>% pretty_labels(),
+#                      show_values_in_labels = T, animate = F, yr = 2024, label_units = "MGD")
+
 # for documentation later
 df_water_metro_linear_wSW_discharge %>% select(source, target) %>% distinct()
 
@@ -1289,6 +1298,20 @@ validate_flows(df_water_metro_linear_wSW_discharge_type, "water_metro_flows")
 
 plot_sankey_enhanced(df_water_metro_linear_wSW_discharge_type %>% pretty_labels(),
                      show_values_in_labels = T, animate = T, label_units = "MGD")
+
+plot_sankey_enhanced(df_water_metro_linear_wSW_discharge_type %>% pretty_labels(),
+                     show_values_in_labels = T, animate = F, yr = 2024, label_units = "MGD")
+
+# filter all things touching PWS
+high_level_pws_sw_demands_balance <- df_water_metro_linear_wSW_discharge_type_pws <- df_water_metro_linear_wSW_discharge_type %>%
+  filter(grepl("publicWatSup|surfaceWater|Chattahoochee Basin|Coosa_", source) | grepl("publicWatSup", target)) %>%
+  pretty_labels()
+
+plot_sankey_enhanced(high_level_pws_sw_demands_balance,
+                     show_values_in_labels = T, animate = T, label_units = "MGD")
+plot_sankey_enhanced(high_level_pws_sw_demands_balance,
+                     show_values_in_labels = T, animate = F, yr = 2024, label_units = "MGD")
+# write_csv(high_level_pws_sw_demands_balance, paste0(SAVE_DIR, "high_level_pws_sw_demands_balance.csv"))
 
 # write_csv(df_water_metro_linear_wSW_discharge_type, paste0(SAVE_DIR, "water_metro_linear_wSW_discharge_receivingtype.csv"))
 
