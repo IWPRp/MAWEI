@@ -662,6 +662,8 @@ pretty_labels <- function(df_sankey) {
         target == "treat_wastewater" ~ "Total Wastewater Treatment",
         target == "en_wwtreat" ~ "Wastewater Treatment",
         target == "en_wwdist" ~ "Wastewater Transport",
+        target =="energy_services" ~ "Energy Services",
+        target =="rejected_energy" ~ "Rejected Energy",
 
         TRUE ~ target
       )

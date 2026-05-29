@@ -347,6 +347,50 @@ plot_sankey_enhanced(en_fuel_gen_use_loss %>%
 
 ###############################################################################%
 
+# energy services ----
+# all uses should two downstream flows: energy services and rejected energy
+# industrial sector 49% efficiency
+# ag, commercial, govt, residential, and PWS (or water services generally) sector have 65% efficiency
+# assuming 65% for anything else
+
+SECTOR_EFFICIENCY <- c(
+  industrial = 0.49,
+  agricultural = 0.65,
+  commercial = 0.65,
+  government = 0.65,
+  residential = 0.65,
+  transport = 0.65,
+  en4water = 0.65
+)
+
+DEFAULT_EFFICIENCY <- 0.65
+
+# energy services and rejected energy
+# split each sector's total energy intake into useful energy (services) and waste (rejected)
+end_use_sectors <- setdiff(unique(en_fuel_gen_use_loss$target), unique(en_fuel_gen_use_loss$source))
+end_use_sectors <- end_use_sectors[!end_use_sectors %in% c("efficiency_losses", "elec_own_use")]
+
+en_sector_totals <- en_fuel_gen_use_loss %>%
+  filter(target %in% end_use_sectors) %>%
+  group_by(county, year, source = target, units) %>%
+  summarise(value = sum(value), .groups = "drop") %>%
+  mutate(efficiency = if_else(source %in% names(SECTOR_EFFICIENCY),
+                              SECTOR_EFFICIENCY[source], DEFAULT_EFFICIENCY))
+
+en_services_rejected <- rbind(
+  en_sector_totals %>% mutate(target = "energy_services", value = value * efficiency),
+  en_sector_totals %>% mutate(target = "rejected_energy", value = value * (1 - efficiency))
+) %>% select(county, year, source, target, value, units)
+
+
+plot_sankey_enhanced(en_fuel_gen_use_loss %>% rbind(en_services_rejected) %>%
+                       group_by(year, source, target, units) %>%
+                       summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% pretty_labels(),
+                     animate = T, show_values_in_labels = T, label_units = "PJ")
+
+
+###############################################################################%
+
 # transmission and distribution losses ----
 # assume 6% losses for now: source EIA (5-7%) https://www.eia.gov/tools/faqs/faq.php?id=105&t=3
 TD_LOSSES_PCT <- 0.06
@@ -358,7 +402,7 @@ en_transmission_losses <- en_fuel_gen_use_loss %>%
   select(county, year, source, target, value = tdloss, units)
 
 
-en_fuel_gen_use_loss_all <- rbind(en_fuel_gen_use_loss, en_transmission_losses)
+en_fuel_gen_use_loss_all <- rbind(en_fuel_gen_use_loss, en_transmission_losses, en_services_rejected)
 
 plot_sankey_enhanced(en_fuel_gen_use_loss_all %>%
                        group_by(year, source, target, units) %>%
@@ -373,7 +417,8 @@ en_fuel_gen_use_loss_loop <- rbind(eia923_fuel_input, # fuel input
                               eiaseds_use, en_use_agg_C, # consumption
                               en4water_ww_elec_use, # energy for water
                               en_transmission_losses,
-                              en_efficiency_losses_s, en_rejected # fuel and generation energy difference.
+                              en_efficiency_losses_s, en_rejected, # fuel and generation energy difference.
+                              en_services_rejected
 ) # transmission losses and elec transfers handled later
 
 plot_sankey_enhanced(en_fuel_gen_use_loss_loop %>%
