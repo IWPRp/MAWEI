@@ -1389,8 +1389,8 @@ FRESH_SW_TREAT_ENERGY_INT <- 405  # kWh/mg
 FRESH_GW_TREAT_ENERGY_INT <- 205  # kWh/mg
 
 en4water_treat <- rbind(en4sw_extract, en4gw_extract) %>%
-  # only pws and residential need treatment
-  filter(grepl("publicWatSup|residential", target)) %>%
+  # only pws and residential (new additions: industry and plants also) need treatment
+  filter(grepl("publicWatSup|residential|industr|plant|Plant", target)) %>%
   mutate(elec_treat = case_when(
     watertype == "surfaceWater" ~ (value * DAYS_PER_YEAR) * FRESH_SW_TREAT_ENERGY_INT * kWh_to_EJ,
     watertype == "groundwater" ~ (value * DAYS_PER_YEAR) * FRESH_GW_TREAT_ENERGY_INT * kWh_to_EJ)) %>%
@@ -1409,6 +1409,11 @@ en4water_treat <- rbind(en4sw_extract, en4gw_extract) %>%
 DISTRIBUTION_ENERGY_INT <- 1040 # kWh/mg
 
 en4water_distribute <- rbind(en4sw_extract, en4gw_extract) %>%
+  # exclude powerplants from distribution because they likely use water on-site
+  # and don't have distribution needs. also exclude ag because they likely use
+  # irrigation which is not like typical distribution. keep industrial for now
+  # because some of it is likely to be distributed like other non-ag self-supply
+  filter(!grepl("Plant|plant|agricultural|Agricultural", target)) %>%
   # MGD to mg/yr to kWh/yr to EJ/yr
   mutate(elec_distribute = (value * DAYS_PER_YEAR) * DISTRIBUTION_ENERGY_INT * kWh_to_EJ) %>%
   group_by(county, watertype, target, year) %>%
