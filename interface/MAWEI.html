@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <title>IWPR Project: Atlanta Metro Energy & Water Flows</title> -->
+   <title>MAWEI: Metro Atlanta Water Energy Interdependencies (IWPR, PNNL)</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="header-left">
+        <img src="logo_iwpr.jpg" alt="Project Logo" class="logo">
+        <!-- <h1>IWPR Atlanta Metro Energy & Water Flows</h1> -->
+        <h1>MAWEI: Metro Atlanta Water Energy Interdependencies</h1>
+      </div>
+      <div class="header-controls">
+        <input type="search" id="search" placeholder="Search...">
+        <select id="sector-filter">
+          <option value="all">All Sectors</option>
+          <option value="water">Water</option>
+          <option value="energy">Energy</option>
+          <option value="energy-water">Energy-Water</option>
+        </select>
+        <select id="resolution-filter">
+          <option value="all">All Resolutions</option>
+          <option value="metro">Metro</option>
+          <option value="bartow">Bartow</option>
+          <option value="cherokee">Cherokee</option>
+          <option value="clayton">Clayton</option>
+          <option value="cobb">Cobb</option>
+          <option value="coweta">Coweta</option>
+          <option value="dekalb">DeKalb</option>
+          <option value="douglas">Douglas</option>
+          <option value="fayette">Fayette</option>
+          <option value="forsyth">Forsyth</option>
+          <option value="fulton">Fulton</option>
+          <option value="gwinnett">Gwinnett</option>
+          <option value="hall">Hall</option>
+          <option value="henry">Henry</option>
+          <option value="paulding">Paulding</option>
+          <option value="rockdale">Rockdale</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="content-wrapper">
+      <div class="section" id="data-section">
+        <div class="sector-tabs" id="sector-tabs">
+          <button class="sector-tab active" data-sector="all">All</button>
+          <button class="sector-tab" data-sector="energy">Energy</button>
+          <button class="sector-tab" data-sector="water">Water</button>
+          <button class="sector-tab" data-sector="energy-water">Energy-Water</button>
+        </div>
+        <div class="map-container" id="map-container">
+          <div id="county-map"></div>
+          <div class="map-legend">
+            <span>Click a county to filter</span>
+            <button id="map-reset">Reset</button>
+          </div>
+        </div>
+        <h2>Data</h2>
+        <div class="file-grid" id="data-list">
+          <!-- Data items will be dynamically injected -->
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="section" id="diagrams-section">
+        <h2>Diagrams</h2>
+        <div class="file-grid" id="diagrams-list">
+          <!-- Diagram items will be dynamically injected -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Viewer Section -->
+  <div id="viewer-section" class="viewer-section hidden">
+    <div class="viewer-header">
+      <h2>Viewer</h2>
+      <span id="viewer-filename" class="viewer-filename"></span>
+      <button id="close-viewer" class="close-viewer-btn">✕</button>
+    </div>
+    <div id="viewer-content" class="viewer-content">
+      <!-- Content will be dynamically loaded here -->
+    </div>
+  </div>
+
+  <footer>
+    <p>IWPR PNNL Team & Stakeholders © 2026</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
