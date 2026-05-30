@@ -11,6 +11,7 @@ library(zoo)
 
 DATA_DIR <- "data/"
 SAVE_DIR <- "outputs/files/"
+MAKE_PLOT <- T
 
 # create directory if it doesn't exist
 if (!dir.exists(SAVE_DIR)) {
