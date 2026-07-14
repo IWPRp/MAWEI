@@ -358,9 +358,14 @@ neg_losses <- df_water_losses %>% filter(value < 0) # should be none
 
 # temp fix: add back negative losses into water supply for each category and remove negative losses or recalculate them
 df_water_sup_waste_fix <- df_water_sup_waste %>%
+  # remove groundwater and assign the fix to PWS + surface water only to avoid double counting e.g. Bartow 2024
+  # (and because GW is very small to absorb statistical differences)
+  filter(source != "groundwater") %>% filter(source != "surfaceWater") %>%
   left_join(neg_losses %>% rename(negloss=value), by = c("county", "year", "target" = "source")) %>%
   mutate(supply_adj = if_else(!is.na(negloss), value + abs(negloss), value)) %>%
-  select(county, year, source, target, value = supply_adj)
+  select(county, year, source, target, value = supply_adj) %>%
+  # bring back groundwater
+  rbind(df_water_sup_waste %>% filter(source == "groundwater"))
 
 total_water_supply_fix <- df_water_sup_waste_fix %>%
   filter(source %in% c("publicWatSup", "groundwater", "surfaceWater")) %>%
@@ -368,14 +373,14 @@ total_water_supply_fix <- df_water_sup_waste_fix %>%
   group_by(county, year, target) %>%
   summarise(total_supply = sum(value), .groups = "drop")
 
-df_water_losses_fix <- total_water_supply_fix %>%
+df_water_losses_fix_raw <- total_water_supply_fix %>%
   left_join(total_wastewater, by = c("county", "year", "target")) %>%
   mutate(losses = total_supply - wastewater_generated,
          source = target, target = "losses") %>%
   select(county, year, source, target, value = losses)
 
-df_water_losses_fix %>% filter(value < 0) # should be none
-df_water_losses_fix <- df_water_losses_fix %>% mutate(value = if_else(value < 0, 0, value)) # fixing just 4 edge cases in Bartow
+df_water_losses_fix_raw %>% filter(value < 0) # should be none
+df_water_losses_fix <- df_water_losses_fix_raw %>% mutate(value = if_else(value < 0, 0, value)) # fixing just 4 edge cases in Bartow
 
 # I/I ----
 # increase total wastewater by i_i_factor, target wastewater
