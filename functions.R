@@ -14,7 +14,7 @@ library(zoo)
 
 DATA_DIR <- "data/"
 SAVE_DIR <- "outputs/files/"
-SCRIPTS_DIR <- "scripts/"
+SCRIPTS_DIR <- "R/"
 SAVE_FILES <- F
 MAKE_PLOT <- F
 

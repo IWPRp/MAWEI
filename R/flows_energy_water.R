@@ -3,8 +3,9 @@
 # Hassan Niazi, PNNL, May 2026
 
 source("functions.R")
-source(paste0(SCRIPTS_DIR, "flows_energy.R"))
 source(paste0(SCRIPTS_DIR, "flows_water.R"))
+source(paste0(SCRIPTS_DIR, "flows_energy.R"))
+
 
 ###############################################################################%
 ew_alt_units <- list(
