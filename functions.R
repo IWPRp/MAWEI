@@ -1,4 +1,6 @@
-# Ancillary functions to support Metro Atlanta
+# Ancillary functions to support Metro Atlanta Water-Energy Flows analysis and plotting.
+#
+# Hassan Niazi, PNNL, July 2026
 
 
 library(tidyverse)
@@ -12,6 +14,7 @@ library(zoo)
 
 DATA_DIR <- "data/"
 SAVE_DIR <- "outputs/files/"
+SCRIPTS_DIR <- "scripts/"
 SAVE_FILES <- F
 MAKE_PLOT <- F
 
@@ -44,15 +47,15 @@ fips <- read_csv(paste0(DATA_DIR, "common_county_fips.csv"))$fip
 YEARS_TO_ENSURE <- 2020:2024
 
 # units
-BBtu_to_EJ <- 1.055e-6 # billion British thermal units to exajoules
+BBtu_to_EJ <- 1.055e-6  # billion British thermal units to exajoules
 MMBtu_to_EJ <- 1.055e-9
-kWh_to_EJ <- 3.6e-12 # 1 kWh = 3.6e6 J = 3.6e-12 EJ
+kWh_to_EJ <- 3.6e-12    # 1 kWh = 3.6e6 J = 3.6e-12 EJ
 MWh_to_EJ <- 3.6e-9
-EJ_to_PJ <- 1e3 # exajoules to petajoules
-EJ_to_TJ <- 1e6 # exajoules to terajoules
-PJ_to_GWh <- 277.778 # 1 PJ = 277.778 GWh
+EJ_to_PJ <- 1e3         # exajoules to petajoules
+EJ_to_TJ <- 1e6         # exajoules to terajoules
+PJ_to_GWh <- 277.778    # 1 PJ = 277.778 GWh
 MGD_to_GPM <- 694.4444444444445 # million gallons per day to gallons per minute
-HP_to_KW <- 0.7457 # horsepower to kilowatts
+HP_to_KW <- 0.7457      # horsepower to kilowatts
 PUMPING_EFFICIENCY <- 0.55 # typical range 0.5-0.7
 WATER_HORSEPOWER <- 3960 # constant
 HOURS_PER_YEAR <- 8760

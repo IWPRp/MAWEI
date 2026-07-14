@@ -1,11 +1,12 @@
 # Metro Atlanta energy-water flows
 #
-# Hassan Niazi, May 2026
+# Hassan Niazi, PNNL, May 2026
 
 source("functions.R")
-source("flows_water.R")
-source("flows_energy.R")
+source(paste0(SCRIPTS_DIR, "flows_energy.R"))
+source(paste0(SCRIPTS_DIR, "flows_water.R"))
 
+###############################################################################%
 ew_alt_units <- list(
   nodes = c("Bowen Plant", "Jack McDonough Plant", "Yates Plant", "Grid Electricity"),
   from_unit = "PJ", factor = PJ_to_GWh, label = "GWh"
