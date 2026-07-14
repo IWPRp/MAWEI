@@ -573,7 +573,8 @@ pretty_labels <- function(df_sankey) {
     mutate(
       source = case_when(
         # water sources
-        source == "surfaceWater" ~ "Surface Water",
+        # source == "surfaceWater" ~ "Surface Water",
+        source == "surfaceWater" ~ "Surface Water (all basins)",
         source == "publicWatSup" ~ "Public Water Supply",
         source == "groundwater" ~ "Groundwater",
         source == "groundwaterAllBasins" ~ "Groundwater (all basins)",
@@ -585,8 +586,8 @@ pretty_labels <- function(df_sankey) {
         source == "commercial" ~ "Commercial Use",
         source == "losses" ~ "Losses",
         source == "wastewater" ~ "Wastewater Collection",
-        source == "ww_imports" ~ "Wastewater Imports",
-        source == "ww_exports" ~ "Wastewater Exports",
+        source == "ww_imports" ~ "Wastewater Transfer Inflows (within Metro Atlanta)",
+        source == "ww_exports" ~ "Wastewater Transfer Outflows (within Metro Atlanta)",
         source == "septic" ~ "Septic Systems",
         source == "in-county treatment" ~ "In-County Treatment",
 
@@ -599,8 +600,10 @@ pretty_labels <- function(df_sankey) {
         source == "Jack McDonough" ~ "Jack McDonough Plant",
         source == "McDonough" ~ "Jack McDonough Plant",
         source == "Yates" ~ "Yates Plant",
-        source == "Electricity" ~ "Grid Electricity",
-        source == "electricity" ~ "Grid Electricity",
+        # source == "Electricity" ~ "Grid Electricity",
+        # source == "electricity" ~ "Grid Electricity",
+        source == "Electricity" ~ "Thermoelectric Generation",
+        source == "electricity" ~ "Thermoelectric Generation",
         source == "elec_import" ~ "Electricity Imports",
         source == "elec_export" ~ "Electricity Exports",
         source == "out_metro_elec_import" ~ "Out-Metro Electricity Imports",
@@ -610,7 +613,7 @@ pretty_labels <- function(df_sankey) {
 
         # energy for water
         source == "extract_groundwater" ~ "Groundwater Extraction",
-        source == "extract_surfaceWater" ~ "Surface Water Extraction",
+        source == "extract_surfaceWater" ~ "Surface Water Withdrawal",
         source == "treat_groundwater" ~ "Groundwater Treatment",
         source == "treat_surfaceWater" ~ "Surface Water Treatment",
         source == "distribute_groundwater" ~ "Groundwater Distribution",
@@ -624,6 +627,7 @@ pretty_labels <- function(df_sankey) {
         source == "treat_wastewater" ~ "Total Wastewater Treatment",
         source == "en_wwtreat" ~ "Wastewater Treatment",
         source == "en_wwdist" ~ "Wastewater Transport",
+        source == "en4water" ~ "Water Services Energy",
 
         TRUE ~ source
       ),
@@ -638,8 +642,8 @@ pretty_labels <- function(df_sankey) {
         target == "commercial" ~ "Commercial Use",
         target == "losses" ~ "Losses",
         target == "wastewater" ~ "Wastewater Collection",
-        target == "ww_imports" ~ "Wastewater Imports",
-        target == "ww_exports" ~ "Wastewater Exports",
+        target == "ww_imports" ~ "Wastewater Transfer Inflows (within Metro Atlanta)",
+        target == "ww_exports" ~ "Wastewater Transfer Outflows (within Metro Atlanta)",
         target == "septic" ~ "Septic Systems",
         target == "wastewater_treated" ~ "Wastewater Treated",
         target == "in-county treatment" ~ "In-County Treatment",
@@ -654,8 +658,10 @@ pretty_labels <- function(df_sankey) {
         target == "Jack McDonough" ~ "Jack McDonough Plant",
         target == "McDonough" ~ "Jack McDonough Plant",
         target == "Yates" ~ "Yates Plant",
-        target == "Electricity" ~ "Grid Electricity",
-        target == "electricity" ~ "Grid Electricity",
+        # target == "Electricity" ~ "Grid Electricity",
+        # target == "electricity" ~ "Grid Electricity",
+        target == "Electricity" ~ "Thermoelectric Generation",
+        target == "electricity" ~ "Thermoelectric Generation",
         target == "elec_import" ~ "Electricity Imports",
         target == "elec_export" ~ "Electricity Exports",
         target == "out_metro_elec_import" ~ "Out-Metro Electricity Imports",
@@ -670,7 +676,7 @@ pretty_labels <- function(df_sankey) {
         # energy for water
         target == "en4water" ~ "Water Services Energy",
         target == "extract_groundwater" ~ "Groundwater Extraction",
-        target == "extract_surfaceWater" ~ "Surface Water Extraction",
+        target == "extract_surfaceWater" ~ "Surface Water Withdrawal",
         target == "treat_groundwater" ~ "Groundwater Treatment",
         target == "treat_surfaceWater" ~ "Surface Water Treatment",
         target == "distribute_groundwater" ~ "Groundwater Distribution",
