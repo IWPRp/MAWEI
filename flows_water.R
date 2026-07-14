@@ -1120,21 +1120,21 @@ df_sankey_county_pws_balanced <- df_sankey_ww_mgmt_C_ind %>%
   rbind(mgmtplan_surface_pws_scaled) # add balanced pws inflows
 
 
-if (MAKE_PLOT) plot_sankey_enhanced(df_sankey_county_pws_balanced %>%
+plot_sankey_enhanced(df_sankey_county_pws_balanced %>%
                        group_by(year, source, target, units) %>%
                        summarise(value = sum(value), .groups = "drop") %>% pretty_labels(),
                      animate = T, label_units = "MGD")
-if (MAKE_PLOT) plot_sankey_enhanced(df_sankey_county_pws_balanced, reg = "Cobb")
-if (MAKE_PLOT) plot_sankey_enhanced(df_sankey_county_pws_balanced, reg = "Cobb", show_values_in_labels = TRUE, animate = T, label_units = "MGD")
+plot_sankey_enhanced(df_sankey_county_pws_balanced, reg = "Cobb")
+plot_sankey_enhanced(df_sankey_county_pws_balanced, reg = "Cobb", show_values_in_labels = TRUE, animate = T, label_units = "MGD")
 if (MAKE_PLOT) plot_sankey_enhanced(df_sankey_county_pws_balanced, reg = "Gwinnett", show_values_in_labels = TRUE, animate = T, label_units = "MGD")
-if (MAKE_PLOT) plot_sankey_enhanced(df_sankey_county_pws_balanced, reg = "Fulton", show_values_in_labels = TRUE, animate = T, label_units = "MGD")
+plot_sankey_enhanced(df_sankey_county_pws_balanced, reg = "Fulton", show_values_in_labels = TRUE, animate = T, label_units = "MGD")
 if (MAKE_PLOT) plot_sankey_enhanced(df_sankey_county_pws_balanced, reg = "DeKalb", show_values_in_labels = TRUE, animate = T, label_units = "MGD")
 if (MAKE_PLOT) plot_sankey_enhanced(df_sankey_county_pws_balanced, reg = "Douglas", show_values_in_labels = TRUE, animate = T, label_units = "MGD")
 
 
 # loopy:
 # water bodies as loops
-if (MAKE_PLOT) plot_sankey_enhanced(df_sankey_county_pws_balanced %>%
+plot_sankey_enhanced(df_sankey_county_pws_balanced %>%
                        # replace _ds in targets to get loops back
                        mutate(target = gsub("_ds", "", target))%>%
                        group_by(year, source, target, units) %>%
@@ -1159,12 +1159,12 @@ mgmtplan_all_basin <- rbind(mgmtplan_surface_pws_scaled %>% # mgmtplan_surface i
 
 df_sankey_water_county <- rbind(df_sankey, thermoelec_water_use, ww_trade_comb, mgmtplan_all_basin)
 
-if (MAKE_PLOT) plot_sankey_enhanced(df_sankey_water_county %>%
+plot_sankey_enhanced(df_sankey_water_county %>%
                        group_by(year, source, target, units) %>%
                        summarise(value = sum(value), .groups = "drop") %>% pretty_labels(),
                      show_values_in_labels = TRUE, animate = T, label_units = "MGD")
 
-if (MAKE_PLOT) plot_sankey_enhanced(df_sankey_water_county %>% pretty_labels(), reg = "Cobb", show_values_in_labels = TRUE, animate = T, label_units = "MGD")
+plot_sankey_enhanced(df_sankey_water_county %>% pretty_labels(), reg = "Cobb", show_values_in_labels = TRUE, animate = T, label_units = "MGD")
 
 
 ###############################################################################%
@@ -1301,10 +1301,10 @@ df_water_metro_linear_wSW_discharge_type <- df_water_metro_linear_wSW %>%
           select(source, target, year, value, units))
 validate_flows(df_water_metro_linear_wSW_discharge_type, "water_metro_flows")
 
-if (MAKE_PLOT) plot_sankey_enhanced(df_water_metro_linear_wSW_discharge_type %>% pretty_labels(),
+plot_sankey_enhanced(df_water_metro_linear_wSW_discharge_type %>% pretty_labels(),
                      show_values_in_labels = T, animate = T, label_units = "MGD")
 
-if (MAKE_PLOT) plot_sankey_enhanced(df_water_metro_linear_wSW_discharge_type %>% pretty_labels(),
+plot_sankey_enhanced(df_water_metro_linear_wSW_discharge_type %>% pretty_labels(),
                      show_values_in_labels = T, animate = F, yr = 2024, label_units = "MGD")
 
 # filter all things touching PWS

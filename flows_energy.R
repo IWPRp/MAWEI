@@ -421,13 +421,13 @@ en_fuel_gen_use_loss_loop <- rbind(eia923_fuel_input, # fuel input
                               en_services_rejected
 ) # transmission losses and elec transfers handled later
 
-if (MAKE_PLOT) plot_sankey_enhanced(en_fuel_gen_use_loss_loop %>%
+plot_sankey_enhanced(en_fuel_gen_use_loss_loop %>%
                        group_by(year, source, target, units) %>%
                        summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% pretty_labels(),
                      animate = T, show_values_in_labels = T, label_units = "PJ")
 
 
-if (MAKE_PLOT) plot_sankey_enhanced(en_fuel_gen_use_loss_loop %>%
+plot_sankey_enhanced(en_fuel_gen_use_loss_loop %>%
                        group_by(county, year, source, target, units) %>%
                        summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% pretty_labels(),
                      reg = "Cobb", animate = T, show_values_in_labels = T, label_units = "PJ")
@@ -467,13 +467,13 @@ en_elec_trade_metro <- en_fuel_gen_use_loss_all %>%
 en_fuel_gen_use_loss_all_trade_metro <- en_fuel_gen_use_loss_all %>% select(-county) %>%
   rbind(en_elec_trade_metro)
 
-if (MAKE_PLOT) plot_sankey_enhanced(en_fuel_gen_use_loss_all_trade_metro %>%
+plot_sankey_enhanced(en_fuel_gen_use_loss_all_trade_metro %>%
                        group_by(year, source, target, units) %>%
                        summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% pretty_labels(),
                      animate = T, show_values_in_labels = T, label_units = "PJ")
 
 # metro level without transportation target and Petroleum source
-if (MAKE_PLOT) plot_sankey_enhanced(en_fuel_gen_use_loss_all_trade_metro %>%
+plot_sankey_enhanced(en_fuel_gen_use_loss_all_trade_metro %>%
                        # filter(!(source == "Petroleum" & target == "transport")) %>%
                        filter(!(grepl("transport", target, ignore.case = T) & grepl("petroleum", source, ignore.case = T))) %>%
                        group_by(year, source, target, units) %>%
@@ -512,14 +512,15 @@ en_fuel_gen_use_loss_all_trade <- rbind(en_fuel_gen_use_loss_all, en_elec_trade_
 validate_flows(en_fuel_gen_use_loss_all_trade, "en_fuel_gen_use_loss_all_trade")
 
 
-if (MAKE_PLOT) plot_sankey_enhanced(en_fuel_gen_use_loss_all_trade %>%
+if (MAKE_PLOT) plot_sankey_pro(en_fuel_gen_use_loss_all_trade)
+
+plot_sankey_enhanced(en_fuel_gen_use_loss_all_trade %>%
                        group_by(year, source, target, units) %>%
                        summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% pretty_labels(),
                      animate = T, show_values_in_labels = T, label_units = "PJ")
 
-if (MAKE_PLOT) plot_sankey_pro(en_fuel_gen_use_loss_all_trade)
 
-if (MAKE_PLOT) plot_sankey_enhanced(en_fuel_gen_use_loss_all_trade %>%
+plot_sankey_enhanced(en_fuel_gen_use_loss_all_trade %>%
                        group_by(county, year, source, target, units) %>%
                        summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% pretty_labels(),
                      reg = "Fulton", animate = T, show_values_in_labels = T, label_units = "PJ")
