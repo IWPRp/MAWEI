@@ -6,16 +6,23 @@ source("functions.R")
 source("flows_water.R")
 source("flows_energy.R")
 
+ew_alt_units <- list(
+  nodes = c("Bowen Plant", "Jack McDonough Plant", "Yates Plant", "Grid Electricity"),
+  from_unit = "PJ", factor = PJ_to_GWh, label = "GWh"
+)
 
 # energy water ----
 
 energy_water <- rbind(en_fuel_gen_use_loss_all_trade_metro, en4water %>% select(-county)) %>%
   group_by(year, source, target, units) %>%
   summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>%
+  mutate(units = "PJ") %>%
   rbind(df_water_metro_linear_wSW_discharge_type) # from water script
 
-if (MAKE_PLOT) plot_sankey_enhanced(energy_water %>% pretty_labels(),
-                     animate = T, show_values_in_labels = T, label_units = "")
+plot_sankey_enhanced(energy_water %>% pretty_labels(),
+                     animate = T, show_values_in_labels = T,
+                     label_units = "auto", alt_units = ew_alt_units,
+                     link_color_by_domain = TRUE)
 
 
 # simplified energy-water ----
@@ -27,18 +34,12 @@ energy_water %>% select(source, target) %>% distinct() -> energy_water_nodes
 # read common_energy_water_simplified_map.csv and aggreagate using source_agg and target_agg
 energy_water_simplified_map <- read_csv(paste0(DATA_DIR, "common_energy_water_simplified_map.csv")) %>% clean_col_names()
 
-# energy_water_simplified <- energy_water %>%
-#   left_join(energy_water_simplified_map %>% select(source, source_agg) %>% distinct(), by = "source") %>%
-#   left_join(energy_water_simplified_map %>% select(target, target_agg) %>% distinct(), by = "target") %>%
-#   mutate(source_agg = coalesce(source_agg, source),
-#          target_agg = coalesce(target_agg, target)) %>%
-#   group_by(year, source = source_agg, target = target_agg, units) %>%
-#   summarise(value = sum(value), .groups = "drop")
-
 energy_water_simplified <- simplify_sankey(energy_water, energy_water_simplified_map)
 
-if (MAKE_PLOT) plot_sankey_enhanced(energy_water_simplified %>% pretty_labels(),
-                     animate = T, show_values_in_labels = T, label_units = "")
+plot_sankey_enhanced(energy_water_simplified %>% pretty_labels(),
+                     animate = T, show_values_in_labels = T,
+                     label_units = "auto", alt_units = ew_alt_units,
+                     link_color_by_domain = TRUE)
 
 # plot_sankey_pro(energy_water_simplified)
 
@@ -48,30 +49,27 @@ if (MAKE_PLOT) plot_sankey_enhanced(energy_water_simplified %>% pretty_labels(),
 energy_water_county <- rbind(en_fuel_gen_use_loss_all_trade, en4water_ww_elec_use) %>%
   group_by(county, year, source, target, units) %>%
   summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>%
+  mutate(units = "PJ") %>%
   rbind(df_sankey_county_pws_balanced)
 
-if (MAKE_PLOT) plot_sankey_enhanced(energy_water_county %>% pretty_labels(),
-                     reg = "Fulton", animate = T, show_values_in_labels = T, label_units = "")
+plot_sankey_enhanced(energy_water_county %>% pretty_labels(),
+                     reg = "Fulton", animate = T, show_values_in_labels = T,
+                     label_units = "auto", alt_units = ew_alt_units,
+                     link_color_by_domain = TRUE)
 
 if (MAKE_PLOT) plot_sankey_pro(energy_water_county, reg = "Fulton")
 if (MAKE_PLOT) plot_sankey_pro(energy_water_county, reg = "Cobb")
 
 # energy water simplified by county ----
-# energy_water_simplified_county <- energy_water_county %>%
-#   left_join(energy_water_simplified_map %>% select(source, source_agg) %>% distinct(), by = "source") %>%
-#   left_join(energy_water_simplified_map %>% select(target, target_agg) %>% distinct(), by = "target") %>%
-#   mutate(source_agg = coalesce(source_agg, source),
-#          target_agg = coalesce(target_agg, target)) %>%
-#   group_by(county, year, source = source_agg, target = target_agg, units) %>%
-#   summarise(value = sum(value), .groups = "drop")
-
 energy_water_simplified_county <- simplify_sankey(energy_water_county, energy_water_simplified_map)
 
-if (MAKE_PLOT) plot_sankey_enhanced(energy_water_simplified_county %>% pretty_labels(),
-                     reg = "Fulton", animate = T, show_values_in_labels = T, label_units = "")
+plot_sankey_enhanced(energy_water_simplified_county %>% pretty_labels(),
+                     reg = "Fulton", animate = T, show_values_in_labels = T,
+                     label_units = "auto", alt_units = ew_alt_units,
+                     link_color_by_domain = TRUE)
 
-plot_sankey_pro(energy_water_simplified_county)
-plot_sankey_pro(energy_water_simplified_county, reg = "Fulton")
+# plot_sankey_pro(energy_water_simplified_county)
+# plot_sankey_pro(energy_water_simplified_county, reg = "Fulton")
 
 if (SAVE_FILES) {
 ###############################################################################%
