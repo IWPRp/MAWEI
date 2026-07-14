@@ -1,5 +1,6 @@
 # Ancillary functions to support Metro Atlanta
 
+
 library(tidyverse)
 library(plotly)
 library(htmlwidgets)
@@ -11,11 +12,29 @@ library(zoo)
 
 DATA_DIR <- "data/"
 SAVE_DIR <- "outputs/files/"
-MAKE_PLOT <- T
+SAVE_FILES <- F
+MAKE_PLOT <- F
+
+# --- Sankey color scheme switch ---
+# "vivid"  : high-contrast true-representative colors
+# "muted"  : softer same-family tones
+# FALSE    : no named colors (Spectral/RColorBrewer fallback)
+COLOR_SCHEME <- "vivid"
+
+
+# --- Diagram saving mode ---
+# "selfcontained" : each HTML embeds all JS/CSS (~1-2 MB each, fully portable)
+# "shared_libs"   : HTMLs reference one shared lib folder (~50 KB each + one ~4 MB folder)
+SAVE_MODE <- "selfcontained"
 
 # create directory if it doesn't exist
 if (!dir.exists(SAVE_DIR)) {
   dir.create(SAVE_DIR, recursive = TRUE)
+}
+
+for (domain in c("energy", "water", "energy-water")) {
+  dir.create(file.path(SAVE_DIR, domain, "data"), recursive = TRUE, showWarnings = FALSE)
+  dir.create(file.path(SAVE_DIR, domain, "diagrams"), recursive = TRUE, showWarnings = FALSE)
 }
 
 # county names
@@ -31,6 +50,7 @@ kWh_to_EJ <- 3.6e-12 # 1 kWh = 3.6e6 J = 3.6e-12 EJ
 MWh_to_EJ <- 3.6e-9
 EJ_to_PJ <- 1e3 # exajoules to petajoules
 EJ_to_TJ <- 1e6 # exajoules to terajoules
+PJ_to_GWh <- 277.778 # 1 PJ = 277.778 GWh
 MGD_to_GPM <- 694.4444444444445 # million gallons per day to gallons per minute
 HP_to_KW <- 0.7457 # horsepower to kilowatts
 PUMPING_EFFICIENCY <- 0.55 # typical range 0.5-0.7
@@ -38,6 +58,248 @@ WATER_HORSEPOWER <- 3960 # constant
 HOURS_PER_YEAR <- 8760
 HOURS_PER_DAY <- 24
 DAYS_PER_YEAR <- 365
+
+
+# ---------------------------------------------------------------------------
+# Sankey node color palettes
+# ---------------------------------------------------------------------------
+# Two palettes available; selected by COLOR_SCHEME above.
+# Per-call override: plot_sankey_enhanced(..., color_scheme = FALSE) → Spectral
+# Unmapped nodes get SANKEY_DEFAULT_COLOR via resolve_node_color().
+
+SANKEY_DEFAULT_COLOR <- "#C8C8C8"
+
+# ---- Vivid: high-contrast, true-representative colors --------------------
+SANKEY_COLORS_VIVID <- list(
+
+  # --- Fossil fuels ---
+  "Coal"                    = "#1A1A1A",
+  "Natural Gas"             = "#E87D2F",
+  "Petroleum"               = "#8B4513",
+
+  # --- Renewables ---
+  "Solar"                   = "#FFD700",
+  "Biomass"                 = "#228B22",
+  "Hydroelectric Water"     = "#1E90FF",
+  "Geothermal"              = "#CD5C5C",
+  "Energy Storage"          = "#9370DB",
+  "Other"                   = "#A0A0A0",
+
+  # --- On-site / distributed generation ---
+  "Onsite / BehindTheMeter" = "#DAA520",
+  "Onsite Solar/DER"        = "#FFC125",
+  "Distributed-scale Generation" = "#B8860B",
+  "On-Site Backup Generation" = "#A0522D",
+
+  # --- Power plants ---
+  "Bowen Plant"             = "#CC3333",
+  "Jack McDonough Plant"    = "#D2691E",
+  "Yates Plant"             = "#B8860B",
+
+  # --- Generation and grid ---
+  "Thermoelectric Generation" = "#FF8C00",
+  "Utility-scale Generation"  = "#E07020",
+  "Electricity Imports"       = "#FFB347",
+  "Electricity Exports"       = "#F0A030",
+  "Out-Metro Electricity Imports"  = "#FFC04D",
+  "Out-Metro Electricity Exports"  = "#E8A830",
+
+  # --- Energy losses and services ---
+  "Efficiency Losses"            = "#808080",
+  "Transmission & Dist. Losses"  = "#A9A9A9",
+  "Plants Own Use"               = "#696969",
+  "Energy Services"              = "#4CAF50",
+  "Rejected Energy"              = "#B0B0B0",
+
+  # --- End-use sectors ---
+  "Residential Use"         = "#5B9BD5",
+  "Commercial Use"          = "#BF8F00",
+  "Industrial Use"          = "#707070",
+  "Agricultural Use"        = "#6B8E23",
+  "Government Use"          = "#7B68AE",
+  "Transportation Use"      = "#C0392B",
+
+  # --- Water basins ---
+  "Chattahoochee Basin"     = "#0047AB",
+  "Coosa_Etowah Basin"      = "#2E8BC0",
+  "Flint Basin"             = "#1560BD",
+  "Ocmulgee Basin"          = "#3A75C4",
+  "Oconee Basin"            = "#4682B4",
+  "Tallapoosa Basin"        = "#5CACEE",
+  "Surface Water (all basins)" = "#1C86EE",
+  "Groundwater"             = "#36648B",
+  "Groundwater (all basins)" = "#36648B",
+
+  # --- Water supply and distribution ---
+  "Public Water Supply"     = "#4169E1",
+  "Losses"                  = "#778899",
+  "Infiltration and Inflow" = "#5F9EA0",
+
+  # --- Wastewater ---
+  "Wastewater Collection"   = "#6A0DAD",
+  "Septic Systems"          = "#9370DB",
+  "In-County Treatment"     = "#800080",
+  "Wastewater Treated"      = "#BA55D3",
+  "Wastewater Transfer Inflows (within Metro Atlanta)"  = "#7B2FBE",
+  "Wastewater Transfer Outflows (within Metro Atlanta)" = "#9060C0",
+  "Total Wastewater Treatment" = "#7B2FBE",
+
+  # --- Discharge destinations ---
+  "Discharge"               = "#008B8B",
+  "discharge"               = "#008B8B",
+  "Creek"                   = "#20B2AA",
+  "River"                   = "#2F9E9E",
+  "Lake"                    = "#1C86EE",
+  "Reservoir"               = "#1874CD",
+  "Wetland"                 = "#3CB371",
+  "Reuse"                   = "#00CED1",
+  "Land"                    = "#6B8E23",
+
+  # --- Energy-for-water bridge ---
+  "Water Services Energy"   = "#008080",
+  "en4water"                = "#008080",
+  "Groundwater Extraction"  = "#2E8B8B",
+  "Surface Water Withdrawal" = "#207878",
+  "Groundwater Treatment"   = "#388E8E",
+  "Surface Water Treatment" = "#2E7D7D",
+  "Groundwater Distribution" = "#3AA0A0",
+  "Surface Water Distribution" = "#308888",
+  "Wastewater Treatment"    = "#7B2FBE",
+  "Wastewater Transport"    = "#6A0DAD",
+
+  # --- Simplified E-W diagram aggregates ---
+  "Basins"                  = "#1C86EE",
+  "Renewables"              = "#228B22",
+  "Small-scale generation"  = "#B8860B",
+  "Energy Losses"           = "#808080",
+  "Water Losses"            = "#778899",
+  "Disposal"                = "#008B8B"
+)
+
+# ---- Muted: softer same-family tones (original palette) ------------------
+SANKEY_COLORS_MUTED <- list(
+
+  "Coal"                    = "#636363",
+  "Natural Gas"             = "#E8994E",
+  "Petroleum"               = "#A67B5B",
+
+  "Solar"                   = "#F0C75E",
+  "Biomass"                 = "#8DB580",
+  "Hydroelectric Water"     = "#6BB5C9",
+  "Geothermal"              = "#C47A5A",
+  "Energy Storage"          = "#B0A878",
+  "Other"                   = "#B0B0B0",
+
+  "Onsite / BehindTheMeter" = "#D4B870",
+  "Onsite Solar/DER"        = "#E8C95E",
+  "Distributed-scale Generation" = "#C8B060",
+  "On-Site Backup Generation" = "#B8A860",
+
+  "Bowen Plant"             = "#D47B6A",
+  "Jack McDonough Plant"    = "#C49A6C",
+  "Yates Plant"             = "#BF8B67",
+
+  "Thermoelectric Generation" = "#E8B960",
+  "Utility-scale Generation"  = "#D4A858",
+  "Electricity Imports"       = "#F0D070",
+  "Electricity Exports"       = "#E8C868",
+  "Out-Metro Electricity Imports"  = "#F5D76E",
+  "Out-Metro Electricity Exports"  = "#E8D070",
+
+  "Efficiency Losses"            = "#C0B8AC",
+  "Transmission & Dist. Losses"  = "#B8B0A4",
+  "Plants Own Use"               = "#CCC0B0",
+  "Energy Services"              = "#A8B8A0",
+  "Rejected Energy"              = "#C8B8A8",
+
+  "Residential Use"         = "#7BA3B0",
+  "Commercial Use"          = "#A89070",
+  "Industrial Use"          = "#8D9880",
+  "Agricultural Use"        = "#90A868",
+  "Government Use"          = "#8898A8",
+  "Transportation Use"      = "#A89888",
+
+  "Chattahoochee Basin"     = "#3A80A8",
+  "Coosa_Etowah Basin"      = "#5898B8",
+  "Flint Basin"             = "#4888A0",
+  "Ocmulgee Basin"          = "#6098A8",
+  "Oconee Basin"            = "#5090B0",
+  "Tallapoosa Basin"        = "#7AB8E0",
+  "Surface Water (all basins)" = "#4A90B8",
+  "Groundwater"             = "#5A7898",
+  "Groundwater (all basins)" = "#5A7898",
+
+  "Public Water Supply"     = "#4A88B0",
+  "Losses"                  = "#88A8B8",
+  "Infiltration and Inflow" = "#6898A8",
+
+  "Wastewater Collection"   = "#8B6EA0",
+  "Septic Systems"          = "#A088A8",
+  "In-County Treatment"     = "#9878A0",
+  "Wastewater Treated"      = "#A890B0",
+  "Wastewater Transfer Inflows (within Metro Atlanta)"  = "#9080A0",
+  "Wastewater Transfer Outflows (within Metro Atlanta)" = "#9888A8",
+  "Total Wastewater Treatment" = "#9070A0",
+
+  "Discharge"               = "#5098B0",
+  "discharge"               = "#5098B0",
+  "Creek"                   = "#60A8B8",
+  "River"                   = "#5090A8",
+  "Lake"                    = "#6898C0",
+  "Reservoir"               = "#5888B0",
+  "Wetland"                 = "#70B0A8",
+  "Reuse"                   = "#80C8B8",
+  "Land"                    = "#88A898",
+
+  "Water Services Energy"   = "#5EAAB0",
+  "en4water"                = "#5EAAB0",
+  "Groundwater Extraction"  = "#5898A8",
+  "Surface Water Withdrawal" = "#5090A0",
+  "Groundwater Treatment"   = "#6098A0",
+  "Surface Water Treatment" = "#5890A0",
+  "Groundwater Distribution" = "#6890A0",
+  "Surface Water Distribution" = "#6088A0",
+  "Wastewater Treatment"    = "#8870A0",
+  "Wastewater Transport"    = "#8068A0",
+
+  "Basins"                  = "#4A90B8",
+  "Renewables"              = "#8DB580",
+  "Small-scale generation"  = "#C8B060",
+  "Energy Losses"           = "#C0B8AC",
+  "Water Losses"            = "#88A8B8",
+  "Disposal"                = "#5098B0"
+)
+
+# ---- Active palette (selected by COLOR_SCHEME) ----------------------------
+SANKEY_COLORS <- if (identical(COLOR_SCHEME, "vivid")) SANKEY_COLORS_VIVID else
+                 if (identical(COLOR_SCHEME, "muted")) SANKEY_COLORS_MUTED else
+                 list()
+
+# Pattern-based fallback for nodes not in SANKEY_COLORS (facility names,
+# water bodies, discharge points, inter-county transfers).
+resolve_node_color <- function(node_name, palette) {
+  if (node_name %in% names(palette)) return(palette[[node_name]])
+  nm <- toupper(node_name)
+  dc  <- if ("Discharge" %in% names(palette)) palette[["Discharge"]] else "#008B8B"
+  ww  <- if ("Wastewater Collection" %in% names(palette)) palette[["Wastewater Collection"]] else "#6A0DAD"
+  lk  <- if ("Lake" %in% names(palette)) palette[["Lake"]] else "#1C86EE"
+  rv  <- if ("River" %in% names(palette)) palette[["River"]] else "#2F9E9E"
+  re  <- if ("Reuse" %in% names(palette)) palette[["Reuse"]] else "#00CED1"
+  la  <- if ("Land" %in% names(palette)) palette[["Land"]] else "#6B8E23"
+  if (grepl("_ds$", node_name))                          return(dc)
+  if (grepl("^inFrom_", node_name))                      return(ww)
+  if (grepl("WRF|WPCP|WWTP|WRC|LAS|POND", nm))          return(ww)
+  if (grepl("REUSE", nm))                                return(re)
+  if (grepl("LAND APPLICATION", nm))                     return(la)
+  if (grepl("LAKE|RESERVOIR", nm))                       return(lk)
+  if (grepl("RIVER|CREEK|BRANCH|TRIBUTARY", nm))         return(rv)
+  if (grepl("SPRING", nm))                               return(rv)
+  if (grepl("SNAPPING SHOALS", nm))                      return(ww)
+  if (grepl("^VARIOUS$|^SMALL PERMITS$", nm))            return("#A0A0A0")
+  if (grepl("FORSYTH|GWINNETT|PAULDING|ROCKDALE|FULTON|DEKALB|COBB|HENRY|HALL|CHEROKEE|BARTOW|CLAYTON|COWETA|DOUGLAS|FAYETTE", nm))
+                                                          return(ww)
+  SANKEY_DEFAULT_COLOR
+}
 
 
 repeats <- function(df) {
@@ -82,6 +344,61 @@ simplify_sankey <- function(df, map, bin_ww_imports = TRUE) {
     select(-source_agg, -target_agg) %>%
     group_by(across(c(-value))) %>%
     summarise(value = sum(value), .groups = "drop")
+}
+
+node_throughput_by_unit <- function(df) {
+  bind_rows(
+    df %>% group_by(node = source, units) %>%
+      summarise(total = sum(value, na.rm = TRUE), .groups = "drop"),
+    df %>% group_by(node = target, units) %>%
+      summarise(total = sum(value, na.rm = TRUE), .groups = "drop")
+  ) %>%
+    group_by(node, units) %>%
+    summarise(total = max(total, na.rm = TRUE), .groups = "drop") %>%
+    filter(!is.na(units), total > 0)
+}
+
+format_node_label <- function(nd, nd_totals, alt_units = NULL, prefix = "") {
+  if (nrow(nd_totals) == 0) return(nd)
+  parts <- nd_totals %>% arrange(units) %>%
+    purrr::pmap_chr(function(node, units, total, ...) {
+      lbl <- paste0(prefix, round(total, 1), " ", units)
+      if (!is.null(alt_units) && units == alt_units$from_unit && nd %in% alt_units$nodes) {
+        alt_val <- total * alt_units$factor
+        lbl <- paste0(lbl, " (", round(alt_val, 0), " ", alt_units$label, ")")
+      }
+      lbl
+    })
+  paste0(nd, "\n", paste(parts, collapse = " | "))
+}
+
+save_sankey <- function(widget, filepath) {
+  filepath <- normalizePath(filepath, mustWork = FALSE)
+  widget <- plotly::partial_bundle(widget)
+  if (SAVE_MODE == "shared_libs") {
+    libdir <- normalizePath(file.path(SAVE_DIR, "shared_libs"), mustWork = FALSE)
+    dir.create(libdir, recursive = TRUE, showWarnings = FALSE)
+    htmlwidgets::saveWidget(widget, file = filepath,
+                            selfcontained = FALSE, libdir = libdir)
+  } else {
+    htmlwidgets::saveWidget(widget, file = filepath, selfcontained = TRUE)
+    files_dir <- sub("\\.html$", "_files", filepath)
+    if (dir.exists(files_dir)) unlink(files_dir, recursive = TRUE)
+  }
+}
+
+save_county_sankeys <- function(df, domain_dir, prefix, suffix, prep_fn, label_units,
+                                alt_units = NULL, color_scheme = NULL,
+                                link_color_by_domain = FALSE) {
+  diag_dir <- file.path(SAVE_DIR, domain_dir, "diagrams")
+  for (cty in sort(counties)) {
+    message("  ", cty, " ", suffix)
+    p <- plot_sankey_enhanced(prep_fn(df), reg = cty, animate = TRUE,
+                              show_values_in_labels = TRUE, label_units = label_units,
+                              alt_units = alt_units, color_scheme = color_scheme,
+                              link_color_by_domain = link_color_by_domain)
+    save_sankey(p, file.path(diag_dir, paste0(prefix, "_county_", cty, "_", suffix, ".html")))
+  }
 }
 
 clean_col_names <- function(df) {
@@ -550,7 +867,7 @@ seds_target_set <- function(df_sankey, col_name="msn") {
     )
 }
 
-# plotting ----
+# PLOTTING ----
 
 mytheme <- theme_minimal() + theme(
   panel.background = element_blank(),
@@ -1001,11 +1318,469 @@ plot_sankey <- function(df_sankey, title = "Metro Atlanta Flows", yr = max(YEARS
 
 }
 
-# Preprocessing function to handle colors and labels
+# sankey pro helpers ----
+
+hex_to_rgba <- function(hex_color, alpha = 1) {
+  if (is.na(hex_color) || is.null(hex_color)) return(paste0("rgba(128,128,128,", alpha, ")"))
+  if (substr(hex_color, 1, 1) != "#") {
+    hex_color <- tryCatch(rgb(t(col2rgb(hex_color)), maxColorValue = 255),
+                          error = function(e) "#808080")
+  }
+  rgb_vals <- col2rgb(hex_color)
+  paste0("rgba(", rgb_vals[1], ",", rgb_vals[2], ",", rgb_vals[3], ",", alpha, ")")
+}
+
+blend_colors <- function(color1, color2, alpha = 0.3) {
+  if (is.na(color1)) color1 <- "#808080"
+  if (is.na(color2)) color2 <- "#808080"
+  rgb1 <- tryCatch(col2rgb(color1), error = function(e) col2rgb("#808080"))
+  rgb2 <- tryCatch(col2rgb(color2), error = function(e) col2rgb("#808080"))
+  blended <- (rgb1 + rgb2) / 2
+  paste0("rgba(", blended[1], ",", blended[2], ",", blended[3], ",", alpha, ")")
+}
+
+auto_detect_units <- function(df) {
+  if (!"units" %in% names(df)) return("")
+  u <- unique(df$units)
+  u <- u[!is.na(u)]
+  if (length(u) == 1) u else ""
+}
+
+# preferred positions for known nodes (pretty_labels names)
+PREFERRED_POSITIONS <- list(
+  # water sinks / peripherals
+  "Losses"                  = list(x = 0.95, y = 0.05),
+  "losses"                  = list(x = 0.95, y = 0.05),
+  "Septic"                  = list(x = 0.95, y = 0.90),
+  "septic"                  = list(x = 0.95, y = 0.90),
+  "Wastewater Exports"      = list(x = 0.95, y = 0.80),
+  "ww_exports"              = list(x = 0.95, y = 0.80),
+  "Wastewater Imports"      = list(x = 0.05, y = 0.80),
+  "ww_imports"              = list(x = 0.05, y = 0.80),
+  # water sources
+  "Surface Water"           = list(x = 0.05, y = 0.15),
+  "surfaceWater"            = list(x = 0.05, y = 0.15),
+  "Groundwater"             = list(x = 0.05, y = 0.35),
+  "groundwater"             = list(x = 0.05, y = 0.35),
+  "Public Water Supply"     = list(x = 0.35, y = 0.25),
+  "publicWatSup"            = list(x = 0.35, y = 0.25)
+)
+
+# known water node names (raw + pretty) for domain color detection
+WATER_NODE_NAMES <- c(
+  names(water_palettes$classic),
+  "Surface Water", "Groundwater", "Public Water Supply",
+  "Wastewater", "Wastewater Imports", "Wastewater Exports",
+  "In-County Treatment", "Septic", "Losses",
+  "Agricultural", "Residential", "Commercial", "Industrial",
+  "surfaceWater", "groundwater", "publicWatSup",
+  "wastewater", "ww_imports", "ww_exports",
+  "in-county treatment", "septic", "losses",
+  "agricultural", "residential", "commercial", "industrial"
+)
+
+ENERGY_NODE_NAMES <- c(
+  names(energy_palettes$classic),
+  "Grid Electricity", "Electricity Imports", "Onsite / BehindTheMeter",
+  "electricity", "elec_import", "onsiteBTM",
+  "Coal", "Gas", "Petroleum", "Natural Gas",
+  "Bowen", "McDonough", "Yates",
+  "Government", "Transport", "government", "transport",
+  "en4water"
+)
+
+compute_node_positions <- function(all_nodes, df, user_positions = NULL, use_preferred = TRUE) {
+  sources <- unique(df$source)
+  targets <- unique(df$target)
+  pure_sources <- setdiff(sources, targets)
+  pure_sinks   <- setdiff(targets, sources)
+  intermediates <- intersect(sources, targets)
+
+  n <- length(all_nodes)
+  node_x <- numeric(n)
+  node_y <- numeric(n)
+
+  for (i in seq_along(all_nodes)) {
+    nd <- all_nodes[i]
+    if (nd %in% pure_sources) {
+      n_grp <- length(pure_sources)
+      idx <- match(nd, pure_sources)
+      node_x[i] <- 0.1
+      node_y[i] <- if (n_grp == 1) 0.5 else (idx - 1) / (n_grp - 1) * 0.8 + 0.1
+    } else if (nd %in% pure_sinks) {
+      n_grp <- length(pure_sinks)
+      idx <- match(nd, pure_sinks)
+      node_x[i] <- 0.9
+      node_y[i] <- if (n_grp == 1) 0.5 else (idx - 1) / (n_grp - 1) * 0.8 + 0.1
+    } else {
+      n_grp <- length(intermediates)
+      idx <- match(nd, intermediates)
+      node_x[i] <- 0.5
+      node_y[i] <- if (n_grp == 1) 0.5 else (idx - 1) / (n_grp - 1) * 0.8 + 0.1
+    }
+  }
+
+  # overlay preferred positions
+  if (use_preferred) {
+    for (i in seq_along(all_nodes)) {
+      if (all_nodes[i] %in% names(PREFERRED_POSITIONS)) {
+        pos <- PREFERRED_POSITIONS[[all_nodes[i]]]
+        node_x[i] <- pos$x
+        node_y[i] <- pos$y
+      }
+    }
+  }
+
+  # overlay user positions (user always wins)
+  if (!is.null(user_positions)) {
+    for (i in seq_along(all_nodes)) {
+      if (all_nodes[i] %in% names(user_positions)) {
+        pos <- user_positions[[all_nodes[i]]]
+        node_x[i] <- pos$x
+        node_y[i] <- pos$y
+      }
+    }
+  }
+
+  list(x = node_x, y = node_y)
+}
+
+resolve_node_colors <- function(all_nodes, node_colors = NULL, color_mode = "auto",
+                                 palette_name = "Spectral") {
+  n_nodes <- length(all_nodes)
+
+  if (!is.null(node_colors)) {
+    # user provided named vector or list
+    if (!is.null(names(node_colors))) {
+      cols <- sapply(all_nodes, function(nd) {
+        if (nd %in% names(node_colors)) as.character(node_colors[[nd]]) else "lightgray"
+      })
+    } else {
+      cols <- rep(node_colors, length.out = n_nodes)
+    }
+    names(cols) <- all_nodes
+    return(cols)
+  }
+
+  if (color_mode == "water") {
+    pal <- water_palettes$classic
+    cols <- sapply(all_nodes, function(nd) {
+      if (nd %in% names(pal)) pal[[nd]] else "lightgray"
+    })
+
+  } else if (color_mode == "energy") {
+    pal <- energy_palettes$classic
+    cols <- sapply(all_nodes, function(nd) {
+      if (nd %in% names(pal)) pal[[nd]] else "lightgray"
+    })
+
+  } else if (color_mode == "domain") {
+    # auto-detect: water nodes -> water palette, energy nodes -> energy palette
+    w_pal <- water_palettes$classic
+    e_pal <- energy_palettes$classic
+    cols <- sapply(all_nodes, function(nd) {
+      if (nd %in% names(w_pal)) return(w_pal[[nd]])
+      if (nd %in% names(e_pal)) return(e_pal[[nd]])
+      if (nd %in% WATER_NODE_NAMES) return("#4C78A8")   # default water blue
+      if (nd %in% ENERGY_NODE_NAMES) return("#E15759")   # default energy red
+      "lightgray"
+    })
+
+  } else {
+    # "auto" — professional distinct colors
+    if (n_nodes <= 3) {
+      cols <- RColorBrewer::brewer.pal(3, "Set2")[1:n_nodes]
+    } else if (n_nodes <= 11) {
+      cols <- RColorBrewer::brewer.pal(n_nodes, palette_name)
+    } else {
+      c1 <- RColorBrewer::brewer.pal(11, palette_name)
+      c2 <- RColorBrewer::brewer.pal(min(9, n_nodes - 11), "Set1")
+      cols <- c(c1, c2, rainbow(max(0, n_nodes - 20)))[1:n_nodes]
+    }
+    names(cols) <- all_nodes
+  }
+
+  names(cols) <- all_nodes
+  cols
+}
+
+compute_node_labels <- function(all_nodes, df, units_str, show_values, value_stats, yr, animate) {
+  if (!show_values) return(all_nodes)
+
+  # helper: compute node throughput (max of inflows vs outflows)
+  node_throughput <- function(df_slice) {
+    bind_rows(
+      df_slice %>% group_by(node = source) %>% summarise(total = sum(value, na.rm = TRUE), .groups = "drop"),
+      df_slice %>% group_by(node = target) %>% summarise(total = sum(value, na.rm = TRUE), .groups = "drop")
+    ) %>%
+      group_by(node) %>%
+      summarise(total = max(total, na.rm = TRUE), .groups = "drop")
+  }
+
+  if (!animate) {
+    # static: exact values for yr
+    totals <- node_throughput(df %>% filter(year == yr))
+    sapply(all_nodes, function(nd) {
+      val <- totals$total[totals$node == nd]
+      if (length(val) > 0 && !is.na(val) && val > 0) {
+        paste0(nd, "\n", round(val, 1), " ", units_str)
+      } else nd
+    })
+  } else {
+    # animated: compute stats across years
+    yearly_totals <- df %>%
+      group_by(year) %>%
+      group_split() %>%
+      map_dfr(function(yr_df) {
+        node_throughput(yr_df) %>% mutate(year = yr_df$year[1])
+      })
+
+    stats <- yearly_totals %>%
+      group_by(node) %>%
+      summarise(
+        mn = min(total, na.rm = TRUE),
+        avg = mean(total, na.rm = TRUE),
+        mx = max(total, na.rm = TRUE),
+        .groups = "drop"
+      )
+
+    sapply(all_nodes, function(nd) {
+      row <- stats %>% filter(node == nd)
+      if (nrow(row) == 0 || row$mx == 0) return(nd)
+
+      if (value_stats == "none") {
+        nd
+      } else if (value_stats == "avg") {
+        paste0(nd, "\n(avg: ", round(row$avg, 1), " ", units_str, ")")
+      } else if (value_stats == "range") {
+        paste0(nd, "\n", round(row$mn, 1), " – ", round(row$mx, 1), " ", units_str)
+      } else {
+        # "all" — default
+        paste0(nd, "\nmin: ", round(row$mn, 1), " | avg: ", round(row$avg, 1),
+               " | max: ", round(row$mx, 1), " ", units_str)
+      }
+    })
+  }
+}
+
+# plot_sankey_pro ----
+#
+# Unified Sankey plotting function for energy-water flow diagrams.
+# Merges capabilities of plot_sankey, plot_sankey_enhanced, plot_sankey_advanced.
+#
+# Minimal call: plot_sankey_pro(df) — auto-detects everything
+# Full control:  colors, positions, gradients, theme, hover, animation stats
+#
+plot_sankey_pro <- function(
+    df,                                          # data.frame with source, target, year, value (and optionally county, units)
+    title           = "Metro Atlanta Flows",     # plot title string
+    yr              = max(YEARS_TO_ENSURE),       # year to show when animate = FALSE
+    years           = YEARS_TO_ENSURE,            # years to include; controls animation slider range
+    animate         = TRUE,                       # TRUE = animation slider across years; FALSE = static single year
+    reg             = NULL,                       # county filter: NULL (all), character vector e.g. c("Cobb", "Fulton")
+    agg             = TRUE,                       # TRUE = aggregate over counties; FALSE = keep county-level detail
+    pretty_label    = TRUE,                       # TRUE = apply pretty_labels() to rename nodes for display
+    # --- colors ---
+    node_colors     = NULL,                       # NULL (auto) or named vector e.g. c("losses" = "gray", "Coal" = "#4D4D4D")
+    color_mode      = "auto",                     # "auto" (Spectral palette), "water", "energy", "domain" (auto water+energy)
+    palette_name    = "Spectral",                 # RColorBrewer palette when color_mode = "auto". Options: "Spectral", "Set2", "Set3", "Paired", etc.
+    link_colors     = NULL,                       # NULL (auto from nodes), named vector, or unnamed color vector
+    link_opacity    = 0.3,                        # link transparency 0-1. Lower = more transparent
+    use_gradients   = FALSE,                      # TRUE = blend source+target colors for links; FALSE = source color only
+    # --- labels ---
+    show_values     = TRUE,                       # TRUE = show throughput values in node labels
+    label_units     = NULL,                       # NULL (auto-detect from df$units), or string e.g. "MGD", "PJ", "TJ"
+    value_stats     = "all",                      # animated label stats: "all" (min|avg|max), "avg", "range", "none"
+    # --- positions ---
+    node_positions  = NULL,                       # NULL (auto-layout) or named list: list("losses" = list(x=0.95, y=0.05))
+    use_preferred   = FALSE,                      # TRUE = apply PREFERRED_POSITIONS for known nodes (requires arrangement = "snap" or "fixed")
+    arrangement     = "snap",                     # "snap" (default, draggable with grid), "fixed" (locked), "freeform", "perpendicular"
+    # --- layout ---
+    theme           = "light",                    # "light" (white bg, black text) or "dark" (dark bg, white text)
+    node_width      = 20,                         # node bar thickness in pixels
+    node_pad        = 15,                         # vertical spacing between nodes in pixels
+    show_toolbar    = TRUE,                       # TRUE = show plotly mode bar (zoom, pan, save)
+    link_arrows     = 0                           # arrow length in px at link endpoints. 0 = no arrows
+) {
+
+
+  # --- validation ---
+  if (!animate && !yr %in% years) {
+    stop("yr = ", yr, " not in years: ", paste(years, collapse = ", "))
+  }
+
+  if (any(df$value < 0)) {
+    stop("Data has negative values. Please check the data.")
+  }
+
+  # --- pretty labels (applied ONCE) ---
+  if (pretty_label) {
+    df <- pretty_labels(df)
+  }
+
+  # --- complete data canvas ---
+  if ("county" %in% names(df)) {
+    df <- as.data.frame(df) %>%
+      complete(county, year, nesting(source, target), fill = list(value = 0))
+  } else {
+    df <- as.data.frame(df) %>%
+      complete(year, nesting(source, target), fill = list(value = 0))
+  }
+
+  # --- filter to years ---
+  df <- df %>% filter(year %in% years)
+
+  # --- filter to counties/regions ---
+  if ("county" %in% names(df) && !is.null(reg)) {
+    df <- df %>% filter(county %in% reg)
+  }
+
+  # --- aggregate over counties ---
+  if (agg && "county" %in% names(df)) {
+    df <- df %>%
+      group_by(across(-county)) %>%
+      summarise(value = sum(value), .groups = "drop")
+  }
+
+  # --- auto-detect units ---
+  units_str <- if (is.null(label_units)) auto_detect_units(df) else label_units
+
+  # --- filter to yr if static ---
+  if (!animate) {
+    df <- df %>% filter(year == yr)
+  }
+
+  # --- nodes ---
+  all_nodes <- unique(c(as.character(df$source), as.character(df$target)))
+
+  # --- positions (only set x/y when user explicitly controls them) ---
+  has_positions <- !is.null(node_positions) || use_preferred
+  if (has_positions) {
+    positions <- compute_node_positions(all_nodes, df, node_positions, use_preferred)
+  }
+
+  # --- node colors ---
+  node_cols <- resolve_node_colors(all_nodes, node_colors, color_mode, palette_name)
+
+  # --- link colors ---
+  if (is.null(link_colors)) {
+    if (use_gradients) {
+      link_cols <- mapply(function(s, t) {
+        blend_colors(node_cols[s], node_cols[t], link_opacity)
+      }, as.character(df$source), as.character(df$target), USE.NAMES = FALSE)
+    } else {
+      link_cols <- sapply(as.character(df$source), function(s) {
+        hex_to_rgba(node_cols[s], link_opacity)
+      }, USE.NAMES = FALSE)
+    }
+  } else if (!is.null(names(link_colors))) {
+    # named link colors: match by "source -> target", source, or target
+    link_cols <- df %>%
+      mutate(
+        flow_key = paste(source, "->", target),
+        color = case_when(
+          flow_key %in% names(link_colors) ~ link_colors[flow_key],
+          source %in% names(link_colors) ~ link_colors[source],
+          target %in% names(link_colors) ~ link_colors[target],
+          TRUE ~ "rgba(128,128,128,0.5)"
+        )
+      ) %>%
+      pull(color)
+  } else {
+    link_cols <- rep(link_colors, length.out = nrow(df))
+  }
+
+  # --- node labels ---
+  node_labels <- compute_node_labels(all_nodes, df, units_str, show_values, value_stats, yr, animate)
+
+  # --- hover templates ---
+  node_hover <- paste0("<b>%{label}</b><br>Total: %{value:,.1f} ", units_str, "<extra></extra>")
+  link_hover <- paste0("%{source.label} \u2192 %{target.label}<br>",
+                       "Flow: %{value:,.2f} ", units_str, "<extra></extra>")
+
+  # --- theme colors ---
+  bg_color    <- if (theme == "dark") "#1F1F1F" else "white"
+  plot_bg     <- if (theme == "dark") "#2F2F2F" else "white"
+  text_color  <- if (theme == "dark") "white" else "black"
+  border_color <- if (theme == "dark") "white" else "black"
+  slider_color <- if (theme == "dark") "white" else "red"
+
+  # --- build plot ---
+  node_config <- list(
+    label = node_labels,
+    color = unname(node_cols[all_nodes]),
+    pad = node_pad,
+    thickness = node_width,
+    line = list(color = border_color, width = 0.5),
+    hovertemplate = node_hover
+  )
+  if (has_positions) {
+    node_config$x <- positions$x
+    node_config$y <- positions$y
+  }
+
+  p <- plot_ly(
+    type = "sankey",
+    arrangement = arrangement,
+    node = node_config,
+    link = list(
+      source = match(df$source, all_nodes) - 1,
+      target = match(df$target, all_nodes) - 1,
+      value = df$value,
+      color = link_cols,
+      arrowlen = link_arrows,
+      hovertemplate = link_hover
+    ),
+    frame = if (animate) ~df$year else NULL
+  )
+
+  # --- title ---
+  title_text <- paste0(
+    title,
+    if (!is.null(reg)) paste0(" for ", paste(reg, collapse = ", ")),
+    if (!animate) paste0(" in ", yr)
+  )
+
+  p <- p %>% layout(
+    title = list(
+      text = title_text,
+      font = list(size = 16, color = text_color),
+      x = 0.5, xanchor = "center"
+    ),
+    font = list(size = 12, color = text_color),
+    plot_bgcolor = plot_bg,
+    paper_bgcolor = bg_color,
+    margin = list(l = 10, r = 10, t = 80, b = 40)
+  )
+
+  # --- animation ---
+  if (animate) {
+    p <- p %>%
+      animation_opts(2000, redraw = TRUE) %>%
+      animation_slider(
+        currentvalue = list(
+          prefix = "Year ",
+          font = list(color = slider_color, size = 14)
+        )
+      )
+  }
+
+  # --- toolbar ---
+  p <- p %>% config(
+    displayModeBar = show_toolbar,
+    displaylogo = FALSE
+  )
+
+  return(p)
+}
+
+# Enhanced main function (kept as working backup)
+# Preprocessing function used by plot_sankey_enhanced
 prepare_sankey_enhanced <- function(df_sankey, node_colors = NULL, link_colors = NULL,
                                 show_values_in_labels = FALSE, value_year = NULL,
                                 pretty_label = TRUE,
-                                units = "", animate = FALSE) {
+                                units = "", alt_units = NULL, animate = FALSE,
+                                color_scheme = NULL, link_color_by_domain = FALSE) {
 
   # if pretty label
   if (pretty_label) {
@@ -1015,103 +1790,121 @@ prepare_sankey_enhanced <- function(df_sankey, node_colors = NULL, link_colors =
   # get unique nodes in consistent order
   all_nodes <- unique(c(df_sankey$source, df_sankey$target))
 
+  per_node <- (units == "auto" && "units" %in% names(df_sankey))
+
   # create node labels with values if requested
   if (show_values_in_labels && !animate) {
-    # for static plots, calculate values for specific year
     df_for_labels <- if (!is.null(value_year)) {
       df_sankey %>% filter(year == value_year)
     } else {
-      # use average across years if no specific year provided
+      grp <- if (per_node) c("source", "target", "units") else c("source", "target")
       df_sankey %>%
-        group_by(source, target) %>%
+        group_by(across(all_of(grp))) %>%
         summarise(value = mean(value, na.rm = TRUE), .groups = "drop")
     }
 
-    # calculate total throughput for each node
-    node_totals <- bind_rows(
-      # outflows (node as source)
-      df_for_labels %>%
-        group_by(node = source) %>%
-        summarise(total = sum(value, na.rm = TRUE), .groups = "drop"),
-      # inflows (node as target)
-      df_for_labels %>%
-        group_by(node = target) %>%
-        summarise(total = sum(value, na.rm = TRUE), .groups = "drop")
-    ) %>%
-      group_by(node) %>%
-      summarise(total = max(total, na.rm = TRUE), .groups = "drop") # take the max of in or out
+    if (per_node) {
+      totals <- node_throughput_by_unit(df_for_labels)
+      node_labels <- all_nodes %>%
+        map_chr(~ format_node_label(.x, totals %>% filter(node == .x), alt_units))
+    } else {
+      node_totals <- bind_rows(
+        df_for_labels %>% group_by(node = source) %>% summarise(total = sum(value, na.rm = TRUE), .groups = "drop"),
+        df_for_labels %>% group_by(node = target) %>% summarise(total = sum(value, na.rm = TRUE), .groups = "drop")
+      ) %>%
+        group_by(node) %>%
+        summarise(total = max(total, na.rm = TRUE), .groups = "drop")
 
-    # create formatted labels
-    node_labels <- all_nodes %>%
-      map_chr(function(node) {
-        total_val <- node_totals$total[node_totals$node == node]
-        if (length(total_val) > 0 && !is.na(total_val[1]) && total_val[1] > 0) {
-          paste0(node, "\n", round(total_val[1], 1), " ", units)
-        } else {
-          node
-        }
-      })
+      node_labels <- all_nodes %>%
+        map_chr(function(node) {
+          total_val <- node_totals$total[node_totals$node == node]
+          if (length(total_val) > 0 && !is.na(total_val[1]) && total_val[1] > 0) {
+            paste0(node, "\n", round(total_val[1], 1), " ", units)
+          } else {
+            node
+          }
+        })
+    }
+
   } else if (show_values_in_labels && animate) {
-    # for animated plots, show average values with note
+    grp <- if (per_node) c("source", "target", "units") else c("source", "target")
     avg_values <- df_sankey %>%
-      group_by(source, target) %>%
+      group_by(across(all_of(grp))) %>%
       summarise(value = mean(value, na.rm = TRUE), .groups = "drop")
 
-    node_totals <- bind_rows(
-      avg_values %>% group_by(node = source) %>% summarise(total = sum(value, na.rm = TRUE)),
-      avg_values %>% group_by(node = target) %>% summarise(total = sum(value, na.rm = TRUE))
-    ) %>%
-      group_by(node) %>%
-      summarise(total = max(total, na.rm = TRUE), .groups = "drop")
+    if (per_node) {
+      totals <- node_throughput_by_unit(avg_values)
+      node_labels <- all_nodes %>%
+        map_chr(function(nd) {
+          lbl <- format_node_label(nd, totals %>% filter(node == nd), alt_units, prefix = "avg: ")
+          if (grepl("\n", lbl)) {
+            parts <- strsplit(lbl, "\n", fixed = TRUE)[[1]]
+            paste0(parts[1], "\n(", parts[2], ")")
+          } else lbl
+        })
+    } else {
+      node_totals <- bind_rows(
+        avg_values %>% group_by(node = source) %>% summarise(total = sum(value, na.rm = TRUE)),
+        avg_values %>% group_by(node = target) %>% summarise(total = sum(value, na.rm = TRUE))
+      ) %>%
+        group_by(node) %>%
+        summarise(total = max(total, na.rm = TRUE), .groups = "drop")
 
-    node_labels <- all_nodes %>%
-      map_chr(function(node) {
-        total_val <- node_totals$total[node_totals$node == node]
-        if (length(total_val) > 0 && !is.na(total_val[1]) && total_val[1] > 0) {
-          paste0(node, "\n(avg: ", round(total_val[1], 1), " ", units, ")")
-        } else {
-          node
-        }
-      })
+      node_labels <- all_nodes %>%
+        map_chr(function(node) {
+          total_val <- node_totals$total[node_totals$node == node]
+          if (length(total_val) > 0 && !is.na(total_val[1]) && total_val[1] > 0) {
+            paste0(node, "\n(avg: ", round(total_val[1], 1), " ", units, ")")
+          } else {
+            node
+          }
+        })
+    }
+
   } else {
     node_labels <- all_nodes
   }
 
   # handle node colors
-  if (is.null(node_colors)) {
-    # create default color palette
+  # Priority: explicit node_colors > color_scheme param > COLOR_SCHEME global > Spectral
+  use_named <- if (!is.null(color_scheme)) !identical(color_scheme, FALSE)
+               else !identical(COLOR_SCHEME, FALSE)
+
+  if (is.null(node_colors) && use_named) {
+    palette <- if (is.list(color_scheme)) color_scheme else SANKEY_COLORS
+    node_colors <- all_nodes %>%
+      map_chr(~ resolve_node_color(.x, palette))
+  } else if (is.null(node_colors)) {
     n_nodes <- length(all_nodes)
     if (n_nodes <= 3) {
       node_colors <- brewer.pal(3, "Set2")[1:n_nodes]
     } else if (n_nodes <= 11) {
       node_colors <- brewer.pal(n_nodes, "Spectral")
     } else {
-      # For more than 11 nodes, combine palettes
       colors1 <- brewer.pal(11, "Spectral")
       colors2 <- brewer.pal(min(9, n_nodes - 11), "Set1")
       node_colors <- c(colors1, colors2, rainbow(max(0, n_nodes - 20)))[1:n_nodes]
     }
   } else if (is.list(node_colors) || (is.character(node_colors) && !is.null(names(node_colors)))) {
-    # named colors mapping
     node_colors <- all_nodes %>%
       map_chr(~ if(.x %in% names(node_colors)) node_colors[[.x]] else "lightgray")
-    # map_chr(~ if_else(.x %in% names(node_colors), node_colors[[.x]], "lightgray"))
   } else {
-    # vector of colors
     node_colors <- rep(node_colors, length.out = length(all_nodes))
   }
 
   # handle link colors
-  if (is.null(link_colors)) {
-    # Default: use source node color with transparency
+  if (link_color_by_domain && "units" %in% names(df_sankey)) {
+    energy_units <- c("EJ", "PJ", "TJ", "GWh", "kWh", "MWh", "BBtu", "MMBtu")
+    link_colors <- ifelse(df_sankey$units %in% energy_units,
+                          "#E8863A60",   # warm orange, 38% opacity
+                          "#4A90D960")   # clear blue, 38% opacity
+  } else if (is.null(link_colors)) {
     source_indices <- match(df_sankey$source, all_nodes)
     link_colors <- node_colors[source_indices]
-    # Add transparency (convert to rgba if needed)
     link_colors <- ifelse(startsWith(link_colors, "#"),
                           paste0(link_colors, "80"),
                           paste0(link_colors, "80"))
   } else if (is.list(link_colors) || (is.character(link_colors) && !is.null(names(link_colors)))) {
-    # Named link colors
     link_colors <- df_sankey %>%
       mutate(
         flow_key = paste(source, "->", target),
@@ -1124,26 +1917,25 @@ prepare_sankey_enhanced <- function(df_sankey, node_colors = NULL, link_colors =
       ) %>%
       pull(color)
   } else {
-    # Vector of colors
     link_colors <- rep(link_colors, length.out = nrow(df_sankey))
   }
 
   return(list(
     df_sankey = df_sankey,
     node_labels = node_labels,
-    node_names = all_nodes,  # Keep original names for matching
+    node_names = all_nodes,
     node_colors = node_colors,
     link_colors = link_colors
   ))
 }
 
-# Enhanced main function
 plot_sankey_enhanced <- function(df_sankey, title = "Metro Atlanta Flows", yr = max(YEARS_TO_ENSURE),
                                  animate = TRUE, animateby = "year", years = YEARS_TO_ENSURE,
                                  reg = NULL, agg = TRUE, pretty_label = TRUE,
                                  node_colors = NULL, link_colors = NULL,
                                  show_values_in_labels = T, label_units = "",
-                                 label_year = NULL) {
+                                 label_year = NULL, alt_units = NULL,
+                                 color_scheme = NULL, link_color_by_domain = FALSE) {
 
   if (!animate && !yr %in% years) stop("yr = ", yr, " not in years: ", paste(years, collapse = ", "))
 
@@ -1162,12 +1954,13 @@ plot_sankey_enhanced <- function(df_sankey, title = "Metro Atlanta Flows", yr = 
   }
 
   # Complete the data to set the full canvas
+  nest_cols <- if ("units" %in% colnames(df_sankey)) c("source", "target", "units") else c("source", "target")
   if ("county" %in% colnames(df_sankey)) {
     df_sankey <- as.data.frame(df_sankey) %>%
-      complete(county, year, nesting(source, target), fill = list(value = 0))
+      complete(county, year, nesting(!!!syms(nest_cols)), fill = list(value = 0))
   } else {
     df_sankey <- as.data.frame(df_sankey) %>%
-      complete(year, nesting(source, target), fill = list(value = 0))
+      complete(year, nesting(!!!syms(nest_cols)), fill = list(value = 0))
   }
 
   # Filter to selected years
@@ -1198,8 +1991,11 @@ plot_sankey_enhanced <- function(df_sankey, title = "Metro Atlanta Flows", yr = 
     show_values_in_labels = show_values_in_labels,
     value_year = if(animate) label_year else yr,
     units = label_units,
+    alt_units = alt_units,
     pretty_label = pretty_label,
-    animate = animate
+    animate = animate,
+    color_scheme = color_scheme,
+    link_color_by_domain = link_color_by_domain
   )
 
   # Create the plot
@@ -1243,486 +2039,4 @@ plot_sankey_enhanced <- function(df_sankey, title = "Metro Atlanta Flows", yr = 
   return(p)
 }
 
-# Example usage:
-# Basic usage with default colors
-plot_sankey_enhanced(df_sankey_wwtrade)
-
-
-plot_sankey_enhanced(df_sankey_wwtrade,
-                     node_colors = water_palettes$node_colors)
-
-# With custom labels showing values
-plot_sankey_enhanced(df_sankey_wwtrade,
-                     animate = F,
-                     # yr = 2025,
-                     show_values_in_labels = TRUE,
-                     label_units = "MGD",
-                     node_colors = water_palettes$classic)
-
-
-
-# With custom link colors
-link_colors <- list(
-  "agricultural" = "rgba(46,139,87,0.6)",  # Source-based coloring
-  "agricultural -> losses" = "rgba(255,99,71,0.8)"  # Specific flow coloring
-)
-
-plot_sankey_enhanced(df_sankey_wwtrade,
-                     # node_colors = node_colors,
-                     link_colors = link_colors,
-                     show_values_in_labels = TRUE,
-                     label_units = "MGD")
-
-
-# try 2 ----
-plot_sankey_advanced <- function(df_sankey,
-                                 title = "Metro Atlanta Flows",
-                                 yr = max(YEARS_TO_ENSURE),
-                                 animate = TRUE,
-                                 years = YEARS_TO_ENSURE,
-                                 reg = NULL,
-                                 agg = TRUE,
-                                 node_colors = NULL,
-                                 link_colors = NULL,
-                                 link_opacity = 0.2,
-                                 use_gradients = TRUE,
-                                 node_positions = NULL,
-                                 show_values_in_labels = TRUE,
-                                 color_palette = "Set3",
-                                 theme = "light",
-                                 node_width = 20,
-                                 node_pad = 15) {
-
-  # load required libraries
-  require(plotly)
-  require(dplyr)
-  require(tidyr)
-  require(RColorBrewer)
-
-  # helper function to check for duplicates
-  repeats <- function(df) {
-    df[duplicated(df) | duplicated(df, fromLast = TRUE), ]
-  }
-
-  # data validation
-  if (!animate && !yr %in% years) stop("yr = ", yr, " not in years: ", paste(years, collapse = ", "))
-
-  df_check <- df_sankey %>% select(source, target, year)
-  if (any(duplicated(df_check))) {
-    stop("data has multiple flows / repeated rows. Please check the data.")
-  }
-
-  if (any(df_sankey$value < 0)) {
-    stop("data has negative values. Please check the data.")
-  }
-
-  # complete the data to set the full canvas
-  if ("county" %in% colnames(df_sankey)) {
-    df_sankey <- as.data.frame(df_sankey) %>%
-      complete(county, year, nesting(source, target), fill = list(value = 0))
-  } else {
-    df_sankey <- as.data.frame(df_sankey) %>%
-      complete(year, nesting(source, target), fill = list(value = 0))
-  }
-
-  # filter data based on parameters
-  df_sankey <- df_sankey %>% filter(year %in% years)
-
-  if ("county" %in% colnames(df_sankey) && !is.null(reg)) {
-    df_sankey <- df_sankey %>% filter(county %in% reg)
-  }
-
-  # aggregate over counties if needed
-  if (agg == TRUE && "county" %in% colnames(df_sankey)) {
-    df_sankey <- df_sankey %>%
-      group_by(across(-county)) %>%
-      summarise(value = sum(value), .groups = "drop")
-  }
-
-  # filter to specific year if not animating
-  if (animate == FALSE) {
-    df_sankey <- df_sankey %>% filter(year == yr)
-  }
-
-  # generate unique node labels
-  all_nodes <- unique(c(as.character(df_sankey$source), as.character(df_sankey$target)))
-  n_nodes <- length(all_nodes)
-
-  # calculate node values for labels
-  if (show_values_in_labels && animate == FALSE) {
-    # for static plots, use the specific year
-    node_values <- df_sankey %>%
-      filter(year == yr) %>%
-      group_by(source) %>%
-      summarise(out_flow = sum(value), .groups = "drop") %>%
-      rename(node = source, flow = out_flow) %>%
-      bind_rows(
-        df_sankey %>%
-          filter(year == yr) %>%
-          group_by(target) %>%
-          summarise(in_flow = sum(value), .groups = "drop") %>%
-          rename(node = target, flow = in_flow)
-      ) %>%
-      group_by(node) %>%
-      summarise(total_flow = max(flow), .groups = "drop")
-
-    units <- if("units" %in% colnames(df_sankey)) df_sankey$units[1] else ""
-
-    enhanced_labels <- sapply(all_nodes, function(node) {
-      node_val <- node_values$total_flow[node_values$node == node]
-      if(length(node_val) > 0 && !is.na(node_val) && node_val > 0) {
-        paste0(node, " (", round(node_val, 1), " ", units, ")")
-      } else {
-        node
-      }
-    })
-    node_display_labels <- as.character(enhanced_labels)
-  } else {
-    # for animated plots, use base labels to avoid confusion
-    node_display_labels <- all_nodes
-  }
-
-  # set up node colors
-  if (is.null(node_colors)) {
-    if (n_nodes <= 12 && color_palette %in% rownames(RColorBrewer::brewer.pal.info)) {
-      available_colors <- RColorBrewer::brewer.pal.info[color_palette, "maxcolors"]
-      n_colors <- max(3, min(n_nodes, available_colors))
-      node_colors <- RColorBrewer::brewer.pal(n_colors, color_palette)
-      if (n_nodes > n_colors) {
-        # extend with rainbow if needed
-        additional_colors <- rainbow(n_nodes - n_colors, alpha = 0.8)
-        node_colors <- c(node_colors, additional_colors)
-      }
-    } else {
-      # for more nodes or invalid palette, use rainbow
-      node_colors <- rainbow(n_nodes, alpha = 0.8)
-    }
-    names(node_colors) <- all_nodes
-  } else {
-    # ensure all nodes have colors
-    missing_nodes <- setdiff(all_nodes, names(node_colors))
-    if (length(missing_nodes) > 0) {
-      additional_colors <- rainbow(length(missing_nodes), alpha = 0.8)
-      names(additional_colors) <- missing_nodes
-      node_colors <- c(node_colors, additional_colors)
-    }
-  }
-
-  # set up node positions
-  if (is.null(node_positions)) {
-    # create smart default positions
-    sources <- unique(df_sankey$source)
-    targets <- unique(df_sankey$target)
-
-    pure_sources <- setdiff(sources, targets)
-    pure_sinks <- setdiff(targets, sources)
-    intermediates <- intersect(sources, targets)
-
-    node_x <- numeric(n_nodes)
-    node_y <- numeric(n_nodes)
-
-    for (i in seq_along(all_nodes)) {
-      node <- all_nodes[i]
-      if (node %in% pure_sources) {
-        node_x[i] <- 0.1
-        node_y[i] <- ifelse(length(pure_sources) == 1, 0.5,
-                            (match(node, pure_sources) - 1) / (length(pure_sources) - 1) * 0.8 + 0.1)
-      } else if (node %in% pure_sinks) {
-        node_x[i] <- 0.9
-        node_y[i] <- ifelse(length(pure_sinks) == 1, 0.5,
-                            (match(node, pure_sinks) - 1) / (length(pure_sinks) - 1) * 0.8 + 0.1)
-      } else {
-        node_x[i] <- 0.5
-        node_y[i] <- ifelse(length(intermediates) == 1, 0.5,
-                            (match(node, intermediates) - 1) / (length(intermediates) - 1) * 0.8 + 0.1)
-      }
-    }
-  } else {
-    node_x <- node_positions$x[match(all_nodes, names(node_positions$x))]
-    node_y <- node_positions$y[match(all_nodes, names(node_positions$y))]
-
-    # fill missing positions
-    missing_pos <- is.na(node_x) | is.na(node_y)
-    if (any(missing_pos)) {
-      node_x[missing_pos] <- seq(0.1, 0.9, length.out = sum(missing_pos))
-      node_y[missing_pos] <- 0.5
-    }
-  }
-
-  # helper function to convert hex to rgba
-  hex_to_rgba <- function(hex_color, alpha = 1) {
-    if (substr(hex_color, 1, 1) != "#") {
-      # handle named colors
-      hex_color <- rgb(t(col2rgb(hex_color)), maxColorValue = 255)
-    }
-    rgb_vals <- col2rgb(hex_color)
-    paste0("rgba(", rgb_vals[1], ",", rgb_vals[2], ",", rgb_vals[3], ",", alpha, ")")
-  }
-
-  # helper function to blend colors
-  blend_colors <- function(color1, color2, alpha = link_opacity) {
-    rgb1 <- col2rgb(color1)
-    rgb2 <- col2rgb(color2)
-    blended_rgb <- (rgb1 + rgb2) / 2
-    paste0("rgba(", blended_rgb[1], ",", blended_rgb[2], ",", blended_rgb[3], ",", alpha, ")")
-  }
-
-  # set up link colors
-  if (is.null(link_colors)) {
-    if (use_gradients) {
-      # create gradient colors from source to target
-      link_colors_vec <- mapply(function(src, tgt) {
-        src_color <- node_colors[src]
-        tgt_color <- node_colors[tgt]
-        blend_colors(src_color, tgt_color, link_opacity)
-      }, df_sankey$source, df_sankey$target)
-    } else {
-      # use source node color with opacity
-      link_colors_vec <- sapply(df_sankey$source, function(src) {
-        hex_to_rgba(node_colors[src], link_opacity)
-      })
-    }
-  } else {
-    link_colors_vec <- link_colors
-  }
-
-  # prepare data for plotly
-  plot_data <- df_sankey %>%
-    mutate(
-      source_id = match(source, all_nodes) - 1,
-      target_id = match(target, all_nodes) - 1,
-      link_color = link_colors_vec
-    )
-
-  # create the plot
-  p <- plot_ly(
-    data = plot_data,
-    type = "sankey",
-    arrangement = "snap",
-    node = list(
-      pad = node_pad,
-      thickness = node_width,
-      label = node_display_labels,
-      color = node_colors[all_nodes],
-      x = node_x,
-      y = node_y,
-      line = list(
-        color = if(theme == "dark") "white" else "black",
-        width = 0.5
-      )
-    ),
-    link = list(
-      source = ~source_id,
-      target = ~target_id,
-      value = ~value,
-      color = ~link_color
-    )
-  )
-
-  # add animation if requested - correct way for sankey
-  if (animate == TRUE) {
-    p <- p %>%
-      add_trace(frame = ~year) %>%
-      animation_opts(
-        2000,
-        redraw = TRUE
-      ) %>%
-      animation_slider(
-        currentvalue = list(
-          prefix = "Year ",
-          font = list(color = if(theme == "dark") "white" else "red", size = 14)
-        )
-      )
-  }
-
-  # set up layout
-  title_text <- paste0(
-    title,
-    if(!is.null(reg)) paste0(" for ", paste(reg, collapse = ", ")),
-    if(!animate) paste0(" in ", yr)
-  )
-
-  layout_config <- list(
-    title = list(
-      text = title_text,
-      font = list(
-        size = 18,
-        color = if(theme == "dark") "white" else "black"
-      ),
-      x = 0.5,
-      xanchor = "center"
-    ),
-    font = list(
-      size = 12,
-      color = if(theme == "dark") "white" else "black"
-    ),
-    plot_bgcolor = if(theme == "dark") "#2F2F2F" else "white",
-    paper_bgcolor = if(theme == "dark") "#1F1F1F" else "white",
-    margin = list(l = 10, r = 10, t = 80, b = 40)
-  )
-
-  p <- p %>% layout(layout_config)
-
-  # add configuration options
-  p <- p %>% config(
-    displayModeBar = TRUE,
-    displaylogo = FALSE
-  )
-
-  return(p)
-}
-
-# test with your data
-plot_sankey_advanced(
-  df_sankey_wwtrade,
-  title = "Water Trade Flows",
-  animate = F,
-  node_colors = c("agricultural" = "#2E8B57", "losses" = "#CD5C5C"),
-  use_gradients = T,
-  node_positions = node_positions,
-  link_opacity = 0.2,
-  show_values_in_labels = T  # set to FALSE for animated plots
-)
-
-
-all_nodes <- unique(c(df_sankey_wwtrade$source, df_sankey_wwtrade$target))
-# create circular arrangement
-n_nodes <- length(all_nodes)
-angles <- seq(0, 2*pi, length.out = n_nodes + 1)[1:n_nodes]
-radius <- 0.3
-center_x <- 0.5
-center_y <- 0.5
-
-# helper function to print current default positions for reference
-get_default_positions <- function(df_sankey) {
-  all_nodes <- unique(c(df_sankey$source, df_sankey$target))
-
-  # this mimics the default positioning logic
-  sources <- unique(df_sankey$source)
-  targets <- unique(df_sankey$target)
-  pure_sources <- setdiff(sources, targets)
-  pure_sinks <- setdiff(targets, sources)
-  intermediates <- intersect(sources, targets)
-
-  positions <- data.frame(
-    node = all_nodes,
-    x = numeric(length(all_nodes)),
-    y = numeric(length(all_nodes)),
-    type = character(length(all_nodes))
-  )
-
-  for (i in seq_along(all_nodes)) {
-    node <- all_nodes[i]
-    if (node %in% pure_sources) {
-      positions$x[i] <- 0.1
-      positions$y[i] <- ifelse(length(pure_sources) == 1, 0.5,
-                               (match(node, pure_sources) - 1) / (length(pure_sources) - 1) * 0.8 + 0.1)
-      positions$type[i] <- "source"
-    } else if (node %in% pure_sinks) {
-      positions$x[i] <- 0.9
-      positions$y[i] <- ifelse(length(pure_sinks) == 1, 0.5,
-                               (match(node, pure_sinks) - 1) / (length(pure_sinks) - 1) * 0.8 + 0.1)
-      positions$type[i] <- "sink"
-    } else {
-      positions$x[i] <- 0.5
-      positions$y[i] <- ifelse(length(intermediates) == 1, 0.5,
-                               (match(node, intermediates) - 1) / (length(intermediates) - 1) * 0.8 + 0.1)
-      positions$type[i] <- "intermediate"
-    }
-  }
-
-  return(positions)
-}
-
-# see default positions
-default_pos <- get_default_positions(df_sankey_wwtrade)
-print(default_pos)
-
-# convert to position format
-node_positions <- list(
-  x = setNames(default_pos$x, default_pos$node),
-  y = setNames(default_pos$y, default_pos$node)
-)
-
-plot_sankey_advanced(
-  df_sankey_wwtrade,
-  title = "Water Trade Flows",
-  node_positions = node_positions,
-  animate = F
-)
-
-
-# hard coding positions ----
-node_positions <- list(
-  x = c(
-    # column 1 - water sources (left)
-    "groundwater" = 0.05,
-    "publicWatSup" = 0.05,
-
-    # column 2 - water users (center-left)
-    "residential" = 0.35,
-    "commercial" = 0.35,
-    "industrial" = 0.35,
-    "agricultural" = 0.35,
-
-    # column 2.5 - imports (before wastewater collection)
-    "ww_imports" = 0.05,
-
-    # column 3 - wastewater collection (center)
-    "wastewater" = 0.65,
-
-    # column 4 - final destinations (right)
-    "losses" = 0.95,
-    "septic" = 0.95,
-    "in-county treatment" = 0.95,
-    "ww_exports" = 0.95
-  ),
-  y = c(
-    # column 1 vertical positions
-    "groundwater" = 0.8,        # bottom (green)
-    "publicWatSup" = 0.2,       # top (purple)
-
-    # column 2 vertical positions (top to bottom)
-    "residential" = 0.35,       # top (brown/red)
-    "commercial" = 0.45,        # middle-top (orange)
-    "industrial" = 0.55,        # middle-bottom (red)
-    "agricultural" = 0.75,      # bottom (blue)
-
-    # column 2.5
-    "ww_imports" = 0.95,        # center level
-    "wastewater" = 0.65,        # center (pink/magenta)
-    "ww_exports" = 0.95,         # very bottom
-
-    # column 4 vertical positions
-    "losses" = 0.05,            # top (gray)
-    "septic" = 0.25,            # middle-top (yellow)
-    "in-county treatment" = 0.55# bottom (cyan/teal)
-
-  )
-)
-
-# use with your function
-plot_sankey_advanced(
-  df_sankey_wwtrade,
-  title = "Water Trade Flows",
-  animate = F,
-  node_positions = node_positions,
-  # node_colors = c(
-  #   "groundwater" = "#2E8B57",           # green
-  #   "publicWatSup" = "#9370DB",          # purple
-  #   "residential" = "#A0522D",           # brown
-  #   "commercial" = "#FF8C00",            # orange
-  #   "industrial" = "#DC143C",            # red
-  #   "agricultural" = "#4682B4",          # blue
-  #   "wastewater" = "#FF69B4",            # pink/magenta
-  #   "ww_imports" = "#DDA0DD",            # light purple
-  #   "losses" = "#808080",                # gray
-  #   "septic" = "#FFD700",                # yellow/gold
-  #   "in-county treatment" = "#20B2AA",   # teal/cyan
-  #   "ww_exports" = "#FF6347"             # tomato
-  # ),
-  use_gradients = TRUE,
-  link_opacity = 0.4,
-  show_values_in_labels = T
-)
 
