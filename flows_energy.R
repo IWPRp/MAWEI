@@ -524,8 +524,6 @@ if (MAKE_PLOT) plot_sankey_enhanced(en_fuel_gen_use_loss_all_trade %>%
                        summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>% pretty_labels(),
                      reg = "Fulton", animate = T, show_values_in_labels = T, label_units = "PJ")
 
-# save this
-
 
 # TODO: improve colors; ability to pass on units column to have both MGD and PJ in labels
 # TODO: remove ww trade labeling but have insights of energy, water movement
@@ -533,5 +531,35 @@ if (MAKE_PLOT) plot_sankey_enhanced(en_fuel_gen_use_loss_all_trade %>%
 # TODO: reporting
 # TODO: paper draft
 
+if (SAVE_FILES) {
+###############################################################################%
+# SAVING METRO ----
+###############################################################################%
 
+message("Saving energy outputs...")
 
+write_csv(en_fuel_gen_use_loss_all_trade_metro,
+          file.path(SAVE_DIR, "energy/01_metro_energy_flows.csv"))
+
+save_sankey(
+  plot_sankey_enhanced(
+    en_fuel_gen_use_loss_all_trade_metro %>%
+      group_by(year, source, target, units) %>%
+      summarise(value = sum(value) * EJ_to_PJ, .groups = "drop"),
+    animate = TRUE, show_values_in_labels = TRUE, label_units = "PJ"),
+  file.path(SAVE_DIR, "energy/01_metro_energy.html"))
+
+###############################################################################%
+# SAVING COUNTY ----
+###############################################################################%
+
+write_csv(en_fuel_gen_use_loss_all_trade,
+          file.path(SAVE_DIR, "energy/02_county_energy_flows.csv"))
+
+save_county_sankeys(en_fuel_gen_use_loss_all_trade, "energy", "02", "energy",
+                    prep_fn = function(df) df %>%
+                      group_by(county, year, source, target, units) %>%
+                      summarise(value = sum(value) * EJ_to_PJ, .groups = "drop"),
+                    label_units = "PJ")
+
+}

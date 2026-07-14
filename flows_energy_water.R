@@ -73,3 +73,49 @@ if (MAKE_PLOT) plot_sankey_enhanced(energy_water_simplified_county %>% pretty_la
 plot_sankey_pro(energy_water_simplified_county)
 plot_sankey_pro(energy_water_simplified_county, reg = "Fulton")
 
+if (SAVE_FILES) {
+###############################################################################%
+# SAVING METRO ----
+###############################################################################%
+
+message("Saving energy-water outputs...")
+
+write_csv(energy_water,
+          file.path(SAVE_DIR, "energy-water/01_metro_ew_flows.csv"))
+write_csv(energy_water_simplified,
+          file.path(SAVE_DIR, "energy-water/02_metro_ew_simplified_flows.csv"))
+
+save_sankey(
+  plot_sankey_enhanced(energy_water,
+                       animate = TRUE, show_values_in_labels = TRUE,
+                       label_units = "auto", alt_units = ew_alt_units,
+                       link_color_by_domain = TRUE),
+  file.path(SAVE_DIR, "energy-water/01_metro_ew.html"))
+
+save_sankey(
+  plot_sankey_enhanced(energy_water_simplified,
+                       animate = TRUE, show_values_in_labels = TRUE,
+                       label_units = "auto", alt_units = ew_alt_units,
+                       link_color_by_domain = TRUE),
+  file.path(SAVE_DIR, "energy-water/02_metro_ew_simplified.html"))
+
+###############################################################################%
+# SAVING COUNTY ----
+###############################################################################%
+
+write_csv(energy_water_county,
+          file.path(SAVE_DIR, "energy-water/03_county_ew_flows.csv"))
+write_csv(energy_water_simplified_county,
+          file.path(SAVE_DIR, "energy-water/04_county_ew_simplified_flows.csv"))
+
+save_county_sankeys(
+  energy_water_county, "energy-water", "03", "ew",
+  prep_fn = identity, label_units = "auto", alt_units = ew_alt_units,
+  link_color_by_domain = TRUE)
+
+save_county_sankeys(
+  energy_water_simplified_county, "energy-water", "04", "ew_simplified",
+  prep_fn = identity, label_units = "auto", alt_units = ew_alt_units,
+  link_color_by_domain = TRUE)
+
+}

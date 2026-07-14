@@ -1321,9 +1321,42 @@ if (MAKE_PLOT) plot_sankey_enhanced(high_level_pws_sw_demands_balance,
 # write_csv(df_water_metro_linear_wSW_discharge_type, paste0(SAVE_DIR, "water_metro_linear_wSW_discharge_receivingtype.csv"))
 
 
+if (SAVE_FILES) {
+###############################################################################%
+# SAVING METRO ----
+###############################################################################%
+
+message("Saving water outputs...")
+
+write_csv(df_water_metro_linear_wSW_discharge_type,
+          file.path(SAVE_DIR, "water/01_metro_water_flows.csv"))
+
+save_sankey(
+  plot_sankey_enhanced(df_water_metro_linear_wSW_discharge_type,
+                       animate = TRUE, show_values_in_labels = TRUE, label_units = "MGD"),
+  file.path(SAVE_DIR, "water/01_metro_water.html"))
+
+###############################################################################%
+# SAVING COUNTY ----
+###############################################################################%
+
+write_csv(df_sankey_county_pws_balanced,
+          file.path(SAVE_DIR, "water/02_county_water_flows.csv"))
+
+save_county_sankeys(
+  df_sankey_county_pws_balanced, "water", "02", "water",
+  prep_fn = identity, label_units = "MGD")
+
+
+}
+
+
 ##############################################################################%
 # ENERGY FOR WATER ----
 ##############################################################################%
+
+# This could go into energy-water script but keep it here due to data tables
+# being here and downstream dependency to energy
 
 # TODO: probably write out the balanced county level water flows df_sankey_county_pws_balanced
 # to a csv and move this to a separate script for energy-for-water
@@ -1569,333 +1602,3 @@ en4water <- en4water_ww_elec_use %>%
 if (MAKE_PLOT) plot_sankey_enhanced(en4water %>% group_by(source, target, year) %>% summarise(value = sum(value) * EJ_to_TJ, .groups = "drop") %>% mutate(units = "TJ") %>% pretty_labels(), show_values_in_labels = TRUE, animate = T, label_units = "TJ")
 
 
-###############################################################################%
-# ENERGY-WATER ----
-###############################################################################%
-
-# # add thermoelectric water with EFW
-# en_water_ww_elec_thermo <- rbind(en4water_ww_elec %>% mutate(value = value * EJ_to_PJ), thermoelec_water_use %>% mutate(value = value /10))
-#
-# plot_sankey_enhanced(en_water_ww_elec_thermo %>% group_by(source, target, year) %>% summarise(value = sum(value), .groups = "drop") %>% pretty_labels(), show_values_in_labels = TRUE, animate = T)
-
-
-
-
-
-
-
-
-
-
-
-
-###############################################################################%
-# # archive ----
-#
-# # test, dummy data for imports and exports
-# # unique((df_sankey %>% filter(county == "Bartow", source == "wastewater"))$target)
-# test_ww_flows <- data.frame(
-#   fromcounty = c("Bartow", "Bartow", "Cherokee", "Cherokee", "Fulton", "Fulton"),
-#   tocounty = c("Cherokee", "Fulton", "Bartow", "Fulton", "Bartow", "Cherokee"),
-#   fromplace = c("PlaceA", "PlaceB", "PlaceC", "PlaceD", "PlaceE", "PlaceF"),
-#   tofacility = c("CARTERSVILLE JAMES R. STAFFORD WPCP", "EMERSON HENRY JORDAN WWTP", "ADAIRSVILLE NORTH WPCP", "ADAIRSVILLE SOUTH WPCP", "BARTOW SOUTHEAST WPCP", "BARTOW TWO RUN WPCP"),
-#   year = c(2020, 2020, 2020, 2020, 2020, 2020),
-#   value = c(10, 14, 15, 12, 13, 5)
-# )
-#
-# imports <- test_ww_flows %>% filter(fromcounty != "Bartow", tocounty == "Bartow") %>%
-#   select(county = tocounty, source = fromcounty, target = tofacility, year, value)
-# exports <- test_ww_flows %>% filter(fromcounty == "Bartow", tocounty != "Bartow") %>% mutate(source = "wastewater") %>%
-#   select(county = fromcounty, source, target = tofacility, year, value)
-#
-# plot_sankey(rbind(df_sankey, imports, exports), reg = "Bartow")
-#
-# # attempts
-# a <- df_wastewater_treated_ %>% rename(total_treated_byfacility = value) %>%
-#   left_join(df_ww_conn_type, by = c("county", "year", "target" = "tofacility")) %>% filter(!is.na(value)) %>%
-#   group_by(tofacility, year) %>%
-#   summarise(total_connected = sum(value), .groups = "drop"),
-# by = c("tofacility", "year")) %>%
-#   mutate(perc_connected = if_else(total_treated_byfacility > 0,
-#                                   total_connected / total_treated_byfacility * 100, 0)) %>%
-#   filter(perc_connected > 100) %>%
-#   arrange(desc(perc_connected)) -> df_ww_conn_exceed
-#
-#
-# # calculate imports, exports
-# ww_imports <- df_ww_conn_type %>%
-#   group_by(tocounty, tofacility, year) %>%
-#   summarise(imports = sum(value, na.rm = TRUE), .groups = 'drop') %>%
-#   rename(county = tocounty, facility = tofacility)
-#
-# # I think total treated does NOT include imports, given half the imports are larger than total treated
-# # adding imports to total treated to get in-county treated
-# df_wastewater_treated_imports_adj <- df_wastewater_treated_ %>%
-#   left_join(ww_imports, by = c("county", "target" = "facility", "year")) %>%
-#   mutate(imports = replace_na(imports, 0),
-#          in_county_treated = value + imports) %>%
-#   select(county, year, facility = target, in_county_treated, imports)
-#
-# b <- df_wastewater_treated_imports_adj %>% filter(imports > 0) # should be none
-#
-# ww_exports <- df_ww_conn_type %>%
-#   group_by(fromcounty, tocounty, tofacility, year) %>%
-#   summarise(ww_exports = sum(value), .groups = "drop") %>%
-#   select(county = fromcounty, source = tocounty, target = tofacility, year, value = ww_exports)
-#
-# # total treated by a facility = df_wastewater_treated_
-# ww_flow <- ww_imports %>%
-#   left_join(ww_exports, by = c("fromcounty" = "tocounty", "tofacility", "year")) %>%
-#   mutate(ww_exports = replace_na(ww_exports, 0),
-#          net_flow = ww_imports - ww_exports) %>%
-#   filter(net_flow != 0)
-#
-# # quick test for Cherokee county
-# df_ww_conn_cher <- df_ww_conn %>% filter(tocounty == "Cherokee" | fromcounty == "Cherokee") %>% filter(tocounty != fromcounty) %>%
-#   # replace "Little River WRF (SEE CHEROKEE CO)" with "Fulton Co Little River WRF" in tofacility
-#   mutate(tofacility = if_else(tofacility == "Little River WRF (SEE CHEROKEE CO)", "Fulton Co Little River WRF", tofacility))
-#
-#
-# # main workflow
-# df_ww_conn_cher %>% rename(source = fromcounty, target = tofacility) %>%
-#   select(county = source, year, source, target, value = flow) %>%
-#   rbind(df_ww_conn_cher %>% rename(source = fromfacility, target = tocounty) %>%
-#           select(county = target, year, source, target, value)) %>%
-#   filter(county == "Cherokee") %>%
-#   rbind(df_sankey %>% filter(county == "Cherokee")) %>%
-#   plot_sankey(., reg = "Cherokee", title = "Cherokee County Wastewater Connections")
-#
-#
-# df_ww_conn_cher %>% rename(source = fromcounty, target = tofacility) %>% mutate(county = "Cherokee") %>%
-#   select(county, year, source, target, value = flow) %>% rbind(df_sankey) %>%
-#   # if source = Cherokee, replace it "wastewater"
-#   mutate(source = if_else(source == "Cherokee", "wastewater", source)) -> df_plotcher
-# plot_sankey(df_plotcher %>% unique(), reg = "Cherokee", title = "Cherokee County Wastewater Connections")
-#
-#
-#
-# ## testing
-#
-# # Load required libraries
-# library(dplyr)
-# library(tidyr)
-# library(networkD3)  # for Sankey diagrams
-# library(ggplot2)
-#
-# # Step 1: Data Preparation and Validation
-# prepare_data <- function(df_wastewater_treated_, df_ww_conn_type, target_year = 2020) {
-#
-#   # Filter for target year
-#   treatment_data <- df_wastewater_treated_ %>%
-#     filter(year == target_year) %>%
-#     select(county, target, value) %>%
-#     rename(facility = target, total_treatment = value)
-#
-#   connection_data <- df_ww_conn_type %>%
-#     filter(year == target_year)
-#
-#   return(list(treatment = treatment_data, connections = connection_data))
-# }
-#
-# # Step 2: Calculate Imports by Facility
-# calculate_imports <- function(connection_data, treatment_data) {
-#
-#   imports <- connection_data %>%
-#     filter(!is.na(tofacility)) %>%  # Only facility-level imports
-#     group_by(tocounty, tofacility) %>%
-#     summarise(imports = sum(value, na.rm = TRUE), .groups = 'drop') %>%
-#     rename(county = tocounty, facility = tofacility)
-#
-#   return(imports)
-# }
-#
-# # Step 3: Calculate Exports by County (limitation: not at facility level)
-# calculate_exports <- function(connection_data) {
-#
-#   exports <- connection_data %>%
-#     group_by(fromcounty) %>%
-#     summarise(total_exports = sum(value, na.rm = TRUE), .groups = 'drop') %>%
-#     rename(county = fromcounty)
-#
-#   return(exports)
-# }
-#
-# # Step 4: Calculate In-County Treatment
-# calculate_incounty_treatment <- function(treatment_data, imports) {
-#
-#   # Join treatment data with imports
-#   facility_flows <- treatment_data %>%
-#     left_join(imports, by = c("county", "facility")) %>%
-#     mutate(
-#       imports = coalesce(imports, 0),
-#       incounty_treatment = total_treatment - imports,
-#       # Flag potential issues
-#       issue_flag = case_when(
-#         incounty_treatment < 0 ~ "negative_incounty",
-#         incounty_treatment == 0 ~ "zero_incounty",
-#         TRUE ~ "normal"
-#       )
-#     )
-#
-#   return(facility_flows)
-# }
-#
-# # Step 5: Create Sankey Data Structure
-# prepare_sankey_data <- function(facility_flows, connection_data, target_county = NULL) {
-#
-#   # Filter for specific county if requested
-#   if (!is.null(target_county)) {
-#     facility_flows <- facility_flows %>% filter(county == target_county)
-#     connection_data <- connection_data %>%
-#       filter(fromcounty == target_county | tocounty == target_county)
-#   }
-#
-#   # Create nodes and links for Sankey
-#   nodes <- data.frame()
-#   links <- data.frame()
-#
-#   # In-county treatment flows
-#   incounty_flows <- facility_flows %>%
-#     filter(incounty_treatment > 0) %>%
-#     mutate(
-#       source = paste0(county, "_generation"),
-#       target = paste0(county, "_", facility),
-#       value = incounty_treatment,
-#       flow_type = "incounty"
-#     ) %>%
-#     select(source, target, value, flow_type)
-#
-#   # Import flows
-#   import_flows <- connection_data %>%
-#     filter(!is.na(tofacility), value > 0) %>%
-#     mutate(
-#       source = paste0(fromcounty, "_export"),
-#       target = paste0(tocounty, "_", tofacility),
-#       value = value,
-#       flow_type = "import"
-#     ) %>%
-#     select(source, target, value, flow_type)
-#
-#   # Export flows (county level)
-#   export_flows <- connection_data %>%
-#     filter(!is.na(fromcounty), value > 0) %>%
-#     mutate(
-#       source = paste0(fromcounty, "_generation"),
-#       target = paste0(tocounty, "_import"),
-#       value = value,
-#       flow_type = "export"
-#     ) %>%
-#     select(source, target, value, flow_type)
-#
-#   # Combine all flows
-#   all_flows <- bind_rows(incounty_flows, import_flows, export_flows)
-#
-#   return(all_flows)
-# }
-#
-# # Step 6: Data Quality Checks
-# perform_quality_checks <- function(facility_flows, connection_data) {
-#
-#   # Check for negative in-county treatment
-#   negative_incounty <- facility_flows %>%
-#     filter(incounty_treatment < 0) %>%
-#     select(county, facility, total_treatment, imports, incounty_treatment)
-#
-#   # Check mass balance by county
-#   county_balance <- facility_flows %>%
-#     group_by(county) %>%
-#     summarise(
-#       total_treatment = sum(total_treatment),
-#       total_imports = sum(imports),
-#       total_incounty = sum(incounty_treatment),
-#       .groups = 'drop'
-#     )
-#
-#   # Check for missing connections
-#   facilities_in_treatment <- facility_flows %>%
-#     distinct(county, facility)
-#
-#   facilities_in_connections <- connection_data %>%
-#     filter(!is.na(tofacility)) %>%
-#     distinct(tocounty, tofacility) %>%
-#     rename(county = tocounty, facility = tofacility)
-#
-#   missing_facilities <- anti_join(facilities_in_treatment, facilities_in_connections,
-#                                   by = c("county", "facility"))
-#
-#   return(list(
-#     negative_incounty = negative_incounty,
-#     county_balance = county_balance,
-#     missing_facilities = missing_facilities
-#   ))
-# }
-#
-# # Step 7: Create Sankey Visualization
-# create_sankey_plot <- function(sankey_data, title = "Wastewater Flow") {
-#
-#   # Create node list
-#   nodes <- data.frame(
-#     name = unique(c(sankey_data$source, sankey_data$target)),
-#     stringsAsFactors = FALSE
-#   ) %>%
-#     mutate(id = row_number() - 1)
-#
-#   # Create links with node IDs
-#   links <- sankey_data %>%
-#     left_join(nodes, by = c("source" = "name")) %>%
-#     rename(source_id = id) %>%
-#     left_join(nodes, by = c("target" = "name")) %>%
-#     rename(target_id = id) %>%
-#     select(source_id, target_id, value, flow_type)
-#
-#   # Create Sankey plot
-#   sankeyNetwork(
-#     Links = links,
-#     Nodes = nodes,
-#     Source = "source_id",
-#     Target = "target_id",
-#     Value = "value",
-#     NodeID = "name",
-#     fontSize = 12,
-#     nodeWidth = 30,
-#     title = title
-#   )
-# }
-#
-# # Main execution function
-# analyze_wastewater_flows <- function(df_wastewater_treated_, df_ww_conn_type,
-#                                      target_year = 2020, target_county = NULL) {
-#
-#   # Step 1: Prepare data
-#   data <- prepare_data(df_wastewater_treated_, df_ww_conn_type, target_year)
-#
-#   # Step 2-4: Calculate flows
-#   imports <- calculate_imports(data$connections, data$treatment)
-#   exports <- calculate_exports(data$connections)
-#   facility_flows <- calculate_incounty_treatment(data$treatment, imports)
-#
-#   # Step 5: Quality checks
-#   quality_checks <- perform_quality_checks(facility_flows, data$connections)
-#
-#   # Step 6: Prepare Sankey data
-#   sankey_data <- prepare_sankey_data(facility_flows, data$connections, target_county)
-#
-#   # Step 7: Create visualization
-#   sankey_plot <- create_sankey_plot(sankey_data,
-#                                     paste("Wastewater Flows",
-#                                           ifelse(is.null(target_county), "", target_county),
-#                                           target_year))
-#
-#   return(list(
-#     facility_flows = facility_flows,
-#     quality_checks = quality_checks,
-#     sankey_data = sankey_data,
-#     sankey_plot = sankey_plot
-#   ))
-# }
-#
-# # Usage example:
-# # results <- analyze_wastewater_flows(df_wastewater_treated_, df_ww_conn_type,
-# #                                   target_year = 2020, target_county = "Bartow")
-# # results$sankey_plot
-# # View(results$quality_checks$negative_incounty)
