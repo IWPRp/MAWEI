@@ -1,13 +1,47 @@
-MIT License
+Educational Use License
 
 Copyright (c) 2026 Pacific Northwest National Laboratory
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+All rights reserved.
+
+# Purpose
+
+This repository and its contents are provided solely for educational, informational, and research purposes. The materials are intended to facilitate learning and discussion and are not provided for any commercial, institutional, or production use.
+
+# Permitted Use
+
+You may:
+
+- View, read, and study the contents of this repository.
+- Share links to this repository.
+- Share excerpts or references to this repository only when proper credit is given to the original author and this license accompanies the shared material.
+
+# Restrictions
+
+Unless you have obtained prior written permission from the copyright holder, you may NOT:
+
+- Copy, reproduce, redistribute, or republish this repository or any portion of its contents in any form or by any means.
+- Modify, adapt, translate, or create derivative works based on this repository.
+- Use any part of this repository in commercial, institutional, or intellectual property products, services, publications, or training materials.
+- Remove or alter copyright notices or attribution.
+
+# Written Permission
+
+Requests for permission to reproduce, modify, or otherwise use the materials beyond the permissions granted by this license must be submitted in writing to:
+
+Pacific Northwest National Laboratory
+Email: hassan.niazi@pnnl.gov | kelsey.semrod@pnnl.gov
+
+Permission is granted only when explicitly provided in writing by the copyright holder.
+
+# Attribution
+
+When sharing permitted excerpts or references, you must clearly credit:
+
+Niazi, H., Semrod, K., Mongird, K., Rice, J. (2026). MAWEI: Metro Atlanta Water-Energy Interdependencies. Pacific Northwest National Laboratory.
+© 2026 Pacific Northwest National Laboratory. Used with attribution.
+
+# Disclaimer
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
