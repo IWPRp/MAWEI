@@ -15,8 +15,9 @@ library(zoo)
 DATA_DIR <- "data/"
 SAVE_DIR <- "outputs/files/"
 SCRIPTS_DIR <- "R/"
-SAVE_FILES <- F
+SAVE_FILES <- T
 MAKE_PLOT <- F
+ANALYSIS <- F
 
 # --- Sankey color scheme switch ---
 # "vivid"  : high-contrast true-representative colors

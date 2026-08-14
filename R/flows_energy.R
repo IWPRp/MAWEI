@@ -241,7 +241,7 @@ eia923_electricity_gen <- eia923_sch2pg1_genfuel_GA_C %>%
   remap_plants_agg("source") %>% select(-source, source = plant_aggregated) %>%
   group_by(county, year, source, target, units) %>%
   summarise(value = sum(value), .groups = "drop") %>%
-  # TODO: if on-site genn, make it go to commerical direclty, bypass grid elec
+  # TODO: if on-site genn, make it go to commercial directly, bypass grid elec
   mutate(target = ifelse(grepl("site", source, ignore.case = T), "commercial", target)) %>%
   filter(value > 0) # 3 plants have negative net generation
 

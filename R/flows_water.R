@@ -341,7 +341,7 @@ total_wastewater <- df_wastewat %>%
 # as Bartow), it is called out on its own. )
 
 # # wastewater in some counties for certain categories is more than the water supply for those categories. e.g., industrial Hall 2020
-# # but the total wasterwater is still less than the total water supply
+# # but the total wastewater is still less than the total water supply
 # # NOTE: this was true before excluding losses from total water supply
 # paste0("Total water supply in Hall county in 2020: ",
 #        sum(total_water_supply$total_supply[total_water_supply$county == "Hall" & total_water_supply$year == 2020]))
@@ -405,7 +405,7 @@ if (any(df_water_i_i$value <= 0)) {
 }
 
 # diagnostic plot for I/I (histogram, x county, y i_i_factor)
-if (F) {
+if (ANALYSIS) {
   ggplot(df_water_i_i %>% select(county, i_i_factor) %>% unique(), aes(x = county, y = i_i_factor)) +
     geom_bar(stat = "identity", fill = "lightblue") +
     # add an average horizontal line
@@ -528,6 +528,7 @@ if (MAKE_PLOT) plot_sankey(df_sankey)
 # single county (all)
 if (MAKE_PLOT) plot_sankey_enhanced(df_sankey, reg = "Bartow", show_values_in_labels = TRUE, animate = T)
 if (MAKE_PLOT) plot_sankey_enhanced(df_sankey, reg = "Bartow")
+if (MAKE_PLOT) plot_sankey_enhanced(df_sankey, reg = "Bartow", year = 2024, show_values_in_labels = TRUE, animate = F)
 # plot_sankey(df_sankey, reg = "Cherokee")
 # plot_sankey(df_sankey, reg = "Clayton")
 # plot_sankey(df_sankey, reg = "Cobb")
@@ -1131,6 +1132,7 @@ plot_sankey_enhanced(df_sankey_county_pws_balanced, reg = "Fulton", show_values_
 if (MAKE_PLOT) plot_sankey_enhanced(df_sankey_county_pws_balanced, reg = "DeKalb", show_values_in_labels = TRUE, animate = T, label_units = "MGD")
 if (MAKE_PLOT) plot_sankey_enhanced(df_sankey_county_pws_balanced, reg = "Douglas", show_values_in_labels = TRUE, animate = T, label_units = "MGD")
 
+plot_sankey_enhanced(df_sankey_county_pws_balanced, reg = "Bartow", yr = 2024, animate = F, show_values_in_labels = TRUE, label_units = "MGD")
 
 # loopy:
 # water bodies as loops
