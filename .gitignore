@@ -17,3 +17,10 @@ data/eia_seds_Complete_*.csv.gz
 # folders
 .*
 outputs/
+
+# QC + scratch output trees (regenerable)
+outputs/qc/
+outputs/files_baseline/
+outputs/files_p1/
+outputs/files_check/
+outputs/*.log

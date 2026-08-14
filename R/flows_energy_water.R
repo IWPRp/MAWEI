@@ -21,7 +21,7 @@ energy_water <- rbind(en_fuel_gen_use_loss_all_trade_metro, en4water %>% select(
   mutate(units = "PJ") %>%
   rbind(df_water_metro_linear_wSW_discharge_type) # from water script
 
-plot_sankey_enhanced(energy_water %>% pretty_labels(),
+if (MAKE_PLOT) plot_sankey_enhanced(energy_water %>% pretty_labels(),
                      animate = T, show_values_in_labels = T,
                      label_units = "auto", alt_units = ew_alt_units,
                      link_color_by_domain = TRUE)
@@ -38,7 +38,7 @@ energy_water_simplified_map <- read_csv(paste0(DATA_DIR, "common_energy_water_si
 
 energy_water_simplified <- simplify_sankey(energy_water, energy_water_simplified_map)
 
-plot_sankey_enhanced(energy_water_simplified %>% pretty_labels(),
+if (MAKE_PLOT) plot_sankey_enhanced(energy_water_simplified %>% pretty_labels(),
                      animate = T, show_values_in_labels = T,
                      label_units = "auto", alt_units = ew_alt_units,
                      link_color_by_domain = TRUE)
@@ -54,7 +54,7 @@ energy_water_county <- rbind(en_fuel_gen_use_loss_all_trade, en4water_ww_elec_us
   mutate(units = "PJ") %>%
   rbind(df_sankey_county_pws_balanced)
 
-plot_sankey_enhanced(energy_water_county %>% pretty_labels(),
+if (MAKE_PLOT) plot_sankey_enhanced(energy_water_county %>% pretty_labels(),
                      reg = "Fulton", animate = T, show_values_in_labels = T,
                      label_units = "auto", alt_units = ew_alt_units,
                      link_color_by_domain = TRUE)
@@ -65,7 +65,7 @@ if (MAKE_PLOT) plot_sankey_pro(energy_water_county, reg = "Cobb")
 # energy water simplified by county ----
 energy_water_simplified_county <- simplify_sankey(energy_water_county, energy_water_simplified_map)
 
-plot_sankey_enhanced(energy_water_simplified_county %>% pretty_labels(),
+if (MAKE_PLOT) plot_sankey_enhanced(energy_water_simplified_county %>% pretty_labels(),
                      reg = "Fulton", animate = T, show_values_in_labels = T,
                      label_units = "auto", alt_units = ew_alt_units,
                      link_color_by_domain = TRUE)

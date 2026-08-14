@@ -11,13 +11,43 @@ library(RColorBrewer)
 library(ggsci)
 library(purrr)
 library(zoo)
+library(jsonlite)
 
 DATA_DIR <- "data/"
-SAVE_DIR <- "outputs/files/"
+# SAVE_DIR is overridable from the shell so a run can be diverted to a scratch
+# tree without editing this file, e.g.
+#   MAWEI_SAVE_DIR=outputs/files_baseline/ Rscript R/flows_energy_water.R
+# ExtraNotes: needed for regression testing - lets us regenerate a full set of
+# artefacts and diff them against outputs/files/ without ever overwriting it.
+SAVE_DIR <- Sys.getenv("MAWEI_SAVE_DIR", unset = "outputs/files/")
+if (!grepl("/$", SAVE_DIR)) SAVE_DIR <- paste0(SAVE_DIR, "/")
 SCRIPTS_DIR <- "R/"
-SAVE_FILES <- T
-MAKE_PLOT <- F
-ANALYSIS <- F
+
+# Run-mode flags. Each is overridable from the shell, e.g.
+#   MAWEI_SAVE_FILES=0 MAWEI_MAKE_PLOT=0 Rscript R/run_qc.R
+# ExtraNotes: the flows_*.R scripts each re-source this file, so a flag assigned
+# in a calling script gets clobbered. Reading the environment makes the override
+# survive re-sourcing, which is what lets R/run_qc.R suppress artefact writing.
+flag_env <- function(name, default) {
+  v <- Sys.getenv(name, unset = NA)
+  if (is.na(v) || !nzchar(v)) return(default)
+  !(tolower(v) %in% c("0", "f", "false", "no"))
+}
+SAVE_FILES <- flag_env("MAWEI_SAVE_FILES", TRUE)
+MAKE_PLOT  <- flag_env("MAWEI_MAKE_PLOT",  FALSE)
+ANALYSIS   <- flag_env("MAWEI_ANALYSIS",   FALSE)
+
+# --- QC ---
+# QC_DIR holds machine-readable audit trails (mass-balance residuals, dropped-row
+# ledgers, manifest checks). Written by R/qc.R helpers, never by the plot code.
+QC_DIR <- Sys.getenv("MAWEI_QC_DIR", unset = "outputs/qc/")
+if (!grepl("/$", QC_DIR)) QC_DIR <- paste0(QC_DIR, "/")
+# Relative tolerance for node-level mass balance (0.005 = 0.5%).
+BALANCE_TOL <- 0.005
+
+# QC helpers (mass balance, dropped-row ledger, manifest + run comparison).
+# Sourced here so every flows_*.R script gets them for free via functions.R.
+source(paste0(SCRIPTS_DIR, "qc.R"))
 
 # --- Sankey color scheme switch ---
 # "vivid"  : high-contrast true-representative colors
@@ -30,6 +60,54 @@ COLOR_SCHEME <- "vivid"
 # "selfcontained" : each HTML embeds all JS/CSS (~1-2 MB each, fully portable)
 # "shared_libs"   : HTMLs reference one shared lib folder (~50 KB each + one ~4 MB folder)
 SAVE_MODE <- "selfcontained"
+
+# ---------------------------------------------------------------------------
+# pandoc discovery
+# ---------------------------------------------------------------------------
+# htmlwidgets::saveWidget(selfcontained = TRUE) needs pandoc. RStudio bundles one
+# and puts it on the path for its own sessions, so interactive runs always worked
+# while `Rscript R/flows_energy_water.R` from a terminal failed at the first save.
+# Probe the usual locations once and export RSTUDIO_PANDOC, which is what
+# rmarkdown::find_pandoc() reads.
+# ExtraNotes: without this the pipeline is interactive-only, which blocks both
+# scripted regeneration and any CI/GitHub Actions build of the web dashboard.
+ensure_pandoc <- function(verbose = TRUE) {
+  if (rmarkdown::pandoc_available()) return(invisible(TRUE))
+
+  arch <- R.version$arch
+  candidates <- c(
+    Sys.getenv("RSTUDIO_PANDOC", unset = NA),
+    unname(Sys.which("pandoc")),
+    sprintf("/Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/%s", arch),
+    "/Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/aarch64",
+    "/Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/x86_64",
+    "/Applications/RStudio.app/Contents/Resources/app/bin/pandoc",
+    "/Applications/quarto/bin/tools",
+    "/opt/homebrew/bin", "/usr/local/bin", "/usr/bin"
+  )
+  candidates <- candidates[!is.na(candidates) & nzchar(candidates)]
+
+  for (cand in candidates) {
+    dir <- if (grepl("pandoc$", cand) && !dir.exists(cand)) dirname(cand) else cand
+    if (!dir.exists(dir)) next
+    if (!file.exists(file.path(dir, "pandoc"))) next
+    Sys.setenv(RSTUDIO_PANDOC = dir)
+    if (rmarkdown::pandoc_available()) {
+      if (verbose) message("  pandoc ", as.character(rmarkdown::pandoc_version()), " at ", dir)
+      return(invisible(TRUE))
+    }
+  }
+
+  warning("pandoc not found: falling back to SAVE_MODE = 'shared_libs'.\n",
+          "  Install with `brew install pandoc` for self-contained diagrams.",
+          call. = FALSE)
+  invisible(FALSE)
+}
+
+HAS_PANDOC <- ensure_pandoc()
+# ExtraNotes: degrade rather than abort. shared_libs still produces working HTML,
+# just with an external lib folder instead of one embedded blob.
+if (!HAS_PANDOC && identical(SAVE_MODE, "selfcontained")) SAVE_MODE <- "shared_libs"
 
 # create directory if it doesn't exist
 if (!dir.exists(SAVE_DIR)) {
@@ -62,6 +140,70 @@ WATER_HORSEPOWER <- 3960 # constant
 HOURS_PER_YEAR <- 8760
 HOURS_PER_DAY <- 24
 DAYS_PER_YEAR <- 365
+
+# ---------------------------------------------------------------------------
+# EIA non-combustible heat-rate convention
+# ---------------------------------------------------------------------------
+# 1 kWh == 3412 Btu by definition, so 3.412 MMBtu/MWh is a 100%-efficient
+# conversion. EIA reported non-combustible renewables at a *fossil-fuel-equivalent*
+# heat rate (~8766 Btu/kWh) through 2021 and switched to 3412 Btu/kWh from 2022.
+# Measured in this dataset (elec_fuel_consumption_mmbtu / net_generation_MWh):
+#   Hydro  8766, 8843, 3412, 3412, 3412   (2020..2024)
+#   Solar  8766, 8842, 3411, 3411, 3412
+#   Coal   9918, 9832, 9948, 9825, 9940   <- no break, so this is convention only
+# Left alone, hydro and solar fuel input is 2.57x inflated in 2020-21, producing a
+# large artificial discontinuity in 2022 and, if a generic fuel-minus-generation
+# loss rule were applied, ~61% of invented "rejected heat" at a hydro dam.
+MMBTU_PER_MWH <- 3.412            # 1 MWh at 100% efficiency
+NONCOMBUSTIBLE_FUELS <- c("Hydroelectric Water", "Solar", "Wind", "Geothermal")
+
+# Plant aggregates whose output is consumed on site and never reaches the grid.
+# ExtraNotes: replaces a grepl("site", ...) test that matched any label containing
+# "site". Kept as an explicit constant so adding a new aggregate is a deliberate act.
+BEHIND_THE_METER_AGGREGATES <- c("On-Site Backup Generation")
+
+# The demand sectors that receive delivered energy and split it into useful services
+# vs rejected energy.
+# ExtraNotes: previously derived as setdiff(unique(target), unique(source)), which
+# would classify any plant aggregate that happened to have no generation in a given
+# year as an end-use sector and then invent 65% "energy services" at a generator node.
+# It is not currently triggered (the "Other" aggregate does emit generation) but the
+# construction is fragile, so the set is now stated outright.
+END_USE_SECTORS <- c("residential", "commercial", "industrial", "government",
+                     "transport", "agricultural", "en4water")
+
+# The three large thermal plants for which the utility spreadsheet supplies gross
+# generation, letting own-use (gross - net) and rejected heat (fuel - gross) be
+# separated. Every other plant aggregate has only net generation available.
+SOCO_THERMAL_PLANTS <- c("Bowen", "Jack McDonough", "Yates")
+
+# Force fuel input == net generation for non-combustible fuels, in every year.
+# ExtraNotes: METHOD CHOICE, affects published numbers. Harmonises 2020-21 onto
+# EIA's current convention so renewable fuel input is comparable across the study
+# period and carries no conversion loss. `fuel_col` is modified in place; the
+# original is kept as <fuel_col>_reported for the audit trail.
+normalize_noncombustible_heat_rate <- function(df,
+                                               fuel_broad_col = "fuel_broad",
+                                               fuel_col = "elec_fuel_consumption_mmbtu",
+                                               gen_col = "net_generation_megawatthours",
+                                               verbose = TRUE) {
+  stopifnot(all(c(fuel_broad_col, fuel_col, gen_col) %in% names(df)))
+  is_nc <- df[[fuel_broad_col]] %in% NONCOMBUSTIBLE_FUELS
+  reported <- df[[fuel_col]]
+  implied <- ifelse(is_nc, df[[gen_col]] * MMBTU_PER_MWH, reported)
+
+  if (verbose && any(is_nc)) {
+    chg <- sum(reported[is_nc], na.rm = TRUE)
+    new <- sum(implied[is_nc], na.rm = TRUE)
+    message(sprintf(
+      "  heat-rate normalisation: %d non-combustible rows, fuel input %.4g -> %.4g MMBtu (%+.1f%%)",
+      sum(is_nc), chg, new, (new - chg) / chg * 100))
+  }
+
+  df[[paste0(fuel_col, "_reported")]] <- reported
+  df[[fuel_col]] <- implied
+  df
+}
 
 
 # ---------------------------------------------------------------------------
@@ -312,7 +454,12 @@ repeats <- function(df) {
 }
 
 # validate flow data frames for completeness and correctness
-validate_flows <- function(df, label = "flows") {
+# ExtraNotes: `strict_years` also asserts that NO year outside YEARS_TO_ENSURE is
+# present. Without it the published CSVs silently carried 2006-2065 rows (88% of
+# df_sankey_county_pws_balanced) because the wastewater connection records start in
+# 2006 and the management-plan projections run to 2065. Diagrams filter years so
+# the artefacts looked fine while the CSVs were bloated and sparse.
+validate_flows <- function(df, label = "flows", strict_years = FALSE) {
   required <- c("source", "target", "year", "value")
   missing <- setdiff(required, names(df))
   if (length(missing) > 0) stop(label, ": missing columns: ", paste(missing, collapse = ", "))
@@ -320,6 +467,19 @@ validate_flows <- function(df, label = "flows") {
   for (col in required) {
     n_na <- sum(is.na(df[[col]]))
     if (n_na > 0) stop(label, ": ", n_na, " NA values in '", col, "'")
+  }
+
+  # county is not in `required` because the metro frames legitimately lack it, but
+  # when present an NA county silently corrupts every county-level cut.
+  if ("county" %in% names(df)) {
+    n_na <- sum(is.na(df$county))
+    if (n_na > 0) stop(label, ": ", n_na, " NA values in 'county'")
+    bad <- setdiff(unique(df$county), counties)
+    if (length(bad) > 0) {
+      stop(label, ": non-canonical county label(s): ",
+           paste0("'", bad, "'", collapse = ", "),
+           "\n  expected one of: ", paste(counties, collapse = ", "))
+    }
   }
 
   group_cols <- intersect(c("county", "year", "source", "target", "units"), names(df))
@@ -331,6 +491,15 @@ validate_flows <- function(df, label = "flows") {
   years_present <- sort(unique(df$year))
   years_missing <- setdiff(YEARS_TO_ENSURE, years_present)
   if (length(years_missing) > 0) stop(label, ": missing years: ", paste(years_missing, collapse = ", "))
+
+  if (strict_years) {
+    extra <- setdiff(years_present, YEARS_TO_ENSURE)
+    if (length(extra) > 0) {
+      stop(label, ": ", length(extra), " year(s) outside YEARS_TO_ENSURE: ",
+           paste(range(extra), collapse = "-"),
+           "\n  -> clamp with filter(year %in% YEARS_TO_ENSURE) before publishing")
+    }
+  }
 
   invisible(df)
 }
@@ -434,7 +603,10 @@ clean_names <- function(df) {
 
 
 # EIA NOTES ----
-EIA_SEDS_FILE <- "eia_seds_complete_seds_2024_update.csv.gz"
+# ExtraNotes: filename case matters. macOS/APFS is case-insensitive so a wrong
+# case resolves silently here but stop()s on Linux/CI. On-disk name is
+# "eia_seds_Complete_..." with a capital C.
+EIA_SEDS_FILE <- "eia_seds_Complete_seds_2024_update.csv.gz"
 if (!file.exists(paste0(DATA_DIR, EIA_SEDS_FILE))) {
   stop(paste("File", EIA_SEDS_FILE, "not found in data directory. Download from EIA SEDS."))
 }
@@ -763,7 +935,7 @@ remap_plants <- function(df, col_name = "target") {
 
 # aggregate plants into broader categories
 remap_plants_agg <- function(df, col_name = "target") {
-  df %>%
+  out <- df %>%
     mutate(
       plant_aggregated = case_when(
         !!sym(col_name) %in% c("Bowen") ~ "Bowen Plant", # large coal plant
@@ -771,7 +943,11 @@ remap_plants_agg <- function(df, col_name = "target") {
         !!sym(col_name) %in% c("Jack McDonough") ~ "Jack McDonough", # large combined-cycle gas plant
 
         # conventional hydro generation grouped with small renewables
-        !!sym(col_name) %in% c("Morgan Falls", "Buford", "Allatoona"
+        # ExtraNotes: Milstead (Rockdale) is conventional hydro and appears in the
+        # 2020 EIA-860 only. It previously fell through to "Other"; grouping it with
+        # the other hydro dams keeps Rockdale's single generator visible instead of
+        # hiding it in a catch-all.
+        !!sym(col_name) %in% c("Morgan Falls", "Buford", "Allatoona", "Milstead"
                                # ) ~ "Hydro & Renewable Plants",
                                ) ~ "Utility-scale Generation",
         # landfill gas, solar, CHP, and microgrid assets
@@ -786,6 +962,9 @@ remap_plants_agg <- function(df, col_name = "target") {
         # ) ~ "Renewables & Distributed Energy",
         ) ~ "Distributed-scale Generation",
         # building-based or industrial on-site generation
+        # ExtraNotes: Hewlett Packard Enterprise is a reciprocating-engine (prime
+        # mover IC) genset on natural gas + distillate, i.e. data-centre standby
+        # power. It belongs with the other building-scale units, not in "Other".
         !!sym(col_name) %in% c("Inforum",
                                "CNN Center",
                                "Shepherd Center",
@@ -797,13 +976,29 @@ remap_plants_agg <- function(df, col_name = "target") {
                                "Bank of America Plaza",
                                "State Farm Support Center East",
                                "Emory Hillandale Hospital",
-                               "Bartow Davidson"
+                               "Bartow Davidson",
+                               "Hewlett Packard Enterprise"
         # ) ~ "Commercial & Institutional Sites",
         ) ~ "On-Site Backup Generation",
 
         TRUE ~ "Other"
       )
     )
+
+  # ExtraNotes: the TRUE ~ "Other" fallback used to swallow real plants silently
+  # (Milstead and Hewlett Packard Enterprise were both hiding there, and "Other"
+  # then got treated as an end-use sector by end_use_sectors). Warn loudly so a
+  # newly-appearing plant is noticed instead of being averaged into a catch-all.
+  unmapped <- out %>% filter(plant_aggregated == "Other") %>%
+    pull(!!sym(col_name)) %>% unique()
+  if (length(unmapped) > 0) {
+    warning("remap_plants_agg(): ", length(unmapped),
+            " plant(s) fell through to 'Other': ",
+            paste(unmapped, collapse = ", "),
+            "\n  -> add them to an explicit group in functions.R::remap_plants_agg()",
+            call. = FALSE)
+  }
+  out
 }
 
 

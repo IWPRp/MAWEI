@@ -9,12 +9,12 @@ electricity,electricity,Yates Plant,Yates Plant
 onsiteBTM,Renewables,commercial,commercial
 onsiteBTM,Renewables,industrial,industrial
 onsiteBTM,Renewables,residential,residential
-Bowen,Bowen,efficiency_losses,Energy Losses
-Bowen,Bowen,elec_own_use,elec_own_use
+Bowen Plant,Bowen Plant,efficiency_losses,Energy Losses
+Bowen Plant,Bowen Plant,elec_own_use,elec_own_use
 Jack McDonough,Jack McDonough,efficiency_losses,Energy Losses
 Jack McDonough,Jack McDonough,elec_own_use,elec_own_use
-Yates,Yates,efficiency_losses,Energy Losses
-Yates,Yates,elec_own_use,elec_own_use
+Yates Plant,Yates Plant,efficiency_losses,Energy Losses
+Yates Plant,Yates Plant,elec_own_use,elec_own_use
 electricity,electricity,industrial,industrial
 electricity,electricity,publicWatSup,publicWatSup
 electricity,electricity,agricultural,agricultural
