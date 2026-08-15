@@ -50,3 +50,10 @@ outputs/*.log
 web/data
 
 docs_analysis/
+# Large upstream reference datasets. Each is filtered to the study region by R/prep_spatial.R,
+# and only the small extract is tracked: spatial_basins.geojson (30 kB from a 365 MB
+# geopackage), spatial_facility_coords.csv, spatial_county_basin_area.csv.
+data/WBD_03_HU2_GPKG/
+data/datacenter_atlas/
+data/epa_npdes_outfalls_layer.csv.gz
+data/WRP Permit Inventory *.xlsx

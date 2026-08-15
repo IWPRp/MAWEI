@@ -168,4 +168,109 @@ stopifnot(all(in_bbox(coords$lat, coords$lon)),
 write_csv(coords, paste0(DATA_DIR, "spatial_facility_coords.csv"))
 message("  -> data/spatial_facility_coords.csv (", nrow(coords), " located facilities, ",
         "min precision ", min(coords$coord_decimals), " decimals)")
+
+###############################################################################%
+## river basins ----
+# The USGS Watershed Boundary Dataset for region 03 is 365 MB and covers the whole South
+# Atlantic-Gulf. What this study needs is the few basins the metro draws from, at the aggregation
+# the water pipeline already uses.
+#
+# ExtraNotes: HUC8 is the right level. HUC6 merges Coosa and Tallapoosa into one unit, erasing a
+# distinction the withdrawal data makes, while HUC10 and HUC12 subdivide far below anything the
+# flow records resolve. Ten HUC8 units touch the metro and dissolve into the six named basins the
+# pipeline reports, plus Broad, which carries no withdrawals.
+#
+# ExtraNotes: polygons are kept at FULL basin extent, not clipped to the county boundary. The
+# headwater position of metro Atlanta on the Chattahoochee is the most policy-relevant fact in the
+# water results, and clipping to the metro is precisely what would hide it.
+
+WBD_FILE <- paste0(DATA_DIR, "WBD_03_HU2_GPKG/WBD_03_HU2_GPKG.gpkg")
+BASIN_OUT <- paste0(DATA_DIR, "spatial_basins.geojson")
+
+if (file.exists(WBD_FILE)) {
+  message("\n== building basin extract ==")
+
+  # HUC8 unit -> the basin label used throughout the pipeline. Stated explicitly rather than
+  # pattern-matched: "Coosawattee" and "Oostanaula" are Coosa-system tributaries whose names
+  # contain neither "Coosa" nor "Etowah", so any regex would silently drop them.
+  HUC8_TO_BASIN <- c(
+    "03130001" = "Chattahoochee",   # Upper Chattahoochee
+    "03130002" = "Chattahoochee",   # Middle Chattahoochee-Lake Harding
+    "03150104" = "Coosa_Etowah",    # Etowah
+    "03150102" = "Coosa_Etowah",    # Coosawattee
+    "03150103" = "Coosa_Etowah",    # Oostanaula
+    "03130005" = "Flint",           # Upper Flint
+    "03070103" = "Ocmulgee",        # Upper Ocmulgee
+    "03070101" = "Oconee",          # Upper Oconee
+    "03150108" = "Tallapoosa",      # Upper Tallapoosa
+    "03060104" = "Broad")           # touches the metro edge; carries no withdrawals
+
+  h8 <- st_read(WBD_FILE, layer = "WBDHU8", quiet = TRUE) %>%
+    filter(huc8 %in% names(HUC8_TO_BASIN)) %>%
+    st_transform(4326) %>%
+    mutate(basin = HUC8_TO_BASIN[huc8])
+
+  cty_sf <- st_read(paste0(DATA_DIR, "geojson-counties-fips.json"), quiet = TRUE) %>%
+    rename_with(tolower) %>% filter(id %in% fips) %>% st_set_crs(4326) %>%
+    mutate(county = name) %>% select(county)
+  metro <- st_union(cty_sf)
+
+  basins <- h8 %>%
+    group_by(basin) %>%
+    summarise(huc8_units = n(), huc8_codes = paste(sort(huc8), collapse = ";"),
+              area_sqkm = sum(areasqkm), .groups = "drop") %>%
+    # ExtraNotes: simplification must happen in a PROJECTED CRS. st_simplify interprets
+    # dTolerance in the units of the coordinate system, so on lat/long data it neither simplifies
+    # predictably nor honours a metre tolerance; the file came out unchanged at 1.8 MB until this
+    # was fixed. Albers equal-area for the conterminous US (EPSG:5070) is the standard choice here
+    # and preserves area, which is what the overlap weights depend on.
+    st_transform(5070) %>%
+    st_simplify(dTolerance = 500, preserveTopology = TRUE) %>%   # 500 m
+    st_make_valid() %>%
+    # st_make_valid can return a GEOMETRYCOLLECTION when simplification leaves a degenerate
+    # sliver, and most downstream operations refuse that class.
+    st_collection_extract("POLYGON") %>%
+    st_cast("MULTIPOLYGON", warn = FALSE) %>%
+    st_transform(4326)
+
+  # How much of each basin lies inside the study area. This is the weight any spatial allocation
+  # needs, and it is what makes the basin layer joinable to the county results.
+  #
+  # ExtraNotes: computed as a separate join, not inside mutate(). st_intersection() returns a
+  # geometry column, and assigning one inside mutate() on an sf object replaces the active
+  # geometry and invalidates the layer. Note also that the WBD geometry column is named `shape`,
+  # not `geometry`, so st_area() is called on the object rather than on a named column.
+  metro_area <- suppressWarnings(st_intersection(basins %>% select(basin), metro)) %>%
+    mutate(a = as.numeric(units::set_units(st_area(.), "km^2"))) %>%
+    st_drop_geometry() %>%
+    group_by(basin) %>% summarise(metro_area_sqkm = sum(a), .groups = "drop")
+
+  basins <- basins %>%
+    left_join(metro_area, by = "basin") %>%
+    mutate(metro_area_sqkm = replace_na(metro_area_sqkm, 0),
+           metro_share_pct = 100 * metro_area_sqkm / area_sqkm)
+
+  # ExtraNotes: coordinate PRECISION, not vertex count, is what makes a GeoJSON large. st_simplify
+  # removes vertices but each survivor is still written with ~15 significant digits. Four decimal
+  # places is about 11 m at this latitude, far finer than a simplified basin boundary can support,
+  # and it cuts the file by roughly an order of magnitude.
+  st_write(basins, BASIN_OUT, delete_dsn = TRUE, quiet = TRUE,
+           layer_options = "COORDINATE_PRECISION=4")
+  message("  basins: ", nrow(basins), " from ", nrow(h8), " HUC8 units -> ",
+          basename(BASIN_OUT), " (", round(file.size(BASIN_OUT) / 1e3), " kB)")
+
+  # Which basins each county sits in, by overlap area. A county spanning a divide draws from more
+  # than one basin, and that split is the spatial fact behind an inter-basin transfer.
+  cb <- suppressWarnings(st_intersection(cty_sf, basins %>% select(basin))) %>%
+    mutate(area_sqkm = as.numeric(units::set_units(st_area(.), "km^2"))) %>%
+    st_drop_geometry() %>%
+    group_by(county) %>% mutate(share_pct = 100 * area_sqkm / sum(area_sqkm)) %>%
+    ungroup() %>% arrange(county, desc(share_pct))
+
+  write_csv(cb, paste0(DATA_DIR, "spatial_county_basin_area.csv"))
+  message("  -> data/spatial_county_basin_area.csv (", nrow(cb), " county-basin overlaps)")
+} else {
+  message("  WBD geopackage absent; skipping basin extract")
+}
+
 message("== done ==")
