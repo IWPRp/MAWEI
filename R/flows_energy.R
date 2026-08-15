@@ -29,20 +29,17 @@ en_gen_agg <- en_gen %>% group_by(across(!c(year, value))) %>%
   mutate(value = values * MWh_to_EJ, units = "EJ") # MWh to EJ
 
 en_gen_onsite_EJ <- en_gen_onsite %>%
-  # ExtraNotes: energy_gen_onsite.csv spells DeKalb as "Dekalb". The county string is
-  # carried verbatim into the merged frame, and save_county_sankeys() filters with an
-  # exact `county %in% reg` against the canonical list from common_county_fips.csv, so
-  # every "Dekalb" row was silently excluded from the DeKalb county diagram while still
-  # being counted in the metro total (which drops county). Canonicalise on ingest.
+  # ExtraNotes: canonicalise county spelling on ingest. County diagrams are selected with an
+  # exact match against the canonical list, so any variant spelling silently drops that
+  # county's rows from its own diagram while still counting them in the metro total.
   mutate(county = str_trim(county),
          county = coalesce(counties[match(tolower(county), tolower(counties))], county)) %>%
   group_by(across(!c(year, value))) %>%
   mutate(valuef = na.approx(value, na.rm = FALSE, rule = 2)) %>% ungroup() %>% # fill NAs
   fill(valuef, .direction = "updown") %>%
   mutate(value = valuef * kWh_to_EJ, units = "EJ") # KWh to EJ
-# ExtraNotes: fill(.direction = "updown") back-fills leading NAs with the first observed
-# value, so a class with no data before 2023 is treated as flat at its 2023 level rather
-# than absent. Source file spans 2018-2024; the study-period clamp happens downstream.
+# ExtraNotes: fill(.direction = "updown") back-fills leading NAs, so a class with no data
+# before a given year is treated as flat at its first observed level rather than as absent.
 
 en_use_agg <- en_use %>% group_by(across(!c(year, value))) %>%
   mutate(value = na.approx(value, na.rm = FALSE, rule = 2)) %>% # fill NAs
@@ -54,14 +51,13 @@ en_use_agg <- en_use %>% group_by(across(!c(year, value))) %>%
 en_losses <- en_gen_agg %>% filter(gentype == "gross") %>%
   left_join(en_gen_agg %>% filter(gentype == "net"), by = c("facility_name", "county", "water_source", "fuel_type", "capacity_mw", "units", "year")) %>%
   mutate(losses = value.x - value.y)
-# ExtraNotes: value.x = gross, value.y = net, so `losses` is the plant's own parasitic
-# load (pumps, fans, mills, precipitators). Verified against EIA-923: SOCO `net` and
-# 923 `net_generation_megawatthours` are identical, so gross is the ONLY quantity this
-# spreadsheet adds. Own-use fractions: Bowen ~8.4-9.1%, McDonough ~1.33-1.39%,
-# Yates ~6.0-11.7% of gross.
-# CAUTION: Yates 2024 `net` is blank for all 12 months, so na.approx(rule = 2) copies
-# the last 2023 value forward and the resulting own-use fraction (56.7%) is fabricated.
-# Handled in the plant balance block below.
+# ExtraNotes: value.x is gross and value.y is net, so `losses` is the plant's own parasitic
+# load (pumps, fans, mills, precipitators). Verified against EIA-923: the utility's net
+# generation and EIA's are identical, so GROSS is the only quantity this spreadsheet adds.
+# Typical own-use shares: Bowen ~8-9%, McDonough ~1.3%, Yates ~6-12% of gross.
+# CAUTION: a plant-year with no reported net generation gets a value copied forward by
+# na.approx(rule = 2), which makes its own-use share meaningless. Handled in the plant
+# balance block below.
 
 ###############################################################################%
 ## all flows from data ----
@@ -71,9 +67,7 @@ en_losses <- en_gen_agg %>% filter(gentype == "gross") %>%
   en_gen_onsite_EJ_s <- en_gen_onsite_EJ %>% mutate(source = "onsiteBTM", units = "EJ") %>%
     select(county, source, target=class, year, value, units) %>%
     filter(year %in% YEARS_TO_ENSURE)
-  # ExtraNotes: clamped to the study period. The source file starts in 2018, and unlike
-  # en_use_agg_s this frame was previously unfiltered, injecting 2018-2019 rows into the
-  # merged energy frame.
+  # ExtraNotes: clamped to the study period; the source file starts before it.
   en_efficiency_losses_s <- en_losses %>% mutate(source = facility_name, target = "elec_own_use", units = "EJ") %>% select(county, source, target, year, value = losses, units)
   en_use_agg_s <- en_use_agg %>% mutate(source = "electricity", target = enduse, units = "EJ") %>% select(source, target, year, value, units) %>%
     filter(year %in% YEARS_TO_ENSURE)
@@ -122,11 +116,9 @@ en_elec_imports <- df_sankey_en_soco %>%
 
 
 # plot all elec
-# ExtraNotes: interim SOCO-only diagram. It computes its own rejected term from the
-# spreadsheet's own fuel and gross figures (fuel - gross), which is self-consistent
-# within this frame. It deliberately does NOT reuse `en_rejected` from the main
-# pipeline, because that one is built on EIA-923 fuel and is defined further down,
-# after the 923 ingestion.
+# ExtraNotes: interim diagram built purely from the utility spreadsheet, so it closes its own
+# rejected term against that spreadsheet's fuel and gross figures. It deliberately does not
+# reuse `en_rejected`, which is built on EIA-923 fuel and defined after the 923 ingestion.
 en_rejected_soco_only <- en_fuels_agg %>%
   filter(facility_name %in% SOCO_THERMAL_PLANTS) %>%
   group_by(source = facility_name, year) %>%
@@ -241,18 +233,15 @@ eia923_sch2pg1_genfuel_GA_C <- eia923_sch2pg1_genfuel_GA %>%
   # be harmonised before any EJ conversion happens
   remap_fuel_broad("reported_fuel") %>%
   normalize_noncombustible_heat_rate()
-# ExtraNotes: EIA reported hydro/solar fuel input at a fossil-fuel-equivalent heat
-# rate (~8766 Btu/kWh) through 2021 and at 3412 Btu/kWh from 2022, so the raw series
-# has a spurious 2.57x step at 2022 for non-combustibles while fossil fuels show no
-# break. normalize_noncombustible_heat_rate() puts every year on the 3412 Btu/kWh
-# (100% efficiency) convention. Deliberate method choice: it removes an artefact that
-# otherwise dominates the apparent year-to-year change in hydro and solar (Allatoona
-# in Bartow: 0.00158 -> 0.000527 EJ from 2021 to 2022 for similar real generation).
-# The untouched series is kept as elec_fuel_consumption_mmbtu_reported.
+# ExtraNotes: EIA reports non-combustible fuel input at a fossil-fuel-equivalent heat rate in
+# earlier years and at the thermodynamic 3412 Btu/kWh in later years, with no corresponding
+# break in fossil fuels. Harmonising onto the 3412 convention is a deliberate method choice:
+# it removes a reporting artefact that otherwise dominates the apparent year-on-year change
+# in hydro and solar. The reported series is preserved as elec_fuel_consumption_mmbtu_reported.
 
-# ExtraNotes: EIA-923 writes "." for missing and quotes thousands-separated numbers,
-# so a single stray "." turns a whole column to character and the * MMBtu_to_EJ
-# multiply then fails silently. Assert numeric before relying on it.
+# ExtraNotes: EIA-923 writes "." for missing values and quotes thousands-separated numbers, so
+# a single stray "." turns a whole column to character and the unit conversion then fails
+# silently. Assert numeric before relying on it.
 stopifnot(is.numeric(eia923_sch2pg1_genfuel_GA_C$elec_fuel_consumption_mmbtu),
           is.numeric(eia923_sch2pg1_genfuel_GA_C$net_generation_megawatthours))
 
@@ -274,9 +263,9 @@ eia923_fuel_input <- eia923_fuel_input_C %>%
 # plot_sankey(eia923_fuel_input, yr=2024, animate = T)
 
 ## electricity generation ----
-# ExtraNotes: NET generation, not gross. Gross exists only in the utility spreadsheet
-# (energy_gen.csv) and only for the three large thermal plants; the gross-net
-# difference is the plants' own parasitic load, routed to elec_own_use below.
+# ExtraNotes: NET generation. Gross is available only from the utility spreadsheet and only for
+# the three large thermal plants; the gross-net difference is each plant's parasitic load and
+# is routed to elec_own_use below.
 eia923_electricity_gen <- eia923_sch2pg1_genfuel_GA_C %>%
   mutate(net_generation_EJ = net_generation_megawatthours * MWh_to_EJ, units = "EJ", target="electricity") %>%
   select(county, year, source=plant_name, target, value=net_generation_EJ, units) %>%
@@ -286,17 +275,16 @@ eia923_electricity_gen <- eia923_sch2pg1_genfuel_GA_C %>%
   # Behind-the-meter output is consumed on site and never reaches the grid, so it is
   # re-pointed at the commercial sector and excluded from the electricity node (and
   # therefore from each county's import/export deficit).
-  # ExtraNotes: matched on an explicit label set, NOT grepl("site"). The old regex
-  # swallowed anything containing "site", and "On-Site Backup Generation" now also
-  # holds Bartow Davidson (a 2.6 MW utility solar farm, online 12/2023) and the
-  # Hewlett Packard Enterprise standby genset. Explicit matching keeps it auditable.
+  # ExtraNotes: matched on an explicit label set rather than a name pattern. The
+  # behind-the-meter category holds a mix of standby gensets and small utility solar, so a
+  # pattern match on the label text would route generation on the strength of its name.
   mutate(target = ifelse(source %in% BEHIND_THE_METER_AGGREGATES, "commercial", target))
 
 eia923_electricity_gen <- eia923_electricity_gen %>%
   log_drop(eia923_electricity_gen$value > 0, "energy gen: non-positive net generation")
-# ExtraNotes: negative annual net generation occurs when a unit consumed more than it
-# produced (standby/auxiliary load). Dropped rather than netted, which is why a plant
-# can be missing from a given year entirely.
+# ExtraNotes: negative annual net generation means a unit consumed more than it produced over
+# the year (standby or auxiliary load). Dropped rather than netted, so a plant can legitimately
+# be absent from a given year.
 
 # plot_sankey(rbind(eia923_fuel_input, eia923_electricity_gen), yr=2024, animate = T)
 
@@ -312,19 +300,14 @@ eia923_electricity_gen <- eia923_electricity_gen %>%
 #
 # net + (gross - net) + (fuel - gross) == fuel, so the node closes algebraically.
 #
-# ExtraNotes: this replaces a version that summed the plant's SOCO outflows to BOTH
-# `electricity` and `elec_own_use` and called the total "gross_generation". That sum is
-# 2*gross - net, i.e. gross was subtracted twice, giving
-# rejected = fuel - 2*gross + net. It was self-consistent inside the SOCO-only
-# diagram, but the merged frame supplies the generation leg from 923 *net*, so the
-# node was left with a residual of exactly the own-use term (Bowen: 0.00285/0.0834 =
-# 3.4%). Closing against gross alone removes the residual entirely.
+# ExtraNotes: the three terms must be closed against GROSS generation, not against gross plus
+# own use. Own use is already inside gross, so counting it twice leaves the plant node open by
+# exactly the own-use volume.
 #
-# ExtraNotes: fuel input is taken from EIA-923, not from the SOCO spreadsheet. The two
-# agree to 1e-14 for 2020-2023, but Yates 2024 is blank in SOCO and na.approx(rule = 2)
-# fabricates a value ~2x too small; using 923 throughout avoids a negative rejected
-# term (the old code's `filter(rejected > 0)` silently dropped that row, leaving Yates
-# 2024 with outflow 0.01253 against inflow 0.01186 EJ - a hard violation, not rounding).
+# ExtraNotes: fuel input comes from EIA-923 rather than the utility spreadsheet. The two agree
+# to within floating-point error where both report, but EIA-923 also covers plant-years the
+# spreadsheet leaves blank, and interpolating those would give a fuel input too small to cover
+# the measured generation and hence a negative rejected term.
 en_plant_fuel_923 <- eia923_fuel_input %>%
   filter(target %in% c("Bowen Plant", "Yates Plant", "Jack McDonough")) %>%
   group_by(county, plant_agg = target, year) %>%
@@ -344,8 +327,9 @@ en_plant_balance <- en_plant_fuel_923 %>%
 # SOCO figure, so `gross` can exceed what the 923 fuel would support. Rather than drop
 # the row, hold the plant's own-use fraction at its 2020-2023 mean and rebuild gross
 # from the 923 net generation, which is measured.
-# ExtraNotes: this is the single data gap in the study period. Documented as a
-# limitation; affects Yates 2024 only.
+# ExtraNotes: where the interpolated gross exceeds what the measured fuel input can support,
+# rebuild gross from measured net generation and the plant's own-use share averaged over the
+# years it does report. Preferable to dropping the plant-year, which would leave the node open.
 en_plant_neg <- en_plant_balance %>% filter(rejected < 0)
 if (nrow(en_plant_neg) > 0) {
   message("  plant balance: ", nrow(en_plant_neg),
@@ -467,12 +451,9 @@ en4water_ww_elec_use_linear <- en4water_ww_elec_use %>%
   summarise(value = sum(value), .groups = "drop") %>%
   filter(year %in% YEARS_TO_ENSURE)
 validate_flows(en4water_ww_elec_use_linear, "en4water_ww_elec_use_linear", strict_years = TRUE)
-# ExtraNotes: this filter is the single fix for the 2006-2065 year leak on the energy
-# side. The water pipeline carries 2006 (earliest wastewater connection record) through
-# 2065 (management-plan projection horizon); before clamping, this frame contributed 860
-# rows of which only 75 were in the study period, and those 785 stray rows propagated
-# into electricity->td_losses and en4water->energy_services/rejected_energy, giving the
-# published energy CSVs 60 years of mostly-empty rows.
+# ExtraNotes: the water pipeline carries a much wider year range than the energy study period
+# (wastewater connection records through management-plan projections), so this is the single
+# point where that range has to be clamped before it propagates into the energy frames.
 
 ###############################################################################%
 
@@ -486,12 +467,10 @@ en_fuel_gen_use_loss <- rbind(eia923_fuel_input, # fuel input
                               en4water_ww_elec_use_linear, # energy for water
                               en_efficiency_losses_agg, en_rejected # plant own use + rejected heat
 ) # transmission losses and elec transfers handled later
-# ExtraNotes: uses en_efficiency_losses_agg (plant-aggregate labels: "Bowen Plant",
-# "Yates Plant", "Jack McDonough") rather than the raw-facility en_efficiency_losses_s
-# ("Bowen", "Yates"). The raw names collided with the 923 aggregate names, splitting each
-# plant into two nodes that only appeared merged because pretty_labels() renamed them at
-# draw time - so Bowen showed +65.7% imbalance while its own-use and rejected heat sat on
-# a separate, invisible "Bowen" node.
+# ExtraNotes: uses the plant-AGGREGATE labels so that a plant's fuel input, generation, own use
+# and rejected heat all attach to one node. Raw facility names and aggregate names differ for
+# some plants, and mixing them splits a single plant into two nodes that look merged only
+# because the display labels coincide.
 
 if (MAKE_PLOT) plot_sankey_enhanced(en_fuel_gen_use_loss %>%
                        group_by(year, source, target, units) %>%
@@ -524,12 +503,8 @@ DEFAULT_EFFICIENCY <- 0.65
 
 # energy services and rejected energy
 # split each sector's total energy intake into useful energy (services) and waste (rejected)
-# ExtraNotes: END_USE_SECTORS is now an explicit constant (functions.R) instead of
-# setdiff(unique(target), unique(source)). The derived version would classify any plant
-# aggregate with no generation in a year as an end-use sector and then invent 65% "energy
-# services" at a generator node. It happens not to trigger today (the "Other" aggregate
-# does emit generation), so this is hardening rather than a behaviour change - asserted
-# below so a future divergence is loud rather than silent.
+# ExtraNotes: END_USE_SECTORS is stated explicitly (functions.R) rather than inferred from
+# topology; the derived version is kept only as a cross-check so a divergence is loud.
 end_use_sectors <- intersect(END_USE_SECTORS, unique(en_fuel_gen_use_loss$target))
 end_use_sectors_derived <- setdiff(unique(en_fuel_gen_use_loss$target),
                                    unique(en_fuel_gen_use_loss$source)) %>%
@@ -616,12 +591,12 @@ if (MAKE_PLOT) plot_sankey_enhanced(en_fuel_gen_use_loss_loop %>%
 
 # assign outside metro imports to the difference
 
-# ExtraNotes: built on a complete year grid so a year with no generation at all still
-# yields a trade row. `electricity` balances to 0.00% at metro in every year of the
-# study period, confirming that routing T&D losses as an extra outflow from the
-# electricity node (rather than deducting them from delivered demand) is correct: the
-# SEDS/utility demand figures are METERED, so losses sit upstream of the meter and
-# generation + imports must cover metered use + T&D losses.
+# ExtraNotes: built on a complete year grid so that a year with no generation still yields a
+# trade row.
+# ExtraNotes: T&D losses are an additional OUTFLOW from the electricity node rather than a
+# deduction from delivered demand, because the SEDS and utility demand figures are metered.
+# Losses occur upstream of the meter, so generation plus imports must cover metered use plus
+# losses. The metro electricity node closes exactly under this convention.
 en_elec_trade_metro <- expand_grid(year = YEARS_TO_ENSURE) %>%
   left_join(en_fuel_gen_use_loss_all %>%
               filter(grepl("electricity", target, ignore.case = T)) %>%
@@ -652,9 +627,8 @@ en_fuel_gen_use_loss_all_trade_metro <- en_fuel_gen_use_loss_all %>% select(-cou
   summarise(value = sum(value), .groups = "drop")
 validate_flows(en_fuel_gen_use_loss_all_trade_metro,
                "en_fuel_gen_use_loss_all_trade_metro", strict_years = TRUE)
-# ExtraNotes: re-aggregated after dropping `county` so the metro frame has one row per
-# (year, source, target, units). Without this, dropping county leaves 15 duplicate rows
-# per flow, which validate_flows() would reject as duplicates.
+# ExtraNotes: re-aggregated after dropping `county` so the metro frame carries one row per
+# (year, source, target, units).
 
 if (MAKE_PLOT) plot_sankey_enhanced(en_fuel_gen_use_loss_all_trade_metro %>%
                        group_by(year, source, target, units) %>%
@@ -699,19 +673,10 @@ en_elec_trade_county <- expand_grid(county = counties, year = YEARS_TO_ENSURE) %
          units = "EJ") %>%
   filter(value > 0) %>%
   select(county, year, source, target, value, units)
-# ExtraNotes: THE IMPORT FIX. The previous version started from the generation side and
-# left_joined consumption onto it, so a county with no row whose target is "electricity"
-# was dropped by the join and never got a trade flow at all. Six counties have no
-# EIA-860 generator in any year - Cherokee, Clayton, Fayette, Hall, Henry, Paulding - so
-# they showed zero imports despite consuming electricity, which is physically impossible.
-# Douglas showed imports only from 2022 because its sole generator (Turnipseed Solar)
-# first appears in the 2022 EIA-860; Rockdale's only generator (Milstead hydro) appears
-# in 2020 alone. Starting from expand_grid(county, year) makes generation default to 0,
-# so every county-year gets an explicit import or export.
-# What was previously displayed as "Electricity Imports" in e.g. Henry was a zero-valued
-# placeholder created by complete() inside plot_sankey_enhanced() (which runs before the
-# county filter), not a real flow - hence a label that appeared and vanished between
-# animation frames.
+# ExtraNotes: the deficit is built from a complete county x year grid so that generation
+# defaults to zero. Starting from the generation side instead would drop any county with no
+# generating plant, which would report zero imports despite consuming electricity - physically
+# impossible, and it affects the six metro counties that host no EIA-860 generator.
 
 # Every county must now trade; a county that neither imports nor exports would mean its
 # generation exactly equals its consumption, which does not happen in practice.
@@ -728,9 +693,8 @@ en_fuel_gen_use_loss_all_trade <- rbind(en_fuel_gen_use_loss_all, en_elec_trade_
   filter(year %in% YEARS_TO_ENSURE)
 validate_flows(en_fuel_gen_use_loss_all_trade, "en_fuel_gen_use_loss_all_trade",
                strict_years = TRUE)
-# ExtraNotes: clamped at publication. validate_flows(strict_years = TRUE) now also
-# asserts no year outside YEARS_TO_ENSURE and that every county label is canonical, so
-# the 2006-2065 leak and the "Dekalb" spelling cannot come back unnoticed.
+# ExtraNotes: clamped to the study period at publication, with strict_years asserting that no
+# out-of-period year and no non-canonical county label can reach a published artefact.
 
 # Report the trade balance, which is a headline result in its own right.
 if (exists("en_elec_trade_county")) {

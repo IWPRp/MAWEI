@@ -104,24 +104,17 @@ residential,residential,wastewater,wastewater
 subsurface,subsurface,wastewater,wastewater
 wastewater,wastewater,in-county treatment,in-county treatment
 wastewater,wastewater,ww_exports,ww_exports
-ww_imports,ww_imports,wastewater,wastewater
+ww_imports,ww_imports,in-county treatment,in-county treatment
 surfaceWater,surfaceWater,Chattahoochee Basin,Basins
 surfaceWater,surfaceWater,Coosa_Etowah Basin,Basins
 surfaceWater,surfaceWater,Flint Basin,Basins
 surfaceWater,surfaceWater,Ocmulgee Basin,Basins
 surfaceWater,surfaceWater,Oconee Basin,Basins
 surfaceWater,surfaceWater,Tallapoosa Basin,Basins
-ww_exports,ww_exports,Creek,Disposal
-ww_exports,ww_exports,Lake,Disposal
-ww_exports,ww_exports,River,Disposal
-ww_exports,ww_exports,Wetland,Disposal
-ww_exports,ww_exports,Reuse,Disposal
 in-county treatment,in-county treatment,Creek,Disposal
 in-county treatment,in-county treatment,Lake,Disposal
 in-county treatment,in-county treatment,Land,Disposal
-ww_exports,ww_exports,Land,Disposal
 in-county treatment,in-county treatment,Reservoir,Disposal
-ww_exports,ww_exports,Reservoir,Disposal
 in-county treatment,in-county treatment,Reuse,Disposal
 in-county treatment,in-county treatment,River,Disposal
 in-county treatment,in-county treatment,Wetland,Disposal

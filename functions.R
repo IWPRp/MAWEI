@@ -14,20 +14,19 @@ library(zoo)
 library(jsonlite)
 
 DATA_DIR <- "data/"
-# SAVE_DIR is overridable from the shell so a run can be diverted to a scratch
-# tree without editing this file, e.g.
-#   MAWEI_SAVE_DIR=outputs/files_baseline/ Rscript R/flows_energy_water.R
-# ExtraNotes: needed for regression testing - lets us regenerate a full set of
-# artefacts and diff them against outputs/files/ without ever overwriting it.
+# SAVE_DIR is overridable from the shell so a run can be diverted to a scratch tree
+# without editing this file, e.g.
+#   MAWEI_SAVE_DIR=outputs/files_test/ Rscript R/flows_energy_water.R
+# ExtraNotes: this is what makes regression testing possible - a full set of artefacts can be
+# regenerated somewhere else and diffed against the published tree.
 SAVE_DIR <- Sys.getenv("MAWEI_SAVE_DIR", unset = "outputs/files/")
 if (!grepl("/$", SAVE_DIR)) SAVE_DIR <- paste0(SAVE_DIR, "/")
 SCRIPTS_DIR <- "R/"
 
 # Run-mode flags. Each is overridable from the shell, e.g.
 #   MAWEI_SAVE_FILES=0 MAWEI_MAKE_PLOT=0 Rscript R/run_qc.R
-# ExtraNotes: the flows_*.R scripts each re-source this file, so a flag assigned
-# in a calling script gets clobbered. Reading the environment makes the override
-# survive re-sourcing, which is what lets R/run_qc.R suppress artefact writing.
+# ExtraNotes: read from the environment rather than set here because each flows_*.R script
+# re-sources this file, which would otherwise clobber a flag set by a calling script.
 flag_env <- function(name, default) {
   v <- Sys.getenv(name, unset = NA)
   if (is.na(v) || !nzchar(v)) return(default)
@@ -64,13 +63,11 @@ SAVE_MODE <- "selfcontained"
 # ---------------------------------------------------------------------------
 # pandoc discovery
 # ---------------------------------------------------------------------------
-# htmlwidgets::saveWidget(selfcontained = TRUE) needs pandoc. RStudio bundles one
-# and puts it on the path for its own sessions, so interactive runs always worked
-# while `Rscript R/flows_energy_water.R` from a terminal failed at the first save.
-# Probe the usual locations once and export RSTUDIO_PANDOC, which is what
-# rmarkdown::find_pandoc() reads.
-# ExtraNotes: without this the pipeline is interactive-only, which blocks both
-# scripted regeneration and any CI/GitHub Actions build of the web dashboard.
+# htmlwidgets::saveWidget(selfcontained = TRUE) requires pandoc. RStudio bundles a copy and
+# puts it on the path for its own sessions only, so probe the usual locations and export
+# RSTUDIO_PANDOC, which is what rmarkdown::find_pandoc() reads.
+# ExtraNotes: without this the pipeline is interactive-only, which rules out both scripted
+# regeneration and any CI build of the web dashboard.
 ensure_pandoc <- function(verbose = TRUE) {
   if (rmarkdown::pandoc_available()) return(invisible(TRUE))
 
@@ -105,8 +102,8 @@ ensure_pandoc <- function(verbose = TRUE) {
 }
 
 HAS_PANDOC <- ensure_pandoc()
-# ExtraNotes: degrade rather than abort. shared_libs still produces working HTML,
-# just with an external lib folder instead of one embedded blob.
+# ExtraNotes: degrade rather than abort. shared_libs still produces working HTML, just with
+# an external library folder instead of one embedded blob.
 if (!HAS_PANDOC && identical(SAVE_MODE, "selfcontained")) SAVE_MODE <- "shared_libs"
 
 # create directory if it doesn't exist
@@ -151,24 +148,23 @@ DAYS_PER_YEAR <- 365
 #   Hydro  8766, 8843, 3412, 3412, 3412   (2020..2024)
 #   Solar  8766, 8842, 3411, 3411, 3412
 #   Coal   9918, 9832, 9948, 9825, 9940   <- no break, so this is convention only
-# Left alone, hydro and solar fuel input is 2.57x inflated in 2020-21, producing a
-# large artificial discontinuity in 2022 and, if a generic fuel-minus-generation
-# loss rule were applied, ~61% of invented "rejected heat" at a hydro dam.
+# Untreated, non-combustible fuel input is 2.57x inflated in 2020-21, which dominates the
+# apparent year-on-year change in hydro and solar and would manufacture ~61% of spurious
+# "rejected heat" at a hydro dam under any fuel-minus-generation loss rule.
 MMBTU_PER_MWH <- 3.412            # 1 MWh at 100% efficiency
 NONCOMBUSTIBLE_FUELS <- c("Hydroelectric Water", "Solar", "Wind", "Geothermal")
 
 # Plant aggregates whose output is consumed on site and never reaches the grid.
-# ExtraNotes: replaces a grepl("site", ...) test that matched any label containing
-# "site". Kept as an explicit constant so adding a new aggregate is a deliberate act.
+# ExtraNotes: an explicit set rather than a name pattern, so that adding an aggregate to the
+# behind-the-meter category is always a deliberate act and cannot happen by coincidence of
+# naming.
 BEHIND_THE_METER_AGGREGATES <- c("On-Site Backup Generation")
 
-# The demand sectors that receive delivered energy and split it into useful services
-# vs rejected energy.
-# ExtraNotes: previously derived as setdiff(unique(target), unique(source)), which
-# would classify any plant aggregate that happened to have no generation in a given
-# year as an end-use sector and then invent 65% "energy services" at a generator node.
-# It is not currently triggered (the "Other" aggregate does emit generation) but the
-# construction is fragile, so the set is now stated outright.
+# The demand sectors that receive delivered energy and split it into useful services vs
+# rejected energy.
+# ExtraNotes: stated outright rather than inferred from graph topology. Inferring it would
+# classify any plant aggregate that happened to generate nothing in a given year as an end-use
+# sector, and then invent useful "energy services" at a generator node.
 END_USE_SECTORS <- c("residential", "commercial", "industrial", "government",
                      "transport", "agricultural", "en4water")
 
@@ -178,10 +174,9 @@ END_USE_SECTORS <- c("residential", "commercial", "industrial", "government",
 SOCO_THERMAL_PLANTS <- c("Bowen", "Jack McDonough", "Yates")
 
 # Force fuel input == net generation for non-combustible fuels, in every year.
-# ExtraNotes: METHOD CHOICE, affects published numbers. Harmonises 2020-21 onto
-# EIA's current convention so renewable fuel input is comparable across the study
-# period and carries no conversion loss. `fuel_col` is modified in place; the
-# original is kept as <fuel_col>_reported for the audit trail.
+# ExtraNotes: METHOD CHOICE that affects published numbers. Harmonises the whole study period
+# onto EIA's current convention so renewable fuel input is comparable across years and carries
+# no conversion loss. The reported series is preserved as <fuel_col>_reported for audit.
 normalize_noncombustible_heat_rate <- function(df,
                                                fuel_broad_col = "fuel_broad",
                                                fuel_col = "elec_fuel_consumption_mmbtu",
@@ -454,11 +449,10 @@ repeats <- function(df) {
 }
 
 # validate flow data frames for completeness and correctness
-# ExtraNotes: `strict_years` also asserts that NO year outside YEARS_TO_ENSURE is
-# present. Without it the published CSVs silently carried 2006-2065 rows (88% of
-# df_sankey_county_pws_balanced) because the wastewater connection records start in
-# 2006 and the management-plan projections run to 2065. Diagrams filter years so
-# the artefacts looked fine while the CSVs were bloated and sparse.
+# ExtraNotes: `strict_years` asserts that no year OUTSIDE YEARS_TO_ENSURE is present, not just
+# that the wanted years exist. The source tables span 2006-2065 (wastewater connection records
+# through management-plan projections), and because the diagrams filter on year, out-of-period
+# rows are invisible in the artefacts while still bloating the published CSVs.
 validate_flows <- function(df, label = "flows", strict_years = FALSE) {
   required <- c("source", "target", "year", "value")
   missing <- setdiff(required, names(df))
@@ -603,9 +597,8 @@ clean_names <- function(df) {
 
 
 # EIA NOTES ----
-# ExtraNotes: filename case matters. macOS/APFS is case-insensitive so a wrong
-# case resolves silently here but stop()s on Linux/CI. On-disk name is
-# "eia_seds_Complete_..." with a capital C.
+# ExtraNotes: filename case matters. macOS is case-insensitive and will resolve a wrong case
+# silently, but Linux and CI will not.
 EIA_SEDS_FILE <- "eia_seds_Complete_seds_2024_update.csv.gz"
 if (!file.exists(paste0(DATA_DIR, EIA_SEDS_FILE))) {
   stop(paste("File", EIA_SEDS_FILE, "not found in data directory. Download from EIA SEDS."))
@@ -943,10 +936,8 @@ remap_plants_agg <- function(df, col_name = "target") {
         !!sym(col_name) %in% c("Jack McDonough") ~ "Jack McDonough", # large combined-cycle gas plant
 
         # conventional hydro generation grouped with small renewables
-        # ExtraNotes: Milstead (Rockdale) is conventional hydro and appears in the
-        # 2020 EIA-860 only. It previously fell through to "Other"; grouping it with
-        # the other hydro dams keeps Rockdale's single generator visible instead of
-        # hiding it in a catch-all.
+        # ExtraNotes: Milstead (Rockdale) is conventional hydro and is Rockdale's only
+        # generator, so grouping it here keeps the county's generation visible.
         !!sym(col_name) %in% c("Morgan Falls", "Buford", "Allatoona", "Milstead"
                                # ) ~ "Hydro & Renewable Plants",
                                ) ~ "Utility-scale Generation",
@@ -962,9 +953,9 @@ remap_plants_agg <- function(df, col_name = "target") {
         # ) ~ "Renewables & Distributed Energy",
         ) ~ "Distributed-scale Generation",
         # building-based or industrial on-site generation
-        # ExtraNotes: Hewlett Packard Enterprise is a reciprocating-engine (prime
-        # mover IC) genset on natural gas + distillate, i.e. data-centre standby
-        # power. It belongs with the other building-scale units, not in "Other".
+        # ExtraNotes: Hewlett Packard Enterprise is a reciprocating-engine genset on natural
+        # gas and distillate, i.e. data-centre standby power, so it belongs with the other
+        # building-scale units.
         !!sym(col_name) %in% c("Inforum",
                                "CNN Center",
                                "Shepherd Center",
@@ -985,10 +976,9 @@ remap_plants_agg <- function(df, col_name = "target") {
       )
     )
 
-  # ExtraNotes: the TRUE ~ "Other" fallback used to swallow real plants silently
-  # (Milstead and Hewlett Packard Enterprise were both hiding there, and "Other"
-  # then got treated as an end-use sector by end_use_sectors). Warn loudly so a
-  # newly-appearing plant is noticed instead of being averaged into a catch-all.
+  # ExtraNotes: warn loudly on the catch-all. A plant landing in "Other" is either newly
+  # appearing in EIA-860 or renamed, and either way it should be classified deliberately - an
+  # unclassified plant distorts both the fuel mix and the generation total it is lumped into.
   unmapped <- out %>% filter(plant_aggregated == "Other") %>%
     pull(!!sym(col_name)) %>% unique()
   if (length(unmapped) > 0) {
