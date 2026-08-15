@@ -1106,7 +1106,7 @@ save_fig(region_map(FALSE) +
 
 save_fig(region_map(TRUE) +
   labs(title = "The same system over its settlement pattern",
-       subtitle = "Faint outlines are the 1,386 census tracts. Tracts hold roughly equal population by\ndesign, so small dense tracts trace the urban core and large ones the rural fringe."),
+       subtitle = "Faint outlines are the 1,386 census tracts, shaded by measured population density.\nThe average resident lives at 1,130 per km2 while the region averages 450."),
   "Fig9b_regional_overview_settlement", 11, 9.5)
 
 ###############################################################################%
@@ -1195,7 +1195,7 @@ p10f <- M2 %>%
   scale_y_continuous(expand = expansion(mult = c(0, 0.12))) +
   labs(x = NULL, y = "gallons per person per day in the basin",
        title = "The Ocmulgee discharges more than it withdraws",
-       subtitle = "78 gpcd out against 34 in: 1.7 million people are supplied from the Chattahoochee\nand return their sewage to a different river") +
+       subtitle = "78 gpcd out against 34 in: 1.6 million people are supplied from the Chattahoochee\nand return their sewage to a different river") +
   theme_mawei() + theme(legend.position = "bottom")
 
 save_fig((p10a | p10b | p10c) / (p10d | p10e | p10f) +
