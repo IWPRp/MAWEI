@@ -1,0 +1,83 @@
+county,facility_name,wrp_permit,note
+Bartow,CARTERSVILLE JAMES R. STAFFORD WPCP,GA0024091,James R. Stafford is the plant name of the Cartersville WPCP
+Bartow,ADAIRSVILLE NORTH WPCP,GA0046035,
+Bartow,EMERSON HENRY JORDAN WWTP,GA0026115,
+Bartow,BARTOW SOUTHEAST WPCP,GA0037664,
+Bartow,BARTOW TWO RUN WPCP,GA0020702,
+Cherokee,CCWSA ROSE CREEK WPCP,GA0046451,
+Cherokee,CCWSA FITZGERALD CREEK WPCP,GA0038555,
+Cherokee,CANTON WPCP,GA0025674,
+Cherokee,WOODSTOCK RUBES CREEK WRF,GA0026263,
+Cherokee,Fulton Co Little River WRF,GA0033251,Fulton County plant physically located in Cherokee
+Cherokee,CCWSA ROSE CREEK - REUSE,GA0046451,reuse train at the Rose Creek site; shares the permit
+Cherokee,CCWSA RIVER BEND ENVIR. COMPLEX,GA0050242,
+Cherokee,CANTON WPCP SECOND ROW,GA0025674,second reported row for Canton WPCP; same site
+Clayton,CLAYTON W.B. CASEY WRF,GA0038423,permit covers Casey WRF and the Huie constructed wetlands
+Clayton,CLAYTON NORTHEAST WRF,GA0020575,Clayton County Water Authority plant sited in Henry County
+Clayton,CLAYTON SHOAL CREEK WRF,GA0038369,
+Cobb,COBB RL SUTTON WRF,GA0026140,
+Cobb,COBB SOUTH COBB WRF,GA0026158,
+Cobb,COBB NOONDAY CREEK WRF,GA0024988,
+Cobb,COBB NORTHWEST WRF,GA0046761,
+Coweta,NEWNAN WAHOO CREEK,GA0031721,
+Coweta,COWETA SHENANDOAH WPCP,GA0038822,
+Coweta,NEWNAN MINERAL SPRINGS,GA0021423,NPDES permit; a parallel LAS permit GAJ020020 exists at the same site
+Coweta,SENOIA LAS,GAJ020135,land application permit; the NPDES Keg Creek permit is a separate outfall
+Coweta,GRANTVILLE COLLEY STREET LAS,GAJ020287,
+Coweta,GRANTVILLE PONDS,GA0033201,aggregates three adjacent pond permits (GA0033201/GA0033219/GA0033227) within ~1 km
+Coweta,COWETA ARNCO WPCP,GA0000311,
+Coweta,COWETA ARNALL/SARGENT WPCP,GA0000299,
+DeKalb,Snapfinger Creek,GA0024147,
+DeKalb,Pole Bridge Creek,GA0026816,WRP spells it Polebridge
+Douglas,Douglas SouthCentral WPCP,GA0038709,
+Douglas,Douglas Sweetwater Creek WPCP,GA0047201,
+Douglas,Douglas Northside WPCP,GA0030350,
+Douglas,Douglas South Central Urban Water Reuse Facility,GA0038709,reuse train at the South Central site; shares the permit
+Douglas,Villa Rica Tallapoosa West WPCP(1/2 assumed from Douglas Co),GA0027162,City of Villa Rica West WPCP; permitted in Carroll County and shared with Douglas
+Douglas,Villa Rica North Sweetwater WPCP,GA0027171,City of Villa Rica plant permitted in Carroll County
+Fayette,FAYETTEVILLE WHITEWATER CREEK WPCP,GA0035807,
+Fayette,PEACHTREE CITY ROCKAWAY WWTP,GA0046655,
+Fayette,PEACHTREE CITY LINE CREEK / LARRY B. TURNER WWTP,GA0035777,Line Creek is the receiving stream; Larry B. Turner is the plant
+Forsyth,Cumming Bethelview Rd AWRF,GA0046019,
+Forsyth,Forsyth Fowler WRF + Shakerag WRF,GA0038954,WRP permit covers Fowler and Shakerag jointly
+Forsyth,Forsyth James Creek,GA0050238,
+Forsyth,Forsyth Dick Creek,GA0038563,
+Forsyth,Forsyth Manor,GA0050244,WRP calls it The Manor WRF
+Forsyth,Hampton Creek WRF,GA0038903,operated by Settendown Public Utility
+Forsyth,Fowler and James Creek,GAJ020186,land application permit shared by the Fowler and James Creek plants
+Fulton,Atlanta RM Clayton WRC,GA0039012,one permit covers three plants; this coordinate is the R.M. Clayton site
+Fulton,Atlanta Utoy Creek WRC,GA0039012,shares the Atlanta WRCS permit; coordinate is the permit point not the plant
+Fulton,Atlanta South River WRC,GA0039012,shares the Atlanta WRCS permit; coordinate is the permit point not the plant
+Fulton,Fulton Big Creek WRF,GA0024333,
+Fulton,Camp Creek WRF,GA0025381,
+Fulton,Johns Creek Environmental Campus,GA0038831,
+Fulton,Little River WRF (SEE CHEROKEE CO),GA0033251,same plant as the Cherokee entry; reported twice in the source
+Gwinnett,Gwinnett  F.W. Hill,GA0038130,F.W. abbreviates F. Wayne Hill
+Gwinnett,Gwinnett Yellow River,GA0047911,
+Gwinnett,Gwinnett Crooked Creek,GA0026433,
+Gwinnett,Buford Southside WPCP,GA0023167,
+Gwinnett,Buford Westside WPCP,GA0023175,
+Hall,GAINESVILLE FLAT CREEK WRF,GA0021156,
+Hall,GAINESVILLE LINWOOD WRF,GA0020168,
+Hall,HALL COUNTY SPOUT SPRINGS,GA0050214,
+Hall,FLOWERY BRANCH WPCP,GA0031933,
+Hall,LULA WRF,GA0039039,
+Hall,LULA FACULTATIVE POND,GA0039039,pond stage at the Lula site; shares the permit
+Henry,HENRY COUNTY WALNUT CREEK,GAJ020137,land application permit; GA0050316 is the NPDES outfall at the same site
+Henry,HENRY COUNTY INDIAN CREEK,GA0050241,
+Henry,MCDONOUGH WALNUT CREEK WPCP,GA0023949,City of McDonough plant; distinct from the county Walnut Creek plant
+Henry,LOCUST GROVE INDIAN CREEK WPCP,GA0038849,City of Locust Grove plant; distinct from the county Indian Creek plant
+Henry,STOCKBRIDGE WPCP,GA0023337,WRP calls it Stephen D. Peurifoy WPCP
+Henry,HAMPTON WPCP,GA0020320,WRP calls it Bear Creek WPCP under the City of Hampton
+Henry,HENRY COUNTY BEAR CREEK,GAJ020095,Henry County Water Authority plant; distinct from the City of Hampton plant
+Paulding,Paulding Pumpkinvine WRF,GA0039021,
+Paulding,Dallas Pumpkinvine Ck WPCP,GA0039241,City of Dallas plant; distinct from the county Pumpkinvine plant
+Paulding,Paulding Coppermine LAS,GA0038865,
+Paulding,Paulding Coppermine WRF,GA0038865,same site as the Coppermine LAS entry
+Paulding,Paulding Pumpkinvine LAS,GA0039021,same site as the Pumpkinvine WRF entry
+Paulding,Paulding Upper Sweetwater,GA0038890,
+Rockdale,ROCKDALE QUIGG BRANCH,GA0047678,
+Rockdale,ROCKDALE ALMAND BRANCH,GA0021610,
+Rockdale,ROCKDALE SNAPPING SHOALS,GA0050258,
+Rockdale,ROCKDALE HONEY CREEK,GA0022659,
+Rockdale,ROCKDALE SCOTT CREEK,GA0026239,

@@ -127,6 +127,29 @@ df_pws_cira_other <- df_pws %>% # cira = comm ind res ag
 # changes every sectoral total. Irrigation goes first because its destination is known on
 # physical grounds, whereas `other` is a residual with no known destination.
 
+# ANALYSIS: how much of each sector's reported demand is actually reallocated rather than
+# metered to it. Only computable here, because downstream the reallocated volume is
+# indistinguishable from directly metered demand. A sector whose total is largely reallocation
+# carries correspondingly more method uncertainty, which is what this quantifies.
+if (ANALYSIS) {
+  pws_reallocation <- df_pws %>%
+    select(county, year, irrigation, other, self_supplied, nrw) %>%
+    mutate(across(everything(), ~replace_na(., 0))) %>%
+    left_join(df_pws_cira_other %>%
+                mutate(final_total = residential + commercial + industrial + agricultural) %>%
+                select(county, year, final_total), by = c("county", "year")) %>%
+    filter(year %in% YEARS_TO_ENSURE) %>%
+    group_by(year) %>%
+    summarise(across(c(irrigation, other, self_supplied, nrw, final_total), sum),
+              .groups = "drop") %>%
+    mutate(irrigation_pct = 100 * irrigation / final_total,
+           other_pct = 100 * other / final_total,
+           reallocated_pct = 100 * (irrigation + other) / final_total)
+  write_csv(pws_reallocation, file.path(ANALYSIS_DIR, "P1_pws_reallocation_share.csv"))
+  message("  ANALYSIS: reallocated share of sectoral demand, ", max(YEARS_TO_ENSURE), ": ",
+          round(last(pws_reallocation$reallocated_pct), 1), "%")
+}
+
 
 ###############################################################################%
 
@@ -466,31 +489,27 @@ if (any(df_water_i_i$value <= 0)) {
   cat("\n => Zero I/I is OK, as some counties have no wastewater from agriculture and industry")
 }
 
-# diagnostic plot for I/I (histogram, x county, y i_i_factor)
+# ANALYSIS: I&I as an infiltration RATE per unit of real sewage, alongside the resulting volume.
+# The factor is an input assumption and the volume is a result, so reporting them together is the
+# only way a reader can tell how much of the I&I finding is measurement and how much is
+# assumption. The joined factor is captured before the select() below drops it.
 if (ANALYSIS) {
-  ggplot(df_water_i_i %>% select(county, i_i_factor) %>% unique(), aes(x = county, y = i_i_factor)) +
-    geom_bar(stat = "identity", fill = "lightblue") +
-    # add an average horizontal line
-    geom_hline(yintercept = mean(df_water_i_i$i_i_factor, na.rm = TRUE), linetype = "dashed", color = "red") +
-    # add text label for average line
-    geom_text(aes(x = Inf, y = mean(df_water_i_i$i_i_factor, na.rm = TRUE), label = paste0("Average: ", round(mean(df_water_i_i$i_i_factor, na.rm = TRUE), 2))),
-              hjust = 1.1, vjust = -0.5, color = "red2") +
-    theme_minimal() +
-    labs(title = "Infiltration and Inflow (I/I) Factor by County",
-         x = "County",
-         y = "I/I factor") +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1), panel.grid.major = element_blank())
-
-  # plot a 2nd plot as a map here's the sf: sf_counties_atlanta
-  ggplot(data = sf_counties_atlanta %>% mutate(county=name) %>% left_join(df_water_i_i %>% select(county, i_i_factor) %>% unique(), by = "county")) +
-    geom_sf(aes(fill = i_i_factor), color = "white") +
-    geom_sf_text(aes(label = paste0(name, " ", i_i_factor)), size = 3, color = "yellow2") +
-    # scale_fill_viridis_c(option = "C", na.value = "lightgrey", alpha = 0.9) +
-    scale_fill_gradient(low = "lightblue", high = "darkblue", na.value = "lightgrey") +
-    theme_void() +
-    labs(title = "Infiltration and Inflow (I/I) Factor by County",
-         fill = "I/I factor")
-
+  ii_factor <- df_wastewat %>%
+    filter(target == "wastewater") %>%
+    left_join(df_wastewater %>% select(county, year, i_i_factor), by = c("county", "year")) %>%
+    filter(year %in% YEARS_TO_ENSURE) %>%
+    group_by(county, year) %>%
+    summarise(i_i_factor = first(i_i_factor),
+              sector_ww_mgd = sum(value), .groups = "drop") %>%
+    mutate(ii_mgd = sector_ww_mgd * i_i_factor,
+           ii_share_of_collected_pct = 100 * ii_mgd / (sector_ww_mgd + ii_mgd))
+  write_csv(ii_factor, file.path(ANALYSIS_DIR, "P0_ii_factor_and_volume.csv"))
+  message("  ANALYSIS: I&I factor range ",
+          paste(range(ii_factor$i_i_factor, na.rm = TRUE), collapse = "-"),
+          ", mean ", round(mean(ii_factor$i_i_factor, na.rm = TRUE), 3),
+          "; metro I&I share ",
+          round(100 * sum(ii_factor$ii_mgd) / sum(ii_factor$sector_ww_mgd + ii_factor$ii_mgd), 1),
+          "%")
 }
 
 
@@ -579,6 +598,32 @@ if (nrow(ww_conn_ambiguous) > 0) {
           ww_conn_ambiguous$tocounty, ww_conn_ambiguous$tofacility)),
           " route(s) have multiple differing records -> ",
           file.path(QC_DIR, "ww_connections_ambiguous.csv"))
+}
+
+# ANALYSIS: how far apart the two counties' estimates of the SAME transfer are. This is a
+# measure of how well neighbouring utilities agree about a shared pipe, and it can only be
+# computed before deduplication collapses the pairs. A large systematic disagreement would
+# undermine the transfer network results; a small one supports them.
+if (ANALYSIS) {
+  dup_pairs <- df_ww_conn %>%
+    mutate(flow_type = if_else(fromcounty == tocounty, "in-county", "out-county")) %>%
+    filter(flow_type == "out-county", !grepl("copied", tolower(notes))) %>%
+    replace_na(list(value = 0)) %>%
+    # Clamped to the study period. The connection table runs to 2065, and the projected years
+    # carry a growth ramp on one leg only, which makes the two counties' figures diverge by
+    # construction and would report a spurious 99% disagreement.
+    filter(year %in% YEARS_TO_ENSURE) %>%
+    group_by(fromcounty, fromplace, tocounty, tofacility, year) %>%
+    filter(n() > 1) %>%
+    summarise(lo = min(value), hi = max(value), n = n(), .groups = "drop") %>%
+    mutate(abs_gap = hi - lo,
+           rel_gap_pct = if_else(hi > 0, 100 * (hi - lo) / hi, 0))
+  if (nrow(dup_pairs) > 0) {
+    write_csv(dup_pairs, file.path(ANALYSIS_DIR, "P2_transfer_reporting_agreement.csv"))
+    message("  ANALYSIS: ", nrow(dup_pairs), " doubly reported transfers; ",
+            sum(dup_pairs$rel_gap_pct < 1), " agree within 1%, median disagreement ",
+            round(median(dup_pairs$rel_gap_pct), 1), "%")
+  }
 }
 
 
@@ -676,6 +721,35 @@ df_wastewater_treatment_fracs <- df_wastewater_treatment %>%
 # instead for the DISPOSAL split further down, where it is the only available basis.
 # Consequence: facility-level volumes are modelled allocations, not reported measurements, so
 # they are appropriate for system structure but not for regulatory comparison per plant.
+
+# ANALYSIS: treatment capacity utilisation and concentration. Headroom against permit is a
+# planning question the diagram itself cannot answer, and the Herfindahl index over facility
+# shares says whether a county depends on one plant or spreads risk across several. Both need
+# the facility-level allocation that exists only at this point in the pipeline.
+if (ANALYSIS) {
+  treat_util <- df_wastewater_treatment_fracs %>%
+    left_join(df_wastewater_treatment %>%
+                select(county, facility_name, permitted_capacity, level_of_treatment),
+              by = c("county", "facility_name")) %>%
+    left_join(df_ww_tobetreated %>% filter(year %in% YEARS_TO_ENSURE) %>%
+                select(county, year, county_flow = value), by = "county",
+              relationship = "many-to-many") %>%
+    mutate(assigned = county_flow * treatment_fraction,
+           utilisation_pct = 100 * assigned / permitted_capacity) %>%
+    filter(!is.na(year))
+  write_csv(treat_util, file.path(ANALYSIS_DIR, "P3_treatment_utilisation.csv"))
+
+  treat_conc <- df_wastewater_treatment_fracs %>%
+    group_by(county) %>%
+    summarise(facilities = n(),
+              hhi = sum(treatment_fraction^2),
+              largest_share_pct = 100 * max(treatment_fraction), .groups = "drop") %>%
+    arrange(desc(hhi))
+  write_csv(treat_conc, file.path(ANALYSIS_DIR, "P4_treatment_concentration.csv"))
+  message("  ANALYSIS: treatment concentration, most concentrated county: ",
+          treat_conc$county[1], " (HHI ", round(treat_conc$hhi[1], 2), ", ",
+          treat_conc$facilities[1], " plants)")
+}
 
 # apply treatment fractions by facility to wastewater volumes
 df_wastewater_treated <- df_ww_tobetreated %>%
@@ -1263,6 +1337,36 @@ mgmtplan_surface_pws_scaled <- df_sankey_ww_mgmt_C_ind %>%
          pws_in_scaled = source_share * pws_surface_target) %>%
   select(county, year, source, target, value = pws_in_scaled, units)
 
+# ANALYSIS: the size of the supply-demand reconciliation, per county. The scaling factor is a
+# direct measure of how far the withdrawal records and the demand records disagree before they
+# are forced to close, so it is the best available indicator of input data quality per county.
+# It exists only at this step: after the rebuild the node balances and the discrepancy is gone.
+if (ANALYSIS) {
+  pws_scaling <- df_sankey_ww_mgmt_C_ind %>%
+    filter(year %in% YEARS_TO_ENSURE, grepl("publicWatSup", target), source != "groundwater") %>%
+    group_by(county, year) %>%
+    summarise(surface_reported = sum(value), .groups = "drop") %>%
+    left_join(pws_out, by = c("county", "year")) %>%
+    left_join(pws_in_ground, by = c("county", "year")) %>%
+    mutate(pws_in_ground = replace_na(pws_in_ground, 0),
+           surface_needed = pmax(pws_out - pws_in_ground, 0),
+           # A county that reports essentially no surface withdrawal while supplying real volumes
+           # makes the ratio meaningless, so the absolute gap is the primary measure and the
+           # percentage is reported only where there is a meaningful base. Paulding is the case:
+           # it reports ~0 surface inflow to public supply yet supplies about 15 MGD, which is a
+           # reporting gap rather than a scaling adjustment.
+           abs_gap_mgd = surface_needed - surface_reported,
+           scale_factor = if_else(surface_reported > 0.5, surface_needed / surface_reported,
+                                  NA_real_),
+           adjustment_pct = if_else(surface_reported > 0.5,
+                                    100 * abs_gap_mgd / surface_reported, NA_real_),
+           flag = if_else(surface_reported <= 0.5, "no surface withdrawal reported", ""))
+  write_csv(pws_scaling, file.path(ANALYSIS_DIR, "P5_pws_supply_demand_reconciliation.csv"))
+  message("  ANALYSIS: supply-demand reconciliation, median |adjustment| ",
+          round(median(abs(pws_scaling$adjustment_pct), na.rm = TRUE), 1),
+          "%, ", sum(pws_scaling$flag != ""), " county-year(s) report no surface withdrawal")
+}
+
 # check total surface water supply across all counties before scaling
 df_sankey_ww_mgmt_C_ind %>%
   filter(year == 2024) %>%
@@ -1621,15 +1725,14 @@ en4gwflows <- df_sankey_county_pws_balanced %>%
 
 # params
 # flow will be in MGD from the data
-PUMPING_HEAD_GW <- 125 # AVG_GW_DEPTH_FT, assuming a middle number (domestic dominated due to it's high share in volumes)
-PUMPING_HEAD_SW <- 25  # typical for surface water
-# ExtraNotes: the fivefold difference between these two heads is what makes groundwater the more
+# PUMPING_HEAD_GW / PUMPING_HEAD_SW are defined in functions.R
+# ExtraNotes: the fivefold difference between the two heads is what makes groundwater the more
 # energy-intensive source per unit volume, and it is the mechanism behind the whole
-# energy-for-water term. 125 ft is chosen as a domestic-dominated middle value: Georgia public
-# supply wells run 150-750 ft while domestic wells run 50-150 ft, and self-supply here is
-# assigned to households. Because metro Atlanta is overwhelmingly surface-supplied (~97.6%), the
-# choice of groundwater head has little leverage on the metro total but matters for any county
-# with a high groundwater share.
+# energy-for-water term. 125 ft is a domestic-dominated middle value: Georgia public supply wells
+# run 150-750 ft while domestic wells run 50-150 ft, and self-supply here is assigned to
+# households. Because metro Atlanta is overwhelmingly surface-supplied (~97.6%), the choice of
+# groundwater head has little leverage on the metro total but matters for any county with a high
+# groundwater share.
 
 # EJ/year = (flow → gpm → HP → kW → kWh → J → EJ) × 365
 # value × MGD_to_GPM	gpm
@@ -1670,8 +1773,7 @@ en4water_extract <- rbind(en4sw_extract, en4gw_extract) %>%
 # saline surface water treatment = 12,000 kWh/mg saline groundwater treatment = 12,000 kWh/mg
 # distribution 1040 kWh/mg
 
-FRESH_SW_TREAT_ENERGY_INT <- 405  # kWh/mg
-FRESH_GW_TREAT_ENERGY_INT <- 205  # kWh/mg
+# FRESH_SW_TREAT_ENERGY_INT / FRESH_GW_TREAT_ENERGY_INT are defined in functions.R
 # ExtraNotes: surface water costs about twice as much energy to treat as groundwater because it
 # needs coagulation, flocculation, sedimentation and filtration, whereas groundwater arrives
 # filtered by the aquifer and often needs only disinfection. Both intensities are national
@@ -1697,7 +1799,7 @@ en4water_treat <- rbind(en4sw_extract, en4gw_extract) %>%
 # probably exclude self-supply, but since energy for water is so small, calculating distribution for all
 # (it's not like industrial or other self use won't have the need to move water, so it's not unreasonable)
 
-DISTRIBUTION_ENERGY_INT <- 1040 # kWh/mg
+# DISTRIBUTION_ENERGY_INT is defined in functions.R
 # ExtraNotes: distribution is the single largest term in the water-energy chain, roughly 2.5x
 # surface treatment and 5x groundwater treatment, because pressurising a sprawling network over
 # rolling terrain dominates. Metro Atlanta sits on the Piedmont with substantial relief, so this
@@ -1721,6 +1823,29 @@ en4water_distribute <- rbind(en4sw_extract, en4gw_extract) %>%
 # combine all energy for water
 en4water_all <- rbind(en4water_extract, en4water_treat, en4water_distribute)
 
+# ANALYSIS: decompose water-sector energy into its stages. The published diagram shows only the
+# total reaching `en4water`, so the split between lifting, treating and distributing -- and
+# therefore which intervention would matter -- is visible only here. Reported per water type as
+# well, since the surface/groundwater contrast is the mechanism behind the intensity differences
+# between counties.
+if (ANALYSIS) {
+  e4w_stages <- bind_rows(
+    en4water_extract %>% mutate(stage = "extraction"),
+    en4water_treat %>% mutate(stage = "treatment"),
+    en4water_distribute %>% mutate(stage = "distribution")) %>%
+    filter(year %in% YEARS_TO_ENSURE) %>%
+    mutate(water_type = if_else(grepl("groundwater", source), "groundwater", "surface water")) %>%
+    group_by(year, stage, water_type) %>%
+    summarise(pj = sum(value) * EJ_to_PJ, .groups = "drop") %>%
+    group_by(year) %>% mutate(share_pct = 100 * pj / sum(pj)) %>% ungroup()
+  write_csv(e4w_stages, file.path(ANALYSIS_DIR, "P6_energy_for_water_by_stage.csv"))
+
+  st <- e4w_stages %>% filter(year == max(YEARS_TO_ENSURE)) %>%
+    group_by(stage) %>% summarise(pj = sum(pj), .groups = "drop") %>% arrange(desc(pj))
+  message("  ANALYSIS: water-sector energy by stage, ", max(YEARS_TO_ENSURE), ": ",
+          paste0(st$stage, " ", round(st$pj, 3), " PJ", collapse = ", "))
+}
+
 if (MAKE_PLOT) plot_sankey_enhanced(en4water_all %>% group_by(source, target, year) %>%
                        summarise(value = sum(value) * EJ_to_PJ, .groups = "drop") %>%
                        mutate(units = "PJ") %>%
@@ -1738,7 +1863,7 @@ if (MAKE_PLOT) plot_sankey_enhanced(en4water_all %>% mutate(value = value * EJ_t
 # everything is treated as secondary so 2080 kWh/mg
 # see the table here https://pnnl.github.io/interflow/wastewater_sector.html
 
-WW_TREATMENT_ENERGY_INT <- 2080 # kWh/mg
+# WW_TREATMENT_ENERGY_INT is defined in functions.R
 # ExtraNotes: every plant is treated as secondary. Metro Atlanta plants are in practice mostly
 # advanced/tertiary with nutrient removal, which is more energy intensive, so this is a
 # deliberately conservative floor on wastewater treatment energy. Wastewater treatment is the

@@ -1,0 +1,111 @@
+kind,county,name,id,capacity,capacity_units,detail,lat,lon,coord_source,water_source,permit_basin,permit_city,site_shared,coord_decimals
+power plant,Bartow,Bowen,703,3498.6,MW,Conventional Steam Coal,34.1256,-84.9222,EIA-860 schedule 2,Etowah River,NA,NA,NA,4
+power plant,Bartow,Allatoona,760,86.6,MW,Conventional Hydroelectric,34.1637,-84.7282,EIA-860 schedule 2,Etowah River,NA,NA,NA,4
+power plant,Bartow,Bartow Davidson,66980,2.6,MW,Solar Photovoltaic,34.25745,-84.831486,EIA-860 schedule 2,NA,NA,NA,NA,5
+power plant,Cobb,Jack McDonough,710,2848.4000000000005,MW,Natural Gas Fired Combined Cycle; Petroleum Liquids,33.8239,-84.4758,EIA-860 schedule 2,Chattahoochee River,NA,NA,NA,4
+power plant,Cobb,Solar BESS Hybrid,63535,3.5,MW,Batteries; Natural Gas Fired Combustion Turbine; Solar Photovoltaic,33.979348,-84.556128,EIA-860 schedule 2,NA,NA,NA,NA,6
+power plant,Cobb,Riverwood 100 Building,54816,1.1,MW,Petroleum Liquids,33.8775,-84.4603,EIA-860 schedule 2,NA,NA,NA,NA,4
+power plant,Coweta,Yates,728,807.4,MW,Natural Gas Steam Turbine,33.4622,-84.8986,EIA-860 schedule 2,Chattahoochee River,NA,NA,NA,4
+power plant,DeKalb,Emory Decatur Hospital,54830,3.9000000000000004,MW,Petroleum Liquids,33.7919,-84.2831,EIA-860 schedule 2,NA,NA,NA,NA,4
+power plant,DeKalb,Emory Hillandale Hospital,56231,1.6,MW,Petroleum Liquids,33.7036,-84.1494,EIA-860 schedule 2,NA,NA,NA,NA,4
+power plant,DeKalb,Laredo Bus Facility Solar Canopies,58064,1,MW,Solar Photovoltaic,33.783333,-84.267778,EIA-860 schedule 2,NA,NA,NA,NA,6
+power plant,DeKalb,Hickory Ridge Landfill Solar Project,59459,1,MW,Solar Photovoltaic,33.665,-84.336111,EIA-860 schedule 2,0,NA,NA,NA,3
+power plant,Douglas,"Turnipseed Solar, LLC",66205,3,MW,Solar Photovoltaic,33.69915,-84.678913,EIA-860 schedule 2,NA,NA,NA,NA,5
+power plant,Forsyth,Buford,759,131.2,MW,Conventional Hydroelectric,34.162279,-84.077367,EIA-860 schedule 2,Chattahoochee River,NA,NA,NA,6
+power plant,Fulton,Morgan Falls,717,16.8,MW,Conventional Hydroelectric,33.9681,-84.3841,EIA-860 schedule 2,Chattahoochee River,NA,NA,NA,4
+power plant,Fulton,CNN Center,54323,13,MW,Petroleum Liquids,33.759167,-84.395,EIA-860 schedule 2,N/A,NA,NA,NA,3
+power plant,Fulton,State Farm Support Center East,55274,10.8,MW,Petroleum Liquids,34.086,-84.245,EIA-860 schedule 2,Municipality,NA,NA,NA,3
+power plant,Fulton,Hewlett Packard Enterprise,54457,8,MW,Petroleum Liquids,34.0864,-84.2677,EIA-860 schedule 2,NA,NA,NA,NA,4
+power plant,Fulton,MAS ASB Cogen Plant,58484,6.6000000000000005,MW,Natural Gas Internal Combustion Engine,33.655,-84.394444,EIA-860 schedule 2,City of Atlanta,NA,NA,NA,3
+power plant,Fulton,Bank of America Plaza,55152,3,MW,Petroleum Liquids,33.7708,-84.3861,EIA-860 schedule 2,NA,NA,NA,NA,4
+power plant,Fulton,191 Peachtree Tower,54818,2.4,MW,Petroleum Liquids,33.7583,-84.3869,EIA-860 schedule 2,Miscellaneous Service,NA,NA,NA,4
+power plant,Fulton,Sun Trust Plaza,54845,2.4,MW,Petroleum Liquids,33.7625,-84.387200000000007,EIA-860 schedule 2,City Of Atlanta,NA,NA,NA,4
+power plant,Fulton,Shepherd Center,54813,2.2,MW,Petroleum Liquids,33.8111,-84.3928,EIA-860 schedule 2,NA,NA,NA,NA,4
+power plant,Fulton,Georgia Pacific Center,54906,1.4,MW,Petroleum Liquids,33.757513,-84.386871,EIA-860 schedule 2,NA,NA,NA,NA,6
+power plant,Fulton,Tech Square Microgrid,63775,1.4,MW,Batteries; Natural Gas Internal Combustion Engine; Other Natural Gas; Petroleum Liquids,33.7756,-84.3899,EIA-860 schedule 2,NA,NA,NA,NA,4
+power plant,Fulton,Inforum,54290,1.3,MW,Petroleum Liquids,33.7533,-84.3889,EIA-860 schedule 2,NA,NA,NA,NA,4
+power plant,Fulton,Atlanta Gift Mart LP,54877,1.2,MW,Petroleum Liquids,33.7611,-84.3892,EIA-860 schedule 2,NA,NA,NA,NA,4
+power plant,Fulton,Atlanta Falcons Solar,62393,1,MW,Solar Photovoltaic,33.755421,-84.400933,EIA-860 schedule 2,NA,NA,NA,NA,6
+power plant,Gwinnett,Georgia LFG Richland Creek Plant,61387,11.2,MW,Landfill Gas,34.127146,-84.033376,EIA-860 schedule 2,NA,NA,NA,NA,6
+wastewater plant,Bartow,CARTERSVILLE JAMES R. STAFFORD WPCP,GA0024091,15,MGD,0,34.143636,-84.830298,GA EPD WRP permit inventory,NA,Coosa,Cartersville,FALSE,6
+wastewater plant,Bartow,ADAIRSVILLE NORTH WPCP,GA0046035,1,MGD,0,34.390832,-84.941101,GA EPD WRP permit inventory,NA,Coosa,Adairsville,FALSE,6
+wastewater plant,Bartow,EMERSON HENRY JORDAN WWTP,GA0026115,0.45,MGD,Activated Sludge,34.112154,-84.750709,GA EPD WRP permit inventory,NA,Coosa,Emerson,FALSE,6
+wastewater plant,Bartow,BARTOW SOUTHEAST WPCP,GA0037664,0.1,MGD,0,34.132089,-84.789375,GA EPD WRP permit inventory,NA,Coosa,Cartersville,FALSE,6
+wastewater plant,Bartow,BARTOW TWO RUN WPCP,GA0020702,0.1,MGD,0,34.278966,-84.826044,GA EPD WRP permit inventory,NA,Coosa,Cartersville,FALSE,6
+wastewater plant,Cherokee,CCWSA ROSE CREEK WPCP,GA0046451,6,MGD,0,34.136488,-84.570114,GA EPD WRP permit inventory,NA,Coosa,Woodstock,TRUE,6
+wastewater plant,Cherokee,CCWSA FITZGERALD CREEK WPCP,GA0038555,5,MGD,0,34.099428,-84.447093,GA EPD WRP permit inventory,NA,Coosa,Woodstock,FALSE,6
+wastewater plant,Cherokee,CANTON WPCP,GA0025674,4,MGD,0,34.231745,-84.503094,GA EPD WRP permit inventory,NA,Coosa,Canton,TRUE,6
+wastewater plant,Cherokee,WOODSTOCK RUBES CREEK WRF,GA0026263,2.5,MGD,0,34.098704,-84.509864,GA EPD WRP permit inventory,NA,Coosa,Woodstock,FALSE,6
+wastewater plant,Cherokee,Fulton Co Little River WRF,GA0033251,1,MGD,Advanced,34.10235,-84.42927,GA EPD WRP permit inventory,NA,Coosa,Woodstock,TRUE,5
+wastewater plant,Cherokee,CCWSA ROSE CREEK - REUSE,GA0046451,0,MGD,REUSE,34.136488,-84.570114,GA EPD WRP permit inventory,NA,Coosa,Woodstock,TRUE,6
+wastewater plant,Cherokee,CCWSA RIVER BEND ENVIR. COMPLEX,GA0050242,0,MGD,0.5,34.299813,-84.393542,GA EPD WRP permit inventory,NA,Coosa,Ball Ground,FALSE,6
+wastewater plant,Cherokee,CANTON WPCP SECOND ROW,GA0025674,0,MGD,0,34.231745,-84.503094,GA EPD WRP permit inventory,NA,Coosa,Canton,TRUE,6
+wastewater plant,Clayton,CLAYTON W.B. CASEY WRF,GA0038423,24,MGD,Advanced,33.515369,-84.371975,GA EPD WRP permit inventory,NA,Ocmulgee,Jonesboro,FALSE,6
+wastewater plant,Clayton,CLAYTON NORTHEAST WRF,GA0020575,10,MGD,Advanced,33.573081,-84.257665,GA EPD WRP permit inventory,NA,Upper Ocmulgee,Rex,FALSE,6
+wastewater plant,Clayton,CLAYTON SHOAL CREEK WRF,GA0038369,4.4,MGD,Advanced,33.408627,-84.383121,GA EPD WRP permit inventory,NA,Flint,Hampton,FALSE,6
+wastewater plant,Cobb,COBB RL SUTTON WRF,GA0026140,40,MGD,Advanced,33.832369,-84.459174,GA EPD WRP permit inventory,NA,Chattahoochee,Smyrna,FALSE,6
+wastewater plant,Cobb,COBB SOUTH COBB WRF,GA0026158,40,MGD,Advanced,33.775919,-84.537819,GA EPD WRP permit inventory,NA,Chattahoochee,Austell,FALSE,6
+wastewater plant,Cobb,COBB NOONDAY CREEK WRF,GA0024988,20,MGD,Advanced,34.072986,-84.536622,GA EPD WRP permit inventory,NA,Coosa,Kennesaw,FALSE,6
+wastewater plant,Cobb,COBB NORTHWEST WRF,GA0046761,12,MGD,Advanced,34.047526,-84.656512,GA EPD WRP permit inventory,NA,Coosa,Kennesaw,FALSE,6
+wastewater plant,Coweta,NEWNAN WAHOO CREEK,GA0031721,3,MGD,Secondary,33.402033,-84.784952,GA EPD WRP permit inventory,NA,Chattahoochee,Newnan,FALSE,6
+wastewater plant,Coweta,COWETA SHENANDOAH WPCP,GA0038822,2,MGD,Advanced,33.347334,-84.726136,GA EPD WRP permit inventory,NA,Flint,Newnan,FALSE,6
+wastewater plant,Coweta,NEWNAN MINERAL SPRINGS,GA0021423,0.75,MGD,Secondary,33.378371,-84.855121,GA EPD WRP permit inventory,NA,Chattahoochee,Newnan,FALSE,6
+wastewater plant,Coweta,SENOIA LAS,GAJ020135,0.49,MGD,LAS,33.301082,-84.564544,GA EPD WRP permit inventory,NA,Flint,Senoia,FALSE,6
+wastewater plant,Coweta,GRANTVILLE COLLEY STREET LAS,GAJ020287,0.15,MGD,LAS,33.237317,-84.845271,GA EPD WRP permit inventory,NA,Chattahoochee,Grantville,FALSE,6
+wastewater plant,Coweta,GRANTVILLE PONDS,GA0033201,0.13,MGD,0,33.243889,-84.83222,GA EPD WRP permit inventory,NA,Chattahoochee,Grantville,FALSE,5
+wastewater plant,Coweta,COWETA ARNCO WPCP,GA0000311,0.1,MGD,Secondary,33.421513,-84.857779,GA EPD WRP permit inventory,NA,Chattahoochee,Arnco,FALSE,6
+wastewater plant,Coweta,COWETA ARNALL/SARGENT WPCP,GA0000299,0.06,MGD,Secondary,33.425589,-84.874037,GA EPD WRP permit inventory,NA,Chattahoochee,Sargent,FALSE,6
+wastewater plant,DeKalb,Snapfinger Creek,GA0024147,36,MGD,Advanced,33.664782,-84.218424,GA EPD WRP permit inventory,NA,Ocmulgee,Decatur,FALSE,6
+wastewater plant,DeKalb,Pole Bridge Creek,GA0026816,20,MGD,Advanced,33.637972,-84.14331,GA EPD WRP permit inventory,NA,Ocmulgee,Lithonia,FALSE,5
+wastewater plant,Douglas,Douglas SouthCentral WPCP,GA0038709,6,MGD,Advanced,33.646345,-84.753224,GA EPD WRP permit inventory,NA,Chattahoochee,Douglasville,TRUE,6
+wastewater plant,Douglas,Douglas Sweetwater Creek WPCP,GA0047201,3,MGD,Advanced,33.705624,-84.632433,GA EPD WRP permit inventory,NA,Chattahoochee,Douglasville,FALSE,6
+wastewater plant,Douglas,Villa Rica Tallapoosa West WPCP(1/2 assumed from Douglas Co),GA0027162,2.15,MGD,Advanced,33.738678,-84.949298,GA EPD WRP permit inventory,NA,Tallapoosa,Villa Rica,FALSE,6
+wastewater plant,Douglas,Douglas Northside WPCP,GA0030350,0.6,MGD,Advanced,33.783585,-84.760818,GA EPD WRP permit inventory,NA,Chattahoochee,Douglasville,FALSE,6
+wastewater plant,Douglas,Villa Rica North Sweetwater WPCP,GA0027171,0.52,MGD,Advanced,33.742368,-84.879158,GA EPD WRP permit inventory,NA,Chattahoochee,Villa Rica,FALSE,6
+wastewater plant,Douglas,Douglas South Central Urban Water Reuse Facility,GA0038709,0,MGD,LAS,33.646345,-84.753224,GA EPD WRP permit inventory,NA,Chattahoochee,Douglasville,TRUE,6
+wastewater plant,Fayette,FAYETTEVILLE WHITEWATER CREEK WPCP,GA0035807,5,MGD,0,33.431277,-84.481643,GA EPD WRP permit inventory,NA,Flint,Fayetteville,FALSE,6
+wastewater plant,Fayette,PEACHTREE CITY ROCKAWAY WWTP,GA0046655,4,MGD,0,33.340205,-84.543111,GA EPD WRP permit inventory,NA,Flint,Peachtree City,FALSE,6
+wastewater plant,Fayette,PEACHTREE CITY LINE CREEK / LARRY B. TURNER WWTP,GA0035777,2,MGD,0,33.348424,-84.564865,GA EPD WRP permit inventory,NA,Flint,Peachtree City,FALSE,6
+wastewater plant,Forsyth,Cumming Bethelview Rd AWRF,GA0046019,8,MGD,Advanced,34.196355,-84.189286,GA EPD WRP permit inventory,NA,Chattahoochee,Cumming,FALSE,6
+wastewater plant,Forsyth,Forsyth Fowler WRF + Shakerag WRF,GA0038954,3.75,MGD,Advanced,34.058917,-84.114791,GA EPD WRP permit inventory,NA,Chattahoochee,Suwanee,FALSE,6
+wastewater plant,Forsyth,Forsyth James Creek,GA0050238,1,MGD,Advanced,34.128152,-84.123769,GA EPD WRP permit inventory,NA,Chattahoochee,Suwanee,FALSE,6
+wastewater plant,Forsyth,Forsyth Dick Creek,GA0038563,0.76,MGD,Advanced,34.087492,-84.154012,GA EPD WRP permit inventory,NA,Chattahoochee,Suwanee,FALSE,6
+wastewater plant,Forsyth,Forsyth Manor,GA0050244,0.5,MGD,Advanced,34.166554,-84.258074,GA EPD WRP permit inventory,NA,Coosa,Alpharetta,FALSE,6
+wastewater plant,Forsyth,Hampton Creek WRF,GA0038903,0.45,MGD,LAS,34.301051,-84.060855,GA EPD WRP permit inventory,NA,Coosa,Cumming,FALSE,6
+wastewater plant,Forsyth,Fowler and James Creek,GAJ020186,0,MGD,LAS,34.128152,-84.123769,GA EPD WRP permit inventory,NA,Chattahoochee,Suwanee,FALSE,6
+wastewater plant,Fulton,Atlanta RM Clayton WRC,GA0039012,100,MGD,Primary Secondary and Tertiary,33.823318,-84.456921,GA EPD WRP permit inventory,NA,Chattahoochee,Atlanta,TRUE,6
+wastewater plant,Fulton,Atlanta Utoy Creek WRC,GA0039012,48,MGD,Primary Secondary and Tertiary,33.823318,-84.456921,GA EPD WRP permit inventory,NA,Chattahoochee,Atlanta,TRUE,6
+wastewater plant,Fulton,Atlanta South River WRC,GA0039012,40,MGD,Primary Secondary and Tertiary,33.823318,-84.456921,GA EPD WRP permit inventory,NA,Chattahoochee,Atlanta,TRUE,6
+wastewater plant,Fulton,Fulton Big Creek WRF,GA0024333,24,MGD,Advanced,34.00248,-84.390515,GA EPD WRP permit inventory,NA,Chattahoochee,Roswell,FALSE,5
+wastewater plant,Fulton,Camp Creek WRF,GA0025381,24,MGD,Advanced,33.678256,-84.634493,GA EPD WRP permit inventory,NA,Chattahoochee,Atlanta,FALSE,6
+wastewater plant,Fulton,Johns Creek Environmental Campus,GA0038831,15,MGD,Advanced,33.976784,-84.266987,GA EPD WRP permit inventory,NA,Chattahoochee,Alpharetta,FALSE,6
+wastewater plant,Fulton,Little River WRF (SEE CHEROKEE CO),GA0033251,0,MGD,0,34.10235,-84.42927,GA EPD WRP permit inventory,NA,Coosa,Woodstock,TRUE,5
+wastewater plant,Gwinnett,Gwinnett  F.W. Hill,GA0038130,60,MGD,Advanced,34.058903,-84.016176,GA EPD WRP permit inventory,NA,Chattahoochee,Buford,FALSE,6
+wastewater plant,Gwinnett,Gwinnett Yellow River,GA0047911,22,MGD,Advanced,33.878267,-84.085169,GA EPD WRP permit inventory,NA,Upper Ocmulgee,Lilburn,FALSE,6
+wastewater plant,Gwinnett,Gwinnett Crooked Creek,GA0026433,16,MGD,Advanced,33.961095,-84.258707,GA EPD WRP permit inventory,NA,Chattahoochee,Norcross,FALSE,6
+wastewater plant,Gwinnett,Buford Southside WPCP,GA0023167,2,MGD,Extended Air,34.079398,-84.015536,GA EPD WRP permit inventory,NA,Chattahoochee,Buford,FALSE,6
+wastewater plant,Gwinnett,Buford Westside WPCP,GA0023175,0.25,MGD,Extended Air,34.124676,-84.027124,GA EPD WRP permit inventory,NA,Chattahoochee,Buford,FALSE,6
+wastewater plant,Hall,GAINESVILLE FLAT CREEK WRF,GA0021156,12,MGD,Advanced,34.265933,-83.867517,GA EPD WRP permit inventory,NA,Chattahoochee,Gainesville,FALSE,6
+wastewater plant,Hall,GAINESVILLE LINWOOD WRF,GA0020168,5,MGD,Advanced,34.32989,-83.850076,GA EPD WRP permit inventory,NA,Chattahoochee,Gainesville,FALSE,5
+wastewater plant,Hall,HALL COUNTY SPOUT SPRINGS,GA0050214,0.75,MGD,Aqua-Aerobic SBR AdvancedTreatment,34.136652,-83.883394,GA EPD WRP permit inventory,NA,Oconee,Flowery Branch,FALSE,6
+wastewater plant,Hall,FLOWERY BRANCH WPCP,GA0031933,0.4,MGD,0,34.179307,-83.930088,GA EPD WRP permit inventory,NA,Chattahoochee,Flowery Branch,FALSE,6
+wastewater plant,Hall,LULA WRF,GA0039039,0.375,MGD,Tertiary,34.414937,-83.689398,GA EPD WRP permit inventory,NA,Chattahoochee,Lula,TRUE,6
+wastewater plant,Hall,LULA FACULTATIVE POND,GA0039039,0,MGD,Primary,34.414937,-83.689398,GA EPD WRP permit inventory,NA,Chattahoochee,Lula,TRUE,6
+wastewater plant,Henry,HENRY COUNTY WALNUT CREEK,GAJ020137,8,MGD,LAS,33.482093,-84.037616,GA EPD WRP permit inventory,NA,Ocmulgee,McDonough,FALSE,6
+wastewater plant,Henry,HENRY COUNTY INDIAN CREEK,GA0050241,4.5,MGD,LAS;NPDES,33.333103,-84.141011,GA EPD WRP permit inventory,NA,Ocmulgee,McDonough,FALSE,6
+wastewater plant,Henry,MCDONOUGH WALNUT CREEK WPCP,GA0023949,2,MGD,Secondary,33.480275,-84.130223,GA EPD WRP permit inventory,NA,Upper Ocmulgee,McDonough,FALSE,6
+wastewater plant,Henry,LOCUST GROVE INDIAN CREEK WPCP,GA0038849,1.5,MGD,0,33.301164,-84.083997,GA EPD WRP permit inventory,NA,Ocmulgee,Locust Grove,FALSE,6
+wastewater plant,Henry,STOCKBRIDGE WPCP,GA0023337,1.5,MGD,0,33.55163,-84.226682,GA EPD WRP permit inventory,NA,Upper Ocmulgee,Stockbridge,FALSE,5
+wastewater plant,Henry,HAMPTON WPCP,GA0020320,0.5,MGD,0,33.376664,-84.304852,GA EPD WRP permit inventory,NA,Flint,Hampton,FALSE,6
+wastewater plant,Henry,HENRY COUNTY BEAR CREEK,GAJ020095,0.25,MGD,LAS,33.359126,-84.344002,GA EPD WRP permit inventory,NA,Flint,Hampton,FALSE,6
+wastewater plant,Paulding,Paulding Pumpkinvine WRF,GA0039021,1.5,MGD,Advanced,34.068256,-84.768887,GA EPD WRP permit inventory,NA,Coosa,Acworth,TRUE,6
+wastewater plant,Paulding,Dallas Pumpkinvine Ck WPCP,GA0039241,1.5,MGD,0,33.960876,-84.835156,GA EPD WRP permit inventory,NA,Coosa,Dallas,FALSE,6
+wastewater plant,Paulding,Paulding Coppermine LAS,GA0038865,1.033,MGD,LAS,33.884623,-84.776758,GA EPD WRP permit inventory,NA,Chattahoochee,Hiram,TRUE,6
+wastewater plant,Paulding,Paulding Coppermine WRF,GA0038865,1,MGD,Advanced,33.884623,-84.776758,GA EPD WRP permit inventory,NA,Chattahoochee,Hiram,TRUE,6
+wastewater plant,Paulding,Paulding Pumpkinvine LAS,GA0039021,1,MGD,LAS (re-use),34.068256,-84.768887,GA EPD WRP permit inventory,NA,Coosa,Acworth,TRUE,6
+wastewater plant,Paulding,Paulding Upper Sweetwater,GA0038890,0.3,MGD,LAS (re-use),33.78777,-84.90338,GA EPD WRP permit inventory,NA,Chattahoochee,Villa Rica,FALSE,5
+wastewater plant,Rockdale,ROCKDALE QUIGG BRANCH,GA0047678,8,MGD,Advanced,33.676496,-83.960878,GA EPD WRP permit inventory,NA,Upper Ocmulgee,Conyers,FALSE,6
+wastewater plant,Rockdale,ROCKDALE ALMAND BRANCH,GA0021610,1.25,MGD,Advanced,33.627665,-84.033156,GA EPD WRP permit inventory,NA,Ocmulgee,Conyers,FALSE,6
+wastewater plant,Rockdale,ROCKDALE SNAPPING SHOALS,GA0050258,0.45,MGD,Secondary,33.599068,-83.995656,GA EPD WRP permit inventory,NA,Ocmulgee,Conyers,FALSE,6
+wastewater plant,Rockdale,ROCKDALE HONEY CREEK,GA0022659,0.3,MGD,Secondary,33.581125,-84.047421,GA EPD WRP permit inventory,NA,Ocmulgee,Conyers,FALSE,6
+wastewater plant,Rockdale,ROCKDALE SCOTT CREEK,GA0026239,0.22,MGD,Secondary,33.550774,-84.029516,GA EPD WRP permit inventory,NA,Upper Ocmulgee,Conyers,FALSE,6

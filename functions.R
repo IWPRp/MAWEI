@@ -137,6 +137,59 @@ HOURS_PER_YEAR <- 8760
 HOURS_PER_DAY <- 24
 DAYS_PER_YEAR <- 365
 
+# Water-sector energy intensities ----
+# Defined here rather than inside the water pipeline so the analysis scripts use the same values
+# by construction. Duplicating them at the point of use let the two drift silently.
+# Source: PNNL interflow (https://pnnl.github.io/interflow/), national averages.
+# ExtraNotes: surface water costs about twice groundwater to treat (coagulation, flocculation,
+# sedimentation, filtration versus aquifer filtration plus disinfection), while groundwater costs
+# far more to lift. Distribution dominates both, and wastewater treatment dominates everything --
+# which is what makes infiltration into sewers an energy problem as much as a hydraulic one.
+FRESH_SW_TREAT_ENERGY_INT <- 405   # kWh per million gallons
+FRESH_GW_TREAT_ENERGY_INT <- 205   # kWh/MG
+DISTRIBUTION_ENERGY_INT   <- 1040  # kWh/MG
+WW_TREATMENT_ENERGY_INT   <- 2080  # kWh/MG, secondary treatment
+PUMPING_HEAD_GW <- 125  # ft; GA domestic wells 50-150, public supply 150-750
+PUMPING_HEAD_SW <- 25   # ft; typical surface intake
+
+# End-use efficiency and delivery losses ----
+# Useful-energy fractions follow the Lawrence Livermore (LLNL) energy-flow convention so the
+# diagrams are comparable with the national and state Sankeys readers already know.
+# ExtraNotes: industry is lower because much of its energy is process heat lost up the stack; the
+# 0.65 applied elsewhere is a building-sector figure. Two consequences must be stated wherever
+# the useful-energy split is reported: transportation is given 0.65 although a light-duty fleet
+# delivers nearer 0.20-0.25 to motion, which makes the metro figure optimistic given transport is
+# about half of end use; and because these are fixed coefficients, the services/rejected split
+# carries no information beyond sectoral mix and cannot show efficiency improving over time.
+SECTOR_EFFICIENCY <- c(
+  industrial   = 0.49,
+  agricultural = 0.65,
+  commercial   = 0.65,
+  government   = 0.65,
+  residential  = 0.65,
+  transport    = 0.65,
+  en4water     = 0.65
+)
+DEFAULT_EFFICIENCY <- 0.65
+
+# A realistic light-duty fleet efficiency, used only to report how much the LLNL transport
+# coefficient overstates useful energy. Not used in the published diagrams.
+TRANSPORT_EFFICIENCY_REAL <- 0.225
+
+# Transmission and distribution losses: midpoint of EIA's 5-7% national range.
+# ExtraNotes: applied to electricity leaving the grid node and treated as an additional OUTFLOW
+# rather than a deduction from delivered demand, because the SEDS and utility demand figures are
+# metered downstream of the losses. Generation plus imports must therefore cover metered use plus
+# losses; the metro electricity node closes exactly under this convention.
+TD_LOSSES_PCT <- 0.06
+
+# Where the ANALYSIS blocks inside the flows scripts write their tables. Kept alongside the
+# tables from R/analysis.R so the manuscript draws every number from one directory; the P-prefix
+# marks a result that can only be computed inside the pipeline, from intermediate objects that
+# no published flow table retains.
+ANALYSIS_DIR <- Sys.getenv("MAWEI_ANALYSIS_DIR", "docs_analysis/analysis_outputs")
+if (ANALYSIS) dir.create(ANALYSIS_DIR, recursive = TRUE, showWarnings = FALSE)
+
 # EIA non-combustible heat-rate convention ----
 # 1 kWh == 3412 Btu by definition, so 3.412 MMBtu/MWh is a 100%-efficient
 # conversion. EIA reported non-combustible renewables at a *fossil-fuel-equivalent*

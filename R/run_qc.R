@@ -15,11 +15,16 @@
 
 args <- commandArgs(trailingOnly = TRUE)
 WRITE_CSV <- "--write-csv" %in% args
+# --analysis runs the ANALYSIS blocks inside the flows scripts. Off by default so the balance
+# check stays fast, but available here because those blocks depend on intermediate objects and
+# this runner is the cheapest way to build them: it skips plotting and artefact writing.
+RUN_ANALYSIS <- "--analysis" %in% args
 
 # Suppress artefact writing inside the sourced scripts; this runner decides what
 # to write. Set via the environment so the flags survive each script's own
 # re-source of functions.R.
-Sys.setenv(MAWEI_SAVE_FILES = "0", MAWEI_MAKE_PLOT = "0", MAWEI_ANALYSIS = "0")
+Sys.setenv(MAWEI_SAVE_FILES = "0", MAWEI_MAKE_PLOT = "0",
+           MAWEI_ANALYSIS = if (RUN_ANALYSIS) "1" else "0")
 
 source("functions.R")
 

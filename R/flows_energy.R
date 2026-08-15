@@ -245,6 +245,29 @@ eia923_sch2pg1_genfuel_GA_C <- eia923_sch2pg1_genfuel_GA %>%
 stopifnot(is.numeric(eia923_sch2pg1_genfuel_GA_C$elec_fuel_consumption_mmbtu),
           is.numeric(eia923_sch2pg1_genfuel_GA_C$net_generation_megawatthours))
 
+# ANALYSIS: size of the heat-rate harmonisation, by fuel and year. This is the only point where
+# the reported and normalised series both exist, so the magnitude of the correction -- and the
+# proof that it touches non-combustible fuels only -- cannot be recovered downstream. It is the
+# evidence for the methods claim that the apparent renewables collapse at the 2021/22 boundary
+# is a reporting artefact rather than a physical change.
+if (ANALYSIS) {
+  heat_rate_effect <- eia923_sch2pg1_genfuel_GA_C %>%
+    filter(!is.na(elec_fuel_consumption_mmbtu_reported)) %>%
+    group_by(year, fuel_broad) %>%
+    summarise(reported_mmbtu = sum(elec_fuel_consumption_mmbtu_reported, na.rm = TRUE),
+              normalised_mmbtu = sum(elec_fuel_consumption_mmbtu, na.rm = TRUE),
+              .groups = "drop") %>%
+    mutate(change_pct = 100 * (normalised_mmbtu - reported_mmbtu) / reported_mmbtu) %>%
+    filter(abs(change_pct) > 1e-9)
+  if (nrow(heat_rate_effect) > 0) {
+    write_csv(heat_rate_effect, file.path(ANALYSIS_DIR, "P7_heat_rate_normalisation.csv"))
+    message("  ANALYSIS: heat-rate normalisation affects ",
+            n_distinct(heat_rate_effect$fuel_broad), " fuel(s) in ",
+            n_distinct(heat_rate_effect$year), " year(s); largest change ",
+            round(min(heat_rate_effect$change_pct), 1), "%")
+  }
+}
+
 # Note: either primary mover could be a target or a plant_name could be target; let's
 # do plant name for now, but that will mask the generation type; but I guess
 # that will be apparent from the fuel type
@@ -365,6 +388,29 @@ en_plant_balance_fix <- en_plant_balance %>%
 stopifnot(all(en_plant_balance_fix$rejected > -1e-12, na.rm = TRUE),
           all(en_plant_balance_fix$own_use > -1e-12, na.rm = TRUE))
 
+# ANALYSIS: plant thermal performance. Heat rate and thermal efficiency follow directly from the
+# closed fuel-to-generation balance, and the own-use fraction is the parasitic load share. None
+# of the three survives into the published flow table, which carries only the three separate
+# outflows. Together they say whether a plant is an efficient combined-cycle unit or an ageing
+# steam plant, which is the physical reason its water intensity differs.
+if (ANALYSIS) {
+  plant_performance <- en_plant_balance_fix %>%
+    filter(year %in% YEARS_TO_ENSURE) %>%
+    mutate(fuel_pj = fuel_input * EJ_to_PJ,
+           net_pj = net_gen * EJ_to_PJ,
+           gross_pj = gross_used * EJ_to_PJ,
+           thermal_efficiency_pct = 100 * net_gen / fuel_input,
+           own_use_pct = 100 * own_use / gross_used,
+           heat_rate_btu_per_kwh = (fuel_input / MMBtu_to_EJ * 1e6) /
+                                   (net_gen / MWh_to_EJ * 1000)) %>%
+    select(county, plant = plant_agg, year, fuel_pj, gross_pj, net_pj,
+           thermal_efficiency_pct, own_use_pct, heat_rate_btu_per_kwh)
+  write_csv(plant_performance, file.path(ANALYSIS_DIR, "P8_plant_thermal_performance.csv"))
+  pp <- plant_performance %>% filter(year == max(YEARS_TO_ENSURE))
+  message("  ANALYSIS: plant thermal efficiency ", max(YEARS_TO_ENSURE), ": ",
+          paste0(pp$plant, " ", round(pp$thermal_efficiency_pct, 1), "%", collapse = ", "))
+}
+
 # own parasitic load -> elec_own_use
 en_efficiency_losses_agg <- en_plant_balance_fix %>%
   mutate(source = plant_agg, target = "elec_own_use") %>%
@@ -476,6 +522,34 @@ eiaseds_use <- eiasedsGA %>%
 # population-weighted regional demand, and only metro totals treated as observed. Note also
 # that population share sums to one across GA, so the metro total is preserved exactly.
 
+# ANALYSIS: how much the downscaling choice matters. Population share is compared against an
+# employment-free alternative -- each county's share of metro public water supply, a proxy for
+# built-environment activity rather than residence. The spread between the two is an honest
+# bound on county-level uncertainty, and it can only be built here where the state total and the
+# weights are both in scope. The metro total is identical under either weighting by construction.
+if (ANALYSIS) {
+  alt_weight <- df_sankey_county_pws_balanced %>%
+    filter(source == "publicWatSup", year %in% YEARS_TO_ENSURE) %>%
+    group_by(county, year) %>% summarise(w = sum(value), .groups = "drop") %>%
+    group_by(year) %>% mutate(water_share = w / sum(w)) %>% ungroup()
+
+  downscale_sensitivity <- census_pop %>%
+    filter(year %in% YEARS_TO_ENSURE) %>%
+    group_by(year) %>% mutate(pop_share_metro = pop / sum(pop)) %>% ungroup() %>%
+    select(county, year, pop_share_metro) %>%
+    left_join(alt_weight %>% select(county, year, water_share), by = c("county", "year")) %>%
+    left_join(eiaseds_use %>% filter(year %in% YEARS_TO_ENSURE) %>%
+                group_by(year) %>% summarise(metro_pj = sum(value) * EJ_to_PJ, .groups = "drop"),
+              by = "year") %>%
+    mutate(pj_by_population = metro_pj * pop_share_metro,
+           pj_by_water = metro_pj * water_share,
+           difference_pct = 100 * (pj_by_water - pj_by_population) / pj_by_population)
+  write_csv(downscale_sensitivity, file.path(ANALYSIS_DIR, "P9_downscaling_sensitivity.csv"))
+  message("  ANALYSIS: county downscaling sensitivity, median |difference| ",
+          round(median(abs(downscale_sensitivity$difference_pct), na.rm = TRUE), 1),
+          "%, max ", round(max(abs(downscale_sensitivity$difference_pct), na.rm = TRUE), 1), "%")
+}
+
 # disaggregate stakeholder consumption data.
 # TODO: is this everything? or do we need data from other utilities?
 en_use_agg_C <- en_use_agg_s %>% mutate(state = "GA", units = "EJ") %>%
@@ -533,17 +607,8 @@ if (MAKE_PLOT) plot_sankey_enhanced(en_fuel_gen_use_loss %>%
 # ag, commercial, govt, residential, and PWS (or water services generally) sector have 65% efficiency
 # assuming 65% for anything else
 
-SECTOR_EFFICIENCY <- c(
-  industrial = 0.49,
-  agricultural = 0.65,
-  commercial = 0.65,
-  government = 0.65,
-  residential = 0.65,
-  transport = 0.65,
-  en4water = 0.65
-)
-
-DEFAULT_EFFICIENCY <- 0.65
+# SECTOR_EFFICIENCY and DEFAULT_EFFICIENCY are defined in functions.R, so the analysis scripts
+# use the same coefficients by construction.
 # ExtraNotes: these are the LLNL/Lawrence Livermore energy-flow convention's useful-energy
 # fractions, adopted so the diagram is comparable with the national and state Sankeys readers
 # already know. Industry is lower (0.49) because much of its energy is process heat lost up the
@@ -591,7 +656,7 @@ if (MAKE_PLOT) plot_sankey_enhanced(en_fuel_gen_use_loss %>% rbind(en_services_r
 
 # transmission and distribution losses ----
 # assume 6% losses for now: source EIA (5-7%) https://www.eia.gov/tools/faqs/faq.php?id=105&t=3
-TD_LOSSES_PCT <- 0.06
+# TD_LOSSES_PCT is defined in functions.R
 # ExtraNotes: 6% is the midpoint of EIA's 5-7% national range for transmission and distribution
 # losses, applied uniformly. Losses scale with distance and loading, so a metro area with
 # substantial imported power sits at or above the midpoint rather than below it. Applied to
