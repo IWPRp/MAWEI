@@ -446,9 +446,22 @@ function saveBlob(text, filename, type) {
   try {
     manifest = await (await fetch(`${DATA}/manifest.json`)).json();
   } catch (e) {
-    document.getElementById('chart').innerHTML =
-      '<p class="loading">Could not load the artefact index. If you are opening this file ' +
-      'directly, serve the folder instead: <code>python3 -m http.server</code></p>';
+    // Distinguish the two failure modes. Opening index.html from disk is the common one and
+    // is not a fault to be fixed: browsers block fetch() on file:// URLs, so the dashboard
+    // has to be served. A genuine http failure means the artefacts are missing instead.
+    const isFile = location.protocol === 'file:';
+    document.getElementById('chart').innerHTML = isFile
+      ? '<div class="notice"><h2>Serve this folder to view the dashboard</h2>' +
+        '<p>Browsers block local file reads, so the dashboard cannot run from a ' +
+        '<code>file://</code> address. Double-click <code>web/serve.command</code>, ' +
+        'or run:</p><pre>cd web &amp;&amp; ln -s ../outputs/files data\n' +
+        'python3 -m http.server 8787</pre>' +
+        '<p>then open <a href="http://localhost:8787/index.html">localhost:8787</a>. ' +
+        'The static diagrams in <code>interface/MAWEI.html</code> open directly, with no ' +
+        'server needed.</p></div>'
+      : '<div class="notice"><h2>Artefact index not found</h2>' +
+        '<p>Expected <code>' + DATA + '/manifest.json</code>. Generate it with:</p>' +
+        '<pre>Rscript R/flows_energy_water.R</pre></div>';
     return;
   }
   document.getElementById('about-meta').textContent =

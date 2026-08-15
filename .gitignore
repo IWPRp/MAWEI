@@ -45,3 +45,6 @@ outputs/files_baseline/
 outputs/files_p1/
 outputs/files_check/
 outputs/*.log
+
+# The dashboard reads artefacts through a symlink created by web/serve.command.
+web/data

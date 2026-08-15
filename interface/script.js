@@ -198,6 +198,8 @@ function applyFilters() {
 
   const filteredFiles = files.filter(file => {
     const matchesSector = activeSectors.size === 0 || activeSectors.has(file.sector);
+    // Metro artefacts always stay visible when counties are selected, so a county view
+    // reads as "county against the regional total" rather than hiding the baseline.
     const matchesResolution = metroOnly
       ? file.scope === 'metro'
       : (selectedCounties.size === 0 || file.resolution === 'metro' ||
@@ -236,7 +238,7 @@ function syncDropdownsFromState() {
   else if (activeSectors.size === 1) sectorFilter.value = [...activeSectors][0];
   else sectorFilter.value = 'all';
 
-  if (selectedCounties.size === 0) resolutionFilter.value = 'all';
+  if (metroOnly) resolutionFilter.value = 'metro';
   else if (selectedCounties.size === 1) resolutionFilter.value = [...selectedCounties][0];
   else resolutionFilter.value = 'all';
 }
@@ -286,12 +288,14 @@ sectorFilter.addEventListener('change', (e) => {
 searchInput.addEventListener('input', () => applyFilters());
 
 resolutionFilter.addEventListener('change', (e) => {
-  if (e.target.value === 'all' || e.target.value === 'metro') {
-    selectedCounties.clear();
-  } else {
-    selectedCounties.clear();
-    selectedCounties.add(e.target.value);
-  }
+  // "Metro" is a scope, not a county: it selects the metro-wide artefacts rather than
+  // clearing the county selection, which is what "All" does. Treating the two alike is
+  // what made the option look inert.
+  selectedCounties.clear();
+  metroOnly = (e.target.value === 'metro');
+  if (!metroOnly && e.target.value !== 'all') selectedCounties.add(e.target.value);
+  const btn = document.getElementById('metro-only');
+  if (btn) btn.classList.toggle('active', metroOnly);
   applyFilters();
   updateMapStyles();
 });
