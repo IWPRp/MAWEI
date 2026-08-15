@@ -24,7 +24,7 @@ energy_water <- rbind(en_fuel_gen_use_loss_all_trade_metro, en4water %>% select(
 if (MAKE_PLOT) plot_sankey_enhanced(energy_water %>% pretty_labels(),
                      animate = T, show_values_in_labels = T,
                      label_units = "auto", alt_units = ew_alt_units,
-                     link_color_by_domain = TRUE)
+                     link_style = "nexus")
 
 
 # simplified energy-water ----
@@ -41,7 +41,7 @@ energy_water_simplified <- simplify_sankey(energy_water, energy_water_simplified
 if (MAKE_PLOT) plot_sankey_enhanced(energy_water_simplified %>% pretty_labels(),
                      animate = T, show_values_in_labels = T,
                      label_units = "auto", alt_units = ew_alt_units,
-                     link_color_by_domain = TRUE)
+                     link_style = "nexus")
 
 # plot_sankey_enhanced(energy_water_simplified)
 
@@ -57,7 +57,7 @@ energy_water_county <- rbind(en_fuel_gen_use_loss_all_trade, en4water_ww_elec_us
 if (MAKE_PLOT) plot_sankey_enhanced(energy_water_county %>% pretty_labels(),
                      reg = "Fulton", animate = T, show_values_in_labels = T,
                      label_units = "auto", alt_units = ew_alt_units,
-                     link_color_by_domain = TRUE)
+                     link_style = "nexus")
 
 if (MAKE_PLOT) plot_sankey_enhanced(energy_water_county, reg = "Fulton")
 if (MAKE_PLOT) plot_sankey_enhanced(energy_water_county, reg = "Cobb")
@@ -68,7 +68,7 @@ energy_water_simplified_county <- simplify_sankey(energy_water_county, energy_wa
 if (MAKE_PLOT) plot_sankey_enhanced(energy_water_simplified_county %>% pretty_labels(),
                      reg = "Fulton", animate = T, show_values_in_labels = T,
                      label_units = "auto", alt_units = ew_alt_units,
-                     link_color_by_domain = TRUE)
+                     link_style = "nexus")
 
 # plot_sankey_enhanced(energy_water_simplified_county)
 # plot_sankey_enhanced(energy_water_simplified_county, reg = "Fulton")
@@ -89,14 +89,14 @@ save_sankey(
   plot_sankey_enhanced(energy_water,
                        animate = TRUE, show_values_in_labels = TRUE,
                        label_units = "auto", alt_units = ew_alt_units,
-                       link_color_by_domain = TRUE),
+                       link_style = "nexus"),
   file.path(SAVE_DIR, "energy-water/01_metro_ew.html"))
 
 save_sankey(
   plot_sankey_enhanced(energy_water_simplified,
                        animate = TRUE, show_values_in_labels = TRUE,
                        label_units = "auto", alt_units = ew_alt_units,
-                       link_color_by_domain = TRUE),
+                       link_style = "nexus"),
   file.path(SAVE_DIR, "energy-water/02_metro_ew_simplified.html"))
 
 ###############################################################################%
@@ -111,11 +111,11 @@ write_csv(energy_water_simplified_county,
 save_county_sankeys(
   energy_water_county, "energy-water", "03", "ew",
   prep_fn = identity, label_units = "auto", alt_units = ew_alt_units,
-  link_color_by_domain = TRUE)
+  link_style = "nexus")
 
 save_county_sankeys(
   energy_water_simplified_county, "energy-water", "04", "ew_simplified",
   prep_fn = identity, label_units = "auto", alt_units = ew_alt_units,
-  link_color_by_domain = TRUE)
+  link_style = "nexus")
 
 }

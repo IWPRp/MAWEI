@@ -399,8 +399,33 @@ if (!file.exists(seds_filtered_file)) {
     write_csv(seds_filtered_file)
 }
 
-eiaseds <- read_csv(seds_filtered_file) %>%
-  left_join(eiaseds_codes, by = "msn") %>%
+eiaseds_raw <- read_csv(seds_filtered_file) %>%
+  left_join(eiaseds_codes, by = "msn")
+
+# SEDS publishes state energy balances on a lag, so the most recent year can be
+# incomplete for whole fuels. An absent series is NOT zero consumption, and silently
+# treating it as zero removes a fuel from the diagram while leaving the rest of that
+# year intact - which reads as a real collapse rather than a missing measurement.
+# ExtraNotes: reported per fuel and year so an incomplete year is impossible to miss,
+# and recorded to outputs/qc/ for the limitations section.
+seds_gaps <- eiaseds_raw %>%
+  filter(msn %in% seds_codes_get, is.na(data)) %>%
+  mutate(fuel_prefix = substr(msn, 1, 2)) %>%
+  group_by(year, fuel_prefix) %>%
+  summarise(codes = paste(sort(msn), collapse = ", "), .groups = "drop")
+if (nrow(seds_gaps) > 0) {
+  message("  SEDS: ", nrow(seds_gaps), " fuel-year series unpublished; those fuels are ",
+          "ABSENT, not zero, in the affected year(s):")
+  purrr::pwalk(seds_gaps, function(year, fuel_prefix, codes)
+    message(sprintf("    %d  %-3s  %s", year, fuel_prefix, codes)))
+  dir.create(QC_DIR, recursive = TRUE, showWarnings = FALSE)
+  write_csv(seds_gaps, file.path(QC_DIR, "seds_missing_series.csv"))
+}
+# Years in which any consumed series is unpublished. Used to scope the energy diagrams
+# so that an incomplete year is never presented alongside complete ones.
+SEDS_INCOMPLETE_YEARS <- sort(unique(seds_gaps$year))
+
+eiaseds <- eiaseds_raw %>%
   filter(data > 0) %>%
   # filter msn where the last character is B (Btu data)
   filter(substr(msn,5,5) == "B")

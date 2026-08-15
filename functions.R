@@ -60,9 +60,7 @@ COLOR_SCHEME <- "vivid"
 # "shared_libs"   : HTMLs reference one shared lib folder (~50 KB each + one ~4 MB folder)
 SAVE_MODE <- "selfcontained"
 
-# ---------------------------------------------------------------------------
-# pandoc discovery
-# ---------------------------------------------------------------------------
+# pandoc discovery ----
 # htmlwidgets::saveWidget(selfcontained = TRUE) requires pandoc. RStudio bundles a copy and
 # puts it on the path for its own sessions only, so probe the usual locations and export
 # RSTUDIO_PANDOC, which is what rmarkdown::find_pandoc() reads.
@@ -138,9 +136,7 @@ HOURS_PER_YEAR <- 8760
 HOURS_PER_DAY <- 24
 DAYS_PER_YEAR <- 365
 
-# ---------------------------------------------------------------------------
-# EIA non-combustible heat-rate convention
-# ---------------------------------------------------------------------------
+# EIA non-combustible heat-rate convention ----
 # 1 kWh == 3412 Btu by definition, so 3.412 MMBtu/MWh is a 100%-efficient
 # conversion. EIA reported non-combustible renewables at a *fossil-fuel-equivalent*
 # heat rate (~8766 Btu/kWh) through 2021 and switched to 3412 Btu/kWh from 2022.
@@ -200,224 +196,131 @@ normalize_noncombustible_heat_rate <- function(df,
   df
 }
 
-
-# ---------------------------------------------------------------------------
-# Sankey node color palettes
-# ---------------------------------------------------------------------------
-# Two palettes available; selected by COLOR_SCHEME above.
-# Per-call override: plot_sankey_enhanced(..., color_scheme = FALSE) → Spectral
-# Unmapped nodes get SANKEY_DEFAULT_COLOR via resolve_node_color().
+# Sankey palettes ----
+# Selected per call:  plot_sankey_enhanced(df, color_scheme = "signature")
+# Or globally:        COLOR_SCHEME <- "signature"
+# A named palette, a bare list of node = colour pairs, or FALSE for a Brewer ramp.
+#
+# Design intent common to all of them:
+#   - a fuel or water source keeps its conventional physical association, so the reader
+#     needs the legend once rather than continuously
+#   - the grid node holds a reserved accent, being the hinge of the energy diagram
+#   - terminal losses are desaturated, so waste recedes and useful output advances
+#   - energy runs warm and water runs cool, which is what lets the combined
+#     energy-water diagram be read at a glance
+#
+# Unmapped nodes fall through to resolve_node_color(), which matches facility and
+# water-body naming patterns; those are too numerous to enumerate.
 
 SANKEY_DEFAULT_COLOR <- "#C8C8C8"
 
-# ---- Vivid: high-contrast, true-representative colors --------------------
+`%||%` <- function(a, b) if (is.null(a)) b else a
+
+## vivid: true-to-source and high contrast ----
 SANKEY_COLORS_VIVID <- list(
-
-  # --- Fossil fuels ---
-  "Coal"                    = "#1A1A1A",
-  "Natural Gas"             = "#E87D2F",
-  "Petroleum"               = "#8B4513",
-
-  # --- Renewables ---
-  "Solar"                   = "#FFD700",
-  "Biomass"                 = "#228B22",
-  "Hydroelectric Water"     = "#1E90FF",
-  "Geothermal"              = "#CD5C5C",
-  "Energy Storage"          = "#9370DB",
-  "Other"                   = "#A0A0A0",
-
-  # --- On-site / distributed generation ---
-  "Onsite / BehindTheMeter" = "#DAA520",
-  "Onsite Solar/DER"        = "#FFC125",
-  "Distributed-scale Generation" = "#B8860B",
-  "On-Site Backup Generation" = "#A0522D",
-
-  # --- Power plants ---
-  "Bowen Plant"             = "#CC3333",
-  "Jack McDonough Plant"    = "#D2691E",
-  "Yates Plant"             = "#B8860B",
-
-  # --- Generation and grid ---
-  "Thermoelectric Generation" = "#FF8C00",
-  "Utility-scale Generation"  = "#E07020",
-  "Electricity Imports"       = "#FFB347",
-  "Electricity Exports"       = "#F0A030",
-  "Out-Metro Electricity Imports"  = "#FFC04D",
-  "Out-Metro Electricity Exports"  = "#E8A830",
-
-  # --- Energy losses and services ---
-  "Efficiency Losses"            = "#808080",
-  "Transmission & Dist. Losses"  = "#A9A9A9",
-  "Plants Own Use"               = "#696969",
-  "Energy Services"              = "#4CAF50",
-  "Rejected Energy"              = "#B0B0B0",
-
-  # --- End-use sectors ---
-  "Residential Use"         = "#5B9BD5",
-  "Commercial Use"          = "#BF8F00",
-  "Industrial Use"          = "#707070",
-  "Agricultural Use"        = "#6B8E23",
-  "Government Use"          = "#7B68AE",
-  "Transportation Use"      = "#C0392B",
-
-  # --- Water basins ---
-  "Chattahoochee Basin"     = "#0047AB",
-  "Coosa_Etowah Basin"      = "#2E8BC0",
-  "Flint Basin"             = "#1560BD",
-  "Ocmulgee Basin"          = "#3A75C4",
-  "Oconee Basin"            = "#4682B4",
-  "Tallapoosa Basin"        = "#5CACEE",
-  "Surface Water (all basins)" = "#1C86EE",
-  "Groundwater"             = "#36648B",
-  "Groundwater (all basins)" = "#36648B",
-
-  # --- Water supply and distribution ---
-  "Public Water Supply"     = "#4169E1",
-  "Losses"                  = "#778899",
+  # fossil fuels
+  "Coal" = "#1A1A1A", "Natural Gas" = "#E87D2F", "Petroleum" = "#8B4513",
+  # renewables
+  "Solar" = "#FFD700", "Biomass" = "#228B22", "Hydroelectric Water" = "#1E90FF",
+  "Geothermal" = "#CD5C5C", "Energy Storage" = "#9370DB", "Wind" = "#63B8CF",
+  "Renewables" = "#2E9E52", "Other" = "#A0A0A0",
+  # on-site and distributed generation
+  "Onsite / BehindTheMeter" = "#DAA520", "Onsite Solar/DER" = "#FFC125",
+  "Distributed Gen." = "#B8860B", "On-Site Gen." = "#A0522D",
+  "Small-scale generation" = "#B8860B",
+  # power plants
+  "Bowen Plant" = "#CC3333", "Jack McDonough Plant" = "#D2691E", "Yates Plant" = "#B8860B",
+  # generation and grid
+  "Grid Electricity" = "#FF8C00", "Utility-scale Gen." = "#E07020",
+  "Electricity Imports" = "#FFB347", "Electricity Exports" = "#F0A030",
+  "Imports (out-metro)" = "#FFC04D", "Exports (out-metro)" = "#E8A830",
+  # energy losses and services
+  "Efficiency Losses" = "#808080", "T&D Losses" = "#A9A9A9",
+  "Plants Own Use" = "#696969", "Energy Losses" = "#8F8F8F",
+  "Energy Services" = "#4CAF50", "Rejected Energy" = "#B0B0B0",
+  # demand sectors
+  "Residential Use" = "#5B9BD5", "Commercial Use" = "#BF8F00", "Industrial Use" = "#707070",
+  "Agricultural Use" = "#6B8E23", "Government Use" = "#7B68AE",
+  "Transportation Use" = "#C0392B",
+  # basins and water sources
+  "Chattahoochee Basin" = "#0047AB", "Coosa_Etowah Basin" = "#2E8BC0",
+  "Flint Basin" = "#1560BD", "Ocmulgee Basin" = "#3A75C4", "Oconee Basin" = "#4682B4",
+  "Tallapoosa Basin" = "#5CACEE", "Basins" = "#2E8BC0",
+  "Surface Water" = "#1C86EE", "Groundwater" = "#36648B",
+  "Groundwater" = "#36648B", "Public Water Supply" = "#4169E1",
   "Infiltration and Inflow" = "#5F9EA0",
-
-  # --- Wastewater ---
-  "Wastewater Collection"   = "#6A0DAD",
-  "Septic Systems"          = "#9370DB",
-  "In-County Treatment"     = "#800080",
-  "Wastewater Treated"      = "#BA55D3",
-  "Wastewater Transfer Inflows (within Metro Atlanta)"  = "#7B2FBE",
-  "Wastewater Transfer Outflows (within Metro Atlanta)" = "#9060C0",
-  "Total Wastewater Treatment" = "#7B2FBE",
-
-  # --- Discharge destinations ---
-  "Discharge"               = "#008B8B",
-  "discharge"               = "#008B8B",
-  "Creek"                   = "#20B2AA",
-  "River"                   = "#2F9E9E",
-  "Lake"                    = "#1C86EE",
-  "Reservoir"               = "#1874CD",
-  "Wetland"                 = "#3CB371",
-  "Reuse"                   = "#00CED1",
-  "Land"                    = "#6B8E23",
-
-  # --- Energy-for-water bridge ---
-  "Water Services Energy"   = "#008080",
-  "en4water"                = "#008080",
-  "Groundwater Extraction"  = "#2E8B8B",
-  "Surface Water Withdrawal" = "#207878",
-  "Groundwater Treatment"   = "#388E8E",
-  "Surface Water Treatment" = "#2E7D7D",
-  "Groundwater Distribution" = "#3AA0A0",
-  "Surface Water Distribution" = "#308888",
-  "Wastewater Treatment"    = "#7B2FBE",
-  "Wastewater Transport"    = "#6A0DAD",
-
-  # --- Simplified E-W diagram aggregates ---
-  "Basins"                  = "#1C86EE",
-  "Renewables"              = "#228B22",
-  "Small-scale generation"  = "#B8860B",
-  "Energy Losses"           = "#808080",
-  "Water Losses"            = "#778899",
-  "Disposal"                = "#008B8B"
+  # wastewater
+  "Wastewater Collection" = "#6A0DAD", "Septic Systems" = "#9370DB",
+  "In-County Treatment" = "#800080", "Wastewater Treated" = "#BA55D3",
+  "Transfers In" = "#7B2FBE",
+  "Transfers Out" = "#9060C0",
+  "Total Wastewater Treatment" = "#7B2FBE", "Wastewater Treatment" = "#7B2FBE",
+  # water sinks
+  "Losses" = "#778899", "Water Losses" = "#778899",
+  "Discharge" = "#008B8B", "discharge" = "#008B8B", "Disposal" = "#008B8B",
+  "Creek" = "#20B2AA", "River" = "#2F9E9E", "Lake" = "#1C86EE",
+  "Reservoir" = "#1874CD", "Wetland" = "#3CB371", "Reuse" = "#00CED1",
+  "Land" = "#6B8E23",
+  # energy for water
+  "Water Services Energy" = "#008080", "en4water" = "#008080",
+  "Groundwater Extraction" = "#2E8B8B", "Surface Water Withdrawal" = "#207878",
+  "Groundwater Treatment" = "#388E8E", "Surface Water Treatment" = "#2E7D7D",
+  "Groundwater Distribution" = "#3AA0A0", "Surface Water Distribution" = "#308888"
 )
 
-# ---- Muted: softer same-family tones (original palette) ------------------
-SANKEY_COLORS_MUTED <- list(
+## signature: vivid's logic on a wider lightness range ----
+# Deeper plant tones so the mid-chain reads as structure rather than as more fuel, and a
+# broader water range so the water diagram is not uniformly blue and purple: basins stay
+# blue, the collection system moves to olive, treatment to green, and the sinks spread
+# across teal, green and stone by receiving-body type.
+SANKEY_COLORS_SIGNATURE <- modifyList(SANKEY_COLORS_VIVID, list(
+  # fuels keep vivid's associations at slightly higher saturation
+  "Coal" = "#2B2B2E", "Natural Gas" = "#E08A2E", "Petroleum" = "#8C5A2B",
+  "Solar" = "#F2C230", "Biomass" = "#4E8B4A", "Hydroelectric Water" = "#2E6F94",
+  "Geothermal" = "#B4553F", "Energy Storage" = "#6A5ACD",
+  # plants: deep slate-violet, so generators are distinct from the fuels feeding them
+  "Bowen Plant" = "#4A4351", "Yates Plant" = "#6B6076", "Jack McDonough Plant" = "#5A5165",
+  "Utility-scale Gen." = "#857992", "Distributed Gen." = "#9C8FA8",
+  "On-Site Gen." = "#B3A8BC", "Small-scale generation" = "#9C8FA8",
+  "Grid Electricity" = "#D2691E",
+  # water, deliberately diversified away from an all-blue ramp
+  "Surface Water" = "#2E7CB0", "Groundwater" = "#1F5878",
+  "Groundwater" = "#1F5878", "Public Water Supply" = "#1C6491",
+  "Chattahoochee Basin" = "#1F6FA8", "Coosa_Etowah Basin" = "#3585B8",
+  "Flint Basin" = "#4A9AC6", "Ocmulgee Basin" = "#5FAED2",
+  "Oconee Basin" = "#77BFDD", "Tallapoosa Basin" = "#8FCEE7", "Basins" = "#3585B8",
+  "Infiltration and Inflow" = "#7FA98C",
+  "Wastewater Collection" = "#8A8A4E", "In-County Treatment" = "#41764A",
+  "Wastewater Treated" = "#4F8A58",
+  "Transfers In" = "#A39A5C",
+  "Transfers Out" = "#B5AC6B",
+  "Septic Systems" = "#A88C5F",
+  "River" = "#26757E", "Creek" = "#39909A", "Lake" = "#3C7FA5",
+  "Reservoir" = "#2B6B90", "Wetland" = "#4E8F5C", "Reuse" = "#3AA39A",
+  "Land" = "#8A8B44", "Discharge" = "#1F6B72", "Disposal" = "#1F6B72",
+  "Losses" = "#9AA3AB", "Water Losses" = "#9AA3AB"
+))
 
-  "Coal"                    = "#636363",
-  "Natural Gas"             = "#E8994E",
-  "Petroleum"               = "#A67B5B",
-
-  "Solar"                   = "#F0C75E",
-  "Biomass"                 = "#8DB580",
-  "Hydroelectric Water"     = "#6BB5C9",
-  "Geothermal"              = "#C47A5A",
-  "Energy Storage"          = "#B0A878",
-  "Other"                   = "#B0B0B0",
-
-  "Onsite / BehindTheMeter" = "#D4B870",
-  "Onsite Solar/DER"        = "#E8C95E",
-  "Distributed-scale Generation" = "#C8B060",
-  "On-Site Backup Generation" = "#B8A860",
-
-  "Bowen Plant"             = "#D47B6A",
-  "Jack McDonough Plant"    = "#C49A6C",
-  "Yates Plant"             = "#BF8B67",
-
-  "Thermoelectric Generation" = "#E8B960",
-  "Utility-scale Generation"  = "#D4A858",
-  "Electricity Imports"       = "#F0D070",
-  "Electricity Exports"       = "#E8C868",
-  "Out-Metro Electricity Imports"  = "#F5D76E",
-  "Out-Metro Electricity Exports"  = "#E8D070",
-
-  "Efficiency Losses"            = "#C0B8AC",
-  "Transmission & Dist. Losses"  = "#B8B0A4",
-  "Plants Own Use"               = "#CCC0B0",
-  "Energy Services"              = "#A8B8A0",
-  "Rejected Energy"              = "#C8B8A8",
-
-  "Residential Use"         = "#7BA3B0",
-  "Commercial Use"          = "#A89070",
-  "Industrial Use"          = "#8D9880",
-  "Agricultural Use"        = "#90A868",
-  "Government Use"          = "#8898A8",
-  "Transportation Use"      = "#A89888",
-
-  "Chattahoochee Basin"     = "#3A80A8",
-  "Coosa_Etowah Basin"      = "#5898B8",
-  "Flint Basin"             = "#4888A0",
-  "Ocmulgee Basin"          = "#6098A8",
-  "Oconee Basin"            = "#5090B0",
-  "Tallapoosa Basin"        = "#7AB8E0",
-  "Surface Water (all basins)" = "#4A90B8",
-  "Groundwater"             = "#5A7898",
-  "Groundwater (all basins)" = "#5A7898",
-
-  "Public Water Supply"     = "#4A88B0",
-  "Losses"                  = "#88A8B8",
-  "Infiltration and Inflow" = "#6898A8",
-
-  "Wastewater Collection"   = "#8B6EA0",
-  "Septic Systems"          = "#A088A8",
-  "In-County Treatment"     = "#9878A0",
-  "Wastewater Treated"      = "#A890B0",
-  "Wastewater Transfer Inflows (within Metro Atlanta)"  = "#9080A0",
-  "Wastewater Transfer Outflows (within Metro Atlanta)" = "#9888A8",
-  "Total Wastewater Treatment" = "#9070A0",
-
-  "Discharge"               = "#5098B0",
-  "discharge"               = "#5098B0",
-  "Creek"                   = "#60A8B8",
-  "River"                   = "#5090A8",
-  "Lake"                    = "#6898C0",
-  "Reservoir"               = "#5888B0",
-  "Wetland"                 = "#70B0A8",
-  "Reuse"                   = "#80C8B8",
-  "Land"                    = "#88A898",
-
-  "Water Services Energy"   = "#5EAAB0",
-  "en4water"                = "#5EAAB0",
-  "Groundwater Extraction"  = "#5898A8",
-  "Surface Water Withdrawal" = "#5090A0",
-  "Groundwater Treatment"   = "#6098A0",
-  "Surface Water Treatment" = "#5890A0",
-  "Groundwater Distribution" = "#6890A0",
-  "Surface Water Distribution" = "#6088A0",
-  "Wastewater Treatment"    = "#8870A0",
-  "Wastewater Transport"    = "#8068A0",
-
-  "Basins"                  = "#4A90B8",
-  "Renewables"              = "#8DB580",
-  "Small-scale generation"  = "#C8B060",
-  "Energy Losses"           = "#C0B8AC",
-  "Water Losses"            = "#88A8B8",
-  "Disposal"                = "#5098B0"
+SANKEY_PALETTES <- list(
+  vivid     = SANKEY_COLORS_VIVID,
+  signature = SANKEY_COLORS_SIGNATURE
 )
 
-# ---- Active palette (selected by COLOR_SCHEME) ----------------------------
-SANKEY_COLORS <- if (identical(COLOR_SCHEME, "vivid")) SANKEY_COLORS_VIVID else
-                 if (identical(COLOR_SCHEME, "muted")) SANKEY_COLORS_MUTED else
-                 list()
+# Resolve a palette argument to a named list.
+sankey_palette <- function(color_scheme = NULL) {
+  if (is.list(color_scheme)) return(color_scheme)
+  nm <- if (!is.null(color_scheme)) color_scheme else COLOR_SCHEME
+  if (identical(nm, FALSE)) return(list())
+  if (is.character(nm) && length(nm) == 1 && nm %in% names(SANKEY_PALETTES)) {
+    return(SANKEY_PALETTES[[nm]])
+  }
+  warning("unknown palette '", paste(nm, collapse = ", "), "'; using vivid. Available: ",
+          paste(names(SANKEY_PALETTES), collapse = ", "), call. = FALSE)
+  SANKEY_PALETTES$vivid
+}
 
-# Pattern-based fallback for nodes not in SANKEY_COLORS (facility names,
-# water bodies, discharge points, inter-county transfers).
+# Pattern-based fallback for nodes not named in the palette (facility names, water
+# bodies, discharge points, inter-county transfers).
 resolve_node_color <- function(node_name, palette) {
   if (node_name %in% names(palette)) return(palette[[node_name]])
   nm <- toupper(node_name)
@@ -429,7 +332,7 @@ resolve_node_color <- function(node_name, palette) {
   la  <- if ("Land" %in% names(palette)) palette[["Land"]] else "#6B8E23"
   if (grepl("_ds$", node_name))                          return(dc)
   if (grepl("^inFrom_", node_name))                      return(ww)
-  if (grepl("WRF|WPCP|WWTP|WRC|LAS|POND", nm))          return(ww)
+  if (grepl("WRF|WPCP|WWTP|WRC|LAS|POND", nm))           return(ww)
   if (grepl("REUSE", nm))                                return(re)
   if (grepl("LAND APPLICATION", nm))                     return(la)
   if (grepl("LAKE|RESERVOIR", nm))                       return(lk)
@@ -440,6 +343,129 @@ resolve_node_color <- function(node_name, palette) {
   if (grepl("FORSYTH|GWINNETT|PAULDING|ROCKDALE|FULTON|DEKALB|COBB|HENRY|HALL|CHEROKEE|BARTOW|CLAYTON|COWETA|DOUGLAS|FAYETTE", nm))
                                                           return(ww)
   SANKEY_DEFAULT_COLOR
+}
+
+
+# Sankey link colouring ----
+# Chosen with plot_sankey_enhanced(..., link_style = ):
+#
+#   "node"   every link takes the hue of the node it leaves, so a fuel or a water source
+#            can be followed by eye through the whole diagram
+#   "domain" one colour for energy, one for water. Loses individual identity but makes
+#            the two systems unmistakable
+#   "nexus"  both at once: the link keeps its source-node hue, tinted toward its class
+#            colour. The default for combined energy-water diagrams
+#   "class"  flat class colours with no node hue, i.e. "nexus" at full strength
+#
+# The class of a flow is not simply its unit. A combined diagram contains four kinds:
+# energy moving through the energy system, water moving through the water system, and the
+# two coupling flows that are the actual subject of a nexus study - electricity consumed
+# to move and treat water, and water withdrawn to cool generation. Giving the couplings
+# their own colours makes the nexus visible rather than something to be inferred.
+
+ENERGY_UNITS <- c("EJ", "PJ", "TJ", "GWh", "kWh", "MWh", "BBtu", "MMBtu")
+
+SANKEY_CLASS_COLORS <- c(
+  energy           = "#E07A2F",  # warm: energy moving through the energy system
+  water            = "#2E7CB0",  # cool: water moving through the water system
+  energy_for_water = "#7E57C2",  # violet: electricity spent moving and treating water
+  water_for_energy = "#26A69A"   # teal: water withdrawn to cool generation
+)
+
+# Water-service nodes that consume energy, and generation nodes that consume water.
+WATER_SERVICE_NODES <- c("Public Water Supply", "publicWatSup", "Water Services Energy",
+                         "en4water", "In-County Treatment", "in-county treatment",
+                         "Transfers Out", "ww_exports",
+                         "Wastewater Treatment", "Total Wastewater Treatment")
+GENERATION_NODES <- c("Bowen Plant", "Yates Plant", "Jack McDonough Plant", "Bowen", "Yates",
+                      "Jack McDonough", "Grid Electricity", "electricity",
+                      "Utility-scale Generation", "Distributed-scale Generation",
+                      "On-Site Backup Generation", "Small-scale generation")
+
+# Classify each flow into one of the four classes above.
+sankey_link_class <- function(df) {
+  is_energy <- if ("units" %in% names(df)) df$units %in% ENERGY_UNITS else rep(TRUE, nrow(df))
+  case_when(
+    # electricity delivered to a water service: the energy cost of the water system
+    is_energy & df$target %in% WATER_SERVICE_NODES ~ "energy_for_water",
+    # water delivered to generation: the water cost of the energy system
+    !is_energy & df$target %in% GENERATION_NODES   ~ "water_for_energy",
+    is_energy                                      ~ "energy",
+    TRUE                                           ~ "water"
+  )
+}
+
+# Build the per-link colour vector.
+sankey_link_colors <- function(df, all_nodes, node_colors,
+                               link_style = "node", link_alpha = 0.45,
+                               class_weight = 0.55) {
+  style <- match.arg(link_style, c("node", "domain", "nexus", "class"))
+  src_col <- node_colors[match(df$source, all_nodes)]
+
+  if (style == "node") return(hex_to_rgba(src_col, link_alpha))
+
+  cls <- sankey_link_class(df)
+  cls_col <- unname(SANKEY_CLASS_COLORS[cls])
+
+  if (style == "class") return(hex_to_rgba(cls_col, link_alpha))
+  if (style == "domain") {
+    two <- ifelse(cls %in% c("energy", "energy_for_water"),
+                  SANKEY_CLASS_COLORS[["energy"]], SANKEY_CLASS_COLORS[["water"]])
+    return(hex_to_rgba(two, link_alpha))
+  }
+  # nexus: source-node hue pulled toward the class colour
+  purrr::map2_chr(src_col, cls_col,
+                  ~ blend_colors(.x, .y, weight = class_weight, alpha = link_alpha))
+}
+
+
+# Render a grid of style variants of one diagram, for choosing between them by eye.
+#   preview_sankey_styles(energy_water, units = "auto", alt_units = ew_alt_units)
+# Writes to outputs/style_preview/ and returns the index path invisibly.
+preview_sankey_styles <- function(df, label = "diagram", units = "",
+                                  alt_units = NULL,
+                                  palettes = names(SANKEY_PALETTES),
+                                  styles = c("node", "nexus", "domain", "class"),
+                                  out_dir = "outputs/style_preview",
+                                  title = "Metro Atlanta flows") {
+  dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
+  made <- list()
+  for (pal in palettes) for (st in styles) {
+    f <- file.path(out_dir, sprintf("%s__%s__%s.html", label, pal, st))
+    message("  ", f)
+    save_sankey(
+      plot_sankey_enhanced(df, title = sprintf("%s  |  %s nodes  |  %s links", title, pal, st),
+                           animate = TRUE, show_values_in_labels = TRUE,
+                           label_units = units, alt_units = alt_units,
+                           color_scheme = pal, link_style = st),
+      f)
+    made[[length(made) + 1L]] <- c(label = label, palette = pal, style = st,
+                                   file = basename(f))
+  }
+  idx <- file.path(out_dir, "index.html")
+  rows <- purrr::map_chr(made, ~ sprintf(
+    '<a href="%s">%s &mdash; %s nodes, %s links</a>', .x[["file"]], .x[["label"]],
+    .x[["palette"]], .x[["style"]]))
+  existing <- if (file.exists(idx)) {
+    grep("^<a href", readLines(idx, warn = FALSE), value = TRUE)
+  } else character(0)
+  writeLines(c(
+    "<!doctype html><meta charset='utf-8'><title>MAWEI style preview</title>",
+    "<style>body{font:15px/1.7 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;",
+    "margin:3rem auto;max-width:46rem;color:#222}h1{font-size:1.4rem;font-weight:600}",
+    "a{display:block;padding:.45rem .7rem;margin:.2rem 0;border:1px solid #e3e3e3;",
+    "border-radius:6px;text-decoration:none;color:#1a4d7a}a:hover{background:#f6f9fc}",
+    "p{color:#555}</style>", "<h1>MAWEI style preview</h1>",
+    "<p>Node palette sets the colour of each node and, under the node link style, of the",
+    "flows leaving it. Link style sets how flows are coloured: <b>node</b> inherits the",
+    "source hue, <b>domain</b> splits energy from water, <b>nexus</b> keeps the source hue",
+    "but tints it by flow class, and <b>class</b> uses flat class colours. The nexus and",
+    "class styles distinguish four classes, separating the two coupling flows -",
+    "energy spent on water, and water spent on energy - from flows internal to either",
+    "system.</p>",
+    unique(c(existing, rows))), idx)
+  message("\nOpen: ", normalizePath(idx))
+  invisible(idx)
 }
 
 
@@ -570,14 +596,14 @@ save_sankey <- function(widget, filepath) {
 
 save_county_sankeys <- function(df, domain_dir, prefix, suffix, prep_fn, label_units,
                                 alt_units = NULL, color_scheme = NULL,
-                                link_color_by_domain = FALSE) {
+                                link_style = "node", ...) {
   diag_dir <- file.path(SAVE_DIR, domain_dir, "diagrams")
   for (cty in sort(counties)) {
     message("  ", cty, " ", suffix)
     p <- plot_sankey_enhanced(prep_fn(df), reg = cty, animate = TRUE,
                               show_values_in_labels = TRUE, label_units = label_units,
                               alt_units = alt_units, color_scheme = color_scheme,
-                              link_color_by_domain = link_color_by_domain)
+                              link_style = link_style, ...)
     save_sankey(p, file.path(diag_dir, paste0(prefix, "_county_", cty, "_", suffix, ".html")))
   }
 }
@@ -613,9 +639,20 @@ clean_names <- function(df) {
 # EIA NOTES ----
 # ExtraNotes: filename case matters. macOS is case-insensitive and will resolve a wrong case
 # silently, but Linux and CI will not.
-EIA_SEDS_FILE <- "eia_seds_Complete_seds_2024_update.csv.gz"
-if (!file.exists(paste0(DATA_DIR, EIA_SEDS_FILE))) {
-  stop(paste("File", EIA_SEDS_FILE, "not found in data directory. Download from EIA SEDS."))
+# The national SEDS release is refreshed periodically and its filename carries a
+# vintage, so it is discovered rather than hardcoded: the newest matching file wins.
+# ExtraNotes: gz is preferred over plain csv when both are present, since only the
+# compressed copy is tracked.
+EIA_SEDS_FILE <- {
+  cands <- list.files(DATA_DIR, pattern = "^eia_seds_Complete_seds_.*\\.csv(\\.gz)?$")
+  if (length(cands) == 0) {
+    stop("No eia_seds_Complete_seds_*.csv[.gz] found in ", DATA_DIR,
+         ". Download the complete state dataset from EIA SEDS.")
+  }
+  gz <- grep("\\.gz$", cands, value = TRUE)
+  pick <- sort(if (length(gz) > 0) gz else cands, decreasing = TRUE)[1]
+  message("  EIA SEDS source: ", pick)
+  pick
 }
 
 
@@ -1094,10 +1131,10 @@ pretty_labels <- function(df_sankey) {
       source = case_when(
         # water sources
         # source == "surfaceWater" ~ "Surface Water",
-        source == "surfaceWater" ~ "Surface Water (all basins)",
+        source == "surfaceWater" ~ "Surface Water",
         source == "publicWatSup" ~ "Public Water Supply",
         source == "groundwater" ~ "Groundwater",
-        source == "groundwaterAllBasins" ~ "Groundwater (all basins)",
+        source == "groundwaterAllBasins" ~ "Groundwater",
         # source == "subsurface" ~ "Shallow Subsurface Water",
         source == "subsurface" ~ "Infiltration and Inflow",
         source == "agricultural" ~ "Agricultural Use",
@@ -1106,8 +1143,8 @@ pretty_labels <- function(df_sankey) {
         source == "commercial" ~ "Commercial Use",
         source == "losses" ~ "Losses",
         source == "wastewater" ~ "Wastewater Collection",
-        source == "ww_imports" ~ "Wastewater Transfer Inflows (within Metro Atlanta)",
-        source == "ww_exports" ~ "Wastewater Transfer Outflows (within Metro Atlanta)",
+        source == "ww_imports" ~ "Transfers In",
+        source == "ww_exports" ~ "Transfers Out",
         source == "septic" ~ "Septic Systems",
         source == "in-county treatment" ~ "In-County Treatment",
 
@@ -1122,12 +1159,15 @@ pretty_labels <- function(df_sankey) {
         source == "Yates" ~ "Yates Plant",
         # source == "Electricity" ~ "Grid Electricity",
         # source == "electricity" ~ "Grid Electricity",
-        source == "Electricity" ~ "Thermoelectric Generation",
-        source == "electricity" ~ "Thermoelectric Generation",
+        source == "Electricity" ~ "Grid Electricity",
+        source == "electricity" ~ "Grid Electricity",
+        source == "Utility-scale Generation" ~ "Utility-scale Gen.",
+        source == "Distributed-scale Generation" ~ "Distributed Gen.",
+        source == "On-Site Backup Generation" ~ "On-Site Gen.",
         source == "elec_import" ~ "Electricity Imports",
         source == "elec_export" ~ "Electricity Exports",
-        source == "out_metro_elec_import" ~ "Out-Metro Electricity Imports",
-        source == "out_metro_elec_export" ~ "Out-Metro Electricity Exports",
+        source == "out_metro_elec_import" ~ "Imports (out-metro)",
+        source == "out_metro_elec_export" ~ "Exports (out-metro)",
         source == "government" ~ "Government Use",
         source == "transport" ~ "Transportation Use",
 
@@ -1155,15 +1195,15 @@ pretty_labels <- function(df_sankey) {
         # water targets
         target == "publicWatSup" ~ "Public Water Supply",
         target == "groundwater" ~ "Groundwater",
-        target == "groundwaterAllBasins" ~ "Groundwater (all basins)",
+        target == "groundwaterAllBasins" ~ "Groundwater",
         target == "agricultural" ~ "Agricultural Use",
         target == "industrial" ~ "Industrial Use",
         target == "residential" ~ "Residential Use",
         target == "commercial" ~ "Commercial Use",
         target == "losses" ~ "Losses",
         target == "wastewater" ~ "Wastewater Collection",
-        target == "ww_imports" ~ "Wastewater Transfer Inflows (within Metro Atlanta)",
-        target == "ww_exports" ~ "Wastewater Transfer Outflows (within Metro Atlanta)",
+        target == "ww_imports" ~ "Transfers In",
+        target == "ww_exports" ~ "Transfers Out",
         target == "septic" ~ "Septic Systems",
         target == "wastewater_treated" ~ "Wastewater Treated",
         target == "in-county treatment" ~ "In-County Treatment",
@@ -1180,17 +1220,20 @@ pretty_labels <- function(df_sankey) {
         target == "Yates" ~ "Yates Plant",
         # target == "Electricity" ~ "Grid Electricity",
         # target == "electricity" ~ "Grid Electricity",
-        target == "Electricity" ~ "Thermoelectric Generation",
-        target == "electricity" ~ "Thermoelectric Generation",
+        target == "Electricity" ~ "Grid Electricity",
+        target == "electricity" ~ "Grid Electricity",
+        target == "Utility-scale Generation" ~ "Utility-scale Gen.",
+        target == "Distributed-scale Generation" ~ "Distributed Gen.",
+        target == "On-Site Backup Generation" ~ "On-Site Gen.",
         target == "elec_import" ~ "Electricity Imports",
         target == "elec_export" ~ "Electricity Exports",
-        target == "out_metro_elec_import" ~ "Out-Metro Electricity Imports",
-        target == "out_metro_elec_export" ~ "Out-Metro Electricity Exports",
+        target == "out_metro_elec_import" ~ "Imports (out-metro)",
+        target == "out_metro_elec_export" ~ "Exports (out-metro)",
         target == "government" ~ "Government Use",
         target == "transport" ~ "Transportation Use",
         target == "elec_own_use" ~ "Plants Own Use",
         target == "efficiency_losses" ~ "Efficiency Losses",
-        target == "td_losses" ~ "Transmission & Dist. Losses",
+        target == "td_losses" ~ "T&D Losses",
 
 
         # energy for water
@@ -1306,9 +1349,7 @@ plot_sankey <- function(df_sankey, title = "Metro Atlanta Flows", yr = max(YEARS
 
 # sankey pro helpers ----
 
-# ---------------------------------------------------------------------------
-# Sankey node layout
-# ---------------------------------------------------------------------------
+# Sankey node layout ----
 # Plotly will solve a Sankey layout by itself, but it re-solves on every animation
 # frame, so a node can move -- or swap places with a neighbour -- as the year
 # changes. Supplying explicit node coordinates makes the geometry a property of the
@@ -1343,22 +1384,22 @@ SANKEY_LAYOUT <- list(
     source = c("Coal", "Natural Gas", "Petroleum", "Biomass", "Hydroelectric Water",
                "Solar", "Wind", "Geothermal", "Energy Storage", "Renewables", "Other",
                "Onsite / BehindTheMeter", "Onsite Solar/DER",
-               "Electricity Imports", "Out-Metro Electricity Imports"),
+               "Electricity Imports", "Imports (out-metro)"),
     plant  = c("Bowen Plant", "Yates Plant", "Jack McDonough Plant",
-               "Utility-scale Generation", "Distributed-scale Generation",
-               "On-Site Backup Generation", "Small-scale generation"),
-    grid   = c("Thermoelectric Generation"),
+               "Utility-scale Gen.", "Distributed Gen.",
+               "On-Site Gen.", "Small-scale generation"),
+    grid   = c("Grid Electricity"),
     demand = c("Residential Use", "Commercial Use", "Industrial Use",
                "Government Use", "Transportation Use", "Agricultural Use",
                "Water Services Energy"),
-    sink   = c("Plants Own Use", "Efficiency Losses", "Transmission & Dist. Losses",
+    sink   = c("Plants Own Use", "Efficiency Losses", "T&D Losses",
                "Energy Losses", "Rejected Energy", "Energy Services",
-               "Electricity Exports", "Out-Metro Electricity Exports")
+               "Electricity Exports", "Exports (out-metro)")
   ),
   water = list(
-    source  = c("Surface Water (all basins)", "Groundwater (all basins)", "Groundwater",
+    source  = c("Surface Water", "Groundwater", "Groundwater",
                 "Infiltration and Inflow",
-                "Wastewater Transfer Inflows (within Metro Atlanta)"),
+                "Transfers In"),
     basin   = c("Chattahoochee Basin", "Coosa_Etowah Basin", "Ocmulgee Basin",
                 "Flint Basin", "Oconee Basin", "Tallapoosa Basin", "Basins"),
     supply  = c("Public Water Supply"),
@@ -1367,7 +1408,7 @@ SANKEY_LAYOUT <- list(
     collect = c("Wastewater Collection"),
     treat   = c("In-County Treatment"),
     sink    = c("Losses", "Water Losses", "Septic Systems",
-                "Wastewater Transfer Outflows (within Metro Atlanta)",
+                "Transfers Out",
                 "Discharge", "Disposal", "River", "Creek", "Lake", "Reservoir",
                 "Wetland", "Land", "Reuse")
   )
@@ -1396,13 +1437,42 @@ sankey_detect_domains <- function(all_nodes) {
   names(sort(hits, decreasing = TRUE))
 }
 
+# Nodes whose vertical position is pinned rather than derived from the stack.
+# ExtraNotes: the derived stack spaces a layer by throughput, which is right for most nodes
+# but wrong for the handful that carry the argument of the diagram: the reader should find
+# the system's entry point, its distribution hub and its losses in the same place in every
+# figure. y runs 0 at the TOP to 1 at the bottom. Edit these freely; anything not named here
+# is stacked automatically, and a pinned node is simply lifted out of that stack.
+SANKEY_NODE_Y <- c(
+  # water: sources and hub top-aligned, collection deliberately below the demand sectors
+  "Surface Water"                          = 0.06,
+  "Groundwater"                            = 0.30,
+  "Infiltration and Inflow"                             = 0.62,
+  "Transfers In"  = 0.88,
+  "Public Water Supply"                                 = 0.10,
+  "Wastewater Collection"                               = 0.60,
+  "In-County Treatment"                                 = 0.45,
+  # right-hand column: losses at the top, septic directly beneath
+  "Losses"                                              = 0.04,
+  "Water Losses"                                        = 0.04,
+  "Septic Systems"                                      = 0.16,
+  "Transfers Out" = 0.26,
+  # energy: grid hub high, loss stack above useful output
+  "Grid Electricity"                           = 0.30,
+  "Plants Own Use"                                      = 0.04,
+  "Efficiency Losses"                                   = 0.12,
+  "T&D Losses"                         = 0.22,
+  "Energy Losses"                                       = 0.12,
+  "Rejected Energy"                                     = 0.34
+)
+
 # Compute node x/y from the layout spec.
 # ExtraNotes: y is derived by stacking each layer in declared order, weighted by mean
-# throughput across ALL years and counties in the frame. Weighting by mean rather than
+# throughput across ALL years and counties in the frame. Weighting by the mean rather than
 # by the current frame is deliberate: it is what makes the geometry identical in every
 # animation frame. Nodes absent from the spec are placed by topology (pure source /
 # pure sink / intermediate) and ranked by throughput.
-sankey_node_positions <- function(all_nodes, df, pad = 0.04) {
+sankey_node_positions <- function(all_nodes, df, pad = 0.04, node_y = NULL) {
 
   domains <- sankey_detect_domains(all_nodes)
   if (length(domains) == 0) return(NULL)
@@ -1490,6 +1560,13 @@ sankey_node_positions <- function(all_nodes, df, pad = 0.04) {
     mutate(x = unname(SANKEY_LAYER_X[layer]),
            x = if_else(is.na(x), 0.5, x))
 
+  # Apply the pinned positions last, so an explicit y always wins over the derived stack.
+  pins <- c(SANKEY_NODE_Y, node_y)[!duplicated(names(c(SANKEY_NODE_Y, node_y)), fromLast = TRUE)]
+  if (length(pins) > 0) {
+    hit <- match(assigned$node, names(pins))
+    assigned$y <- if_else(is.na(hit), assigned$y, unname(pins[hit]))
+  }
+
   list(x = assigned$x[match(all_nodes, assigned$node)],
        y = assigned$y[match(all_nodes, assigned$node)],
        layer = assigned$layer[match(all_nodes, assigned$node)])
@@ -1511,13 +1588,13 @@ hex_to_rgba <- function(hex_color, alpha = 1) {
   paste0("rgba(", rgb_vals[1], ",", rgb_vals[2], ",", rgb_vals[3], ",", alpha, ")")
 }
 
-blend_colors <- function(color1, color2, alpha = 0.3) {
-  if (is.na(color1)) color1 <- "#808080"
+blend_colors <- function(color1, color2, weight = 0.5, alpha = 1) {
+  if (is.na(color1) || grepl("^rgba?\\(", color1)) color1 <- "#808080"
   if (is.na(color2)) color2 <- "#808080"
   rgb1 <- tryCatch(col2rgb(color1), error = function(e) col2rgb("#808080"))
   rgb2 <- tryCatch(col2rgb(color2), error = function(e) col2rgb("#808080"))
-  blended <- (rgb1 + rgb2) / 2
-  paste0("rgba(", blended[1], ",", blended[2], ",", blended[3], ",", alpha, ")")
+  b <- round(rgb1 * (1 - weight) + rgb2 * weight)
+  paste0("rgba(", b[1], ",", b[2], ",", b[3], ",", alpha, ")")
 }
 
 auto_detect_units <- function(df) {
@@ -1533,8 +1610,10 @@ prepare_sankey_enhanced <- function(df_sankey, node_colors = NULL, link_colors =
                                 show_values_in_labels = FALSE, value_year = NULL,
                                 pretty_label = TRUE,
                                 units = "", alt_units = NULL, animate = FALSE,
-                                color_scheme = NULL, link_color_by_domain = FALSE,
-                                link_alpha = 0.45, use_layout = TRUE) {
+                                color_scheme = NULL,
+                                link_style = "node", link_alpha = 0.45,
+                                class_weight = 0.55, use_layout = TRUE,
+                                node_y = NULL) {
 
   # if pretty label
   if (pretty_label) {
@@ -1620,12 +1699,12 @@ prepare_sankey_enhanced <- function(df_sankey, node_colors = NULL, link_colors =
   }
 
   # handle node colors
-  # Priority: explicit node_colors > color_scheme param > COLOR_SCHEME global > Spectral
+  # Priority: explicit node_colors > color_scheme > COLOR_SCHEME global > Brewer ramp
   use_named <- if (!is.null(color_scheme)) !identical(color_scheme, FALSE)
                else !identical(COLOR_SCHEME, FALSE)
 
   if (is.null(node_colors) && use_named) {
-    palette <- if (is.list(color_scheme)) color_scheme else SANKEY_COLORS
+    palette <- sankey_palette(color_scheme)
     node_colors <- all_nodes %>%
       map_chr(~ resolve_node_color(.x, palette))
   } else if (is.null(node_colors)) {
@@ -1647,16 +1726,10 @@ prepare_sankey_enhanced <- function(df_sankey, node_colors = NULL, link_colors =
   }
 
   # handle link colors
-  if (link_color_by_domain && "units" %in% names(df_sankey)) {
-    energy_units <- c("EJ", "PJ", "TJ", "GWh", "kWh", "MWh", "BBtu", "MMBtu")
-    link_colors <- ifelse(df_sankey$units %in% energy_units,
-                          hex_to_rgba("#E8863A", link_alpha),
-                          hex_to_rgba("#4A90D9", link_alpha))
-  } else if (is.null(link_colors)) {
-    # ExtraNotes: a link takes the hue of the node it leaves, which lets a fuel or a
-    # water source be followed by eye all the way through the diagram.
-    source_indices <- match(df_sankey$source, all_nodes)
-    link_colors <- purrr::map_chr(node_colors[source_indices], hex_to_rgba, alpha = link_alpha)
+  if (is.null(link_colors)) {
+    link_colors <- sankey_link_colors(df_sankey, all_nodes, node_colors,
+                                      link_style = link_style, link_alpha = link_alpha,
+                                      class_weight = class_weight)
   } else if (is.list(link_colors) || (is.character(link_colors) && !is.null(names(link_colors)))) {
     link_colors <- df_sankey %>%
       mutate(
@@ -1691,7 +1764,7 @@ prepare_sankey_enhanced <- function(df_sankey, node_colors = NULL, link_colors =
     node_colors[is_phantom] <- "rgba(0,0,0,0)"
   }
 
-  positions <- if (use_layout) sankey_node_positions(all_nodes, df_sankey) else NULL
+  positions <- if (use_layout) sankey_node_positions(all_nodes, df_sankey, node_y = node_y) else NULL
 
   return(list(
     df_sankey = df_sankey,
@@ -1710,14 +1783,19 @@ plot_sankey_enhanced <- function(df_sankey, title = "Metro Atlanta Flows", yr = 
                                  node_colors = NULL, link_colors = NULL,
                                  show_values_in_labels = T, label_units = "",
                                  label_year = NULL, alt_units = NULL,
-                                 color_scheme = NULL, link_color_by_domain = FALSE,
-                                 # --- appearance, all with working defaults ---
-                                 link_alpha = 0.45, use_layout = TRUE,
+                                 # --- colour ---
+                                 color_scheme = NULL, link_style = "node",
+                                 link_alpha = 0.45, class_weight = 0.55,
+                                 # --- geometry ---
+                                 use_layout = TRUE, node_y = NULL,
                                  arrangement = "snap", drop_empty = TRUE,
                                  node_pad = 12, node_thickness = 16,
-                                 node_line_color = "#FFFFFF", node_line_width = 1) {
+                                 node_line_color = NULL, node_line_width = 0) {
   # ExtraNotes: every argument past `df_sankey` has a default that produces a finished
   # diagram, so the one-line call plot_sankey_enhanced(df, reg = "Fulton") stays valid.
+  # ExtraNotes: no node stroke by default. A stroke is drawn inside the node's own height,
+  # so on a node carrying a thousandth of the system total - which is normal here, given the
+  # range of magnitudes - it covers the fill entirely and the node reads as blank.
 
   if (!animate && !yr %in% years) stop("yr = ", yr, " not in years: ", paste(years, collapse = ", "))
 
@@ -1794,9 +1872,11 @@ plot_sankey_enhanced <- function(df_sankey, title = "Metro Atlanta Flows", yr = 
     pretty_label = pretty_label,
     animate = animate,
     color_scheme = color_scheme,
-    link_color_by_domain = link_color_by_domain,
+    link_style = link_style,
     link_alpha = link_alpha,
-    use_layout = use_layout
+    class_weight = class_weight,
+    use_layout = use_layout,
+    node_y = node_y
   )
 
   # Node geometry. Explicit coordinates plus arrangement = "snap" give plotly a fixed
@@ -1806,10 +1886,12 @@ plot_sankey_enhanced <- function(df_sankey, title = "Metro Atlanta Flows", yr = 
   node_spec <- list(
     label = sankey_data$node_labels,
     color = sankey_data$node_colors,
-    line = list(color = node_line_color, width = node_line_width),
     pad = node_pad,
     thickness = node_thickness
   )
+  if (node_line_width > 0) {
+    node_spec$line <- list(color = node_line_color %||% "#FFFFFF", width = node_line_width)
+  }
   pos <- sankey_data$positions
   if (!is.null(pos) && !any(is.na(pos$x))) {
     node_spec$x <- pos$x
