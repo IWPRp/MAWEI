@@ -429,6 +429,11 @@ eiaseds <- eiaseds_raw %>%
   filter(data > 0) %>%
   # filter msn where the last character is B (Btu data)
   filter(substr(msn,5,5) == "B")
+# ExtraNotes: `data > 0` also removes NA rows, which is why the unpublished-series detector above
+# has to run BEFORE this filter. An absent fuel-year would otherwise disappear silently here and
+# read as a genuine collapse in consumption rather than as a missing measurement.
+# ExtraNotes: only the Btu-denominated series are kept (fifth character B). SEDS reports the same
+# quantity in physical units too, and mixing the two would double count every fuel.
 
 
 # EIA SEDS self-generated sources and target consumption
@@ -450,12 +455,26 @@ census_pop <- read_csv(paste0(DATA_DIR, "cc-est2024-agesex-all.csv.gz")) %>% cle
   group_by(state, year) %>%
   mutate(pop_share = pop / sum(pop)) %>% ungroup() %>%
   filter(county %in% counties) # only metro atlanta counties
+# ExtraNotes: the Census vintage file encodes `year` as an index, not a calendar year, where 1 is
+# the April 2020 base and 2-6 are the July estimates for 2020-2024. Index 1 is dropped because
+# including it would put two records in 2020. The share is taken over ALL Georgia counties
+# before the metro filter, so it is each county's share of the STATE, which is what the SEDS
+# state totals must be apportioned by.
 
 # disaggregate EIA SEDS consumption data
 eiaseds_use <- eiasedsGA %>%
   left_join(census_pop %>% select(state, county, year, pop_share), by = c("statecode" = "state", "year")) %>%
   mutate(value_county = value * pop_share) %>%
   select(county, year, source=source, target=target, value=value_county, units)
+# ExtraNotes: state consumption is downscaled to counties by POPULATION SHARE, which is the
+# central limitation of the county energy diagrams. It is defensible for residential and
+# broadly acceptable for commercial, but wrong in principle for industrial and transportation:
+# industry follows plant siting, not headcount, and transportation fuel follows the road
+# network and where fuel is sold rather than where drivers live. Since transportation is ~50%
+# and industry ~26% of end use, roughly three quarters of county end-use energy is allocated on
+# a proxy that does not describe it. County energy demand should therefore be read as
+# population-weighted regional demand, and only metro totals treated as observed. Note also
+# that population share sums to one across GA, so the metro total is preserved exactly.
 
 # disaggregate stakeholder consumption data.
 # TODO: is this everything? or do we need data from other utilities?
@@ -525,6 +544,14 @@ SECTOR_EFFICIENCY <- c(
 )
 
 DEFAULT_EFFICIENCY <- 0.65
+# ExtraNotes: these are the LLNL/Lawrence Livermore energy-flow convention's useful-energy
+# fractions, adopted so the diagram is comparable with the national and state Sankeys readers
+# already know. Industry is lower (0.49) because much of its energy is process heat lost up the
+# stack; the 0.65 applied elsewhere is a building-sector figure. Two consequences to state
+# plainly: transportation is given 0.65 although a vehicle fleet is nearer 0.20-0.25, which
+# makes the metro useful-energy fraction optimistic given transportation is half of end use;
+# and because these are fixed coefficients, the services/rejected split carries no information
+# beyond the sectoral mix -- it cannot show efficiency improving over time.
 
 # energy services and rejected energy
 # split each sector's total energy intake into useful energy (services) and waste (rejected)
@@ -565,6 +592,11 @@ if (MAKE_PLOT) plot_sankey_enhanced(en_fuel_gen_use_loss %>% rbind(en_services_r
 # transmission and distribution losses ----
 # assume 6% losses for now: source EIA (5-7%) https://www.eia.gov/tools/faqs/faq.php?id=105&t=3
 TD_LOSSES_PCT <- 0.06
+# ExtraNotes: 6% is the midpoint of EIA's 5-7% national range for transmission and distribution
+# losses, applied uniformly. Losses scale with distance and loading, so a metro area with
+# substantial imported power sits at or above the midpoint rather than below it. Applied to
+# electricity leaving the grid node, and treated as an additional outflow rather than a
+# deduction from demand, because the demand figures are metered downstream of the losses.
 en_transmission_losses <- en_fuel_gen_use_loss %>%
   filter(grepl("electricity", source, ignore.case = T)) %>%
   group_by(county, year, source, units) %>%

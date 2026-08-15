@@ -48,3 +48,5 @@ outputs/*.log
 
 # The dashboard reads artefacts through a symlink created by web/serve.command.
 web/data
+
+docs_analysis/

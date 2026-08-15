@@ -27,6 +27,10 @@ df_pws_res <- df_pws %>%
   select(county, year, single_family, multifamily, residential) %>%
   mutate(residential_calc = if_else(is.na(residential), single_family + multifamily, residential)) %>%
   select(county, year, residential=residential_calc)
+# ExtraNotes: counties report households EITHER split by dwelling type OR as one combined
+# residential figure, never both, so the two conventions are mutually exclusive and coalescing
+# them cannot double count. Summing unconditionally would double the counties that report both
+# a total and its parts; taking only `residential` would drop the counties that report parts.
 
 
 ## commercial ----
@@ -37,6 +41,10 @@ df_pws_com <- df_pws %>%
   select(county, year, commercial, institutional, municipal, new_commercial) %>%
   mutate(commercial_calc = rowSums(select(., commercial, institutional, municipal, new_commercial), na.rm = TRUE)) %>%
   select(county, year, commercial=commercial_calc)
+# ExtraNotes: `municipal` is folded into commercial on utility advice that the category is
+# government buildings, i.e. a commercial-type building load, not municipal system water. This
+# is why the water diagram carries no separate government sector while the energy diagram does:
+# the two source datasets draw the institutional boundary in different places.
 
 ## industrial ----
 # sum industrial and anheuser_busch in industrial_calc. Ignore missing values (NAs)
@@ -45,6 +53,9 @@ df_pws_ind <- df_pws %>%
   select(county, year, industrial, anheuser_busch) %>%
   mutate(industrial_calc = rowSums(select(., industrial, anheuser_busch), na.rm = TRUE)) %>%
   select(county, year, industrial=industrial_calc)
+# ExtraNotes: one brewery is reported as its own line item because it is large enough to be
+# tracked individually by the utility. It is a single industrial customer, so it is folded into
+# industrial rather than given a node, which would disclose one firm's consumption.
 
 ## agricultural ----
 # ag stays ag, just replace NAs with 0
@@ -80,6 +91,11 @@ df_pws_res_comm_wirrigation <- df_pws %>%
          residential_wirr = residential + (irrigation * residential_share),
          commercial_wirr = commercial + (irrigation * commercial_share)) %>%
   select(county, year, residential=residential_wirr, commercial=commercial_wirr)
+# ExtraNotes: metered irrigation here is landscape watering, not agriculture, so it is split
+# between households and businesses in proportion to their existing metered demand rather than
+# sent to the agricultural sector. Irrigation is also the most consumptive urban end use: it
+# largely evaporates instead of returning to the sewer, which is part of why the residential
+# loss term is as large as it is.
 
 
 ## other ----
@@ -105,6 +121,11 @@ df_pws_cira_other <- df_pws %>% # cira = comm ind res ag
          agricultural_other = agricultural + (other * agricultural_share)) %>%
   select(county, year, residential=residential_other, commercial=commercial_other,
          industrial=industrial_other, agricultural=agricultural_other)
+# ExtraNotes: the order of the two redistributions is a method decision, not an implementation
+# detail. Irrigation is assigned FIRST and then `other` is spread over the resulting totals, so
+# the irrigation volume influences the shares that `other` is split by. Reversing the order
+# changes every sectoral total. Irrigation goes first because its destination is known on
+# physical grounds, whereas `other` is a residual with no known destination.
 
 
 ###############################################################################%
@@ -136,6 +157,11 @@ df_pws_self_supplied <- df_pws %>%
   select(county, year, self_supplied) %>%
   mutate(value = replace_na(self_supplied, 0), target = "residential") %>%
   select(county, year, target, value)
+# ExtraNotes: self-supply is assigned wholly to households on private wells, and its source is
+# set to groundwater downstream. The regional planning figure for self-supply (~45.9 MGD) is an
+# order of magnitude above the management plan's reported groundwater supply (~3.6 MGD); the
+# gap is agricultural and industrial self-supply, which are brought in separately below, so the
+# two figures must not be compared directly.
 
 ## ag self supply ----
 # the data in only for 2020 so let's write zeros for missing counties and extend for all years. the data should be complete
@@ -161,6 +187,11 @@ df_ag_self_supplied <- read_csv(paste0(DATA_DIR, "water_selfsupply_ag.csv")) %>%
   ungroup() %>% replace_na(list(value = 0)) %>%
   mutate(target = "agricultural") %>%
   select(county, year, source, target, value)
+# ExtraNotes: agricultural self-supply is observed for 2020 only and is held CONSTANT across the
+# study period, so any interannual change in agricultural water is an artefact of the public
+# supply data alone. Acceptable because agriculture is ~0.04% of metro supply; it would not be
+# acceptable in a rural application of the same method. Counties absent from the file are true
+# zeros rather than missing, since the source is a complete regional inventory.
 
 
 # nrw / losses ----
@@ -172,6 +203,12 @@ df_pws_nrw <- df_pws %>%
   mutate(value = replace_na(nrw, 0),
          source = "publicWatSup", target = "losses") %>%
   select(county, year, source, target, value)
+# ExtraNotes: non-revenue water is wired straight from the supply node to the loss sink rather
+# than routed through the end-use sectors. NRW is water that never reaches a customer -- mains
+# leakage, unbilled use, meter error -- so passing it through a sector would inflate that
+# sector's apparent demand. Consequence for interpretation: the `losses` sink is NOT all NRW.
+# It also receives each sector's consumptive use (supply minus wastewater returned), so the NRW
+# share must be read from this flow alone, not from the sink total.
 
 ###############################################################################%
 
@@ -360,6 +397,12 @@ df_water_losses <- total_water_supply %>%
   mutate(losses = total_supply - wastewater_generated,
          source = target, target = "losses") %>%
   select(county, year, source, target, value = losses)
+# ExtraNotes: each sector's loss is a RESIDUAL, supply minus wastewater returned, not a measured
+# quantity. Physically it is consumptive use (evaporation, irrigation, product incorporation,
+# human consumption), but it also absorbs every inconsistency between the supply and wastewater
+# datasets, which are separate utility submissions with different sectoral conventions. This is
+# the single largest source of uncertainty in the water diagram and the reason the loss share
+# should be reported as a range rather than a point estimate.
 
 neg_losses <- df_water_losses %>% filter(value < 0) # should be none
 
@@ -388,6 +431,12 @@ df_water_losses_fix_raw <- total_water_supply_fix %>%
 
 df_water_losses_fix_raw %>% filter(value < 0) # should be none
 df_water_losses_fix <- df_water_losses_fix_raw %>% mutate(value = if_else(value < 0, 0, value)) # fixing just 4 edge cases in Bartow
+# ExtraNotes: a negative residual means a sector returned more wastewater than it was supplied,
+# which cannot happen physically and instead signals cross-sector misclassification between the
+# two datasets (a use billed as industrial in one and commercial in the other). The correction
+# raises that sector's supply to at least its return flow, and is applied to public supply and
+# surface water only: groundwater is small and measured, so letting it absorb a statistical
+# residual would corrupt the one inflow term that is directly reported.
 
 # I/I ----
 # increase total wastewater by i_i_factor, target wastewater
@@ -399,6 +448,12 @@ df_water_i_i <- df_wastewat %>%
          source_ii="subsurface") %>%
   select(county, year, source=source_ii, target, value=value_ii) %>%
   unique() # to avoid downstream issues; DeKalb has some duplicated due to no industrial and ag wastewater
+# ExtraNotes: I&I is entered as its own SOURCE node (`subsurface`), not as an addition to sector
+# wastewater, because it is groundwater and stormwater leaking into sewers rather than water any
+# sector was supplied. It therefore enlarges the treatment burden without appearing anywhere in
+# withdrawal, and is the reason treatment throughput exceeds metered use. The county I&I factor
+# is a fixed multiplier applied to every year, so I&I cannot show a wet-year signal here; it
+# tracks sewer condition, not weather.
 
 # check if any I/I values are negative or zero (should not be)
 if (any(df_water_i_i$value <= 0)) {
@@ -564,8 +619,6 @@ df_ww_tobetreated <- df_ww_tobetreated_gen %>%
 # which is what the discharge side sums.
 # ExtraNotes: a county whose exports exceed its own generation would imply treating a negative
 # volume. Clamp at zero and record it rather than let it propagate.
-# ExtraNotes: a county whose exports exceed its own generation would imply treating a
-# negative volume. Clamp at zero and record it rather than let it propagate.
 ww_treat_negative <- df_ww_tobetreated %>% filter(value < 0)
 if (nrow(ww_treat_negative) > 0) {
   message("  ww treatment: ", nrow(ww_treat_negative),
@@ -616,6 +669,13 @@ df_wastewater_treatment_fracs <- df_wastewater_treatment %>%
          treatment_fraction = average / total_treatment_hist) %>%
   replace_na(list(treatment_fraction = 0)) %>% # replace NAs with 0
   ungroup()
+# ExtraNotes: a county's collected sewage is split between its plants in proportion to their
+# historic average throughput, not their permitted capacity. Average throughput reflects the
+# service areas actually connected to each plant, whereas permitted capacity reflects headroom
+# for future growth and would over-assign flow to recently expanded plants. Capacity is used
+# instead for the DISPOSAL split further down, where it is the only available basis.
+# Consequence: facility-level volumes are modelled allocations, not reported measurements, so
+# they are appropriate for system structure but not for regulatory comparison per plant.
 
 # apply treatment fractions by facility to wastewater volumes
 df_wastewater_treated <- df_ww_tobetreated %>%
@@ -835,6 +895,12 @@ energy_water_use_d <- thermoplants_water_use %>%
 
 
 thermoelec_water_use <- rbind(energy_water_use_w, energy_water_use_c, energy_water_use_d) %>% pretty_labels()
+# ExtraNotes: withdrawal is split into consumption (evaporated in the cooling tower, routed to
+# `losses`) and discharge (returned to the river, warmer). Discharge is derived as withdrawal
+# minus consumption, so each plant closes exactly by construction and the plant node cannot be
+# used as an independent check on the reported figures. The withdrawal-to-consumption ratio is
+# what distinguishes cooling technology: once-through plants withdraw far more than they
+# consume, recirculating towers withdraw little and consume most of it.
 
 if (MAKE_PLOT) plot_sankey_enhanced(rbind(df_sankey_wwtrade, thermoelec_water_use %>% select(!c(county))))
 
@@ -887,6 +953,15 @@ mgmtplan_surface <- p_water_mgmtplan_surface %>%
   summarise(value = sum(value), .groups = "drop") %>% select(!year) %>%
   expand_grid(year = 2019:2025) %>% # expand to all years
   select(county, year, basin, source, target, value, units)
+# ExtraNotes: the basin attribution of withdrawals is observed for 2019 ONLY and is copied to
+# every year, so the basin composition of supply is fixed by construction. Interannual change in
+# a basin's withdrawal reflects only the change in county demand, not any shift between sources.
+# The volumes here are overwritten later by the public-supply balancing step, which rescales
+# these surface inflows to match measured outflow; what survives from this table is the SHARE
+# between basins, which is its real contribution.
+# ExtraNotes: multiple intakes on the same basin are summed. They are separately permitted and
+# separately owned, and that ownership detail is deliberately not tracked, so the diagram cannot
+# speak to who holds which withdrawal right.
 
 
 # NOTE: experimenting with making basins as intermediate nodes
@@ -917,6 +992,12 @@ mgmtplan_surface <- p_water_mgmtplan_surface %>%
     group_by(basin) %>% mutate(county_basin_share = value / sum(value)) %>% ungroup() %>%
     arrange(basin)
   }
+# ExtraNotes: the county-basin overlap is weighted by withdrawal volume, not by land area, so a
+# county's dominant basin is where it draws most water rather than where most of its territory
+# lies. That is the correct weighting for allocating withdrawals but the wrong one for anything
+# hydrological. Zero-volume county-basin pairs are given a nominal weight so a county that
+# overlaps a basin without currently withdrawing from it still receives a small share, which
+# keeps the mapping usable for the permitted self-supply split that has no county detail.
 
 
 # no data on conveyance losses so all water leaving a water body is assumed to be used
@@ -972,6 +1053,11 @@ if (MAKE_PLOT) plot_sankey(mgmtplan_ground, animate = T)
 p_water_mgmtplan_self <- read_csv(paste0(DATA_DIR, "water_mgmtplan_self.csv")) %>% clean_col_names()
 
 PERMIT_USE_FACTOR <- 0.85
+# ExtraNotes: industrial and golf-course self-supply is reported as PERMITTED withdrawal, not
+# actual, so it is scaled to 85% of permit. Permit holders routinely withdraw below their limit,
+# and using the permit unscaled would overstate industrial water. The factor is an assumption,
+# not a measurement: it is the largest single judgement call in the water inputs and industrial
+# self-supply should be treated as an order-of-magnitude estimate.
 
 mgmtplan_self <- p_water_mgmtplan_self %>%
   # all self-supply to industrial
@@ -988,6 +1074,10 @@ mgmtplan_self_c <- mgmtplan_self %>%
 
 # sw gw split
 SW_GW_IND <- 0.65 # 65% surface water
+# ExtraNotes: the permitted self-supply file does not distinguish surface from groundwater, so a
+# fixed 65/35 split is imposed. Self-supplied industry sits on the same rivers as public supply
+# but also runs wells where an aquifer is productive, so neither extreme is defensible; the split
+# matters only for which source node the flow attaches to, not for the total.
 
 mgmtplan_self_c_s <- mgmtplan_self_c %>%
   mutate(value = value * SW_GW_IND, source = basin) %>%
@@ -1116,6 +1206,11 @@ industrial_discharge <- df_sankey_ww_mgmt_C %>%
   mutate(value = industrial_supply - industrial_use,
          source = "industrial", target = "discharge", units = "MGD") %>%
   select(county, year, source, target, value, units)
+# ExtraNotes: industry receives water from public supply, its own surface intakes and its own
+# wells, but reports wastewater only where it discharges to a sewer. The unreturned remainder is
+# sent to `discharge` as permitted direct discharge to a water body. Without this term the
+# industrial node stays open by the whole self-supply volume, since self-supplied industry has
+# no reason to appear in a sewer utility's records at all.
 
 
 
@@ -1528,6 +1623,13 @@ en4gwflows <- df_sankey_county_pws_balanced %>%
 # flow will be in MGD from the data
 PUMPING_HEAD_GW <- 125 # AVG_GW_DEPTH_FT, assuming a middle number (domestic dominated due to it's high share in volumes)
 PUMPING_HEAD_SW <- 25  # typical for surface water
+# ExtraNotes: the fivefold difference between these two heads is what makes groundwater the more
+# energy-intensive source per unit volume, and it is the mechanism behind the whole
+# energy-for-water term. 125 ft is chosen as a domestic-dominated middle value: Georgia public
+# supply wells run 150-750 ft while domestic wells run 50-150 ft, and self-supply here is
+# assigned to households. Because metro Atlanta is overwhelmingly surface-supplied (~97.6%), the
+# choice of groundwater head has little leverage on the metro total but matters for any county
+# with a high groundwater share.
 
 # EJ/year = (flow → gpm → HP → kW → kWh → J → EJ) × 365
 # value × MGD_to_GPM	gpm
@@ -1570,6 +1672,12 @@ en4water_extract <- rbind(en4sw_extract, en4gw_extract) %>%
 
 FRESH_SW_TREAT_ENERGY_INT <- 405  # kWh/mg
 FRESH_GW_TREAT_ENERGY_INT <- 205  # kWh/mg
+# ExtraNotes: surface water costs about twice as much energy to treat as groundwater because it
+# needs coagulation, flocculation, sedimentation and filtration, whereas groundwater arrives
+# filtered by the aquifer and often needs only disinfection. Both intensities are national
+# averages from PNNL interflow, not local measurements, so treatment energy is transferable
+# rather than observed. Note the direction of the trade-off against pumping: groundwater is
+# cheaper to treat but much more expensive to lift.
 
 en4water_treat <- rbind(en4sw_extract, en4gw_extract) %>%
   # only pws and residential (new additions: industry and plants also) need treatment
@@ -1590,6 +1698,12 @@ en4water_treat <- rbind(en4sw_extract, en4gw_extract) %>%
 # (it's not like industrial or other self use won't have the need to move water, so it's not unreasonable)
 
 DISTRIBUTION_ENERGY_INT <- 1040 # kWh/mg
+# ExtraNotes: distribution is the single largest term in the water-energy chain, roughly 2.5x
+# surface treatment and 5x groundwater treatment, because pressurising a sprawling network over
+# rolling terrain dominates. Metro Atlanta sits on the Piedmont with substantial relief, so this
+# national average is more likely to understate than overstate the local figure. Power plants
+# and agriculture are excluded: plants use water on site, and irrigation is not a pressurised
+# municipal network.
 
 en4water_distribute <- rbind(en4sw_extract, en4gw_extract) %>%
   # exclude powerplants from distribution because they likely use water on-site
@@ -1625,6 +1739,12 @@ if (MAKE_PLOT) plot_sankey_enhanced(en4water_all %>% mutate(value = value * EJ_t
 # see the table here https://pnnl.github.io/interflow/wastewater_sector.html
 
 WW_TREATMENT_ENERGY_INT <- 2080 # kWh/mg
+# ExtraNotes: every plant is treated as secondary. Metro Atlanta plants are in practice mostly
+# advanced/tertiary with nutrient removal, which is more energy intensive, so this is a
+# deliberately conservative floor on wastewater treatment energy. Wastewater treatment is the
+# most energy-intensive step per unit volume in the whole water chain -- twice distribution and
+# five times surface treatment -- which is why I&I matters energetically as well as
+# hydraulically: every leaked gallon is pumped and aerated at full cost.
 
 # check facilities and flows (do !grepl to see which are not included)
 # plot_sankey_enhanced(df_sankey_county_pws_balanced %>% filter(grepl("wastewater|inFrom", source)) %>% group_by(year, source, target, units) %>% summarise(value = sum(value), .groups = "drop") %>% pretty_labels(), show_values_in_labels = TRUE, animate = T, label_units = "MGD")
@@ -1652,6 +1772,11 @@ en4ww_distribute_facility <- df_sankey_county_pws_balanced %>%
   group_by(county, source, target, year) %>%
   summarise(value = sum(elec_ww_distribute), .groups = "drop") %>%
   mutate(en_wwtype = "en_wwdist", units = "EJ")
+# ExtraNotes: sewage conveyed across a county line is charged twice the collection energy, on the
+# reasoning that an inter-county transfer travels further and needs more lift than a flow to the
+# nearest in-county plant. This is the only place where the transfer network carries an explicit
+# energy penalty, and it is what makes inter-county sewage sharing visible as an energy choice
+# rather than a purely hydraulic one. The factor of 2 is a stated assumption, not a measurement.
 
 en4ww_treat_dist_facility <- rbind(en4ww_treat_facility, en4ww_distribute_facility)
 
