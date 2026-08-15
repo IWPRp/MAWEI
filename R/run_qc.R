@@ -52,11 +52,17 @@ targets <- list(
 BALANCE_EXEMPT <- list(
   # Gross generation is only reported for the three large thermal plants, so the
   # conversion loss of the small distributed/backup units cannot be separated from
-  # their fuel input. Combined magnitude ~0.0008 EJ against a ~0.5 EJ system (~0.2%).
+  # their fuel input. Combined magnitude ~0.0039 EJ against a ~11.9 EJ system (~0.03%).
   energy_metro  = c("Distributed-scale Generation", "On-Site Backup Generation"),
   energy_county = c("Distributed-scale Generation", "On-Site Backup Generation"),
   water_metro   = character(0),
-  water_county  = character(0)
+  # Named treatment facilities are terminal in a COUNTY cut by construction. `ww_imports`
+  # tags rows with the facility's host county while `ww_exports` tags them with the
+  # contributing county, so in the exporting county's diagram the receiving plant has an
+  # inflow and no exit - its discharge is attributed to the host county. At metro scope,
+  # where the county key disappears, these nodes do balance. Accepted as a property of the
+  # county view rather than a defect.
+  water_county  = if (exists("ww_facility_sink_map")) unique(ww_facility_sink_map$facility_name) else character(0)
 )
 
 viol_all <- list()

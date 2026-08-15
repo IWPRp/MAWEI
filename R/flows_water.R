@@ -195,11 +195,47 @@ names(df_wastewater)
 # sum single_family and multifamily and self_supplied to residential_wastewater
 # take out septic part from treated wastewater
 df_wastewater_res <- df_wastewater %>%
-  select(county, year, single_family, multi_family, self_supplied, vol_septic_generated_mg) %>%
-  mutate(residentialww = rowSums(select(., single_family, multi_family, self_supplied), na.rm = TRUE),
-         vol_septic_generated_mgd = vol_septic_generated_mg / 365, # convert mg to mgd
-         residentialnoseptic = residentialww - replace_na(vol_septic_generated_mgd, 0)) %>%
-  select(county, year, residential=residentialnoseptic)
+  select(county, year, single_family, multi_family, self_supplied,
+         vol_septic_generated_mg, percent_sf_septic) %>%
+  mutate(
+    sf_mf_reported = !(is.na(single_family) & is.na(multi_family)),
+    residentialww = rowSums(select(., single_family, multi_family, self_supplied), na.rm = TRUE),
+    septic_mg = replace_na(vol_septic_generated_mg, 0),
+    # Where a county reports neither single- nor multi-family wastewater, reconstruct the
+    # SEWERED share of household wastewater from the septic volume and the septic
+    # penetration rate: septic serves `percent_sf_septic` of households, so the sewered
+    # remainder is septic_mg * (1 - pct) / pct.
+    sewered_recon = if_else(!sf_mf_reported & !is.na(percent_sf_septic) & percent_sf_septic > 0,
+                            septic_mg * (1 - percent_sf_septic) / percent_sf_septic, 0),
+    residentialnoseptic = if_else(sf_mf_reported,
+                                  residentialww - septic_mg,
+                                  residentialww + sewered_recon))
+
+if (any(!df_wastewater_res$sf_mf_reported)) {
+  message("  residential ww: single_family and multi_family both NA for ",
+          paste(unique(df_wastewater_res$county[!df_wastewater_res$sf_mf_reported]), collapse = ", "),
+          "; sewered share reconstructed from septic penetration")
+}
+df_wastewater_res <- df_wastewater_res %>%
+  select(county, year, residential = residentialnoseptic)
+# ExtraNotes: septic is deducted in MG/yr, matching the units of residentialww. The previous
+# version converted septic to MGD first (`/365`) and subtracted that from an MG/yr quantity;
+# because the whole frame is divided by 365 again downstream (line ~311), septic was
+# effectively deducted as P/365^2, i.e. 365x too small. Since df_wastewater_septic separately
+# routes residential -> septic at P/365, septic-served flow was counted BOTH into the sewer
+# collection system and into the septic node. Effect of the fix: residential wastewater into
+# collection falls ~33% (2020: 269.7 -> 202.4 MGD; 2024: 286.0 -> 216.7 MGD), and the
+# 67-69 MGD removed matches the septic node volume (67.5-69.5 MGD) almost exactly, which is
+# what confirms the mechanism.
+#
+# ExtraNotes: the sewered-share reconstruction affects FORSYTH only. Forsyth reports
+# single_family = NA and multi_family = NA, so residentialww collapses to self_supplied
+# (89 MG) against a septic volume of 1836 MG - its household wastewater is essentially
+# absent from the source file. The old code never surfaced this because the mis-scaled
+# septic deduction kept the result positive by accident. Reconstruction gives Forsyth
+# ~2184 MG of sewered residential wastewater, 65% of its reported 3343 MG total into the
+# collection system, which is plausible for a suburban county. Flagged for review.
+stopifnot(all(df_wastewater_res$residential >= 0, na.rm = TRUE))
 
 ## commercial wastewater ----
 # sum commercial, institutional, municipal and new_commercial into commercial
@@ -445,11 +481,149 @@ df_wastewater_treatment <- read_csv(paste0(DATA_DIR, "water_wastewater_treatment
   rename_with(~ gsub("_+", "_", .), everything()) %>%  # replace duplicate underscores
   rename_with(~ gsub("\\(|\\)", "", .), everything())  # replace () with nothing
 
+
+# ww interconnections ----
+# filter out in-county flows: fromcounty == tocounty
+# check duplicates: data is duplicated between counties (check with and without values; also check the copied flag in notes)
+# probably remove the duplicated (on without value level; is values are different keep the max value)
+# complete the data for each year; assign zeros to missing values
+
+# read water_wastewater_connections.csv
+df_ww_conn <- read_csv(paste0(DATA_DIR, "water_wastewater_connections.csv")) %>%
+  rename_all(tolower) %>% rename(value = flow)
+
+# diagnostic
+# unique list of all
+print(paste0("Source counties: ", length(unique(df_ww_conn$fromcounty)), " (", paste(unique(df_ww_conn$fromcounty), collapse = ", "), ")"))
+print(paste0("Sink counties: ", length(unique(df_ww_conn$tocounty)), " (", paste(unique(df_ww_conn$tocounty), collapse = ", "), ")"))
+cat(paste0("Source places: ", length(unique(df_ww_conn$fromplace)), " (\n ", paste(unique(df_ww_conn$fromplace), collapse = "\n "), ")"))
+cat(paste0("Sink facilities: ", length(unique(df_ww_conn$tofacility)), " (\n ", paste(unique(df_ww_conn$tofacility), collapse = "\n "), ")"))
+
+# interconnections
+county2county <- df_ww_conn %>% select(county, year, source = fromcounty, target = tocounty, value) %>% unique() %>% replace_na(list(value= 0))
+if (MAKE_PLOT) plot_sankey(county2county)
+county2facility <- df_ww_conn %>% select(county, year, source = fromcounty, target = tofacility, value) %>% unique() %>% replace_na(list(value= 0))
+if (MAKE_PLOT) plot_sankey(county2facility)
+place2facility <- df_ww_conn %>% select(county, year, source = fromplace, target = tofacility, value) %>% unique() %>% replace_na(list(value= 0))
+if (MAKE_PLOT) plot_sankey(place2facility)
+
+# main interconnections logic
+# if fromcounty = tocounty, mutate flow_type = "in-county" else "out-county"
+# take only out-county flows
+# take wastewater treated final table and subtract out-county flows
+# Total treatment = In-county generation + Imports - Exports (for each facility)
+df_ww_conn_type <- df_ww_conn %>%
+  mutate(flow_type = if_else(fromcounty == tocounty, "in-county", "out-county")) %>%
+  filter(flow_type == "out-county") %>% # keep only out-county flows
+  filter(!grepl("copied", tolower(notes))) %>% # filter if notes contains "copied" string
+  select(-notes) %>% replace_na(list(value= 0))
+
+table(df_ww_conn_type$flow_type) # check counts
+
+# check duplicates
+dupes <- df_ww_conn_type %>%
+  group_by(fromcounty, tocounty, fromplace, tofacility, year, value) %>%
+  summarise(count = n(), .groups = "drop") %>%
+  filter(count > 1)
+
+df_ww_conn_dupes <- dupes %>% left_join(df_ww_conn_type, by = c("fromcounty", "tocounty", "fromplace", "tofacility", "year", "value")) %>%
+  arrange(fromcounty, tocounty, fromplace, tofacility, year)
+
+# Drop transfer records that duplicate an identical physical flow under a different
+# `fromplace` spelling.
+# ExtraNotes: water_wastewater_connections.csv holds 264 rows for 2020-2024 but only 129
+# distinct (fromcounty, tocounty, tofacility, year) transfers. The same connection is
+# entered under several naming conventions, e.g. "Clayton County to Dekalb County" and
+# "Clayton to DeKalb". The `notes ~ "copied"` filter above catches some but not all.
+# Only EXACT-value duplicates are removed here - identical (from, to, facility, year,
+# value) - which is unambiguous. Cases with the same route but DIFFERENT values are left
+# summed as before and written to outputs/qc/ for review, because they may be either two
+# genuinely separate connections or two competing estimates, and that needs local
+# knowledge. Examples of the latter: COBB NORTHWEST WRF 0.06297 vs 0.04506,
+# CLAYTON NORTHEAST WRF 0.09000 vs 0.08844. Genuinely distinct routes are common and must
+# be kept, e.g. Atlanta RM Clayton WRC receives 64.11 / 0.67 / 1.54 MGD from three places.
+n_before <- nrow(df_ww_conn_type)
+df_ww_conn_type <- df_ww_conn_type %>%
+  group_by(fromcounty, tocounty, tofacility, year, value) %>%
+  slice(1) %>% ungroup()
+if (nrow(df_ww_conn_type) < n_before) {
+  message("  ww connections: dropped ", n_before - nrow(df_ww_conn_type),
+          " exact-duplicate transfer record(s) of ", n_before)
+}
+
+# Suspected-but-ambiguous duplicates: same route, different value. Reported, not altered.
+ww_conn_ambiguous <- df_ww_conn_type %>%
+  filter(year %in% YEARS_TO_ENSURE) %>%
+  group_by(fromcounty, tocounty, tofacility, year) %>%
+  filter(n() > 1) %>%
+  arrange(fromcounty, tocounty, tofacility, year, desc(value)) %>%
+  ungroup()
+if (nrow(ww_conn_ambiguous) > 0) {
+  dir.create(QC_DIR, recursive = TRUE, showWarnings = FALSE)
+  write_csv(ww_conn_ambiguous, file.path(QC_DIR, "ww_connections_ambiguous.csv"))
+  message("  ww connections: ", n_distinct(paste(ww_conn_ambiguous$fromcounty,
+          ww_conn_ambiguous$tocounty, ww_conn_ambiguous$tofacility)),
+          " route(s) have multiple differing records -> ",
+          file.path(QC_DIR, "ww_connections_ambiguous.csv"))
+}
+
+
+# trade flows
+df_ww_conn_trade <- df_ww_conn_type %>%
+  group_by(fromcounty, fromplace, tocounty, tofacility, year) %>%
+  summarise(trade = sum(value, na.rm = TRUE), .groups = "drop")
+
 # sum of wastewater generated and I/I added
-df_ww_tobetreated <- rbind(df_water_i_i, df_wastewat) %>%
+df_ww_tobetreated_gen <- rbind(df_water_i_i, df_wastewat) %>%
   filter(target == "wastewater") %>% # just in case
   group_by(county, year, target) %>%
   summarise(value = sum(value), .groups = "drop")
+
+# Net inter-county transfer per county-year: what arrives from other counties minus what
+# leaves for other counties.
+# ExtraNotes: implements the rule stated in the design comment above df_ww_conn_type,
+# "Total treatment = In-county generation + Imports - Exports (for each facility)", which
+# was written but never applied. Previously `treated` came from in-county generation alone,
+# so sewage piped out of a county was BOTH exported and treated at home, and sewage piped in
+# was treated nowhere. That left the `wastewater` node with a residual of exactly
+# (imports - exports) = +4.505 MGD (+0.72%) at metro scope.
+ww_net_trade <- full_join(
+  df_ww_conn_trade %>% group_by(county = tocounty, year) %>%
+    summarise(imports = sum(trade, na.rm = TRUE), .groups = "drop"),
+  df_ww_conn_trade %>% group_by(county = fromcounty, year) %>%
+    summarise(exports = sum(trade, na.rm = TRUE), .groups = "drop"),
+  by = c("county", "year")) %>%
+  mutate(across(c(imports, exports), ~replace_na(., 0)))
+
+df_ww_tobetreated <- df_ww_tobetreated_gen %>%
+  left_join(ww_net_trade, by = c("county", "year")) %>%
+  mutate(across(c(imports, exports), ~replace_na(., 0)),
+         generated = value,
+         value = generated - exports)
+# ExtraNotes: EXPORTS are subtracted but IMPORTS are NOT added. Imports already reach the
+# receiving facility as their own explicit flows (`inFrom_<county>_<place> -> <facility>`,
+# from ww_trade_comb), so adding them here as well would count them twice. The facility's
+# true throughput is therefore
+#     (generated - exports)      [via the county's own `wastewater` node]
+#   + imports                    [via the inFrom nodes]
+# which is what `ww_sink` sums when it builds the discharge side. With this definition the
+# `wastewater` node closes exactly: inflow = generated, outflow = (generated - exports) +
+# exports. Previously `treated` was in-county generation alone, so sewage piped out of a
+# county was BOTH exported and treated at home, leaving the node with a residual of exactly
+# (imports - exports) = +4.505 MGD (+0.72%) at metro scope.
+# ExtraNotes: a county whose exports exceed its own generation would imply treating a
+# negative volume. Clamp at zero and record it rather than let it propagate.
+ww_treat_negative <- df_ww_tobetreated %>% filter(value < 0)
+if (nrow(ww_treat_negative) > 0) {
+  message("  ww treatment: ", nrow(ww_treat_negative),
+          " county-year(s) export more than they generate; clamped to 0: ",
+          paste(unique(ww_treat_negative$county), collapse = ", "))
+  dir.create(QC_DIR, recursive = TRUE, showWarnings = FALSE)
+  write_csv(ww_treat_negative, file.path(QC_DIR, "ww_treatment_negative.csv"))
+}
+df_ww_tobetreated <- df_ww_tobetreated %>%
+  mutate(value = pmax(value, 0)) %>%
+  select(county, year, target, value)
 
 # check for more wastewater to be treated that permit capacity
 total_permit_cap <- df_wastewater_treatment %>%
@@ -581,62 +755,6 @@ if (MAKE_PLOT) plot_sankey_enhanced(df_sankey_agg, show_values_in_labels = TRUE,
 
 
 ###############################################################################%
-
-# ww interconnections ----
-# filter out in-county flows: fromcounty == tocounty
-# check duplicates: data is duplicated between counties (check with and without values; also check the copied flag in notes)
-# probably remove the duplicated (on without value level; is values are different keep the max value)
-# complete the data for each year; assign zeros to missing values
-
-# read water_wastewater_connections.csv
-df_ww_conn <- read_csv(paste0(DATA_DIR, "water_wastewater_connections.csv")) %>%
-  rename_all(tolower) %>% rename(value = flow)
-
-# diagnostic
-# unique list of all
-print(paste0("Source counties: ", length(unique(df_ww_conn$fromcounty)), " (", paste(unique(df_ww_conn$fromcounty), collapse = ", "), ")"))
-print(paste0("Sink counties: ", length(unique(df_ww_conn$tocounty)), " (", paste(unique(df_ww_conn$tocounty), collapse = ", "), ")"))
-cat(paste0("Source places: ", length(unique(df_ww_conn$fromplace)), " (\n ", paste(unique(df_ww_conn$fromplace), collapse = "\n "), ")"))
-cat(paste0("Sink facilities: ", length(unique(df_ww_conn$tofacility)), " (\n ", paste(unique(df_ww_conn$tofacility), collapse = "\n "), ")"))
-
-# interconnections
-county2county <- df_ww_conn %>% select(county, year, source = fromcounty, target = tocounty, value) %>% unique() %>% replace_na(list(value= 0))
-if (MAKE_PLOT) plot_sankey(county2county)
-county2facility <- df_ww_conn %>% select(county, year, source = fromcounty, target = tofacility, value) %>% unique() %>% replace_na(list(value= 0))
-if (MAKE_PLOT) plot_sankey(county2facility)
-place2facility <- df_ww_conn %>% select(county, year, source = fromplace, target = tofacility, value) %>% unique() %>% replace_na(list(value= 0))
-if (MAKE_PLOT) plot_sankey(place2facility)
-
-# main interconnections logic
-# if fromcounty = tocounty, mutate flow_type = "in-county" else "out-county"
-# take only out-county flows
-# take wastewater treated final table and subtract out-county flows
-# Total treatment = In-county generation + Imports - Exports (for each facility)
-df_ww_conn_type <- df_ww_conn %>%
-  mutate(flow_type = if_else(fromcounty == tocounty, "in-county", "out-county")) %>%
-  filter(flow_type == "out-county") %>% # keep only out-county flows
-  filter(!grepl("copied", tolower(notes))) %>% # filter if notes contains "copied" string
-  select(-notes) %>% replace_na(list(value= 0))
-
-table(df_ww_conn_type$flow_type) # check counts
-
-# check duplicates
-dupes <- df_ww_conn_type %>%
-  group_by(fromcounty, tocounty, fromplace, tofacility, year, value) %>%
-  summarise(count = n(), .groups = "drop") %>%
-  filter(count > 1)
-
-df_ww_conn_dupes <- dupes %>% left_join(df_ww_conn_type, by = c("fromcounty", "tocounty", "fromplace", "tofacility", "year", "value")) %>%
-  arrange(fromcounty, tocounty, fromplace, tofacility, year)
-
-# TODO: remove duplicates later, just go back to notes and add "repeated or copied"
-
-
-# trade flows
-df_ww_conn_trade <- df_ww_conn_type %>%
-  group_by(fromcounty, fromplace, tocounty, tofacility, year) %>%
-  summarise(trade = sum(value, na.rm = TRUE), .groups = "drop")
-
 # imports
 ww_imports <- df_ww_conn_trade %>%
   mutate(fromcounty_fromplace = paste("inFrom", fromcounty, fromplace, sep = "_")) %>%
@@ -708,8 +826,17 @@ ww_trade_agg <- ww_trade %>%
   group_by(trade_type, year) %>%
   summarise(value = sum(value, na.rm = TRUE), .groups = "drop") %>%
   mutate(source = if_else(trade_type == "ww_imports", "ww_imports", "wastewater"),
-         target = if_else(trade_type == "ww_imports", "wastewater", "ww_exports")) %>%
+         target = if_else(trade_type == "ww_imports", "in-county treatment", "ww_exports")) %>%
   select(source, target, year, value)
+# ExtraNotes: imports target `in-county treatment`, NOT `wastewater`. Imported sewage arrives
+# by pipe at a treatment plant; it never enters the receiving county's own collection system,
+# and in the county-level frame it is already wired straight to the facility
+# (`inFrom_* -> <facility>`). Routing it through `wastewater` at metro scope made that node's
+# inflow generated + imports while its outflow was only treated + exports, which is where the
+# +0.72% residual came from. With imports going directly to treatment:
+#   wastewater:          in = generated;              out = (generated - exports) + exports
+#   in-county treatment: in = (generated - exports) + imports = sum(ww_sink) = out
+# both close by construction.
 
 df_sankey_wwtrade <- df_sankey_agg <- rbind(df_water_sup_waste_fix, df_water_losses_fix, df_wastewater_septic, df_water_i_i,
                                             df_wastewater_treated_one_node %>% mutate(target = "in-county treatment")) %>%
@@ -954,14 +1081,29 @@ water_mgmtplan_wastewater_map <- water_mgmtplan_wastewater %>%
 ww_facility_sink_map <- read_csv(paste0(DATA_DIR, "common_ww_facility_sink_map.csv"))
 
 # calculate disposal shares to a sink from each facility
+# ExtraNotes: grouped by (county, facility_name) so the shares split a facility's effluent
+# across ITS OWN receiving water bodies. The previous grouping was by facility_name alone,
+# which spread the share across the *contributing counties* a facility serves - the map lists
+# one row per (county, facility, target) - so it summed to 1 over the wrong dimension and
+# could not be used as a disposal split at all.
 ww_facility_sink_map_s <- ww_facility_sink_map %>%
-  group_by(facility_name) %>%
-  # adjust permits between datasets to avoid zero permit per site
-  mutate(permit = if_else(is.na(permit), 0, permit),
-         permit_adj = max(permitted_capacity, permit)) %>%
-  mutate(disposal_share =  permit_adj / sum(permit_adj),
-         disposal_share = replace_na(disposal_share, 0)) %>%
-  ungroup() %>% distinct()
+  # ExtraNotes: deduplicate BEFORE computing shares. The map can list the same
+  # (county, facility, target) twice; collapsing afterwards would leave the shares no longer
+  # summing to 1 for that facility.
+  distinct() %>%
+  mutate(permit = replace_na(permit, 0),
+         permitted_capacity = replace_na(permitted_capacity, 0),
+         permit_adj = pmax(permitted_capacity, permit)) %>%
+  group_by(county, facility_name) %>%
+  mutate(total_permit = sum(permit_adj),
+         # a facility whose permit figures are all zero still has to send its effluent
+         # somewhere: fall back to an even split across its receiving bodies
+         disposal_share = if_else(total_permit > 0, permit_adj / total_permit, 1 / n())) %>%
+  ungroup() %>%
+  select(-total_permit)
+stopifnot(all(abs(
+  ww_facility_sink_map_s %>% group_by(county, facility_name) %>%
+    summarise(s = sum(disposal_share), .groups = "drop") %>% pull(s) - 1) < 1e-9))
 
 # calculate wastewater sink flows
 ww_sink <- df_sankey %>% filter(source == "wastewater") %>%
@@ -969,10 +1111,18 @@ ww_sink <- df_sankey %>% filter(source == "wastewater") %>%
   select(county, year, source = target, value, units) %>%
   # to get sinks based on facility (and shares)
   left_join(ww_facility_sink_map_s, by = c("county", "source" = "facility_name")) %>%
+  # apportion across the facility's receiving water bodies
+  mutate(value = value * disposal_share) %>%
   select(county, year, basin, source, target, value, units) %>%
-  distinct() %>%
   group_by(county, basin, year, source, target, units) %>%
   summarise(value = sum(value), .groups = "drop")
+# ExtraNotes: `disposal_share` is now actually applied. It was computed and then dropped by
+# the select(), so a facility mapped to two receiving water bodies emitted its FULL effluent
+# to each - the flow was duplicated. Only two county-facility pairs are affected (Clayton
+# W.B. Casey WRF -> Flint River + Huie Wetlands; Forsyth Fowler WRF + Shakerag WRF), but
+# Casey treats ~17 MGD, which is most of the 18.4 MGD by which `in-county treatment` outflow
+# exceeded its inflow. Note the earlier `distinct()` was removed: with a multiplicative share
+# applied it could silently drop legitimately equal rows.
 
 if (MAKE_PLOT) plot_sankey(ww_sink)
 
@@ -1258,12 +1408,20 @@ df_water_metro_linear_wSW %>% select(source, target) %>% distinct()
 
 ## add ww discharges sink ----
 
-# determine in-county treatment vs exports ratio by year to split the sources of ww discharges
-# does it need to be by county? Current thinking is no because this recieving type viz is only for metro level. County level already has exact water body sinks
-ww_discharge_source_shares <- df_water_metro_linear_wSW %>%
-  filter(grepl("wastewater", source)) %>%
-  group_by(source, year) %>%
-  mutate(ww_src_share = value / sum(value)) %>% ungroup()
+# All treated effluent is attributed to `in-county treatment`.
+# ExtraNotes: this replaces `ww_discharge_source_shares`, which split the discharge total
+# between `in-county treatment` and `ww_exports` using shares T/(T+E) and E/(T+E). The
+# quantity being apportioned is sum(ww_sink) = T + I, so both nodes were uniformly rescaled
+# by (T+I)/(T+E) - which is exactly why both showed an identical -3.16% relative residual,
+# the signature of a shared multiplicative factor.
+# The split was also double counting physically: wastewater exported from county A is treated
+# and discharged by a facility in county B, and at metro scope that facility's discharge is
+# already inside sum(ww_sink). Giving `ww_exports` its own discharge outflow counted the same
+# effluent twice. `ww_exports` is therefore terminal at metro scope - it represents sewage
+# leaving the originating county, not leaving the metro system - and every discharge flow
+# originates from `in-county treatment`, whose inflow is (generated - exports) + imports and
+# therefore equals sum(ww_sink) by construction.
+WW_DISCHARGE_SOURCE <- "in-county treatment"
 
 ### to discharge (except land and reuse) ----
 # for facilities with _ds (because they are water bodies), keeping the rest as-is. merge Various with discharge
@@ -1283,9 +1441,7 @@ df_water_metro_linear_wSW_discharge <- df_water_metro_linear_wSW %>%
   rbind(ww_sink_discharge %>%
           group_by(year, target, units) %>%
           summarise(value = sum(value), .groups = "drop") %>%
-          left_join(ww_discharge_source_shares %>% select(year, target, ww_src_share),
-                    by = c("year")) %>%
-          mutate(value = value * ww_src_share, source = target.y, target = target.x) %>%
+          mutate(source = WW_DISCHARGE_SOURCE) %>%
           select(source, target, year, value, units))
 
 if (MAKE_PLOT) plot_sankey_enhanced(df_water_metro_linear_wSW_discharge %>% pretty_labels(),
@@ -1317,18 +1473,17 @@ df_water_metro_linear_wSW_discharge_type <- df_water_metro_linear_wSW %>%
   rbind(ww_sink_discharge_type %>%
           group_by(year, target, units) %>%
           summarise(value = sum(value), .groups = "drop") %>%
-          left_join(ww_discharge_source_shares %>% select(year, target, ww_src_share),
-                    by = c("year")) %>%
-          mutate(value = value * ww_src_share, source = target.y, target = target.x) %>%
+          mutate(source = WW_DISCHARGE_SOURCE) %>%
           select(source, target, year, value, units)) %>%
   filter(year %in% YEARS_TO_ENSURE) %>%
   group_by(year, source, target, units) %>%
   summarise(value = sum(value), .groups = "drop")
 validate_flows(df_water_metro_linear_wSW_discharge_type, "water_metro_flows",
                strict_years = TRUE)
-# ExtraNotes: clamped as for the county frame - 1,618 of 1,938 rows were outside
-# 2020-2024 - and collapsed to one row per (year, source, target, units) for the same
-# reason described there.
+# ExtraNotes: clamped to the study period (1,618 of 1,938 rows were outside 2020-2024) and
+# collapsed to one row per (year, source, target, units). Discharge is attributed entirely to
+# `in-county treatment`; see the WW_DISCHARGE_SOURCE note above for why the previous
+# treated-vs-exported share split double counted exported effluent.
 
 if (MAKE_PLOT) plot_sankey_enhanced(df_water_metro_linear_wSW_discharge_type %>% pretty_labels(),
                      show_values_in_labels = T, animate = T, label_units = "MGD")
