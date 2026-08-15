@@ -15,8 +15,29 @@ data/all_csvs/
 data/eia_seds_Complete_*.csv.gz
 
 # folders
+# Hidden files are ignored wholesale, but .github must be tracked or the Pages
+# workflow never reaches GitHub.
 .*
-outputs/
+!.github/
+!.gitignore
+!.nojekyll
+
+# Generated outputs are regenerable and large (~247 MB, mostly self-contained HTML
+# with an embedded copy of plotly in each file), so the tree is not tracked -- except
+# the Sankey JSON, which is the payload GitHub Pages serves and is only ~2.3 MB.
+# Git cannot re-include a file whose parent directory is excluded, so each level is
+# excluded by contents (dir/*) rather than as a directory (dir/), leaving the
+# negations below able to take effect.
+outputs/*
+!outputs/files/
+outputs/files/*
+!outputs/files/manifest.json
+!outputs/files/manifest.js
+!outputs/files/energy/
+!outputs/files/water/
+!outputs/files/energy-water/
+outputs/files/*/*
+!outputs/files/*/*.json
 
 # QC + scratch output trees (regenerable)
 outputs/qc/

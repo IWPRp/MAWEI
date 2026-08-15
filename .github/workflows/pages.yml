@@ -1,0 +1,79 @@
+name: Deploy MAWEI dashboard to Pages
+
+# The published site is the web/ shell plus the JSON artefacts the R pipeline writes.
+# Only the slim JSON is copied, not the self-contained HTML diagrams: those are 1-4 MB each
+# because every one embeds its own copy of plotly, and the dashboard draws its own charts
+# from the JSON anyway.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'web/**'
+      - 'outputs/files/**/*.json'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Assemble site
+        run: |
+          mkdir -p _site/data
+          cp -r web/* _site/
+          # Copy, not symlink: Pages does not follow symlinks.
+          if [ -d outputs/files ]; then
+            rsync -a --include='*/' --include='*.json' --exclude='*' \
+                  outputs/files/ _site/data/
+          fi
+          # Pages would otherwise run Jekyll and strip files beginning with an underscore.
+          touch _site/.nojekyll
+          printf 'User-agent: *\nAllow: /\n' > _site/robots.txt
+
+      - name: Verify the site is self-consistent
+        run: |
+          test -f _site/index.html || { echo "index.html missing"; exit 1; }
+          test -f _site/data/manifest.json || { echo "manifest missing - run the R pipeline"; exit 1; }
+          # Every path in the manifest must resolve on a case-sensitive filesystem. macOS
+          # hides case errors; this is the check that catches them before they ship.
+          python3 - <<'PY'
+          import json, sys, pathlib
+          mf = json.load(open('_site/data/manifest.json'))
+          missing = [f['path'] for f in mf['files']
+                     if f['kind'] == 'data'
+                     and not (pathlib.Path('_site/data') / f['path']).exists()]
+          if missing:
+              print(f"{len(missing)} manifest entries do not resolve:")
+              for m in missing[:20]:
+                  print("  ", m)
+              sys.exit(1)
+          print(f"manifest OK: {len(mf['files'])} entries")
+          PY
+          du -sh _site
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
