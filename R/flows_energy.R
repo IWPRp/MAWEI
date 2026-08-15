@@ -709,7 +709,7 @@ if (exists("en_elec_trade_county")) {
 }
 
 
-if (MAKE_PLOT) plot_sankey_pro(en_fuel_gen_use_loss_all_trade)
+if (MAKE_PLOT) plot_sankey_enhanced(en_fuel_gen_use_loss_all_trade)
 
 if (MAKE_PLOT) plot_sankey_enhanced(en_fuel_gen_use_loss_all_trade %>%
                        group_by(year, source, target, units) %>%

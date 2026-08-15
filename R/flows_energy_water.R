@@ -43,7 +43,7 @@ if (MAKE_PLOT) plot_sankey_enhanced(energy_water_simplified %>% pretty_labels(),
                      label_units = "auto", alt_units = ew_alt_units,
                      link_color_by_domain = TRUE)
 
-# plot_sankey_pro(energy_water_simplified)
+# plot_sankey_enhanced(energy_water_simplified)
 
 # energy water by county ----
 # county-level: uses df_sankey_county_pws_balanced (has individual WW facility names)
@@ -59,8 +59,8 @@ if (MAKE_PLOT) plot_sankey_enhanced(energy_water_county %>% pretty_labels(),
                      label_units = "auto", alt_units = ew_alt_units,
                      link_color_by_domain = TRUE)
 
-if (MAKE_PLOT) plot_sankey_pro(energy_water_county, reg = "Fulton")
-if (MAKE_PLOT) plot_sankey_pro(energy_water_county, reg = "Cobb")
+if (MAKE_PLOT) plot_sankey_enhanced(energy_water_county, reg = "Fulton")
+if (MAKE_PLOT) plot_sankey_enhanced(energy_water_county, reg = "Cobb")
 
 # energy water simplified by county ----
 energy_water_simplified_county <- simplify_sankey(energy_water_county, energy_water_simplified_map)
@@ -70,8 +70,8 @@ if (MAKE_PLOT) plot_sankey_enhanced(energy_water_simplified_county %>% pretty_la
                      label_units = "auto", alt_units = ew_alt_units,
                      link_color_by_domain = TRUE)
 
-# plot_sankey_pro(energy_water_simplified_county)
-# plot_sankey_pro(energy_water_simplified_county, reg = "Fulton")
+# plot_sankey_enhanced(energy_water_simplified_county)
+# plot_sankey_enhanced(energy_water_simplified_county, reg = "Fulton")
 
 if (SAVE_FILES) {
 ###############################################################################%
