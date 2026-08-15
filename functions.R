@@ -109,11 +109,12 @@ if (!dir.exists(SAVE_DIR)) {
   dir.create(SAVE_DIR, recursive = TRUE)
 }
 
+# All artefacts for a domain live directly in its folder: CSV tables, HTML diagrams and
+# the slim JSON the web dashboard reads. A flat layout keeps a diagram next to the data it
+# was built from, and means one path pattern covers every artefact.
 for (domain in c("energy", "water", "energy-water")) {
-  dir.create(file.path(SAVE_DIR, domain, "data"), recursive = TRUE, showWarnings = FALSE)
-  dir.create(file.path(SAVE_DIR, domain, "diagrams"), recursive = TRUE, showWarnings = FALSE)
+  dir.create(file.path(SAVE_DIR, domain), recursive = TRUE, showWarnings = FALSE)
 }
-
 # county names
 counties <- read_csv(paste0(DATA_DIR, "common_county_fips.csv"))$county
 fips <- read_csv(paste0(DATA_DIR, "common_county_fips.csv"))$fip
@@ -355,7 +356,6 @@ resolve_node_color <- function(node_name, palette) {
 #            the two systems unmistakable
 #   "nexus"  both at once: the link keeps its source-node hue, tinted toward its class
 #            colour. The default for combined energy-water diagrams
-#   "class"  flat class colours with no node hue, i.e. "nexus" at full strength
 #
 # The class of a flow is not simply its unit. A combined diagram contains four kinds:
 # energy moving through the energy system, water moving through the water system, and the
@@ -399,7 +399,7 @@ sankey_link_class <- function(df) {
 sankey_link_colors <- function(df, all_nodes, node_colors,
                                link_style = "node", link_alpha = 0.45,
                                class_weight = 0.55) {
-  style <- match.arg(link_style, c("node", "domain", "nexus", "class"))
+  style <- match.arg(link_style, c("node", "domain", "nexus"))
   src_col <- node_colors[match(df$source, all_nodes)]
 
   if (style == "node") return(hex_to_rgba(src_col, link_alpha))
@@ -407,7 +407,6 @@ sankey_link_colors <- function(df, all_nodes, node_colors,
   cls <- sankey_link_class(df)
   cls_col <- unname(SANKEY_CLASS_COLORS[cls])
 
-  if (style == "class") return(hex_to_rgba(cls_col, link_alpha))
   if (style == "domain") {
     two <- ifelse(cls %in% c("energy", "energy_for_water"),
                   SANKEY_CLASS_COLORS[["energy"]], SANKEY_CLASS_COLORS[["water"]])
@@ -425,7 +424,7 @@ sankey_link_colors <- function(df, all_nodes, node_colors,
 preview_sankey_styles <- function(df, label = "diagram", units = "",
                                   alt_units = NULL,
                                   palettes = names(SANKEY_PALETTES),
-                                  styles = c("node", "nexus", "domain", "class"),
+                                  styles = c("node", "nexus", "domain"),
                                   out_dir = "outputs/style_preview",
                                   title = "Metro Atlanta flows") {
   dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
@@ -594,18 +593,137 @@ save_sankey <- function(widget, filepath) {
   }
 }
 
+save_metro_sankey <- function(df, domain_dir, stem, label_units,
+                              alt_units = NULL, color_scheme = NULL,
+                              link_style = "node", ...) {
+  p <- plot_sankey_enhanced(df, animate = TRUE, show_values_in_labels = TRUE,
+                            label_units = label_units, alt_units = alt_units,
+                            color_scheme = color_scheme, link_style = link_style, ...)
+  base <- file.path(SAVE_DIR, domain_dir, stem)
+  save_sankey(p, paste0(base, ".html"))
+  save_sankey_json(df, paste0(base, ".json"), units = label_units,
+                   color_scheme = color_scheme, link_style = link_style)
+  invisible(base)
+}
+
 save_county_sankeys <- function(df, domain_dir, prefix, suffix, prep_fn, label_units,
                                 alt_units = NULL, color_scheme = NULL,
                                 link_style = "node", ...) {
-  diag_dir <- file.path(SAVE_DIR, domain_dir, "diagrams")
   for (cty in sort(counties)) {
     message("  ", cty, " ", suffix)
-    p <- plot_sankey_enhanced(prep_fn(df), reg = cty, animate = TRUE,
+    prepped <- prep_fn(df)
+    p <- plot_sankey_enhanced(prepped, reg = cty, animate = TRUE,
                               show_values_in_labels = TRUE, label_units = label_units,
                               alt_units = alt_units, color_scheme = color_scheme,
                               link_style = link_style, ...)
-    save_sankey(p, file.path(diag_dir, paste0(prefix, "_county_", cty, "_", suffix, ".html")))
+    stem <- file.path(SAVE_DIR, domain_dir, paste0(prefix, "_county_", cty, "_", suffix))
+    save_sankey(p, paste0(stem, ".html"))
+    save_sankey_json(prepped, paste0(stem, ".json"), reg = cty, units = label_units,
+                     color_scheme = color_scheme, link_style = link_style)
   }
+}
+
+
+# Sankey JSON export ----
+# The web dashboard renders its own Sankeys rather than embedding ours, so it needs the
+# geometry and the values, not a rendered widget. A self-contained plotly HTML is 1-4 MB
+# because it carries the whole library; this is 20-80 KB and is the same numbers.
+#
+# Node coordinates and colours are computed by the same functions the R diagrams use, so a
+# diagram drawn in the browser is positioned and coloured identically to the one saved here.
+# That is the point of exporting geometry rather than letting the browser solve its own
+# layout: the two views cannot drift apart.
+save_sankey_json <- function(df, filepath, reg = NULL, units = "",
+                             years = YEARS_TO_ENSURE, color_scheme = NULL,
+                             link_style = "node", pretty_label = TRUE) {
+
+  d <- if (pretty_label) pretty_labels(df) else df
+  if ("county" %in% names(d) && !is.null(reg)) d <- d %>% filter(county %in% reg)
+  d <- d %>% filter(year %in% years)
+  grp <- intersect(c("year", "source", "target", "units"), names(d))
+  d <- d %>% group_by(across(all_of(grp))) %>%
+    summarise(value = sum(value), .groups = "drop") %>%
+    filter(value > 0)
+  if (nrow(d) == 0) return(invisible(NULL))
+
+  all_nodes <- unique(c(d$source, d$target))
+  pal <- sankey_palette(color_scheme)
+  node_colors <- purrr::map_chr(all_nodes, ~ resolve_node_color(.x, pal))
+  pos <- sankey_node_positions(all_nodes, d)
+  link_colors <- sankey_link_colors(d, all_nodes, node_colors, link_style = link_style)
+
+  out <- list(
+    meta = list(
+      domain = if (is.null(reg)) "metro" else "county",
+      scope = reg %||% "metro",
+      units = if (nzchar(units)) units else unique(d$units),
+      years = sort(unique(d$year)),
+      link_style = link_style,
+      generated = format(Sys.time(), "%Y-%m-%dT%H:%M:%S%z")
+    ),
+    nodes = purrr::imap(all_nodes, function(nd, i) list(
+      id = i - 1L, label = nd, x = pos$x[i], y = pos$y[i],
+      layer = pos$layer[i], color = node_colors[i]
+    )),
+    links = purrr::pmap(list(d$source, d$target, d$year, d$value,
+                             d$units %||% rep("", nrow(d)), link_colors),
+                        function(s, t, y, v, u, cl) list(
+                          s = match(s, all_nodes) - 1L, t = match(t, all_nodes) - 1L,
+                          year = y, value = round(v, 6), units = u, color = cl
+                        ))
+  )
+  dir.create(dirname(filepath), recursive = TRUE, showWarnings = FALSE)
+  jsonlite::write_json(out, filepath, auto_unbox = TRUE, digits = 8, null = "null")
+  invisible(filepath)
+}
+
+
+# Artefact manifest ----
+# One index of everything that was written, so a consumer never has to reconstruct paths
+# from a naming convention. The dashboards previously rebuilt the file list from hardcoded
+# county and domain vectors, which silently produced dead links whenever an artefact was
+# renamed, missing or added.
+write_manifest <- function(root = SAVE_DIR, path = file.path(SAVE_DIR, "manifest.json")) {
+  files <- list.files(root, pattern = "\\.(html|csv|json)$", recursive = TRUE)
+  files <- files[basename(files) != "manifest.json"]
+
+  info <- tibble(path = files) %>%
+    mutate(
+      full = file.path(root, path),
+      domain = dirname(path),
+      base = basename(path),
+      ext = tools::file_ext(base),
+      kind = case_when(ext == "csv" ~ "table", ext == "json" ~ "data", TRUE ~ "diagram"),
+      # county name is the token between "_county_" and the trailing suffix
+      county = str_match(base, "_county_([A-Za-z]+)_")[, 2],
+      scope = if_else(is.na(county), "metro", "county"),
+      # ordering key: metro artefacts first, then counties alphabetically
+      order_key = if_else(is.na(county), paste0("0_", base), paste0("1_", county, "_", base)),
+      bytes = file.size(full),
+      label = base %>% str_remove("\\.(html|csv|json)$") %>%
+        str_remove("^[0-9]+_") %>% str_replace_all("_", " ")
+    ) %>%
+    filter(domain %in% c("energy", "water", "energy-water")) %>%
+    arrange(domain, order_key) %>%
+    select(path, domain, scope, county, kind, label, bytes)
+
+  out <- list(
+    generated = format(Sys.time(), "%Y-%m-%dT%H:%M:%S%z"),
+    years = YEARS_TO_ENSURE,
+    counties = sort(counties),
+    domains = c("energy", "water", "energy-water"),
+    files = info
+  )
+  jsonlite::write_json(out, path, auto_unbox = TRUE, pretty = TRUE)
+
+  # A `const` copy as well: the local dashboard runs from file://, where fetch() of a
+  # sibling JSON is blocked as a cross-origin request, but a <script> tag is not.
+  writeLines(paste0("const MAWEI_MANIFEST = ",
+                    jsonlite::toJSON(out, auto_unbox = TRUE, pretty = TRUE), ";"),
+             file.path(dirname(path), "manifest.js"))
+
+  message("  manifest: ", nrow(info), " artefacts -> ", path)
+  invisible(info)
 }
 
 clean_col_names <- function(df) {

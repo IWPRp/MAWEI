@@ -85,19 +85,13 @@ write_csv(energy_water,
 write_csv(energy_water_simplified,
           file.path(SAVE_DIR, "energy-water/02_metro_ew_simplified_flows.csv"))
 
-save_sankey(
-  plot_sankey_enhanced(energy_water,
-                       animate = TRUE, show_values_in_labels = TRUE,
-                       label_units = "auto", alt_units = ew_alt_units,
-                       link_style = "nexus"),
-  file.path(SAVE_DIR, "energy-water/01_metro_ew.html"))
+save_metro_sankey(energy_water, "energy-water", "01_metro_ew",
+                  label_units = "auto", alt_units = ew_alt_units,
+                  link_style = "nexus")
 
-save_sankey(
-  plot_sankey_enhanced(energy_water_simplified,
-                       animate = TRUE, show_values_in_labels = TRUE,
-                       label_units = "auto", alt_units = ew_alt_units,
-                       link_style = "nexus"),
-  file.path(SAVE_DIR, "energy-water/02_metro_ew_simplified.html"))
+save_metro_sankey(energy_water_simplified, "energy-water", "02_metro_ew_simplified",
+                  label_units = "auto", alt_units = ew_alt_units,
+                  link_style = "nexus")
 
 ###############################################################################%
 # SAVING COUNTY ----
@@ -117,5 +111,11 @@ save_county_sankeys(
   energy_water_simplified_county, "energy-water", "04", "ew_simplified",
   prep_fn = identity, label_units = "auto", alt_units = ew_alt_units,
   link_style = "nexus")
+
+# Index every artefact just written. This is the last step of the pipeline because it reads
+# the output tree rather than being told what was produced, so it cannot fall out of step
+# with what is actually on disk.
+write_manifest()
+check_manifest()
 
 }

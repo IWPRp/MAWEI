@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MAWEI — Metro Atlanta Water–Energy Interdependencies</title>
+<meta name="description" content="Interactive water and energy flow accounting for the 15-county Atlanta metropolitan region, 2020–2024.">
+<meta property="og:title" content="MAWEI — Metro Atlanta Water–Energy Interdependencies">
+<meta property="og:description" content="Interactive water and energy flow accounting for metro Atlanta, 2020–2024.">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="app.css">
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+<!-- Privacy-preserving visit counts. Replace the data-goatcounter URL with your own
+     endpoint after registering the site; the script is a no-op until then. -->
+<script data-goatcounter="https://YOURCODE.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="mark">MAWEI</span>
+    <span class="sub">Metro Atlanta Water–Energy Interdependencies</span>
+  </div>
+  <nav class="tabs" id="tabs">
+    <button class="tab active" data-view="flows">Flows</button>
+    <button class="tab" data-view="compare">Compare</button>
+    <button class="tab" data-view="about">About</button>
+  </nav>
+  <div class="topbar-right">
+    <button id="theme-toggle" class="icon-btn" title="Toggle dark mode">◐</button>
+  </div>
+</header>
+
+<!-- ============ FLOWS ============ -->
+<main class="view active" id="view-flows">
+  <aside class="side">
+    <div class="ctrl">
+      <label>System</label>
+      <div class="seg" id="domain-seg">
+        <button class="active" data-domain="water">Water</button>
+        <button data-domain="energy">Energy</button>
+        <button data-domain="energy-water">Both</button>
+      </div>
+    </div>
+
+    <div class="ctrl">
+      <label>Area <span class="hint" id="scope-label">Metro total</span></label>
+      <svg id="map" viewBox="0 0 300 300" aria-label="County selector"></svg>
+      <button id="reset-scope" class="link-btn">Back to metro</button>
+    </div>
+
+    <div class="ctrl" id="variant-ctrl" hidden>
+      <label>Detail</label>
+      <div class="seg" id="variant-seg">
+        <button class="active" data-variant="full">Full</button>
+        <button data-variant="simplified">Simplified</button>
+      </div>
+    </div>
+
+    <div class="ctrl">
+      <label>Units</label>
+      <div class="seg" id="unit-seg"></div>
+    </div>
+
+    <div class="ctrl">
+      <label>Download</label>
+      <div class="row">
+        <button class="link-btn" id="dl-png">PNG</button>
+        <button class="link-btn" id="dl-csv">CSV</button>
+        <button class="link-btn" id="dl-json">JSON</button>
+      </div>
+    </div>
+
+    <div class="ctrl stats" id="stats"></div>
+  </aside>
+
+  <section class="stage">
+    <div class="stage-head">
+      <h1 id="chart-title">Metro Atlanta water flows</h1>
+      <div class="yearbar">
+        <button id="play" class="icon-btn" title="Play through years">▶</button>
+        <input type="range" id="year" min="0" max="4" step="1" value="4">
+        <output id="year-out">2024</output>
+      </div>
+    </div>
+    <div id="chart"></div>
+    <p class="caption" id="caption"></p>
+  </section>
+</main>
+
+<!-- ============ COMPARE ============ -->
+<main class="view" id="view-compare">
+  <section class="stage wide">
+    <div class="stage-head">
+      <h1>Compare</h1>
+      <div class="row">
+        <select id="cmp-domain"></select>
+        <select id="cmp-a"></select>
+        <span class="hint">against</span>
+        <select id="cmp-b"></select>
+        <select id="cmp-year"></select>
+      </div>
+    </div>
+    <div class="split">
+      <div><h2 id="cmp-a-title"></h2><div id="cmp-chart-a"></div></div>
+      <div><h2 id="cmp-b-title"></h2><div id="cmp-chart-b"></div></div>
+    </div>
+    <p class="caption">Both panels share a value scale, so ribbon thickness is comparable
+      between areas. Flows absent from an area are omitted rather than drawn at zero.</p>
+  </section>
+</main>
+
+<!-- ============ ABOUT ============ -->
+<main class="view" id="view-about">
+  <section class="prose">
+    <h1>About</h1>
+    <p>MAWEI is a flow account of water and energy for the 15-county Atlanta metropolitan
+      region, covering 2020 through 2024. Every diagram on this site is drawn from the same
+      audited tables: each intermediate node balances to within 0.5%, and the residuals are
+      published alongside the data.</p>
+
+    <h2>Reading a Sankey</h2>
+    <p>Ribbon width is proportional to volume. Flows advance left to right, from sources
+      through conversion and distribution to end uses and terminal sinks. Losses and waste
+      are grouped at the top of the right-hand column in both systems, so the share of the
+      system that is never used can be read as one block.</p>
+
+    <h2>The two systems, and their couplings</h2>
+    <p>Water runs cool and energy runs warm. In the combined view two further colours mark
+      the couplings that make this a nexus rather than two separate accounts: the electricity
+      spent moving and treating water, and the water withdrawn to cool thermal generation.</p>
+
+    <h2>Units</h2>
+    <p>Water is accounted in million gallons per day (MGD). Energy is held internally in
+      exajoules and displayed in petajoules (PJ), with gigawatt-hours available for
+      electricity-generating nodes. The unit control converts on the fly; the underlying
+      figures do not change.</p>
+
+    <h2>Sources</h2>
+    <ul>
+      <li>EIA Form 923 — plant-level fuel consumption and net generation</li>
+      <li>EIA Form 860 — generator inventory and plant attributes</li>
+      <li>EIA State Energy Data System — state-level consumption by fuel and sector</li>
+      <li>Metropolitan North Georgia Water Planning District — supply, wastewater and
+        management plans</li>
+      <li>Georgia Power / Southern Company — plant gross generation and fuel input</li>
+      <li>US Census Bureau — county population, used to downscale state totals</li>
+    </ul>
+
+    <h2>Caveats</h2>
+    <p>State consumption is downscaled to counties by population, which is a reasonable
+      approximation for residential and commercial demand and a weaker one for industry.
+      Non-combustible fuel input is harmonised onto a 3412 Btu/kWh convention across all
+      years, because the published series changes convention mid-period. Inter-county
+      wastewater transfers are reported by both parties to each transfer and are
+      de-duplicated on the full route key.</p>
+
+    <p class="meta" id="about-meta"></p>
+  </section>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -37,39 +37,41 @@ const COUNTY_COLORS = {
 };
 
 // --- Build file list dynamically from naming conventions ---
+// --- File catalogue, read from the manifest the R pipeline writes ---
+// The manifest is the single source of truth for what exists. Generating paths from
+// hardcoded county and domain lists produced dead links whenever an artefact was renamed,
+// added or missing, and nothing surfaced the error.
+//
+// manifest.js defines MAWEI_MANIFEST as a const via a <script> tag, which works under
+// file:// where fetch() of a sibling JSON is treated as cross-origin and blocked.
 function buildFileList() {
-  const files = [];
-
-  // Energy
-  files.push({ path: 'energy/01_metro_energy_flows.csv', type: 'data', resolution: 'metro', sector: 'energy' });
-  files.push({ path: 'energy/02_county_energy_flows.csv', type: 'data', resolution: 'metro', sector: 'energy' });
-  files.push({ path: 'energy/01_metro_energy.html', type: 'diagrams', resolution: 'metro', sector: 'energy' });
-  COUNTIES.forEach(c => {
-    files.push({ path: `energy/diagrams/02_county_${c}_energy.html`, type: 'diagrams', resolution: c.toLowerCase(), sector: 'energy' });
-  });
-
-  // Water
-  files.push({ path: 'water/01_metro_water_flows.csv', type: 'data', resolution: 'metro', sector: 'water' });
-  files.push({ path: 'water/02_county_water_flows.csv', type: 'data', resolution: 'metro', sector: 'water' });
-  files.push({ path: 'water/01_metro_water.html', type: 'diagrams', resolution: 'metro', sector: 'water' });
-  COUNTIES.forEach(c => {
-    files.push({ path: `water/diagrams/02_county_${c}_water.html`, type: 'diagrams', resolution: c.toLowerCase(), sector: 'water' });
-  });
-
-  // Energy-Water
-  files.push({ path: 'energy-water/01_metro_ew_flows.csv', type: 'data', resolution: 'metro', sector: 'energy-water' });
-  files.push({ path: 'energy-water/02_metro_ew_simplified_flows.csv', type: 'data', resolution: 'metro', sector: 'energy-water' });
-  files.push({ path: 'energy-water/03_county_ew_flows.csv', type: 'data', resolution: 'metro', sector: 'energy-water' });
-  files.push({ path: 'energy-water/04_county_ew_simplified_flows.csv', type: 'data', resolution: 'metro', sector: 'energy-water' });
-  files.push({ path: 'energy-water/01_metro_ew.html', type: 'diagrams', resolution: 'metro', sector: 'energy-water' });
-  files.push({ path: 'energy-water/02_metro_ew_simplified.html', type: 'diagrams', resolution: 'metro', sector: 'energy-water' });
-  COUNTIES.forEach(c => {
-    files.push({ path: `energy-water/diagrams/03_county_${c}_ew.html`, type: 'diagrams', resolution: c.toLowerCase(), sector: 'energy-water' });
-    files.push({ path: `energy-water/diagrams/04_county_${c}_ew_simplified.html`, type: 'diagrams', resolution: c.toLowerCase(), sector: 'energy-water' });
-  });
-
-  return files;
+  if (typeof MAWEI_MANIFEST === 'undefined' || !MAWEI_MANIFEST.files) {
+    console.error('manifest not loaded - run the R pipeline to generate files/manifest.js');
+    return [];
+  }
+  return MAWEI_MANIFEST.files
+    // HTML diagrams and CSV tables are the browsable artefacts; the per-diagram JSON is
+    // for the web dashboard, which renders its own Sankeys.
+    .filter(f => f.kind !== 'data')
+    .map(f => ({
+      path: f.path,
+      type: f.kind === 'table' ? 'data' : 'diagrams',
+      resolution: f.county ? f.county.toLowerCase() : 'metro',
+      sector: f.domain,
+      county: f.county,
+      scope: f.scope,
+      label: f.label,
+      bytes: f.bytes
+    }))
+    // metro artefacts first, then counties alphabetically: the metro picture is the
+    // entry point, and a county is only meaningful once it has been seen in context
+    .sort((a, b) => {
+      if (a.scope !== b.scope) return a.scope === 'metro' ? -1 : 1;
+      if (a.county !== b.county) return (a.county || '').localeCompare(b.county || '');
+      return a.path.localeCompare(b.path);
+    });
 }
+
 
 const files = buildFileList();
 
@@ -97,6 +99,9 @@ const sectorTabs = document.querySelectorAll('.sector-tab');
 // --- Multi-select filter state ---
 let activeSectors = new Set();     // empty = all
 let selectedCounties = new Set();  // empty = all
+// Metro artefacts are normally always visible, so that a county is read against the whole.
+// This inverts that: show the metro picture alone, with no county detail.
+let metroOnly = false;
 
 function parseCSV(text) {
   const lines = text.trim().split('\n');
@@ -154,12 +159,15 @@ function createFileItem(file) {
   const fileItem = document.createElement('div');
   fileItem.classList.add('file-item');
 
+  // The badge carries two facts at once: its text is the file kind, its colour the domain.
+  // One glance therefore answers both "what is this" and "which system".
   const fileType = document.createElement('span');
-  fileType.classList.add('file-type', file.type === 'data' ? 'data' : 'diagram');
+  fileType.classList.add('file-type', file.type === 'data' ? 'data' : 'diagram',
+                         'domain-' + file.sector);
   fileType.textContent = file.type === 'data' ? 'CSV' : 'HTML';
 
   const fileName = document.createElement('h3');
-  fileName.textContent = displayName(file.path);
+  fileName.textContent = file.label ? titleCase(file.label) : displayName(file.path);
 
   const fileLink = document.createElement('a');
   fileLink.href = BASE_PATH + '/' + file.path;
@@ -175,6 +183,12 @@ function createFileItem(file) {
   return fileItem;
 }
 
+function titleCase(s) {
+  return s.replace(/\b\w/g, c => c.toUpperCase())
+          .replace(/\bEw\b/g, 'Energy-Water')
+          .replace(/\bPws\b/g, 'PWS');
+}
+
 // --- Centralized filter + render ---
 function applyFilters() {
   const searchQuery = searchInput.value.toLowerCase();
@@ -184,9 +198,12 @@ function applyFilters() {
 
   const filteredFiles = files.filter(file => {
     const matchesSector = activeSectors.size === 0 || activeSectors.has(file.sector);
-    const matchesResolution = selectedCounties.size === 0 ||
-      file.resolution === 'metro' || selectedCounties.has(file.resolution);
-    const matchesSearch = displayName(file.path).toLowerCase().includes(searchQuery);
+    const matchesResolution = metroOnly
+      ? file.scope === 'metro'
+      : (selectedCounties.size === 0 || file.resolution === 'metro' ||
+         selectedCounties.has(file.resolution));
+    const label = file.label ? titleCase(file.label) : displayName(file.path);
+    const matchesSearch = label.toLowerCase().includes(searchQuery);
     return matchesSector && matchesResolution && matchesSearch;
   });
 
@@ -281,6 +298,19 @@ resolutionFilter.addEventListener('change', (e) => {
 
 closeViewerBtn.addEventListener('click', closeViewer);
 
+// Metro-only toggle, beside the map. Selecting a county clears it, since asking for one
+// county and for metro-only at the same time is contradictory.
+const metroOnlyBtn = document.getElementById('metro-only');
+if (metroOnlyBtn) {
+  metroOnlyBtn.addEventListener('click', () => {
+    metroOnly = !metroOnly;
+    if (metroOnly) selectedCounties.clear();
+    metroOnlyBtn.classList.toggle('active', metroOnly);
+    updateMapStyles();
+    applyFilters();
+  });
+}
+
 // --- County Map Module ---
 let map = null;
 let geojsonLayer = null;
@@ -326,6 +356,14 @@ function initMap() {
       const name = FIPS_TO_COUNTY[feature.id] || feature.properties.NAME;
       const lower = name.toLowerCase();
 
+      // A layer can hold only one bound tooltip, so the resting label is a standalone
+      // tooltip added to the map at the polygon centre and the bound one is left for hover.
+      // Without the resting label the map is a set of unidentified shapes until the
+      // pointer happens to cross one.
+      L.tooltip({
+        permanent: true, direction: 'center', className: 'county-label', interactive: false
+      }).setLatLng(layer.getBounds().getCenter()).setContent(name).addTo(map);
+
       layer.bindTooltip(name, {
         sticky: true, direction: 'top', offset: [0, -8],
         className: 'county-tooltip'
@@ -338,6 +376,10 @@ function initMap() {
         if (!selectedCounties.has(lower)) layer.setStyle(countyStyle(name, 'default'));
       });
       layer.on('click', () => {
+        // choosing a county contradicts metro-only, so leave that mode
+        metroOnly = false;
+        const btn = document.getElementById('metro-only');
+        if (btn) btn.classList.remove('active');
         if (selectedCounties.has(lower)) {
           selectedCounties.delete(lower);
         } else {

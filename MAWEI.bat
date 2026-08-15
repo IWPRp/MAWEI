@@ -1,4 +1,4 @@
-#!/bin/bash
-# Double-click to launch the MAWEI dashboard in your browser
-cd "$(dirname "$0")/interface"
-open MAWEI.html
+@echo off
+REM Open the MAWEI dashboard in the default browser. No server needed.
+cd /d "%~dp0interface"
+start "" "MAWEI.html"

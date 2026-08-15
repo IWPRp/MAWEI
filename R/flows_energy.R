@@ -764,13 +764,11 @@ message("Saving energy outputs...")
 write_csv(en_fuel_gen_use_loss_all_trade_metro,
           file.path(SAVE_DIR, "energy/01_metro_energy_flows.csv"))
 
-save_sankey(
-  plot_sankey_enhanced(
-    en_fuel_gen_use_loss_all_trade_metro %>%
-      group_by(year, source, target, units) %>%
-      summarise(value = sum(value) * EJ_to_PJ, .groups = "drop"),
-    animate = TRUE, show_values_in_labels = TRUE, label_units = "PJ"),
-  file.path(SAVE_DIR, "energy/01_metro_energy.html"))
+save_metro_sankey(
+  en_fuel_gen_use_loss_all_trade_metro %>%
+    group_by(year, source, target, units) %>%
+    summarise(value = sum(value) * EJ_to_PJ, .groups = "drop"),
+  "energy", "01_metro_energy", label_units = "PJ")
 
 ###############################################################################%
 # SAVING COUNTY ----

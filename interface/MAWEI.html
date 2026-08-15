@@ -61,6 +61,7 @@
           <div id="county-map"></div>
           <div class="map-legend">
             <span>Click a county to filter</span>
+            <button id="metro-only">Metro only</button>
             <button id="map-reset">Reset</button>
           </div>
         </div>
@@ -95,6 +96,9 @@
     <p>IWPR PNNL Team & Stakeholders © 2026</p>
   </footer>
 
+  <!-- The artefact index, written by the R pipeline. Loaded as a script rather than
+       fetched so it works from file://, where a sibling JSON is a cross-origin request. -->
+  <script src="files/manifest.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

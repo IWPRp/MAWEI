@@ -1455,10 +1455,8 @@ message("Saving water outputs...")
 write_csv(df_water_metro_linear_wSW_discharge_type,
           file.path(SAVE_DIR, "water/01_metro_water_flows.csv"))
 
-save_sankey(
-  plot_sankey_enhanced(df_water_metro_linear_wSW_discharge_type,
-                       animate = TRUE, show_values_in_labels = TRUE, label_units = "MGD"),
-  file.path(SAVE_DIR, "water/01_metro_water.html"))
+save_metro_sankey(df_water_metro_linear_wSW_discharge_type,
+                  "water", "01_metro_water", label_units = "MGD")
 
 ###############################################################################%
 # SAVING COUNTY ----
