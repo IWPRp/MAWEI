@@ -50,10 +50,26 @@ outputs/*.log
 web/data
 
 docs_analysis/
-# Large upstream reference datasets. Each is filtered to the study region by R/prep_spatial.R,
-# and only the small extract is tracked: spatial_basins.geojson (30 kB from a 365 MB
-# geopackage), spatial_facility_coords.csv, spatial_county_basin_area.csv.
+# Large upstream reference datasets. None is tracked. Each is reduced to the study region by a
+# prep script, and only the small extract is committed -- so if a file appears below, the extract
+# beside it is what the analysis actually reads.
+#
+#   source (ignored)                          prep script        committed extract
+#   WBD_03_HU2_GPKG/            365 MB        R/prep_spatial.R   spatial_basins.geojson    30 kB
+#                                                                spatial_county_basin_area.csv
+#   WRP Permit Inventory *.xlsx 190 kB        R/prep_spatial.R   spatial_facility_coords.csv
+#   ACS_2022_5YR_TRACT_13_*.gdb 1.0 GB        R/prep_acs.R       acs_tract_metro.csv      390 kB
+#                                                                acs_tract_metro.geojson  680 kB
+#   datacenter_atlas/            26 MB        R/analysis.R       H1-H4 tables in
+#   datacenter_atlas_*.zip        27 MB                          docs_analysis/analysis_outputs/
+#   epa_npdes_outfalls_layer     49 MB        R/analysis.R       G1 validation tables
+#   cb_2025_13_tract_500k/      4.4 MB        superseded by prep_acs.R -- geometry only, no
+#                                            population, retained only for R/figures.R fallback
 data/WBD_03_HU2_GPKG/
-data/datacenter_atlas/
-data/epa_npdes_outfalls_layer.csv.gz
 data/WRP Permit Inventory *.xlsx
+data/ACS_2022_5YR_TRACT_13_GEORGIA.gdb/
+data/ACS_2021_Manifest.xls
+data/datacenter_atlas/
+data/datacenter_atlas_*.zip
+data/epa_npdes_outfalls_layer.csv.gz
+data/cb_2025_13_tract_500k/

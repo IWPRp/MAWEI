@@ -871,4 +871,209 @@ if (file.exists(BASIN_FILE)) {
   message("  basin layer absent; skipping basin section")
 }
 
+###############################################################################%
+message("\n== L. gross and net transfers ==")
+
+# Transfers have to be reported BOTH ways. Gross is the water actually moved, which is what
+# determines pumping energy and pipe capacity. Net is the balance after offsetting exchanges,
+# which is what determines whether a county depends on a neighbour. Reporting only one hides
+# something: gross alone overstates dependency, net alone understates infrastructure use.
+#
+# ExtraNotes: county pairs genuinely exchange in BOTH directions, because utility service areas
+# interleave and do not follow county lines. Eight of fifteen active pairs are bidirectional, so
+# the distinction is material rather than theoretical.
+conn_dir <- conn_raw %>%
+  filter(year %in% YEARS_TO_ENSURE, fromcounty != tocounty,
+         !grepl("copied", tolower(notes))) %>%
+  replace_na(list(value = 0)) %>%
+  group_by(fromcounty, fromplace, tocounty, tofacility, year) %>%
+  summarise(mgd = max(value), .groups = "drop") %>%
+  group_by(from_county = fromcounty, to_county = tocounty, year) %>%
+  summarise(mgd = sum(mgd), .groups = "drop")
+
+transfer_pairs <- conn_dir %>%
+  mutate(a = pmin(from_county, to_county), b = pmax(from_county, to_county)) %>%
+  group_by(a, b, year) %>%
+  summarise(directions = n(),
+            a_to_b = sum(mgd[from_county == first(a)]),
+            b_to_a = sum(mgd[from_county == first(b)]),
+            gross_mgd = sum(mgd), .groups = "drop") %>%
+  mutate(net_mgd = abs(a_to_b - b_to_a),
+         offsetting_mgd = gross_mgd - net_mgd,
+         bidirectional = directions > 1,
+         # Which way the net flow runs, which is the direction a map arrow should point.
+         net_from = if_else(a_to_b >= b_to_a, a, b),
+         net_to   = if_else(a_to_b >= b_to_a, b, a))
+put(transfer_pairs, "L1_transfer_gross_net_pairs")
+
+put(transfer_pairs %>% group_by(year) %>%
+      summarise(pairs = n(), bidirectional_pairs = sum(bidirectional),
+                gross_mgd = sum(gross_mgd), net_mgd = sum(net_mgd),
+                offsetting_mgd = sum(offsetting_mgd), .groups = "drop") %>%
+      mutate(offsetting_share_pct = 100 * offsetting_mgd / gross_mgd),
+    "L1b_transfer_gross_net_summary")
+
+# Per county, both measures side by side. A county with large gross and small net is trading, not
+# depending.
+put(bind_rows(
+      conn_dir %>% group_by(county = from_county, year) %>%
+        summarise(gross_out = sum(mgd), .groups = "drop"),
+      conn_dir %>% group_by(county = to_county, year) %>%
+        summarise(gross_in = sum(mgd), .groups = "drop")) %>%
+      group_by(county, year) %>%
+      summarise(across(c(gross_out, gross_in), ~sum(., na.rm = TRUE)), .groups = "drop") %>%
+      mutate(gross_total = gross_out + gross_in,
+             net_position = gross_in - gross_out,
+             trade_intensity = if_else(abs(net_position) > 0,
+                                       gross_total / abs(net_position), NA_real_)) %>%
+      left_join(county_profile %>% select(county, year, collected), by = c("county", "year")),
+    "L2_transfer_by_county_gross_net")
+
+###############################################################################%
+message("\n== M. settlement, demographics and economics ==")
+
+# Census tracts give a settlement geography 92 times finer than the county. The ACS 5-year tract
+# extract carries measured population, income, housing and commuting, so density is a measurement
+# rather than the tract-area proxy an earlier version had to use.
+#
+# ExtraNotes: the vintage differs on purpose. The ACS extract is the 2018-2022 5-year product while
+# the flows cover 2020-2024, because no annual tract-level population exists -- 1-year ACS is not
+# published below 65,000 population. It is therefore used for STRUCTURE, how population and income
+# are distributed WITHIN a county, and never for trend. County-year population still comes from the
+# annual Census vintage-2024 estimates. Tract population sums to the 2020 county estimate with a
+# median error of 0.19% and a maximum of 1.04%, which is the check that attribution is right.
+ACS_FILE <- paste0(DATA_DIR, "acs_tract_metro.csv")
+
+if (file.exists(ACS_FILE)) {
+  acs <- read_csv(ACS_FILE, show_col_types = FALSE, progress = FALSE)
+
+  # M1 county settlement and socio-economic profile.
+  #
+  # ExtraNotes: two densities are reported and they answer different questions. Area density is
+  # population over land area -- how crowded the county is. Population-weighted density is the
+  # density of the tract the average RESIDENT lives in, which is what determines infrastructure
+  # cost per customer. Their ratio measures how unevenly people are distributed: 1.0 would be
+  # perfectly uniform.
+  #
+  # ExtraNotes: per-tract statistics are named distinctly from the county totals. Writing
+  # `land_km2 = sum(land_km2)` alongside `median(land_km2)` makes summarise() rebind the name
+  # mid-expression, so every spread came out as exactly 1. Vector-consuming statistics must be
+  # computed before any same-name aggregation.
+  acs_cty <- acs %>%
+    group_by(county) %>%
+    summarise(tracts = n(),
+              acs_pop = sum(pop),
+              land_km2 = sum(land_km2),
+              water_km2 = sum(water_km2),
+              # settlement pattern
+              pw_density = weighted.mean(pop_density, pop),
+              median_tract_density = median(pop_density),
+              d90 = quantile(pop_density, 0.9),
+              d10 = quantile(pop_density, 0.1),
+              # housing
+              housing_units = sum(housing_units),
+              vacancy_pct = 100 * sum(housing_vacant) / sum(housing_units),
+              persons_per_hh = weighted.mean(persons_per_hh, housing_occupied, na.rm = TRUE),
+              # economics
+              median_hh_income = median(median_hh_income, na.rm = TRUE),
+              income_p10 = quantile(median_hh_income, 0.1, na.rm = TRUE),
+              income_p90 = quantile(median_hh_income, 0.9, na.rm = TRUE),
+              poverty_pct = 100 * sum(poverty_below) / sum(poverty_universe),
+              # commuting
+              mean_commute_min = weighted.mean(mean_commute_min, commuters, na.rm = TRUE),
+              drove_alone_pct = 100 * sum(commute_drove_alone) / sum(commuters),
+              transit_pct = 100 * sum(commute_transit) / sum(commuters),
+              wfh_pct = 100 * sum(commute_wfh) / sum(commuters),
+              .groups = "drop") %>%
+    mutate(area_density = acs_pop / land_km2,
+           # How much denser the average resident's neighbourhood is than the county average.
+           density_unevenness = pw_density / area_density,
+           # Interdecile density ratio. Preferred over max/median because a single very large
+           # rural tract can dominate a max-based measure.
+           density_p90_p10 = d90 / pmax(d10, 1),
+           income_p90_p10 = income_p90 / pmax(income_p10, 1),
+           water_share_pct = 100 * water_km2 / (land_km2 + water_km2)) %>%
+    select(-d90, -d10) %>%
+    arrange(desc(pw_density))
+  put(acs_cty, "M1_settlement_by_county")
+
+  # M1b tract-level distribution, metro-wide. Reported as quantiles rather than tract rows because
+  # a single-tract 5-year estimate carries a margin of error of 20-30% of the estimate; the
+  # distribution is robust where an individual value is not.
+  put(acs %>%
+        summarise(tracts = n(), pop = sum(pop),
+                  across(c(pop_density, median_hh_income, mean_commute_min, poverty_rate,
+                           vacancy_rate, persons_per_hh),
+                         list(p10 = ~ quantile(.x, .1, na.rm = TRUE),
+                              p50 = ~ quantile(.x, .5, na.rm = TRUE),
+                              p90 = ~ quantile(.x, .9, na.rm = TRUE)))) %>%
+        pivot_longer(-c(tracts, pop), names_to = "metric", values_to = "value"),
+      "M1b_tract_distribution_metro")
+
+  # M3 does settlement pattern explain the county spread in water performance?
+  #
+  # ExtraNotes: this is the question the tract data exists to answer. The infiltration factor and
+  # the non-revenue rate are supplied per county with no stated basis, and if they track density or
+  # income they are behaving like real infrastructure-age proxies; if they track nothing they are
+  # closer to administrative assumptions. Fifteen counties is a small n, so the correlation is
+  # reported with its p-value and read as suggestive, never as evidence of mechanism.
+  wperf <- county_profile %>% filter(year == YR) %>%
+    select(county, nrw_pct, ii_share_pct, septic_share_pct, pws_gpcd) %>%
+    left_join(intensity_w %>% filter(year == YR) %>% select(county, kwh_per_mg), by = "county") %>%
+    left_join(acs_cty %>% select(county, pw_density, area_density, density_unevenness,
+                                 median_hh_income, poverty_pct, mean_commute_min,
+                                 drove_alone_pct, transit_pct, persons_per_hh, vacancy_pct),
+              by = "county")
+
+  cor_pairs <- expand_grid(
+    y = c("nrw_pct", "ii_share_pct", "septic_share_pct", "pws_gpcd", "kwh_per_mg"),
+    x = c("pw_density", "area_density", "density_unevenness", "median_hh_income", "poverty_pct",
+          "mean_commute_min", "transit_pct", "persons_per_hh")) %>%
+    rowwise() %>%
+    mutate(n = sum(complete.cases(wperf[[y]], wperf[[x]])),
+           r = suppressWarnings(cor(wperf[[y]], wperf[[x]],
+                                    use = "pairwise.complete.obs", method = "spearman")),
+           p = tryCatch(suppressWarnings(
+                 cor.test(wperf[[y]], wperf[[x]], method = "spearman")$p.value),
+                 error = function(e) NA_real_)) %>%
+    ungroup() %>%
+    arrange(desc(abs(r)))
+  put(wperf, "M3_water_performance_vs_settlement")
+  put(cor_pairs, "M3b_settlement_correlations")
+
+  top <- cor_pairs %>% slice(1)
+  message("  ANALYSIS: strongest settlement association: ", top$y, " vs ", top$x,
+          " rho = ", round(top$r, 3), ", p = ", signif(top$p, 3), ", n = ", top$n)
+
+  # M2 population allocated to BASIN by tract centroid. Now a measured sum rather than a tract
+  # count, which is the substantive gain from the ACS extract: basin population no longer assumes
+  # tracts hold equal population.
+  if (exists("basins_sf")) {
+    ACS_GEO <- paste0(DATA_DIR, "acs_tract_metro.geojson")
+    tr_geo <- st_read(ACS_GEO, quiet = TRUE) %>% st_set_crs(4326)
+    tr_ctr <- suppressWarnings(st_centroid(tr_geo))
+    hit <- st_intersects(tr_ctr, st_set_crs(basins_sf, 4326))
+
+    tr_basin <- tr_ctr %>% st_drop_geometry() %>%
+      mutate(basin = map_chr(hit, ~ if (length(.x)) basins_sf$basin[.x[1]] else NA_character_)) %>%
+      filter(!is.na(basin)) %>%
+      group_by(basin) %>%
+      summarise(tracts = n(), population = sum(pop),
+                pw_density = weighted.mean(pop_density, pop),
+                median_hh_income = median(median_hh_income, na.rm = TRUE),
+                .groups = "drop") %>%
+      mutate(pop_share_pct = 100 * population / sum(population)) %>%
+      left_join(basin_bal %>% filter(year == YR) %>%
+                  select(basin, total_withdrawal_mgd, discharge_mgd), by = "basin") %>%
+      # gpcd is the diagnostic: a basin supplying more than its residents use is exporting water
+      # to another basin's population through the distribution network.
+      mutate(withdrawal_gpcd = 1e6 * total_withdrawal_mgd / pmax(population, 1),
+             discharge_gpcd = 1e6 * discharge_mgd / pmax(population, 1)) %>%
+      arrange(desc(population))
+    put(tr_basin, "M2_population_by_basin")
+  }
+} else {
+  message("  ACS tract extract absent; run Rscript R/prep_acs.R -- skipping settlement section")
+}
+
 message("\n== done: ", length(list.files(OUT)), " tables in ", OUT, " ==")

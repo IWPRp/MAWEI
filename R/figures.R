@@ -45,7 +45,11 @@ for (t in c("A1_water_balance_metro","A2_energy_balance_metro","A3_water_by_sect
             "I2_leakage_recovery_payback","I3_datacentre_capital_vs_leakage",
             "J1_spatial_transfer_edges","J1b_spatial_network_summary",
             "J2_receiving_plant_loading","K1_basin_balance","K3_basin_burden",
-            "K4_interbasin_sewage_transfer","P4_treatment_concentration",
+            "K4_interbasin_sewage_transfer","L1_transfer_gross_net_pairs",
+            "L1b_transfer_gross_net_summary","L2_transfer_by_county_gross_net",
+            "M1_settlement_by_county","M2_population_by_basin",
+            "M3_water_performance_vs_settlement","M3b_settlement_correlations",
+            "P4_treatment_concentration",
             "P6_energy_for_water_by_stage","P8_plant_thermal_performance",
             "P9_downscaling_sensitivity")) {
   assign(str_extract(t, "^[A-Z][0-9]+[a-z]?"), tab(t))
@@ -61,6 +65,27 @@ cent <- sf_cty %>% st_centroid() %>%
   mutate(lon = st_coordinates(.)[, 1], lat = st_coordinates(.)[, 2]) %>% st_drop_geometry()
 sf_basin <- st_read(paste0(DATA_DIR, "spatial_basins.geojson"), quiet = TRUE)
 cty_basin <- read_csv(paste0(DATA_DIR, "spatial_county_basin_area.csv"), show_col_types = FALSE)
+
+# Census tracts, for the settlement underlay and the density panels. The ACS extract carries
+# MEASURED population, so density is real rather than the tract-area proxy an earlier version used.
+# ExtraNotes: falls back to the cartographic boundary file if the ACS extract is absent, in which
+# case `pop_density` is NA and the density panels degrade to an outline underlay rather than
+# failing. Run Rscript R/prep_acs.R to build the extract.
+ACS_GEO   <- paste0(DATA_DIR, "acs_tract_metro.geojson")
+TRACT_SHP <- paste0(DATA_DIR, "cb_2025_13_tract_500k/cb_2025_13_tract_500k.shp")
+tracts_sf <- if (file.exists(ACS_GEO)) {
+  st_read(ACS_GEO, quiet = TRUE) %>% st_set_crs(4326) %>%
+    mutate(land_sqkm = as.numeric(st_area(.)) / 1e6) %>%
+    select(county, pop, pop_density, median_hh_income, mean_commute_min, land_sqkm)
+} else if (file.exists(TRACT_SHP)) {
+  st_read(TRACT_SHP, quiet = TRUE) %>%
+    mutate(cfips = as.numeric(paste0(STATEFP, COUNTYFP))) %>%
+    filter(cfips %in% fips) %>% st_transform(4326) %>%
+    mutate(land_sqkm = as.numeric(ALAND) / 1e6,
+           pop = NA_real_, pop_density = NA_real_,
+           median_hh_income = NA_real_, mean_commute_min = NA_real_, county = NA_character_) %>%
+    select(county, pop, pop_density, median_hh_income, mean_commute_min, land_sqkm)
+} else NULL
 
 # Choropleth with the value printed inside each county on its own line, so the map reads without
 # the colour bar. The label colour is fixed dark rather than value-mapped, because a value-mapped
@@ -143,9 +168,24 @@ idx <- bind_rows(pop = A1 %>% select(year, v = pop), water = A1 %>% select(year,
   group_by(series) %>% mutate(idx = 100 * v / first(v)) %>% ungroup() %>%
   mutate(series = recode(series, pop = "Population", water = "Water withdrawal",
                          energy = "Energy input", elec = "Electricity", ww = "Wastewater"))
+# Values are printed at each point, not only the endpoint index, because a reader asked to judge a
+# dip needs the magnitude. The 2023 electricity fall is annotated because it is REAL, not an
+# artefact: Georgia residential electricity in SEDS fell 4.5% that year, local generation rose
+# 6.8% as Bowen ran harder, and imports absorbed the difference by falling 14.8%.
 p1d <- ggplot(idx, aes(year, idx, colour = series)) +
   geom_hline(yintercept = 100, linewidth = 0.3, colour = "grey85") +
   geom_line(linewidth = 0.85) + geom_point(size = 1.5) +
+  geom_text(data = idx %>% filter(series == "Electricity"),
+            aes(label = sprintf("%.0f", v)), vjust = 2.1, size = 1.9, colour = "#C05A12",
+            show.legend = FALSE) +
+  geom_text(data = idx %>% filter(series == "Water withdrawal"),
+            aes(label = sprintf("%.0f", v)), vjust = -1.5, size = 1.9, colour = C_WATER,
+            show.legend = FALSE) +
+  annotate("segment", x = 2023, xend = 2023, y = 96, yend = 102.5,
+           colour = "grey45", linewidth = 0.3, linetype = "dotted") +
+  annotate("label", x = 2023, y = 95, label = "2023 dip is real:\nmild year, demand -2.1%",
+           size = 1.95, colour = "grey30", lineheight = 0.95, label.size = 0,
+           fill = alpha("white", 0.85)) +
   geom_text_repel(data = idx %>% filter(year == YR),
                   aes(label = sprintf("%s %+.1f%%", series, idx - 100)), size = 2.4,
                   hjust = 0, direction = "y", nudge_x = 0.12, segment.size = 0.2,
@@ -155,9 +195,10 @@ p1d <- ggplot(idx, aes(year, idx, colour = series)) +
                                  "Wastewater" = "#1F5F8B", "Water withdrawal" = C_WATER,
                                  "Population" = "grey45"), guide = "none") +
   scale_x_continuous(breaks = A1$year, limits = c(min(A1$year), YR + 2.1)) +
+  scale_y_continuous(limits = c(93, NA)) +
   labs(x = NULL, y = paste0("index, ", min(A1$year), " = 100"),
        title = "Resource use is outgrowing population",
-       subtitle = "Energy is decoupling from population twice as poorly as water") +
+       subtitle = "Labels are absolute values: electricity in PJ, water in MGD") +
   theme_mawei()
 
 save_fig((p1a | (p1b / p1c) | p1d) + plot_layout(widths = c(1.15, 0.9, 1.25)) +
@@ -167,9 +208,11 @@ save_fig((p1a | (p1b / p1c) | p1d) + plot_layout(widths = c(1.15, 0.9, 1.25)) +
 ###############################################################################%
 message("\n== Fig 2: water ==")
 
-b <- A6 %>% mutate(basin = str_remove(basin, " Basin")) %>% filter(mgd > 0)
-blab <- b %>% filter(year == YR) %>% arrange(desc(mgd)) %>%
-  mutate(cum = cumsum(mgd), ypos = cum - mgd / 2)
+b <- A6 %>% mutate(basin = str_remove(basin, " Basin")) %>% filter(mgd > 0) %>%
+  mutate(basin = factor(basin, levels = A6 %>% filter(year == YR) %>%
+                          mutate(basin = str_remove(basin, " Basin")) %>%
+                          arrange(mgd) %>% pull(basin)))
+blab <- b %>% filter(year == YR) %>% stack_label_y(basin, mgd)
 p2a <- ggplot(b, aes(year, mgd, fill = basin)) +
   geom_area(colour = "white", linewidth = 0.3) +
   geom_text(data = blab %>% filter(mgd > 20),
@@ -265,10 +308,37 @@ p2e <- ggplot(kb, aes(land_share_pct, supply_share_pct)) +
        subtitle = "The Chattahoochee supplies 1.7 times its share of the region's area") +
   theme_mawei()
 
-save_fig((p2a | p2b | p2e) / (p2c | p2d | plot_spacer()) +
+# Sixth panel: the basin loop closed. The Sankeys break the cycle by suffixing downstream water
+# bodies with _ds so the diagram stays acyclic, which hides the fact that a basin both supplies
+# and receives. Plotting withdrawal against discharge per basin restores it, and the diagonal
+# separates basins the metro takes FROM those it gives TO.
+kl <- K1 %>% filter(year == YR, total_withdrawal_mgd + discharge_mgd > 0) %>%
+  left_join(M2 %>% select(basin, population), by = "basin")
+p2f <- ggplot(kl, aes(total_withdrawal_mgd, discharge_mgd)) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", colour = "grey60") +
+  geom_segment(aes(xend = total_withdrawal_mgd, yend = total_withdrawal_mgd, colour = basin),
+               linewidth = 0.4, alpha = 0.6) +
+  geom_point(aes(size = population, colour = basin), alpha = 0.9) +
+  geom_text_repel(aes(label = sprintf("%s\n%.0f in, %.0f out", basin, total_withdrawal_mgd,
+                                      discharge_mgd)),
+                  size = 2.2, colour = "grey20", lineheight = 0.95, box.padding = 0.55,
+                  segment.colour = "grey70", segment.size = 0.2) +
+  annotate("text", x = 430, y = 480, label = "receives more\nthan it gives", size = 2.1,
+           colour = "grey45", lineheight = 0.95) +
+  annotate("text", x = 460, y = 60, label = "gives more\nthan it receives", size = 2.1,
+           colour = "grey45", lineheight = 0.95) +
+  scale_colour_manual(values = BASIN_COLS, guide = "none") +
+  scale_size_area(max_size = 8, guide = "none") +
+  scale_x_continuous(limits = c(-20, 560)) + scale_y_continuous(limits = c(-20, 560)) +
+  labs(x = "withdrawn from the basin (MGD)", y = "discharged to the basin (MGD)",
+       title = "The loop the Sankey has to break",
+       subtitle = "Metro Atlanta takes from the Chattahoochee and gives to the Ocmulgee.\nSymbol area is the population living in each basin.") +
+  theme_mawei()
+
+save_fig((p2a | p2b | p2e) / (p2c | p2d | p2f) +
            plot_layout(heights = c(1, 0.95)) +
            plot_annotation(tag_levels = "a", tag_prefix = "(", tag_suffix = ")"),
-         "Fig2_water_structure", 16, 8.6)
+         "Fig2_water_structure", 16, 8.8)
 
 ###############################################################################%
 message("\n== Fig 3: energy ==")
@@ -318,11 +388,14 @@ p3c <- ggplot(c24, aes(reorder(plant, pj), pj, fill = capacity_factor)) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.48))) +
   scale_fill_distiller(palette = "Oranges", direction = 1, limits = c(0, 0.8),
                        name = "capacity factor",
-                       guide = guide_colourbar(barwidth = 3.6, barheight = 0.28,
-                                               title.position = "top")) +
+                       guide = guide_colourbar(barwidth = 4.6, barheight = 0.32,
+                                               title.position = "top", title.hjust = 0)) +
   labs(x = NULL, y = "PJ generated", title = paste0("Generation by plant, ", YR),
        subtitle = "The gas plant runs hardest; the coal plant is largest") +
-  theme_mawei() + theme(legend.position = c(0.76, 0.20))
+  theme_mawei() + theme(legend.position = c(0.70, 0.24),
+                        legend.direction = "horizontal",
+                        legend.background = element_rect(fill = alpha("white", 0.85),
+                                                         colour = NA))
 
 us <- A4 %>% filter(year == YR) %>%
   mutate(sector = str_to_lower(sector),
@@ -371,13 +444,15 @@ el <- A2 %>% select(year, elec_supply, elec_imports, td_losses, plant_own_use) %
          k = factor(k, c("generated locally","imported","T&D losses","plant own use")))
 p3f <- ggplot(el, aes(year, v, fill = k)) +
   geom_col(width = 0.62) +
+  # Label sits ABOVE the stack in dark grey, not inside it. Inside, it fell on the dark local
+  # generation band and became unreadable.
   geom_text(data = A2, aes(x = year, y = elec_supply,
                            label = sprintf("%.0f%% imported", import_share_pct)),
-            inherit.aes = FALSE, vjust = -0.5, size = 2.2, colour = "grey30") +
-  scale_fill_manual(values = c("generated locally" = "#A0522D", "imported" = C_ENERGY,
-                               "T&D losses" = C_LOSS, "plant own use" = "grey55"), name = NULL) +
+            inherit.aes = FALSE, vjust = -0.6, size = 2.2, colour = "grey30") +
+  scale_fill_manual(values = c("generated locally" = "#8C4A21", "imported" = C_ENERGY,
+                               "T&D losses" = C_LOSS, "plant own use" = "grey60"), name = NULL) +
   scale_x_continuous(breaks = A2$year) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.13))) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.16))) +
   labs(x = NULL, y = "PJ", title = "The electricity account",
        subtitle = "A third of supply is imported, so its cooling water lies outside the region") +
   theme_mawei() + theme(legend.position = "bottom")
@@ -637,9 +712,38 @@ p6d <- ggplot(sec, aes(energy_pj, water_mgd)) +
        subtitle = "Symbol area is a sector's combined draw on the two systems") +
   theme_mawei()
 
-save_fig((p6a | p6b | p6d | p6c) + plot_layout(widths = c(1, 1, 1, 1)) +
+# The county bar answers "how much", but not "on what". This panel decomposes the same energy by
+# the stage that spends it and the water type it moves, which is what identifies the lever:
+# distribution dominates, and it is almost entirely surface water.
+p6e <- ggplot(P6 %>% filter(year == YR) %>%
+                mutate(stage = factor(str_to_title(stage),
+                                      levels = c("Extraction","Treatment","Distribution"))),
+              aes(stage, pj, fill = water_type)) +
+  geom_col(width = 0.6) +
+  geom_text(aes(label = if_else(pj > 0.05, sprintf("%.2f", pj), "")),
+            position = position_stack(vjust = 0.5), size = 2.2, colour = "white",
+            fontface = "bold") +
+  geom_text(data = P6 %>% filter(year == YR) %>% group_by(stage) %>%
+              summarise(pj = sum(pj), share = 100 * pj / sum(P6$pj[P6$year == YR]),
+                        .groups = "drop") %>%
+              mutate(stage = factor(str_to_title(stage),
+                                    levels = c("Extraction","Treatment","Distribution"))),
+            aes(stage, pj, label = sprintf("%.0f%%", share)), inherit.aes = FALSE,
+            vjust = -0.5, size = 2.4, colour = "grey30") +
+  scale_fill_manual(values = c("surface water" = C_WATER, "groundwater" = "#8D6E63"),
+                    name = NULL) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.16))) +
+  labs(x = NULL, y = "PJ",
+       title = paste0("What the water system spends energy on, ", YR),
+       subtitle = "Pressurising the network costs more than lifting and treating combined") +
+  theme_mawei() + theme(legend.position = c(0.24, 0.86),
+                        legend.background = element_rect(fill = alpha("white", 0.8),
+                                                         colour = NA))
+
+save_fig((p6a | p6e | p6b) / (p6d | p6c | plot_spacer()) +
+           plot_layout(heights = c(1, 0.92)) +
            plot_annotation(tag_levels = "a", tag_prefix = "(", tag_suffix = ")"),
-         "Fig6_coupling", 17, 4.8)
+         "Fig6_coupling", 16, 8.2)
 
 ###############################################################################%
 message("\n== Fig 7: data centres ==")
@@ -761,36 +865,54 @@ p8a <- ggplot() +
   scale_size_area(max_size = 6, guide = "none") +
   coord_metro(sf_cty) +
   labs(title = "Spatial Sankey: county to receiving plant",
-       subtitle = sprintf("Ribbon width is volume, tapering toward the destination. %d routes, %.0f MGD.\nGrey dots are all other treatment plants; white circles are those receiving transfers.",
+       subtitle = sprintf("Ribbon width is volume and tapers toward the destination. %d routes, %.0f MGD gross.\nGrey dots are all other plants; white circles receive transfers.",
                           nrow(ed), sum(ed$mgd))) +
-  theme_map() + theme(legend.position = c(0.10, 0.20),
-                      legend.direction = "horizontal")
+  theme_map() +
+  # Legends inside the frame, bottom right, where the map is empty. At the default position they
+  # were pushed outside the panel and clipped.
+  theme(legend.position = c(0.88, 0.13), legend.direction = "vertical",
+        legend.justification = c(1, 0),
+        legend.background = element_rect(fill = alpha("white", 0.8), colour = NA))
 
-# The county-to-county view, kept alongside the facility view so either can be used. Aggregating
-# to the county pair is the conventional representation and makes the net balance legible; the
-# facility view is the physical one.
+# The county-to-county view, kept alongside the facility view so either can be used. Ribbons show
+# GROSS flow in each direction; the arrowheads mark the NET direction, so a pair that exchanges
+# both ways is visibly different from one that only sends.
 ed_cty <- ed %>% group_by(from_county, to_county, year) %>%
   summarise(mgd = sum(mgd), .groups = "drop") %>%
   left_join(cent %>% select(county, x0 = lon, y0 = lat), by = c("from_county" = "county")) %>%
   left_join(cent %>% select(county, x1 = lon, y1 = lat), by = c("to_county" = "county"))
 rib_cty <- sankey_ribbons(ed_cty, x0, y0, x1, y1, mgd, max_w = 0.085, taper = 0.4, curv = 0.2)
 
+# Net direction per pair, drawn as a short arrow at the destination end so direction is explicit
+# rather than implied by the taper alone.
+net_arrows <- L1 %>% filter(year == YR, net_mgd > 0.05) %>%
+  left_join(cent %>% select(county, x0 = lon, y0 = lat), by = c("net_from" = "county")) %>%
+  left_join(cent %>% select(county, x1 = lon, y1 = lat), by = c("net_to" = "county")) %>%
+  # place the arrow at 80% along the chord so it sits near the destination without covering it
+  mutate(ax = x0 + 0.72 * (x1 - x0), ay = y0 + 0.72 * (y1 - y0),
+         bx = x0 + 0.86 * (x1 - x0), by = y0 + 0.86 * (y1 - y0))
+
 p8b <- ggplot() +
   base_layers(basin = TRUE, all_fac = TRUE) +
   geom_polygon(data = rib_cty, aes(x, y, group = rib, colour = mgd), fill = NA,
                linewidth = 0.35) +
   geom_polygon(data = rib_cty, aes(x, y, group = rib), fill = "#1B5E8C", alpha = 0.55) +
-  scale_colour_viridis_c(option = "mako", direction = -1, name = "flow (MGD)",
-                         guide = guide_colourbar(barwidth = 5, barheight = 0.3,
-                                                 title.position = "top")) +
+  scale_colour_viridis_c(option = "mako", direction = -1, name = "gross flow (MGD)",
+                         guide = guide_colourbar(barwidth = 0.3, barheight = 3.2)) +
+  geom_segment(data = net_arrows, aes(x = ax, y = ay, xend = bx, yend = by),
+               arrow = arrow(length = unit(0.11, "cm"), type = "closed"),
+               colour = "grey15", linewidth = 0.4) +
   geom_sf_text(data = sf_cty, aes(label = county), size = 1.9, colour = "grey20",
                fontface = "bold") +
   coord_metro(sf_cty) +
   labs(title = "Spatial Sankey: county to county",
-       subtitle = sprintf("The same flows aggregated to the county pair. %d county-to-county links.\nBasin shading shows which watershed each transfer starts and ends in.",
-                          nrow(ed_cty))) +
-  theme_map() + theme(legend.position = c(0.10, 0.20),
-                      legend.direction = "horizontal")
+       subtitle = sprintf("%d directed links between %d pairs. Ribbons are gross flow; black arrows\nmark the NET direction. %d pairs exchange in both directions.",
+                          nrow(ed_cty), nrow(L1 %>% filter(year == YR)),
+                          sum(L1$bidirectional[L1$year == YR]))) +
+  theme_map() +
+  theme(legend.position = c(0.88, 0.13), legend.direction = "vertical",
+        legend.justification = c(1, 0),
+        legend.background = element_rect(fill = alpha("white", 0.8), colour = NA))
 
 p8c <- ggplot(nt %>% filter(exported > 0 | imported > 0),
               aes(reorder(county, export_dependency_pct), export_dependency_pct,
@@ -811,17 +933,28 @@ p8c <- ggplot(nt %>% filter(exported > 0 | imported > 0),
                         legend.background = element_rect(fill = alpha("white", 0.8), colour = NA))
 
 p8d <- ggplot(ed, aes(distance_km, mgd)) +
-  geom_point(aes(size = conveyance_kwh_yr / 1e6, colour = energy_cost_usd_yr / 1e6), alpha = 0.8) +
-  geom_text_repel(data = ed %>% slice_max(mgd, n = 4),
-                  aes(label = paste0(from_county, " to\n", str_trunc(facility, 20))),
-                  size = 1.95, colour = "grey25", lineheight = 0.95, box.padding = 0.45,
-                  segment.colour = "grey70", segment.size = 0.2) +
-  scale_size_area(max_size = 7, name = "conveyance\nGWh/yr") +
-  scale_colour_distiller(palette = "YlOrRd", direction = 1, name = "cost\nUSD M/yr") +
-  scale_y_sqrt() +
-  labs(x = "haul distance (km)", y = "volume (MGD, sqrt scale)",
+  # Iso-work contours: equal volume-distance product, the quantity conveyance energy scales with.
+  # A route's position relative to these says more than either axis alone.
+  geom_line(data = expand_grid(w = c(50, 200, 800), distance_km = seq(10, 50, 2)) %>%
+              mutate(mgd = w / distance_km),
+            aes(distance_km, mgd, group = w), colour = "grey86", linewidth = 0.3,
+            linetype = "dashed", inherit.aes = FALSE) +
+  geom_point(aes(size = conveyance_kwh_yr / 1e6, fill = energy_cost_usd_yr / 1e6),
+             shape = 21, colour = "grey25", stroke = 0.3, alpha = 0.9) +
+  geom_text_repel(data = ed %>% slice_max(mgd, n = 6),
+                  aes(label = sprintf("%s to %s\n%.1f MGD, %.0f km", from_county,
+                                      str_trunc(facility, 18), mgd, distance_km)),
+                  size = 1.9, colour = "grey20", lineheight = 0.95, box.padding = 0.5,
+                  segment.colour = "grey65", segment.size = 0.2, max.overlaps = 15) +
+  annotate("text", x = 47, y = 17, label = "equal transport work", size = 1.9,
+           colour = "grey60", angle = -28) +
+  scale_size_area(max_size = 8, name = "conveyance\nGWh per year") +
+  scale_fill_viridis_c(option = "inferno", direction = -1, begin = 0.15, end = 0.92,
+                       name = "electricity cost\nUSD million/yr") +
+  scale_y_sqrt(breaks = c(0.1, 1, 5, 10, 20, 35)) +
+  labs(x = "haul distance (km)", y = "volume (MGD, square-root scale)",
        title = "What moving sewage costs",
-       subtitle = sprintf("%.0f GWh and about $%.1f million of electricity a year",
+       subtitle = sprintf("%.0f GWh and about $%.1f million of electricity a year. Dashed lines join routes\nof equal transport work, the product energy actually scales with.",
                           J1b$conveyance_gwh_yr, J1b$energy_cost_musd_yr)) +
   theme_mawei() + theme(legend.position = "right", legend.box = "vertical")
 
@@ -862,42 +995,213 @@ p8f <- ggplot(k4 %>% filter(mgd > 0.01),
   theme_mawei() + theme(legend.position = c(0.68, 0.20),
                         legend.background = element_rect(fill = alpha("white", 0.8), colour = NA))
 
-save_fig((p8a | p8b) / (p8c | p8d | p8e) / (p8f | plot_spacer()) +
-           plot_layout(heights = c(1.35, 0.8, 0.85)) +
+# Gross against net, per pair. A pair far above the diagonal exchanges heavily in both directions,
+# so its infrastructure carries far more water than its dependency implies. Reporting only net
+# would hide that pipe capacity; reporting only gross would overstate reliance.
+lp <- L1 %>% filter(year == YR, gross_mgd > 0.02) %>%
+  mutate(pair = paste0(a, " - ", b))
+p8g <- ggplot(lp, aes(gross_mgd, net_mgd)) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", colour = "grey60") +
+  geom_segment(aes(xend = gross_mgd, yend = gross_mgd), colour = C_LOSS, linewidth = 0.4,
+               alpha = 0.5) +
+  geom_point(aes(colour = bidirectional), size = 2.6, alpha = 0.9) +
+  geom_text_repel(aes(label = pair), size = 2.1, colour = "grey20", box.padding = 0.4,
+                  segment.colour = "grey70", segment.size = 0.2, max.overlaps = 20) +
+  annotate("text", x = 2, y = 30, hjust = 0, size = 2.2, colour = "grey40", lineheight = 0.95,
+           label = "on the line: one-way transfer\nbelow it: two-way exchange,\nred segment is the offsetting volume") +
+  scale_colour_manual(values = c(`TRUE` = C_LOSS, `FALSE` = C_GREY),
+                      labels = c(`TRUE` = "two-way", `FALSE` = "one-way"), name = NULL) +
+  scale_x_log10() + scale_y_log10() +
+  labs(x = "gross transfer (MGD, log)", y = "net transfer (MGD, log)",
+       title = "Gross and net are not the same question",
+       subtitle = sprintf("%.1f MGD gross against %.1f MGD net: %.0f%% of movement offsets itself.\nGross sizes the pipes; net measures the dependency.",
+                          L1b$gross_mgd[L1b$year == YR], L1b$net_mgd[L1b$year == YR],
+                          L1b$offsetting_share_pct[L1b$year == YR])) +
+  theme_mawei() + theme(legend.position = c(0.86, 0.16),
+                        legend.background = element_rect(fill = alpha("white", 0.8),
+                                                         colour = NA))
+
+# Two rows: the two maps and the inter-basin finding on top, the quantitative panels below.
+save_fig((p8a | p8b | p8f) / (p8c | p8g | p8d | p8e) +
+           plot_layout(heights = c(1.25, 0.85)) +
            plot_annotation(tag_levels = "a", tag_prefix = "(", tag_suffix = ")"),
-         "Fig8_spatial_network", 16, 14)
+         "Fig8_spatial_network", 21, 9.5)
 
 ###############################################################################%
 message("\n== Fig 9: the region in one map ==")
 
-# A single layered map: basins, counties, both kinds of plant, data centres and the transfer
-# network together. This is the figure that shows the two systems occupy the same space, which no
-# single-theme map can.
-p9 <- ggplot() +
-  geom_sf(data = sf_basin %>% filter(basin != "Broad"), aes(fill = basin), colour = "white",
-          linewidth = 0.35, alpha = 0.22) +
-  scale_fill_manual(values = BASIN_COLS, name = "river basin") +
-  geom_sf(data = sf_cty, fill = NA, colour = "grey45", linewidth = 0.4) +
-  geom_polygon(data = rib_fac, aes(x, y, group = rib), fill = "#1F6FA8", alpha = 0.35) +
-  geom_point(data = xy %>% filter(kind == "wastewater plant"),
-             aes(lon, lat, size = capacity), shape = 21, fill = alpha(C_WATER, 0.5),
-             colour = "grey25", stroke = 0.3) +
-  geom_point(data = xy %>% filter(kind == "power plant", capacity > 300),
-             aes(lon, lat, size = capacity / 40), shape = 24, fill = alpha(C_ENERGY, 0.85),
-             colour = "grey20", stroke = 0.3) +
-  geom_point(data = dc_ex, aes(lon, lat), shape = 22, size = 2, fill = alpha("grey20", 0.8),
-             colour = "white", stroke = 0.25) +
-  geom_sf_text(data = sf_cty, aes(label = county), size = 2.1, colour = "grey15",
-               fontface = "bold") +
-  scale_size_area(max_size = 9, guide = "none") +
-  coord_metro(sf_cty) +
-  labs(title = "Metro Atlanta's water and energy system in one frame",
-       subtitle = paste0("Basins shaded; ", sum(xy$kind == "wastewater plant"),
-                         " treatment plants (circles), major power plants (triangles), ",
-                         nrow(dc_ex), " data centres (squares).\nRibbons are inter-county sewage transfers, width proportional to volume.")) +
-  theme_map() + theme(legend.position = "right")
+# Basin names are placed inside their own polygons rather than in a legend, so the eye never
+# leaves the map. Labels go at the centroid of the part of each basin that lies INSIDE the view,
+# because a basin centroid can easily fall outside the metro frame.
+# ExtraNotes: s2 spherical geometry rejects the buffered union here (the WBD polygons contain
+# slivers that are invalid on a sphere). Planar mode is switched off for this one operation, which
+# is appropriate: at metro scale the planar approximation is irrelevant for a label position.
+basin_lab <- local({
+  old <- sf_use_s2(FALSE)
+  on.exit(sf_use_s2(old), add = TRUE)
+  suppressWarnings(
+    st_intersection(st_make_valid(sf_basin %>% filter(basin != "Broad")),
+                    st_union(st_buffer(sf_cty, 0.12)))) %>%
+    st_make_valid() %>% st_centroid() %>%
+    mutate(lon = st_coordinates(.)[, 1], lat = st_coordinates(.)[, 2]) %>%
+    st_drop_geometry()
+}) %>%
+  left_join(K3 %>% select(basin, supply_share_pct), by = "basin") %>%
+  mutate(lab = if_else(is.na(supply_share_pct) | supply_share_pct < 0.05,
+                       str_replace(basin, "_", "-"),
+                       sprintf("%s\n%.0f%% of supply", str_replace(basin, "_", "-"),
+                               supply_share_pct)))
 
-save_fig(p9, "Fig9_regional_overview", 11, 9)
+# Data-centre symbol area carries a quantity, not just presence. Floor space is the main variant
+# because it is the only measure the inventory reports for every facility; the intensity variants
+# are computed and shown in the SI, where a proxy can be labelled as such.
+# ExtraNotes: power is estimated at 150 W per square foot of IT load, a mid-range figure for a
+# modern facility, so the derived MW and water columns are order-of-magnitude only.
+dc_ex_m <- dc_ex %>%
+  mutate(est_mw = sqft * 150 / 1e6,
+         est_water_mgd = est_mw * 0.9 * HOURS_PER_YEAR * 1.8 / 3.785 / 1e6 / DAYS_PER_YEAR,
+         mw_per_ksqft = 1000 * est_mw / sqft,
+         water_per_ksqft = 1000 * est_water_mgd / sqft)
+
+region_map <- function(underlay = FALSE) {
+  p <- ggplot() +
+    geom_sf(data = sf_basin %>% filter(basin != "Broad"), aes(fill = basin), colour = "white",
+            linewidth = 0.35, alpha = if (underlay) 0.30 else 0.22) +
+    scale_fill_manual(values = BASIN_COLS, guide = "none")
+  if (underlay) {
+    # A very dim context layer: every census tract, shaded by measured population density. Uses
+    # colour rather than fill because the basin layer already owns the fill scale and two fill
+    # scales cannot coexist in one ggplot.
+    p <- p + geom_sf(data = tracts_sf, aes(colour = log10(pmax(pop_density, 1))), fill = NA,
+                     linewidth = 0.12) +
+      scale_colour_gradient(low = "grey88", high = "grey30", guide = "none")
+  }
+  p +
+    geom_sf(data = sf_cty, fill = NA, colour = "grey40", linewidth = 0.45) +
+    geom_polygon(data = rib_fac, aes(x, y, group = rib), fill = "#1F6FA8", alpha = 0.32) +
+    geom_point(data = xy %>% filter(kind == "wastewater plant"),
+               aes(lon, lat, size = capacity), shape = 21, fill = alpha(C_WATER, 0.5),
+               colour = "grey25", stroke = 0.3) +
+    geom_point(data = xy %>% filter(kind == "power plant", capacity > 300),
+               aes(lon, lat, size = capacity / 40), shape = 24, fill = alpha(C_ENERGY, 0.85),
+               colour = "grey20", stroke = 0.3) +
+    geom_point(data = dc_ex_m, aes(lon, lat, size = sqft / 12000), shape = 22,
+               fill = alpha("grey15", 0.8), colour = "white", stroke = 0.25) +
+    geom_text(data = basin_lab, aes(lon, lat, label = lab), size = 2.5, fontface = "bold",
+              colour = "grey25", lineheight = 0.95, alpha = 0.85) +
+    geom_sf_text(data = sf_cty, aes(label = county), size = 2, colour = "grey12",
+                 fontface = "bold") +
+    scale_size_area(max_size = 9, guide = "none") +
+    coord_metro(sf_cty) + theme_map()
+}
+
+save_fig(region_map(FALSE) +
+  labs(title = "Metro Atlanta's water and energy system in one frame",
+       subtitle = paste0("River basins shaded and named in place. ",
+                         sum(xy$kind == "wastewater plant"),
+                         " treatment plants (circles), major power plants (triangles),\n",
+                         nrow(dc_ex), " data centres (squares, area is floor space). ",
+                         "Ribbons are inter-county sewage transfers.")),
+  "Fig9_regional_overview", 11, 9.5)
+
+save_fig(region_map(TRUE) +
+  labs(title = "The same system over its settlement pattern",
+       subtitle = "Faint outlines are the 1,386 census tracts. Tracts hold roughly equal population by\ndesign, so small dense tracts trace the urban core and large ones the rural fringe."),
+  "Fig9b_regional_overview_settlement", 11, 9.5)
+
+###############################################################################%
+message("\n== Fig 10: settlement, demographics and basin population ==")
+
+# Counties are the unit the data arrives in, but neither water nor people respect them. These
+# panels re-express the region on the two geographies that matter: settlement density, which is
+# what drives demand, and the basin, which is what constrains supply. All quantities are measured
+# ACS tract values, not proxies.
+p10a <- cmap(M1, "pw_density", "Where the average resident lives",
+             "population-weighted density",
+             pal = "Greys", fmt = "%.0f", legend = "per km2")
+p10b <- cmap(M1, "density_unevenness", "How unevenly people are spread",
+             "weighted / area density; 1.0 = uniform",
+             pal = "PuOr", dir = -1, fmt = "%.1f", unit = "x", legend = "ratio")
+
+# ExtraNotes: the two densities are plotted against each other rather than either alone, because
+# the GAP between them is the finding. A county on the 1:1 line is uniformly settled; one far above
+# it holds a dense core and an empty fringe, and its county average describes neither.
+p10c <- ggplot(M1, aes(area_density, pw_density)) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", colour = "grey60") +
+  geom_point(aes(size = acs_pop / 1e3), colour = C_WATER, alpha = 0.6) +
+  geom_text_repel(aes(label = county), size = 2.3, colour = "grey20", box.padding = 0.4,
+                  segment.colour = "grey70", segment.size = 0.2) +
+  scale_size_area(max_size = 9, name = "population\n(thousands)") +
+  annotate("text", x = 130, y = 1750, hjust = 0, size = 2.2, colour = "grey35",
+           label = "above the line = a dense core\nwith an empty fringe") +
+  labs(x = "area density (people per km2 of county)",
+       y = "population-weighted density (per km2)",
+       title = "One county can be two places",
+       subtitle = "Metro-wide the average resident lives at 1130 per km2 while the region averages 450,\na factor of 2.5") +
+  theme_mawei() + theme(legend.position = c(0.87, 0.22))
+
+# ExtraNotes: only associations significant at p < 0.05 are drawn, and the panel is framed as
+# association rather than mechanism -- fifteen counties is a small sample and the water-side inputs
+# are themselves per-county assumptions. What makes it worth showing is that the signs are all
+# physically sensible, which is evidence the county inputs encode something real.
+m3 <- M3b %>% filter(p < 0.05) %>%
+  mutate(lab = paste0(recode(y, nrw_pct = "non-revenue water", ii_share_pct = "infiltration share",
+                             septic_share_pct = "septic share", pws_gpcd = "supply per person",
+                             kwh_per_mg = "energy per MG"),
+                      "  ~  ",
+                      recode(x, pw_density = "density (pop-weighted)", area_density = "density (area)",
+                             transit_pct = "transit commuting", poverty_pct = "poverty rate",
+                             persons_per_hh = "household size",
+                             median_hh_income = "median income",
+                             mean_commute_min = "mean commute")))
+
+p10d <- ggplot(m3, aes(reorder(lab, r), r, fill = r > 0)) +
+  geom_col(width = 0.62) +
+  geom_hline(yintercept = 0, colour = "grey40", linewidth = 0.3) +
+  geom_text(aes(label = sprintf("%.2f", r), hjust = ifelse(r > 0, -0.25, 1.25)),
+            size = 2.2, colour = "grey25") +
+  coord_flip() +
+  scale_fill_manual(values = c(`TRUE` = C_WATER, `FALSE` = C_LOSS), guide = "none") +
+  scale_y_continuous(limits = c(-1, 1)) +
+  labs(x = NULL, y = "Spearman rho",
+       title = "Settlement pattern predicts water performance",
+       subtitle = "Only associations significant at p < 0.05, n = 15 counties. Septic falls with density\n(rho -0.74); infiltration and energy per gallon rise with it.") +
+  theme_mawei()
+
+p10e <- ggplot(M2, aes(reorder(basin, population), population / 1e6)) +
+  geom_col(aes(fill = basin), width = 0.6) +
+  geom_text(aes(label = sprintf(" %.2fM (%.0f%%)", population / 1e6, pop_share_pct)),
+            hjust = 0, size = 2.3, colour = "grey30") +
+  coord_flip(clip = "off") +
+  scale_fill_manual(values = BASIN_COLS, guide = "none") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.4))) +
+  labs(x = NULL, y = "population (millions)",
+       title = "Where the people live, by basin",
+       subtitle = "Measured tract population summed by centroid. Counties cannot answer this question.") +
+  theme_mawei()
+
+# ExtraNotes: withdrawal and discharge per person are plotted together because the COMPARISON is
+# the finding. A basin discharging more per person than it withdraws is receiving water piped in
+# from another basin -- an inter-basin transfer that supply-side accounting cannot see.
+p10f <- M2 %>%
+  select(basin, withdrawal_gpcd, discharge_gpcd) %>%
+  pivot_longer(-basin, names_to = "k", values_to = "gpcd") %>%
+  mutate(k = factor(recode(k, withdrawal_gpcd = "withdrawn", discharge_gpcd = "discharged"),
+                    levels = c("withdrawn", "discharged"))) %>%
+  ggplot(aes(reorder(basin, gpcd), gpcd, fill = k)) +
+  geom_col(position = position_dodge(width = 0.72), width = 0.66) +
+  coord_flip(clip = "off") +
+  scale_fill_manual(values = c(withdrawn = C_WATER, discharged = C_E4W), name = NULL) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.12))) +
+  labs(x = NULL, y = "gallons per person per day in the basin",
+       title = "The Ocmulgee discharges more than it withdraws",
+       subtitle = "78 gpcd out against 34 in: 1.7 million people are supplied from the Chattahoochee\nand return their sewage to a different river") +
+  theme_mawei() + theme(legend.position = "bottom")
+
+save_fig((p10a | p10b | p10c) / (p10d | p10e | p10f) +
+           plot_layout(heights = c(1.05, 0.95)) +
+           plot_annotation(tag_levels = "a", tag_prefix = "(", tag_suffix = ")"),
+         "Fig10_settlement_and_basins", 17, 9)
 
 ###############################################################################%
 message("\n== SI ==")
@@ -905,12 +1209,20 @@ message("\n== SI ==")
 si1 <- ggplot(G1, aes(epa_design_mgd, permitted_capacity)) +
   geom_abline(slope = 1, intercept = 0, linetype = "dashed", colour = "grey55") +
   geom_point(aes(colour = agrees_10pct), size = 2.2, alpha = 0.85) +
+  # Only the disagreeing facilities are named. Labelling all sixteen would obscure the 1:1 line,
+  # and the agreeing ones need no explanation.
+  geom_text_repel(data = G1 %>% filter(!agrees_10pct),
+                  aes(label = sprintf("%s\nstudy %.1f vs EPA %.2f",
+                                      str_trunc(facility_name, 24), permitted_capacity,
+                                      epa_design_mgd)),
+                  size = 1.95, colour = C_LOSS, lineheight = 0.95, box.padding = 0.6,
+                  segment.colour = "grey65", segment.size = 0.2, max.overlaps = 20) +
   scale_x_log10() + scale_y_log10() +
   scale_colour_manual(values = c(`TRUE` = C_GOOD, `FALSE` = C_LOSS),
                       labels = c(`TRUE` = "within 10%", `FALSE` = "differs"), name = NULL) +
   labs(x = "EPA ECHO design flow (MGD, log)", y = "study permitted capacity (MGD, log)",
        title = "Independent validation of facility capacity",
-       subtitle = sprintf("%d of %d agree within 10%%; median ratio %.2f",
+       subtitle = sprintf("%d of %d agree within 10%%; median ratio %.2f. The three that differ are named.",
                           sum(G1$agrees_10pct), nrow(G1), median(G1$ratio))) +
   theme_mawei() + theme(legend.position = "bottom")
 
