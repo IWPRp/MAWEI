@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MAWEI — Metro Atlanta Water–Energy Interdependencies</title>
+<title>MAWEI - Metro Atlanta Water Energy Interdependencies</title>
 <meta name="description" content="Interactive water and energy flow accounting for the 15-county Atlanta metropolitan region, 2020–2024.">
-<meta property="og:title" content="MAWEI — Metro Atlanta Water–Energy Interdependencies">
+<meta property="og:title" content="MAWEI - Metro Atlanta Water Energy Interdependencies">
 <meta property="og:description" content="Interactive water and energy flow accounting for metro Atlanta, 2020–2024.">
 <meta property="og:type" content="website">
 <link rel="stylesheet" href="app.css">
@@ -20,7 +20,7 @@
 <header class="topbar">
   <div class="brand">
     <span class="mark">MAWEI</span>
-    <span class="sub">Metro Atlanta Water–Energy Interdependencies</span>
+    <span class="sub">Metro Atlanta Water Energy Interdependencies</span>
   </div>
   <nav class="tabs" id="tabs">
     <button class="tab active" data-view="flows">Flows</button>
@@ -47,7 +47,7 @@
     <div class="ctrl">
       <label>Area <span class="hint" id="scope-label">Metro total</span></label>
       <svg id="map" viewBox="0 0 300 300" aria-label="County selector"></svg>
-      <button id="reset-scope" class="link-btn">Back to metro</button>
+      <button id="reset-scope" class="link-btn">Back to Metro Atlanta</button>
     </div>
 
     <div class="ctrl" id="variant-ctrl" hidden>
@@ -115,23 +115,21 @@
 <main class="view" id="view-about">
   <section class="prose">
     <h1>About</h1>
-    <p>MAWEI is a flow account of water and energy for the 15-county Atlanta metropolitan
-      region, covering 2020 through 2024. Every diagram on this site is drawn from the same
-      audited tables: each intermediate node balances to within 0.5%, and the residuals are
-      published alongside the data.</p>
+    <p>MAWEI - Metro Atlanta Water Energy Interdependencies is a flow account of water and energy for the 15-counties in the Atlanta metropolitan
+      region, covering consistently over 5-years from 2020 through 2024, for water, energy, and combined energy-water systems. </p>
 
-    <h2>Reading a Sankey</h2>
-    <p>Ribbon width is proportional to volume. Flows advance left to right, from sources
+    <h2>Reading the Sankeys</h2>
+    <p>Ribbon height is proportional to the flows. Flows advance left to right, from sources
       through conversion and distribution to end uses and terminal sinks. Losses and waste
       are grouped at the top of the right-hand column in both systems, so the share of the
       system that is never used can be read as one block.</p>
 
-    <h2>The two systems, and their couplings</h2>
-    <p>Water runs cool and energy runs warm. In the combined view two further colours mark
+    
+    <p>Water has cooler colors and energy has warmer colors. In the combined view two further colors mark
       the couplings that make this a nexus rather than two separate accounts: the electricity
       spent moving and treating water, and the water withdrawn to cool thermal generation.</p>
 
-    <h2>Units</h2>
+    
     <p>Water is accounted in million gallons per day (MGD). Energy is held internally in
       exajoules and displayed in petajoules (PJ), with gigawatt-hours available for
       electricity-generating nodes. The unit control converts on the fly; the underlying
@@ -139,23 +137,33 @@
 
     <h2>Sources</h2>
     <ul>
+      <li>Stakeholder data: water supply and use; wastewater plants, collection, treatment, and inter-county transfers; water self-supply; power plant gross generation, fuel input, and thermoelectric water cooling</li>
+      <li>Metropolitan North Georgia Water Planning District — supply, wastewater and management plans</li>
       <li>EIA Form 923 — plant-level fuel consumption and net generation</li>
       <li>EIA Form 860 — generator inventory and plant attributes</li>
       <li>EIA State Energy Data System — state-level consumption by fuel and sector</li>
-      <li>Metropolitan North Georgia Water Planning District — supply, wastewater and
-        management plans</li>
-      <li>Georgia Power / Southern Company — plant gross generation and fuel input</li>
       <li>US Census Bureau — county population, used to downscale state totals</li>
     </ul>
 
-    <h2>Caveats</h2>
+    <!-- <h2>Caveats</h2>
     <p>State consumption is downscaled to counties by population, which is a reasonable
       approximation for residential and commercial demand and a weaker one for industry.
       Non-combustible fuel input is harmonised onto a 3412 Btu/kWh convention across all
       years, because the published series changes convention mid-period. Inter-county
       wastewater transfers are reported by both parties to each transfer and are
-      de-duplicated on the full route key.</p>
-
+      de-duplicated on the full route key.</p> -->
+    
+    
+    <h1>Acknowledgements</h1>
+    <p>This work was supported by the U.S. Department of Energy's Hydropower and Hydrokinetic Office (H2O), Energy-Water Resource (EWR) Program. </p>
+        <p>The work was performed at the Pacific Northwest National Laboratory (PNNL) under Integrated Water-Power Resilience (IWPR) project.
+        Pacific Northwest National Laboratory is operated by Battelle for the U.S. Department of Energy under Contract DE-AC05-76RL01830.</p>
+    <p>We thank the Metro Atlanta stakeholders for their contributions and support.</p>
+    
+    <h1>Contact</h1>
+    <p>Data and code are available on <a href="https://github.com/IWPRp/MAWEI">github.com/IWPRp/MAWEI</a>.</p>
+    <p>For questions or comments, please contact <a href="mailto:hassan.niazi@pnnl.gov">Hassan Niazi</a> 
+        and <a href="mailto:kelsey.semrod@pnnl.gov">Kelsey Semrod</a> at PNNL.</p>
     <p class="meta" id="about-meta"></p>
   </section>
 </main>

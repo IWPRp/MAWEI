@@ -168,16 +168,14 @@ async function draw() {
 
 function updateTitle(d, conv) {
   const where = state.county || 'Metro Atlanta';
-  const what = { water: 'water flows', energy: 'energy flows',
-                 'energy-water': 'water and energy flows' }[state.domain];
-  document.getElementById('chart-title').textContent = `${where} — ${what}`;
-  document.getElementById('scope-label').textContent = state.county || 'Metro total';
+  const what = { water: 'Water flows', energy: 'Energy flows',
+                 'energy-water': 'Water and Energy flows' }[state.domain];
+  document.getElementById('chart-title').textContent = `${where} - ${state.year} ${what} `;
+  document.getElementById('scope-label').textContent = state.county || 'Metro Atlanta';
 
   const u = conv ? conv.unit : 'mixed units';
   document.getElementById('caption').textContent =
-    `Ribbon width is proportional to volume, in ${u}. Losses and waste sinks are grouped at ` +
-    `the top of the right-hand column. Nodes carrying no flow in ${state.year} are hidden ` +
-    `rather than drawn at zero.`;
+    `Ribbon height is proportional to the flows, in ${u} units.`;
 }
 
 function updateStats(d, conv) {
@@ -465,7 +463,7 @@ function saveBlob(text, filename, type) {
     return;
   }
   document.getElementById('about-meta').textContent =
-    `${manifest.files.length} artefacts, ${manifest.counties.length} counties, ` +
+    `${manifest.files.length} Sankey diagrams and data artefacts, ${manifest.counties.length} counties and aggregated Metro Atlanta region, ` +
     `${manifest.years[0]}–${manifest.years[manifest.years.length - 1]}. ` +
     `Generated ${manifest.generated.slice(0, 10)}.`;
 
