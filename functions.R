@@ -32,9 +32,12 @@ flag_env <- function(name, default) {
   if (is.na(v) || !nzchar(v)) return(default)
   !(tolower(v) %in% c("0", "f", "false", "no"))
 }
-SAVE_FILES <- flag_env("MAWEI_SAVE_FILES", TRUE)
-MAKE_PLOT  <- flag_env("MAWEI_MAKE_PLOT",  FALSE)
-ANALYSIS   <- flag_env("MAWEI_ANALYSIS",   FALSE)
+# SAVE_FILES <- flag_env("MAWEI_SAVE_FILES", TRUE)
+# MAKE_PLOT  <- flag_env("MAWEI_MAKE_PLOT",  TRUE)
+# ANALYSIS   <- flag_env("MAWEI_ANALYSIS",   TRUE)
+SAVE_FILES <- FALSE
+MAKE_PLOT  <- FALSE
+ANALYSIS   <- FALSE
 
 # --- QC ---
 # QC_DIR holds machine-readable audit trails (mass-balance residuals, dropped-row
@@ -202,7 +205,7 @@ if (ANALYSIS) dir.create(ANALYSIS_DIR, recursive = TRUE, showWarnings = FALSE)
 # apparent year-on-year change in hydro and solar and would manufacture ~61% of spurious
 # "rejected heat" at a hydro dam under any fuel-minus-generation loss rule.
 MMBTU_PER_MWH <- 3.412            # 1 MWh at 100% efficiency
-NONCOMBUSTIBLE_FUELS <- c("Hydroelectric Water", "Solar", "Wind", "Geothermal")
+NONCOMBUSTIBLE_FUELS <- c("Hydroelectric", "Solar", "Wind", "Geothermal")
 
 # Plant aggregates whose output is consumed on site and never reaches the grid.
 # ExtraNotes: an explicit set rather than a name pattern, so that adding an aggregate to the
@@ -275,7 +278,7 @@ SANKEY_COLORS_VIVID <- list(
   # fossil fuels
   "Coal" = "#1A1A1A", "Natural Gas" = "#E87D2F", "Petroleum" = "#8B4513",
   # renewables
-  "Solar" = "#FFD700", "Biomass" = "#228B22", "Hydroelectric Water" = "#1E90FF",
+  "Solar" = "#FFD700", "Biomass" = "#228B22", "Hydroelectric" = "#1E90FF",
   "Geothermal" = "#CD5C5C", "Energy Storage" = "#9370DB", "Wind" = "#63B8CF",
   "Renewables" = "#2E9E52", "Other" = "#A0A0A0",
   # on-site and distributed generation
@@ -287,7 +290,7 @@ SANKEY_COLORS_VIVID <- list(
   # generation and grid
   "Grid Electricity" = "#FF8C00", "Utility-scale Gen." = "#E07020",
   "Electricity Imports" = "#FFB347", "Electricity Exports" = "#F0A030",
-  "Imports (out-metro)" = "#FFC04D", "Exports (out-metro)" = "#E8A830",
+  "Electricity Imports (out-metro)" = "#FFC04D", "Exports (out-metro)" = "#E8A830",
   # energy losses and services
   "Efficiency Losses" = "#808080", "T&D Losses" = "#A9A9A9",
   "Plants Own Use" = "#696969", "Energy Losses" = "#8F8F8F",
@@ -306,8 +309,8 @@ SANKEY_COLORS_VIVID <- list(
   # wastewater
   "Wastewater Collection" = "#6A0DAD", "Septic Systems" = "#9370DB",
   "In-County Treatment" = "#800080", "Wastewater Treated" = "#BA55D3",
-  "Transfers In" = "#7B2FBE",
-  "Transfers Out" = "#9060C0",
+  "Transfers In (within Metro)" = "#7B2FBE",
+  "Transfers Out (within Metro)" = "#9060C0",
   "Total Wastewater Treatment" = "#7B2FBE", "Wastewater Treatment" = "#7B2FBE",
   # water sinks
   "Losses" = "#778899", "Water Losses" = "#778899",
@@ -330,7 +333,7 @@ SANKEY_COLORS_VIVID <- list(
 SANKEY_COLORS_SIGNATURE <- modifyList(SANKEY_COLORS_VIVID, list(
   # fuels keep vivid's associations at slightly higher saturation
   "Coal" = "#2B2B2E", "Natural Gas" = "#E08A2E", "Petroleum" = "#8C5A2B",
-  "Solar" = "#F2C230", "Biomass" = "#4E8B4A", "Hydroelectric Water" = "#2E6F94",
+  "Solar" = "#F2C230", "Biomass" = "#4E8B4A", "Hydroelectric" = "#2E6F94",
   "Geothermal" = "#B4553F", "Energy Storage" = "#6A5ACD",
   # plants: deep slate-violet, so generators are distinct from the fuels feeding them
   "Bowen Plant" = "#4A4351", "Yates Plant" = "#6B6076", "Jack McDonough Plant" = "#5A5165",
@@ -346,8 +349,8 @@ SANKEY_COLORS_SIGNATURE <- modifyList(SANKEY_COLORS_VIVID, list(
   "Infiltration and Inflow" = "#7FA98C",
   "Wastewater Collection" = "#8A8A4E", "In-County Treatment" = "#41764A",
   "Wastewater Treated" = "#4F8A58",
-  "Transfers In" = "#A39A5C",
-  "Transfers Out" = "#B5AC6B",
+  "Transfers In (within Metro)" = "#A39A5C",
+  "Transfers Out (within Metro)" = "#B5AC6B",
   "Septic Systems" = "#A88C5F",
   "River" = "#26757E", "Creek" = "#39909A", "Lake" = "#3C7FA5",
   "Reservoir" = "#2B6B90", "Wetland" = "#4E8F5C", "Reuse" = "#3AA39A",
@@ -428,7 +431,7 @@ SANKEY_CLASS_COLORS <- c(
 # Water-service nodes that consume energy, and generation nodes that consume water.
 WATER_SERVICE_NODES <- c("Public Water Supply", "publicWatSup", "Water Services Energy",
                          "en4water", "In-County Treatment", "in-county treatment",
-                         "Transfers Out", "ww_exports",
+                         "Transfers Out (within Metro)", "ww_exports",
                          "Wastewater Treatment", "Total Wastewater Treatment")
 GENERATION_NODES <- c("Bowen Plant", "Yates Plant", "Jack McDonough Plant", "Bowen", "Yates",
                       "Jack McDonough", "Grid Electricity", "electricity",
@@ -1073,7 +1076,7 @@ remap_fuel_broad <- function(df_sankey, col_name="source") {
         !!sym(col_name) %in% c("Bituminous Coal", "Subbituminous Coal", "Anthracite Coal", "Waste/Other Coal", "Lignite Coal") ~ "Coal",
         !!sym(col_name) %in% c("Distillate Fuel Oil",  "Residual Fuel Oil", "Tire-derived Fuels", "Waste/Other Oil", "Kerosene", "Jet Fuel") ~ "Petroleum",
         !!sym(col_name) %in% c("Natural Gas", "Other Gas", "Blast Furnace Gas") ~ "Natural Gas",
-        !!sym(col_name) %in% c("Water at a Conventional Hydroelectric Turbine", "Water for Conventional Hydroelectric") ~ "Hydroelectric Water",
+        !!sym(col_name) %in% c("Water at a Conventional Hydroelectric Turbine", "Water for Conventional Hydroelectric") ~ "Hydroelectric",
         !!sym(col_name) %in% c("Solar", "Photovoltaic") ~ "Solar",
         !!sym(col_name) %in% c("Landfill Gas", "Other Biomass Gas", "Biogenic Municipal Solid Waste", "Other Biomass Liquids", "Other Biomass Solids", "Wood/Wood Waste Solids", "Wood Waste Liquids", "Black Liquor") ~ "Biomass",
         !!sym(col_name) %in% c("Geothermal") ~ "Geothermal",
@@ -1314,8 +1317,8 @@ pretty_labels <- function(df_sankey) {
         source == "commercial" ~ "Commercial Use",
         source == "losses" ~ "Losses",
         source == "wastewater" ~ "Wastewater Collection",
-        source == "ww_imports" ~ "Transfers In",
-        source == "ww_exports" ~ "Transfers Out",
+        source == "ww_imports" ~ "Transfers In (within Metro)",
+        source == "ww_exports" ~ "Transfers Out (within Metro)",
         source == "septic" ~ "Septic Systems",
         source == "in-county treatment" ~ "In-County Treatment",
 
@@ -1337,7 +1340,7 @@ pretty_labels <- function(df_sankey) {
         source == "On-Site Backup Generation" ~ "On-Site Gen.",
         source == "elec_import" ~ "Electricity Imports",
         source == "elec_export" ~ "Electricity Exports",
-        source == "out_metro_elec_import" ~ "Imports (out-metro)",
+        source == "out_metro_elec_import" ~ "Electricity Imports (out-metro)",
         source == "out_metro_elec_export" ~ "Exports (out-metro)",
         source == "government" ~ "Government Use",
         source == "transport" ~ "Transportation Use",
@@ -1373,8 +1376,8 @@ pretty_labels <- function(df_sankey) {
         target == "commercial" ~ "Commercial Use",
         target == "losses" ~ "Losses",
         target == "wastewater" ~ "Wastewater Collection",
-        target == "ww_imports" ~ "Transfers In",
-        target == "ww_exports" ~ "Transfers Out",
+        target == "ww_imports" ~ "Transfers In (within Metro)",
+        target == "ww_exports" ~ "Transfers Out (within Metro)",
         target == "septic" ~ "Septic Systems",
         target == "wastewater_treated" ~ "Wastewater Treated",
         target == "in-county treatment" ~ "In-County Treatment",
@@ -1398,7 +1401,7 @@ pretty_labels <- function(df_sankey) {
         target == "On-Site Backup Generation" ~ "On-Site Gen.",
         target == "elec_import" ~ "Electricity Imports",
         target == "elec_export" ~ "Electricity Exports",
-        target == "out_metro_elec_import" ~ "Imports (out-metro)",
+        target == "out_metro_elec_import" ~ "Electricity Imports (out-metro)",
         target == "out_metro_elec_export" ~ "Exports (out-metro)",
         target == "government" ~ "Government Use",
         target == "transport" ~ "Transportation Use",
@@ -1546,16 +1549,16 @@ plot_sankey <- function(df_sankey, title = "Metro Atlanta Flows", yr = max(YEARS
 # column where it draws to the left, so the gap between the final two columns has to
 # carry two labels and is deliberately the widest.
 SANKEY_LAYER_X <- c(source = 0.02, basin = 0.15, plant = 0.24, supply = 0.32,
-                    grid = 0.42, demand = 0.58, collect = 0.70, treat = 0.84,
+                    grid = 0.42, demand_w = 0.48, demand = 0.6, collect = 0.7, treat = 0.82,
                     sink = 0.98)
 
 # Ordered node lists per layer. Order == vertical order, top first.
 SANKEY_LAYOUT <- list(
   energy = list(
-    source = c("Coal", "Natural Gas", "Petroleum", "Biomass", "Hydroelectric Water",
+    source = c("Coal", "Natural Gas", "Petroleum", "Biomass", "Hydroelectric",
                "Solar", "Wind", "Geothermal", "Energy Storage", "Renewables", "Other",
                "Onsite / BehindTheMeter", "Onsite Solar/DER",
-               "Electricity Imports", "Imports (out-metro)"),
+               "Electricity Imports", "Electricity Imports (out-metro)"),
     plant  = c("Bowen Plant", "Yates Plant", "Jack McDonough Plant",
                "Utility-scale Gen.", "Distributed Gen.",
                "On-Site Gen.", "Small-scale generation"),
@@ -1570,16 +1573,16 @@ SANKEY_LAYOUT <- list(
   water = list(
     source  = c("Surface Water", "Groundwater", "Groundwater",
                 "Infiltration and Inflow",
-                "Transfers In"),
+                "Transfers In (within Metro)"),
     basin   = c("Chattahoochee Basin", "Coosa_Etowah Basin", "Ocmulgee Basin",
                 "Flint Basin", "Oconee Basin", "Tallapoosa Basin", "Basins"),
     supply  = c("Public Water Supply"),
-    demand  = c("Residential Use", "Commercial Use", "Industrial Use", "Agricultural Use",
+    demand_w  = c("Residential Use", "Commercial Use", "Industrial Use", "Agricultural Use",
                 "Bowen Plant", "Yates Plant", "Jack McDonough Plant"),
     collect = c("Wastewater Collection"),
     treat   = c("In-County Treatment"),
     sink    = c("Losses", "Water Losses", "Septic Systems",
-                "Transfers Out",
+                "Transfers Out (within Metro)",
                 "Discharge", "Disposal", "River", "Creek", "Lake", "Reservoir",
                 "Wetland", "Land", "Reuse")
   )
@@ -1617,24 +1620,34 @@ sankey_detect_domains <- function(all_nodes) {
 SANKEY_NODE_Y <- c(
   # water: sources and hub top-aligned, collection deliberately below the demand sectors
   "Surface Water"                          = 0.06,
-  "Groundwater"                            = 0.30,
-  "Infiltration and Inflow"                             = 0.62,
-  "Transfers In"  = 0.88,
+  "Chattahoochee Basin"                     = 0.06,
+  "Coosa_Etowah Basin"                     = 0.26,
+  "Ocmulgee Basin"                          = 0.46,
+  "Flint Basin"                             = 0.66,
+  "Oconee Basin"                            = 0.86,
+  "Chattahoochee River"                            = 0.06,
+  "Groundwater"                            = 0.70,
+  "Residential Use"                            = 0.30,
+  "Infiltration and Inflow"                             = 0.85,
+  "Transfers In (within Metro)"  = 0.98,
   "Public Water Supply"                                 = 0.10,
-  "Wastewater Collection"                               = 0.60,
-  "In-County Treatment"                                 = 0.45,
+  "Wastewater Collection"                               = 0.65,
+  "In-County Treatment"                                 = 0.8,
   # right-hand column: losses at the top, septic directly beneath
   "Losses"                                              = 0.04,
   "Water Losses"                                        = 0.04,
   "Septic Systems"                                      = 0.16,
-  "Transfers Out" = 0.26,
+  "Discharge"                                           = 0.26,
+  "Transfers Out (within Metro)"                                       = 0.34,
   # energy: grid hub high, loss stack above useful output
+  "Electricity Imports (out-metro)"            = 0.06, # for metro
+  "Electricity Imports"                        = 0.06, # for counties
   "Grid Electricity"                           = 0.30,
-  "Plants Own Use"                                      = 0.04,
-  "Efficiency Losses"                                   = 0.12,
-  "T&D Losses"                         = 0.22,
+  "Plants Own Use"                                      = 0.3,
+  "Efficiency Losses"                                   = 0.42,
+  "T&D Losses"                                          = 0.52,
   "Energy Losses"                                       = 0.12,
-  "Rejected Energy"                                     = 0.34
+  "Rejected Energy"                                     = 0.14
 )
 
 # Compute node x/y from the layout spec.
@@ -2106,3 +2119,161 @@ plot_sankey_enhanced <- function(df_sankey, title = "Metro Atlanta Flows", yr = 
 }
 
 
+# ANALYSIS FIGURES ----
+
+## fig_helpers.R originally ----
+# Contains the theme, palette, versioned output and spatial primitives for the MAWEI figures.
+
+# MAWEI figure helpers — theme, palette, versioned output, spatial primitives
+#
+# Sourced by R/figures.R. Kept separate so the figure script stays readable and so the spatial
+# Sankey machinery can be reused.
+#
+# Hassan Niazi, Aug 2026
+
+suppressMessages({library(patchwork); library(sf); library(scales); library(ggrepel)})
+
+# Versioned output. Each run writes to a NEW docs_analysis/figures_v<n>/ so an earlier round can
+# never be overwritten and versions do not have to be renamed by hand. Set MAWEI_FIG_DIR to
+# override, or MAWEI_FIG_REUSE=1 to write into the highest existing version.
+fig_dir <- function(root = "docs_analysis") {
+  override <- Sys.getenv("MAWEI_FIG_DIR", "")
+  if (nzchar(override)) {
+    dir.create(override, recursive = TRUE, showWarnings = FALSE)
+    return(paste0(sub("/$", "", override), "/"))
+  }
+  existing <- list.dirs(root, recursive = FALSE, full.names = FALSE)
+  vers <- as.integer(str_match(existing, "^figures_v([0-9]+)$")[, 2])
+  vers <- vers[!is.na(vers)]
+  n <- if (length(vers) == 0) 0 else max(vers)
+  if (!flag_env("MAWEI_FIG_REUSE", FALSE)) n <- n + 1
+  d <- file.path(root, paste0("figures_v", n))
+  dir.create(d, recursive = TRUE, showWarnings = FALSE)
+  paste0(d, "/")
+}
+
+theme_mawei <- function(base = 9) {
+  theme_minimal(base_size = base) +
+    theme(panel.grid.minor = element_blank(),
+          panel.grid.major = element_line(linewidth = 0.22, colour = "grey91"),
+          # A faint frame around the plotting area separates data from axis labels and gives a
+          # multi-panel figure a visible grid. Deliberately the same weight and tone as the axis
+          # line so it reads as structure rather than as a box drawn on the data. Maps use
+          # theme_map(), which has no border: a frame around a coastline reads as a graticule.
+          panel.border = element_rect(colour = "grey86", fill = NA, linewidth = 0.35),
+          axis.title = element_text(size = base - 0.5, colour = "grey25"),
+          axis.text = element_text(size = base - 1.5, colour = "grey35"),
+          plot.title = element_text(size = base + 0.5, face = "bold", colour = "grey10"),
+          plot.subtitle = element_text(size = base - 1, colour = "grey35", lineheight = 1.05),
+          plot.caption = element_text(size = base - 2.5, colour = "grey50", hjust = 0),
+          legend.title = element_text(size = base - 1.5),
+          legend.text = element_text(size = base - 1.5),
+          legend.key.height = unit(0.32, "cm"),
+          legend.key.width = unit(0.42, "cm"),
+          strip.text = element_text(size = base - 0.5, face = "bold", colour = "grey15"),
+          plot.tag = element_text(size = base + 2, face = "bold", colour = "grey20"))
+}
+theme_map <- function(base = 9) {
+  theme_void(base_size = base) +
+    theme(plot.title = element_text(size = base + 0.5, face = "bold", colour = "grey10"),
+          plot.subtitle = element_text(size = base - 1, colour = "grey35", lineheight = 1.05),
+          legend.title = element_text(size = base - 1.5),
+          legend.text = element_text(size = base - 1.5),
+          legend.key.height = unit(0.30, "cm"),
+          legend.key.width = unit(0.38, "cm"),
+          legend.position = "bottom",
+          plot.margin = margin(4, 4, 4, 4),
+          plot.tag = element_text(size = base + 2, face = "bold", colour = "grey20"))
+}
+
+C_WATER <- "#2E7CB0"; C_ENERGY <- "#E07A2F"
+C_E4W   <- "#7E57C2"; C_W4E    <- "#26A69A"
+C_LOSS  <- "#B0413E"; C_GOOD   <- "#2E8B57"; C_GREY <- "grey62"
+C_FLOW  <- "#2E7CB0"; C_STILL  <- "#5AA9C7"; C_LAND <- "#8D6E63"
+
+# Basin colours, fixed so a basin keeps its identity across every figure it appears in.
+BASIN_COLS <- c(Chattahoochee = "#1F6FA8", Coosa_Etowah = "#E8A33D",
+                Ocmulgee = "#4E9B6E", Flint = "#B4577A",
+                Tallapoosa = "#7E6BA8", Oconee = "#8C8C8C", Broad = "#C6C6C6")
+
+###############################################################################%
+## spatial Sankey primitives ----
+#
+# A spatial Sankey draws each flow as a RIBBON whose width is proportional to volume, laid over a
+# map at the true positions of its endpoints. geom_curve cannot do this: it draws a stroked line
+# whose thickness is a fixed aesthetic in millimetres, so a "wide" flow is a thick line rather
+# than a band with area. Ribbons therefore have to be built as polygons.
+#
+# ExtraNotes: the centreline is a quadratic Bezier, offset perpendicular to its own direction by
+# half the ribbon width at each step, so the band keeps constant width along a curve instead of
+# pinching on the inside of the bend. Width is TAPERED from source to target, which reads as
+# direction without needing an arrowhead that would be lost under a wide band.
+
+# Zoom to the fifteen counties with a small margin. `cty` is passed in because the helper file is
+# sourced before the layers exist.
+# ExtraNotes: the basin polygons are deliberately kept at FULL extent in the data, because the
+# metro's headwater position is a finding. But a map framed on the basins spends most of its area
+# on watershed far outside the study region. Clipping the VIEW rather than the data keeps both:
+# basin edges run off the frame, which is itself the correct visual signal.
+coord_metro <- function(cty, pad = 0.10) {
+  bb <- sf::st_bbox(cty)
+  coord_sf(xlim = c(bb[["xmin"]] - pad, bb[["xmax"]] + pad),
+           ylim = c(bb[["ymin"]] - pad, bb[["ymax"]] + pad), expand = FALSE)
+}
+
+# Label positions for a stacked area or bar.
+# ExtraNotes: position_stack() places the FIRST factor level at the TOP of the stack, so a label
+# position computed from a descending sort lands on the wrong band. Deriving the position from the
+# factor levels in their own order is the only way to keep label and band together; guessing the
+# order is what put the basin labels on the wrong areas.
+stack_label_y <- function(d, group, value) {
+  d %>%
+    mutate(.g = {{ group }}, .v = {{ value }}) %>%
+    arrange(as.integer(factor(.g, levels = levels(factor(.g))))) %>%
+    mutate(.top = sum(.v) - cumsum(.v) + .v,
+           ypos = .top - .v / 2)
+}
+
+# Quadratic Bezier from (x0,y0) to (x1,y1), bowed sideways by `curv` of the chord length.
+bezier_path <- function(x0, y0, x1, y1, curv = 0.18, n = 60) {
+  mx <- (x0 + x1) / 2; my <- (y0 + y1) / 2
+  dx <- x1 - x0; dy <- y1 - y0
+  # control point offset perpendicular to the chord
+  cx <- mx - curv * dy; cy <- my + curv * dx
+  t <- seq(0, 1, length.out = n)
+  tibble(x = (1 - t)^2 * x0 + 2 * (1 - t) * t * cx + t^2 * x1,
+         y = (1 - t)^2 * y0 + 2 * (1 - t) * t * cy + t^2 * y1,
+         t = t)
+}
+
+# One ribbon polygon. `w0` and `w1` are half-widths in degrees at source and target.
+ribbon_poly <- function(x0, y0, x1, y1, w0, w1, curv = 0.18, n = 60, id = 1L) {
+  p <- bezier_path(x0, y0, x1, y1, curv, n)
+  # local direction, forward difference with the last step repeated
+  dx <- c(diff(p$x), tail(diff(p$x), 1)); dy <- c(diff(p$y), tail(diff(p$y), 1))
+  len <- sqrt(dx^2 + dy^2); len[len == 0] <- 1e-12
+  # unit normal
+  nx <- -dy / len; ny <- dx / len
+  w <- w0 + (w1 - w0) * p$t
+  bind_rows(
+    tibble(x = p$x + nx * w, y = p$y + ny * w, ord = seq_len(n)),
+    tibble(x = rev(p$x - nx * w), y = rev(p$y - ny * w), ord = n + seq_len(n))
+  ) %>% mutate(rib = id)
+}
+
+# Build ribbons for a whole edge table. Widths are scaled so the largest flow reaches
+# `max_w` degrees, which keeps the map legible whatever the units of `value`.
+sankey_ribbons <- function(d, x0, y0, x1, y1, value, max_w = 0.055, taper = 0.45,
+                           curv = 0.18) {
+  d <- d %>% mutate(.v = {{ value }}) %>% filter(.v > 0) %>% arrange(.v)
+  if (nrow(d) == 0) return(NULL)
+  # Width scales with the SQUARE ROOT of volume. Linear width makes the largest flow swamp the
+  # map, and area is what the eye integrates anyway.
+  hw <- max_w * sqrt(d$.v / max(d$.v)) / 2
+  purrr::pmap_dfr(
+    list(d %>% pull({{ x0 }}), d %>% pull({{ y0 }}),
+         d %>% pull({{ x1 }}), d %>% pull({{ y1 }}), hw, seq_len(nrow(d))),
+    function(a, b, c, e, w, i)
+      ribbon_poly(a, b, c, e, w0 = w, w1 = w * taper, curv = curv, id = i)) %>%
+    left_join(d %>% mutate(rib = seq_len(nrow(d))), by = "rib")
+}

@@ -50,6 +50,7 @@ outputs/*.log
 web/data
 
 docs_analysis/
+AGENTS.md
 # Large upstream reference datasets. None is tracked. Each is reduced to the study region by a
 # prep script, and only the small extract is committed -- so if a file appears below, the extract
 # beside it is what the analysis actually reads.
