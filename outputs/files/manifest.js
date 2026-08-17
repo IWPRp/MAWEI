@@ -1,5 +1,5 @@
 const MAWEI_MANIFEST = {
-  "generated": "2026-08-14T23:44:28-0400",
+  "generated": "2026-08-16T18:54:37-0400",
   "years": [2020, 2021, 2022, 2023, 2024],
   "counties": ["Bartow", "Cherokee", "Clayton", "Cobb", "Coweta", "DeKalb", "Douglas", "Fayette", "Forsyth", "Fulton", "Gwinnett", "Hall", "Henry", "Paulding", "Rockdale"],
   "domains": ["energy", "water", "energy-water"],
@@ -10,7 +10,7 @@ const MAWEI_MANIFEST = {
       "scope": "metro",
       "kind": "diagram",
       "label": "metro energy",
-      "bytes": 3918932
+      "bytes": 3919174
     },
     {
       "path": "energy/01_metro_energy.json",
@@ -18,7 +18,7 @@ const MAWEI_MANIFEST = {
       "scope": "metro",
       "kind": "data",
       "label": "metro energy",
-      "bytes": 31254
+      "bytes": 31241
     },
     {
       "path": "energy/01_metro_energy_flows.csv",
@@ -26,7 +26,7 @@ const MAWEI_MANIFEST = {
       "scope": "metro",
       "kind": "table",
       "label": "metro energy flows",
-      "bytes": 17648
+      "bytes": 17618
     },
     {
       "path": "energy/02_county_Bartow_energy.html",
@@ -35,7 +35,7 @@ const MAWEI_MANIFEST = {
       "county": "Bartow",
       "kind": "diagram",
       "label": "county Bartow energy",
-      "bytes": 3909733
+      "bytes": 3909884
     },
     {
       "path": "energy/02_county_Bartow_energy.json",
@@ -44,7 +44,7 @@ const MAWEI_MANIFEST = {
       "county": "Bartow",
       "kind": "data",
       "label": "county Bartow energy",
-      "bytes": 23890
+      "bytes": 23870
     },
     {
       "path": "energy/02_county_Cherokee_energy.html",
@@ -53,7 +53,7 @@ const MAWEI_MANIFEST = {
       "county": "Cherokee",
       "kind": "diagram",
       "label": "county Cherokee energy",
-      "bytes": 3901595
+      "bytes": 3901694
     },
     {
       "path": "energy/02_county_Cherokee_energy.json",
@@ -62,7 +62,7 @@ const MAWEI_MANIFEST = {
       "county": "Cherokee",
       "kind": "data",
       "label": "county Cherokee energy",
-      "bytes": 19892
+      "bytes": 19873
     },
     {
       "path": "energy/02_county_Clayton_energy.html",
@@ -71,7 +71,7 @@ const MAWEI_MANIFEST = {
       "county": "Clayton",
       "kind": "diagram",
       "label": "county Clayton energy",
-      "bytes": 3901044
+      "bytes": 3901146
     },
     {
       "path": "energy/02_county_Clayton_energy.json",
@@ -80,7 +80,7 @@ const MAWEI_MANIFEST = {
       "county": "Clayton",
       "kind": "data",
       "label": "county Clayton energy",
-      "bytes": 19466
+      "bytes": 19448
     },
     {
       "path": "energy/02_county_Cobb_energy.html",
@@ -89,7 +89,7 @@ const MAWEI_MANIFEST = {
       "county": "Cobb",
       "kind": "diagram",
       "label": "county Cobb energy",
-      "bytes": 3908046
+      "bytes": 3908239
     },
     {
       "path": "energy/02_county_Cobb_energy.json",
@@ -98,7 +98,7 @@ const MAWEI_MANIFEST = {
       "county": "Cobb",
       "kind": "data",
       "label": "county Cobb energy",
-      "bytes": 23602
+      "bytes": 23588
     },
     {
       "path": "energy/02_county_Coweta_energy.html",
@@ -107,7 +107,7 @@ const MAWEI_MANIFEST = {
       "county": "Coweta",
       "kind": "diagram",
       "label": "county Coweta energy",
-      "bytes": 3904370
+      "bytes": 3904563
     },
     {
       "path": "energy/02_county_Coweta_energy.json",
@@ -116,7 +116,7 @@ const MAWEI_MANIFEST = {
       "county": "Coweta",
       "kind": "data",
       "label": "county Coweta energy",
-      "bytes": 21058
+      "bytes": 21044
     },
     {
       "path": "energy/02_county_DeKalb_energy.html",
@@ -125,7 +125,7 @@ const MAWEI_MANIFEST = {
       "county": "DeKalb",
       "kind": "diagram",
       "label": "county DeKalb energy",
-      "bytes": 3904176
+      "bytes": 3904285
     },
     {
       "path": "energy/02_county_DeKalb_energy.json",
@@ -134,7 +134,7 @@ const MAWEI_MANIFEST = {
       "county": "DeKalb",
       "kind": "data",
       "label": "county DeKalb energy",
-      "bytes": 20930
+      "bytes": 20912
     },
     {
       "path": "energy/02_county_Douglas_energy.html",
@@ -143,7 +143,7 @@ const MAWEI_MANIFEST = {
       "county": "Douglas",
       "kind": "diagram",
       "label": "county Douglas energy",
-      "bytes": 3902573
+      "bytes": 3902675
     },
     {
       "path": "energy/02_county_Douglas_energy.json",
@@ -152,7 +152,7 @@ const MAWEI_MANIFEST = {
       "county": "Douglas",
       "kind": "data",
       "label": "county Douglas energy",
-      "bytes": 20061
+      "bytes": 20042
     },
     {
       "path": "energy/02_county_Fayette_energy.html",
@@ -161,7 +161,7 @@ const MAWEI_MANIFEST = {
       "county": "Fayette",
       "kind": "diagram",
       "label": "county Fayette energy",
-      "bytes": 3901750
+      "bytes": 3901859
     },
     {
       "path": "energy/02_county_Fayette_energy.json",
@@ -170,7 +170,7 @@ const MAWEI_MANIFEST = {
       "county": "Fayette",
       "kind": "data",
       "label": "county Fayette energy",
-      "bytes": 19899
+      "bytes": 19880
     },
     {
       "path": "energy/02_county_Forsyth_energy.html",
@@ -179,7 +179,7 @@ const MAWEI_MANIFEST = {
       "county": "Forsyth",
       "kind": "diagram",
       "label": "county Forsyth energy",
-      "bytes": 3902559
+      "bytes": 3902619
     },
     {
       "path": "energy/02_county_Forsyth_energy.json",
@@ -188,7 +188,7 @@ const MAWEI_MANIFEST = {
       "county": "Forsyth",
       "kind": "data",
       "label": "county Forsyth energy",
-      "bytes": 20106
+      "bytes": 20081
     },
     {
       "path": "energy/02_county_Fulton_energy.html",
@@ -197,7 +197,7 @@ const MAWEI_MANIFEST = {
       "county": "Fulton",
       "kind": "diagram",
       "label": "county Fulton energy",
-      "bytes": 3908478
+      "bytes": 3908545
     },
     {
       "path": "energy/02_county_Fulton_energy.json",
@@ -206,7 +206,7 @@ const MAWEI_MANIFEST = {
       "county": "Fulton",
       "kind": "data",
       "label": "county Fulton energy",
-      "bytes": 24253
+      "bytes": 24228
     },
     {
       "path": "energy/02_county_Gwinnett_energy.html",
@@ -215,7 +215,7 @@ const MAWEI_MANIFEST = {
       "county": "Gwinnett",
       "kind": "diagram",
       "label": "county Gwinnett energy",
-      "bytes": 3902442
+      "bytes": 3902544
     },
     {
       "path": "energy/02_county_Gwinnett_energy.json",
@@ -224,7 +224,7 @@ const MAWEI_MANIFEST = {
       "county": "Gwinnett",
       "kind": "data",
       "label": "county Gwinnett energy",
-      "bytes": 20497
+      "bytes": 20478
     },
     {
       "path": "energy/02_county_Hall_energy.html",
@@ -233,7 +233,7 @@ const MAWEI_MANIFEST = {
       "county": "Hall",
       "kind": "diagram",
       "label": "county Hall energy",
-      "bytes": 3901562
+      "bytes": 3901664
     },
     {
       "path": "energy/02_county_Hall_energy.json",
@@ -242,7 +242,7 @@ const MAWEI_MANIFEST = {
       "county": "Hall",
       "kind": "data",
       "label": "county Hall energy",
-      "bytes": 19908
+      "bytes": 19890
     },
     {
       "path": "energy/02_county_Henry_energy.html",
@@ -251,7 +251,7 @@ const MAWEI_MANIFEST = {
       "county": "Henry",
       "kind": "diagram",
       "label": "county Henry energy",
-      "bytes": 3901098
+      "bytes": 3901200
     },
     {
       "path": "energy/02_county_Henry_energy.json",
@@ -260,7 +260,7 @@ const MAWEI_MANIFEST = {
       "county": "Henry",
       "kind": "data",
       "label": "county Henry energy",
-      "bytes": 19461
+      "bytes": 19442
     },
     {
       "path": "energy/02_county_Paulding_energy.html",
@@ -269,7 +269,7 @@ const MAWEI_MANIFEST = {
       "county": "Paulding",
       "kind": "diagram",
       "label": "county Paulding energy",
-      "bytes": 3900539
+      "bytes": 3900641
     },
     {
       "path": "energy/02_county_Paulding_energy.json",
@@ -278,7 +278,7 @@ const MAWEI_MANIFEST = {
       "county": "Paulding",
       "kind": "data",
       "label": "county Paulding energy",
-      "bytes": 19031
+      "bytes": 19012
     },
     {
       "path": "energy/02_county_Rockdale_energy.html",
@@ -287,7 +287,7 @@ const MAWEI_MANIFEST = {
       "county": "Rockdale",
       "kind": "diagram",
       "label": "county Rockdale energy",
-      "bytes": 3902598
+      "bytes": 3902658
     },
     {
       "path": "energy/02_county_Rockdale_energy.json",
@@ -296,7 +296,7 @@ const MAWEI_MANIFEST = {
       "county": "Rockdale",
       "kind": "data",
       "label": "county Rockdale energy",
-      "bytes": 19386
+      "bytes": 19361
     },
     {
       "path": "energy/02_county_energy_flows.csv",
@@ -305,7 +305,7 @@ const MAWEI_MANIFEST = {
       "county": "energy",
       "kind": "table",
       "label": "county energy flows",
-      "bytes": 190706
+      "bytes": 190610
     },
     {
       "path": "energy-water/01_metro_ew.html",
@@ -313,7 +313,7 @@ const MAWEI_MANIFEST = {
       "scope": "metro",
       "kind": "diagram",
       "label": "metro ew",
-      "bytes": 3965325
+      "bytes": 3966023
     },
     {
       "path": "energy-water/01_metro_ew.json",
@@ -321,7 +321,7 @@ const MAWEI_MANIFEST = {
       "scope": "metro",
       "kind": "data",
       "label": "metro ew",
-      "bytes": 59742
+      "bytes": 59738
     },
     {
       "path": "energy-water/01_metro_ew_flows.csv",
@@ -329,7 +329,7 @@ const MAWEI_MANIFEST = {
       "scope": "metro",
       "kind": "table",
       "label": "metro ew flows",
-      "bytes": 33128
+      "bytes": 33098
     },
     {
       "path": "energy-water/02_metro_ew_simplified.html",
@@ -337,7 +337,7 @@ const MAWEI_MANIFEST = {
       "scope": "metro",
       "kind": "diagram",
       "label": "metro ew simplified",
-      "bytes": 3941459
+      "bytes": 3941960
     },
     {
       "path": "energy-water/02_metro_ew_simplified.json",
@@ -345,7 +345,7 @@ const MAWEI_MANIFEST = {
       "scope": "metro",
       "kind": "data",
       "label": "metro ew simplified",
-      "bytes": 46740
+      "bytes": 46762
     },
     {
       "path": "energy-water/02_metro_ew_simplified_flows.csv",
@@ -362,7 +362,7 @@ const MAWEI_MANIFEST = {
       "county": "Bartow",
       "kind": "diagram",
       "label": "county Bartow ew",
-      "bytes": 3968352
+      "bytes": 3968724
     },
     {
       "path": "energy-water/03_county_Bartow_ew.json",
@@ -371,7 +371,7 @@ const MAWEI_MANIFEST = {
       "county": "Bartow",
       "kind": "data",
       "label": "county Bartow ew",
-      "bytes": 57461
+      "bytes": 57436
     },
     {
       "path": "energy-water/04_county_Bartow_ew_simplified.html",
@@ -380,7 +380,7 @@ const MAWEI_MANIFEST = {
       "county": "Bartow",
       "kind": "diagram",
       "label": "county Bartow ew simplified",
-      "bytes": 3961838
+      "bytes": 3961933
     },
     {
       "path": "energy-water/04_county_Bartow_ew_simplified.json",
@@ -389,7 +389,7 @@ const MAWEI_MANIFEST = {
       "county": "Bartow",
       "kind": "data",
       "label": "county Bartow ew simplified",
-      "bytes": 54119
+      "bytes": 54104
     },
     {
       "path": "energy-water/03_county_Cherokee_ew.html",
@@ -398,7 +398,7 @@ const MAWEI_MANIFEST = {
       "county": "Cherokee",
       "kind": "diagram",
       "label": "county Cherokee ew",
-      "bytes": 3967014
+      "bytes": 3967445
     },
     {
       "path": "energy-water/03_county_Cherokee_ew.json",
@@ -407,7 +407,7 @@ const MAWEI_MANIFEST = {
       "county": "Cherokee",
       "kind": "data",
       "label": "county Cherokee ew",
-      "bytes": 55292
+      "bytes": 55282
     },
     {
       "path": "energy-water/04_county_Cherokee_ew_simplified.html",
@@ -416,7 +416,7 @@ const MAWEI_MANIFEST = {
       "county": "Cherokee",
       "kind": "diagram",
       "label": "county Cherokee ew simplified",
-      "bytes": 3962240
+      "bytes": 3962664
     },
     {
       "path": "energy-water/04_county_Cherokee_ew_simplified.json",
@@ -425,7 +425,7 @@ const MAWEI_MANIFEST = {
       "county": "Cherokee",
       "kind": "data",
       "label": "county Cherokee ew simplified",
-      "bytes": 52390
+      "bytes": 52400
     },
     {
       "path": "energy-water/03_county_Clayton_ew.html",
@@ -434,7 +434,7 @@ const MAWEI_MANIFEST = {
       "county": "Clayton",
       "kind": "diagram",
       "label": "county Clayton ew",
-      "bytes": 3958170
+      "bytes": 3958601
     },
     {
       "path": "energy-water/03_county_Clayton_ew.json",
@@ -443,7 +443,7 @@ const MAWEI_MANIFEST = {
       "county": "Clayton",
       "kind": "data",
       "label": "county Clayton ew",
-      "bytes": 49945
+      "bytes": 49937
     },
     {
       "path": "energy-water/04_county_Clayton_ew_simplified.html",
@@ -452,7 +452,7 @@ const MAWEI_MANIFEST = {
       "county": "Clayton",
       "kind": "diagram",
       "label": "county Clayton ew simplified",
-      "bytes": 3949320
+      "bytes": 3949744
     },
     {
       "path": "energy-water/04_county_Clayton_ew_simplified.json",
@@ -461,7 +461,7 @@ const MAWEI_MANIFEST = {
       "county": "Clayton",
       "kind": "data",
       "label": "county Clayton ew simplified",
-      "bytes": 45645
+      "bytes": 45656
     },
     {
       "path": "energy-water/03_county_Cobb_ew.html",
@@ -470,7 +470,7 @@ const MAWEI_MANIFEST = {
       "county": "Cobb",
       "kind": "diagram",
       "label": "county Cobb ew",
-      "bytes": 3969595
+      "bytes": 3970026
     },
     {
       "path": "energy-water/03_county_Cobb_ew.json",
@@ -479,7 +479,7 @@ const MAWEI_MANIFEST = {
       "county": "Cobb",
       "kind": "data",
       "label": "county Cobb ew",
-      "bytes": 56957
+      "bytes": 56934
     },
     {
       "path": "energy-water/04_county_Cobb_ew_simplified.html",
@@ -488,7 +488,7 @@ const MAWEI_MANIFEST = {
       "county": "Cobb",
       "kind": "diagram",
       "label": "county Cobb ew simplified",
-      "bytes": 3955136
+      "bytes": 3955553
     },
     {
       "path": "energy-water/04_county_Cobb_ew_simplified.json",
@@ -497,7 +497,7 @@ const MAWEI_MANIFEST = {
       "county": "Cobb",
       "kind": "data",
       "label": "county Cobb ew simplified",
-      "bytes": 49999
+      "bytes": 50009
     },
     {
       "path": "energy-water/03_county_Coweta_ew.html",
@@ -506,7 +506,7 @@ const MAWEI_MANIFEST = {
       "county": "Coweta",
       "kind": "diagram",
       "label": "county Coweta ew",
-      "bytes": 3971630
+      "bytes": 3971942
     },
     {
       "path": "energy-water/03_county_Coweta_ew.json",
@@ -515,7 +515,7 @@ const MAWEI_MANIFEST = {
       "county": "Coweta",
       "kind": "data",
       "label": "county Coweta ew",
-      "bytes": 58483
+      "bytes": 58452
     },
     {
       "path": "energy-water/04_county_Coweta_ew_simplified.html",
@@ -524,7 +524,7 @@ const MAWEI_MANIFEST = {
       "county": "Coweta",
       "kind": "diagram",
       "label": "county Coweta ew simplified",
-      "bytes": 3966503
+      "bytes": 3966601
     },
     {
       "path": "energy-water/04_county_Coweta_ew_simplified.json",
@@ -533,7 +533,7 @@ const MAWEI_MANIFEST = {
       "county": "Coweta",
       "kind": "data",
       "label": "county Coweta ew simplified",
-      "bytes": 55847
+      "bytes": 55834
     },
     {
       "path": "energy-water/03_county_DeKalb_ew.html",
@@ -542,7 +542,7 @@ const MAWEI_MANIFEST = {
       "county": "DeKalb",
       "kind": "diagram",
       "label": "county DeKalb ew",
-      "bytes": 3951481
+      "bytes": 3951923
     },
     {
       "path": "energy-water/03_county_DeKalb_ew.json",
@@ -551,7 +551,7 @@ const MAWEI_MANIFEST = {
       "county": "DeKalb",
       "kind": "data",
       "label": "county DeKalb ew",
-      "bytes": 45941
+      "bytes": 45926
     },
     {
       "path": "energy-water/04_county_DeKalb_ew_simplified.html",
@@ -560,7 +560,7 @@ const MAWEI_MANIFEST = {
       "county": "DeKalb",
       "kind": "diagram",
       "label": "county DeKalb ew simplified",
-      "bytes": 3942190
+      "bytes": 3942621
     },
     {
       "path": "energy-water/04_county_DeKalb_ew_simplified.json",
@@ -569,7 +569,7 @@ const MAWEI_MANIFEST = {
       "county": "DeKalb",
       "kind": "data",
       "label": "county DeKalb ew simplified",
-      "bytes": 41542
+      "bytes": 41547
     },
     {
       "path": "energy-water/03_county_Douglas_ew.html",
@@ -578,7 +578,7 @@ const MAWEI_MANIFEST = {
       "county": "Douglas",
       "kind": "diagram",
       "label": "county Douglas ew",
-      "bytes": 3954916
+      "bytes": 3955361
     },
     {
       "path": "energy-water/03_county_Douglas_ew.json",
@@ -587,7 +587,7 @@ const MAWEI_MANIFEST = {
       "county": "Douglas",
       "kind": "data",
       "label": "county Douglas ew",
-      "bytes": 47548
+      "bytes": 47539
     },
     {
       "path": "energy-water/04_county_Douglas_ew_simplified.html",
@@ -596,7 +596,7 @@ const MAWEI_MANIFEST = {
       "county": "Douglas",
       "kind": "diagram",
       "label": "county Douglas ew simplified",
-      "bytes": 3950906
+      "bytes": 3951334
     },
     {
       "path": "energy-water/04_county_Douglas_ew_simplified.json",
@@ -605,7 +605,7 @@ const MAWEI_MANIFEST = {
       "county": "Douglas",
       "kind": "data",
       "label": "county Douglas ew simplified",
-      "bytes": 45128
+      "bytes": 45139
     },
     {
       "path": "energy-water/03_county_Fayette_ew.html",
@@ -614,7 +614,7 @@ const MAWEI_MANIFEST = {
       "county": "Fayette",
       "kind": "diagram",
       "label": "county Fayette ew",
-      "bytes": 3949399
+      "bytes": 3949732
     },
     {
       "path": "energy-water/03_county_Fayette_ew.json",
@@ -623,7 +623,7 @@ const MAWEI_MANIFEST = {
       "county": "Fayette",
       "kind": "data",
       "label": "county Fayette ew",
-      "bytes": 46628
+      "bytes": 46604
     },
     {
       "path": "energy-water/04_county_Fayette_ew_simplified.html",
@@ -632,7 +632,7 @@ const MAWEI_MANIFEST = {
       "county": "Fayette",
       "kind": "diagram",
       "label": "county Fayette ew simplified",
-      "bytes": 3944956
+      "bytes": 3945069
     },
     {
       "path": "energy-water/04_county_Fayette_ew_simplified.json",
@@ -641,7 +641,7 @@ const MAWEI_MANIFEST = {
       "county": "Fayette",
       "kind": "data",
       "label": "county Fayette ew simplified",
-      "bytes": 43753
+      "bytes": 43734
     },
     {
       "path": "energy-water/03_county_Forsyth_ew.html",
@@ -650,7 +650,7 @@ const MAWEI_MANIFEST = {
       "county": "Forsyth",
       "kind": "diagram",
       "label": "county Forsyth ew",
-      "bytes": 3961087
+      "bytes": 3961378
     },
     {
       "path": "energy-water/03_county_Forsyth_ew.json",
@@ -659,7 +659,7 @@ const MAWEI_MANIFEST = {
       "county": "Forsyth",
       "kind": "data",
       "label": "county Forsyth ew",
-      "bytes": 52515
+      "bytes": 52484
     },
     {
       "path": "energy-water/04_county_Forsyth_ew_simplified.html",
@@ -668,7 +668,7 @@ const MAWEI_MANIFEST = {
       "county": "Forsyth",
       "kind": "diagram",
       "label": "county Forsyth ew simplified",
-      "bytes": 3957259
+      "bytes": 3957365
     },
     {
       "path": "energy-water/04_county_Forsyth_ew_simplified.json",
@@ -677,7 +677,7 @@ const MAWEI_MANIFEST = {
       "county": "Forsyth",
       "kind": "data",
       "label": "county Forsyth ew simplified",
-      "bytes": 50426
+      "bytes": 50406
     },
     {
       "path": "energy-water/03_county_Fulton_ew.html",
@@ -686,7 +686,7 @@ const MAWEI_MANIFEST = {
       "county": "Fulton",
       "kind": "diagram",
       "label": "county Fulton ew",
-      "bytes": 3978317
+      "bytes": 3978724
     },
     {
       "path": "energy-water/03_county_Fulton_ew.json",
@@ -695,7 +695,7 @@ const MAWEI_MANIFEST = {
       "county": "Fulton",
       "kind": "data",
       "label": "county Fulton ew",
-      "bytes": 63543
+      "bytes": 63521
     },
     {
       "path": "energy-water/04_county_Fulton_ew_simplified.html",
@@ -704,7 +704,7 @@ const MAWEI_MANIFEST = {
       "county": "Fulton",
       "kind": "diagram",
       "label": "county Fulton ew simplified",
-      "bytes": 3964388
+      "bytes": 3964826
     },
     {
       "path": "energy-water/04_county_Fulton_ew_simplified.json",
@@ -713,7 +713,7 @@ const MAWEI_MANIFEST = {
       "county": "Fulton",
       "kind": "data",
       "label": "county Fulton ew simplified",
-      "bytes": 56625
+      "bytes": 56629
     },
     {
       "path": "energy-water/03_county_Gwinnett_ew.html",
@@ -722,7 +722,7 @@ const MAWEI_MANIFEST = {
       "county": "Gwinnett",
       "kind": "diagram",
       "label": "county Gwinnett ew",
-      "bytes": 3952812
+      "bytes": 3953250
     },
     {
       "path": "energy-water/03_county_Gwinnett_ew.json",
@@ -731,7 +731,7 @@ const MAWEI_MANIFEST = {
       "county": "Gwinnett",
       "kind": "data",
       "label": "county Gwinnett ew",
-      "bytes": 47437
+      "bytes": 47428
     },
     {
       "path": "energy-water/04_county_Gwinnett_ew_simplified.html",
@@ -740,7 +740,7 @@ const MAWEI_MANIFEST = {
       "county": "Gwinnett",
       "kind": "diagram",
       "label": "county Gwinnett ew simplified",
-      "bytes": 3948543
+      "bytes": 3948967
     },
     {
       "path": "energy-water/04_county_Gwinnett_ew_simplified.json",
@@ -749,7 +749,7 @@ const MAWEI_MANIFEST = {
       "county": "Gwinnett",
       "kind": "data",
       "label": "county Gwinnett ew simplified",
-      "bytes": 44898
+      "bytes": 44909
     },
     {
       "path": "energy-water/03_county_Hall_ew.html",
@@ -758,7 +758,7 @@ const MAWEI_MANIFEST = {
       "county": "Hall",
       "kind": "diagram",
       "label": "county Hall ew",
-      "bytes": 3948108
+      "bytes": 3948441
     },
     {
       "path": "energy-water/03_county_Hall_ew.json",
@@ -767,7 +767,7 @@ const MAWEI_MANIFEST = {
       "county": "Hall",
       "kind": "data",
       "label": "county Hall ew",
-      "bytes": 46121
+      "bytes": 46097
     },
     {
       "path": "energy-water/04_county_Hall_ew_simplified.html",
@@ -776,7 +776,7 @@ const MAWEI_MANIFEST = {
       "county": "Hall",
       "kind": "diagram",
       "label": "county Hall ew simplified",
-      "bytes": 3944129
+      "bytes": 3944241
     },
     {
       "path": "energy-water/04_county_Hall_ew_simplified.json",
@@ -785,7 +785,7 @@ const MAWEI_MANIFEST = {
       "county": "Hall",
       "kind": "data",
       "label": "county Hall ew simplified",
-      "bytes": 43630
+      "bytes": 43611
     },
     {
       "path": "energy-water/03_county_Henry_ew.html",
@@ -794,7 +794,7 @@ const MAWEI_MANIFEST = {
       "county": "Henry",
       "kind": "diagram",
       "label": "county Henry ew",
-      "bytes": 3962561
+      "bytes": 3962775
     },
     {
       "path": "energy-water/03_county_Henry_ew.json",
@@ -803,7 +803,7 @@ const MAWEI_MANIFEST = {
       "county": "Henry",
       "kind": "data",
       "label": "county Henry ew",
-      "bytes": 52395
+      "bytes": 52375
     },
     {
       "path": "energy-water/04_county_Henry_ew_simplified.html",
@@ -812,7 +812,7 @@ const MAWEI_MANIFEST = {
       "county": "Henry",
       "kind": "diagram",
       "label": "county Henry ew simplified",
-      "bytes": 3959890
+      "bytes": 3959999
     },
     {
       "path": "energy-water/04_county_Henry_ew_simplified.json",
@@ -821,7 +821,7 @@ const MAWEI_MANIFEST = {
       "county": "Henry",
       "kind": "data",
       "label": "county Henry ew simplified",
-      "bytes": 50520
+      "bytes": 50500
     },
     {
       "path": "energy-water/03_county_Paulding_ew.html",
@@ -830,7 +830,7 @@ const MAWEI_MANIFEST = {
       "county": "Paulding",
       "kind": "diagram",
       "label": "county Paulding ew",
-      "bytes": 3955610
+      "bytes": 3956041
     },
     {
       "path": "energy-water/03_county_Paulding_ew.json",
@@ -839,7 +839,7 @@ const MAWEI_MANIFEST = {
       "county": "Paulding",
       "kind": "data",
       "label": "county Paulding ew",
-      "bytes": 48722
+      "bytes": 48713
     },
     {
       "path": "energy-water/04_county_Paulding_ew_simplified.html",
@@ -848,7 +848,7 @@ const MAWEI_MANIFEST = {
       "county": "Paulding",
       "kind": "diagram",
       "label": "county Paulding ew simplified",
-      "bytes": 3952609
+      "bytes": 3953033
     },
     {
       "path": "energy-water/04_county_Paulding_ew_simplified.json",
@@ -857,7 +857,7 @@ const MAWEI_MANIFEST = {
       "county": "Paulding",
       "kind": "data",
       "label": "county Paulding ew simplified",
-      "bytes": 47117
+      "bytes": 47128
     },
     {
       "path": "energy-water/03_county_Rockdale_ew.html",
@@ -866,7 +866,7 @@ const MAWEI_MANIFEST = {
       "county": "Rockdale",
       "kind": "diagram",
       "label": "county Rockdale ew",
-      "bytes": 3945462
+      "bytes": 3945634
     },
     {
       "path": "energy-water/03_county_Rockdale_ew.json",
@@ -875,7 +875,7 @@ const MAWEI_MANIFEST = {
       "county": "Rockdale",
       "kind": "data",
       "label": "county Rockdale ew",
-      "bytes": 42439
+      "bytes": 42414
     },
     {
       "path": "energy-water/04_county_Rockdale_ew_simplified.html",
@@ -884,7 +884,7 @@ const MAWEI_MANIFEST = {
       "county": "Rockdale",
       "kind": "diagram",
       "label": "county Rockdale ew simplified",
-      "bytes": 3942845
+      "bytes": 3942951
     },
     {
       "path": "energy-water/04_county_Rockdale_ew_simplified.json",
@@ -893,7 +893,7 @@ const MAWEI_MANIFEST = {
       "county": "Rockdale",
       "kind": "data",
       "label": "county Rockdale ew simplified",
-      "bytes": 40912
+      "bytes": 40893
     },
     {
       "path": "energy-water/03_county_ew_flows.csv",
@@ -902,7 +902,7 @@ const MAWEI_MANIFEST = {
       "county": "ew",
       "kind": "table",
       "label": "county ew flows",
-      "bytes": 516507
+      "bytes": 516411
     },
     {
       "path": "energy-water/04_county_ew_simplified_flows.csv",
@@ -919,7 +919,7 @@ const MAWEI_MANIFEST = {
       "scope": "metro",
       "kind": "diagram",
       "label": "metro water",
-      "bytes": 3913650
+      "bytes": 3914074
     },
     {
       "path": "water/01_metro_water.json",
@@ -927,7 +927,7 @@ const MAWEI_MANIFEST = {
       "scope": "metro",
       "kind": "data",
       "label": "metro water",
-      "bytes": 25665
+      "bytes": 25673
     },
     {
       "path": "water/01_metro_water_flows.csv",
@@ -944,7 +944,7 @@ const MAWEI_MANIFEST = {
       "county": "Bartow",
       "kind": "diagram",
       "label": "county Bartow water",
-      "bytes": 3907398
+      "bytes": 3907612
     },
     {
       "path": "water/02_county_Bartow_water.json",
@@ -953,7 +953,7 @@ const MAWEI_MANIFEST = {
       "county": "Bartow",
       "kind": "data",
       "label": "county Bartow water",
-      "bytes": 20352
+      "bytes": 20351
     },
     {
       "path": "water/02_county_Cherokee_water.html",
@@ -962,7 +962,7 @@ const MAWEI_MANIFEST = {
       "county": "Cherokee",
       "kind": "diagram",
       "label": "county Cherokee water",
-      "bytes": 3914092
+      "bytes": 3914303
     },
     {
       "path": "water/02_county_Cherokee_water.json",
@@ -971,7 +971,7 @@ const MAWEI_MANIFEST = {
       "county": "Cherokee",
       "kind": "data",
       "label": "county Cherokee water",
-      "bytes": 22531
+      "bytes": 22528
     },
     {
       "path": "water/02_county_Clayton_water.html",
@@ -980,7 +980,7 @@ const MAWEI_MANIFEST = {
       "county": "Clayton",
       "kind": "diagram",
       "label": "county Clayton water",
-      "bytes": 3907427
+      "bytes": 3907641
     },
     {
       "path": "water/02_county_Clayton_water.json",
@@ -989,7 +989,7 @@ const MAWEI_MANIFEST = {
       "county": "Clayton",
       "kind": "data",
       "label": "county Clayton water",
-      "bytes": 18915
+      "bytes": 18912
     },
     {
       "path": "water/02_county_Cobb_water.html",
@@ -998,7 +998,7 @@ const MAWEI_MANIFEST = {
       "county": "Cobb",
       "kind": "diagram",
       "label": "county Cobb water",
-      "bytes": 3912973
+      "bytes": 3913089
     },
     {
       "path": "water/02_county_Cobb_water.json",
@@ -1007,7 +1007,7 @@ const MAWEI_MANIFEST = {
       "county": "Cobb",
       "kind": "data",
       "label": "county Cobb water",
-      "bytes": 22313
+      "bytes": 22292
     },
     {
       "path": "water/02_county_Coweta_water.html",
@@ -1016,7 +1016,7 @@ const MAWEI_MANIFEST = {
       "county": "Coweta",
       "kind": "diagram",
       "label": "county Coweta water",
-      "bytes": 3915952
+      "bytes": 3916068
     },
     {
       "path": "water/02_county_Coweta_water.json",
@@ -1025,7 +1025,7 @@ const MAWEI_MANIFEST = {
       "county": "Coweta",
       "kind": "data",
       "label": "county Coweta water",
-      "bytes": 24204
+      "bytes": 24190
     },
     {
       "path": "water/02_county_DeKalb_water.html",
@@ -1034,7 +1034,7 @@ const MAWEI_MANIFEST = {
       "county": "DeKalb",
       "kind": "diagram",
       "label": "county DeKalb water",
-      "bytes": 3899399
+      "bytes": 3899627
     },
     {
       "path": "water/02_county_DeKalb_water.json",
@@ -1043,7 +1043,7 @@ const MAWEI_MANIFEST = {
       "county": "DeKalb",
       "kind": "data",
       "label": "county DeKalb water",
-      "bytes": 14803
+      "bytes": 14793
     },
     {
       "path": "water/02_county_Douglas_water.html",
@@ -1052,7 +1052,7 @@ const MAWEI_MANIFEST = {
       "county": "Douglas",
       "kind": "diagram",
       "label": "county Douglas water",
-      "bytes": 3904381
+      "bytes": 3904602
     },
     {
       "path": "water/02_county_Douglas_water.json",
@@ -1061,7 +1061,7 @@ const MAWEI_MANIFEST = {
       "county": "Douglas",
       "kind": "data",
       "label": "county Douglas water",
-      "bytes": 17257
+      "bytes": 17252
     },
     {
       "path": "water/02_county_Fayette_water.html",
@@ -1070,7 +1070,7 @@ const MAWEI_MANIFEST = {
       "county": "Fayette",
       "kind": "diagram",
       "label": "county Fayette water",
-      "bytes": 3897978
+      "bytes": 3898192
     },
     {
       "path": "water/02_county_Fayette_water.json",
@@ -1079,7 +1079,7 @@ const MAWEI_MANIFEST = {
       "county": "Fayette",
       "kind": "data",
       "label": "county Fayette water",
-      "bytes": 14838
+      "bytes": 14833
     },
     {
       "path": "water/02_county_Forsyth_water.html",
@@ -1088,7 +1088,7 @@ const MAWEI_MANIFEST = {
       "county": "Forsyth",
       "kind": "diagram",
       "label": "county Forsyth water",
-      "bytes": 3908166
+      "bytes": 3908387
     },
     {
       "path": "water/02_county_Forsyth_water.json",
@@ -1097,7 +1097,7 @@ const MAWEI_MANIFEST = {
       "county": "Forsyth",
       "kind": "data",
       "label": "county Forsyth water",
-      "bytes": 20056
+      "bytes": 20054
     },
     {
       "path": "water/02_county_Fulton_water.html",
@@ -1106,7 +1106,7 @@ const MAWEI_MANIFEST = {
       "county": "Fulton",
       "kind": "diagram",
       "label": "county Fulton water",
-      "bytes": 3917778
+      "bytes": 3918020
     },
     {
       "path": "water/02_county_Fulton_water.json",
@@ -1115,7 +1115,7 @@ const MAWEI_MANIFEST = {
       "county": "Fulton",
       "kind": "data",
       "label": "county Fulton water",
-      "bytes": 25909
+      "bytes": 25900
     },
     {
       "path": "water/02_county_Gwinnett_water.html",
@@ -1124,7 +1124,7 @@ const MAWEI_MANIFEST = {
       "county": "Gwinnett",
       "kind": "diagram",
       "label": "county Gwinnett water",
-      "bytes": 3902375
+      "bytes": 3902606
     },
     {
       "path": "water/02_county_Gwinnett_water.json",
@@ -1133,7 +1133,7 @@ const MAWEI_MANIFEST = {
       "county": "Gwinnett",
       "kind": "data",
       "label": "county Gwinnett water",
-      "bytes": 16712
+      "bytes": 16707
     },
     {
       "path": "water/02_county_Hall_water.html",
@@ -1142,7 +1142,7 @@ const MAWEI_MANIFEST = {
       "county": "Hall",
       "kind": "diagram",
       "label": "county Hall water",
-      "bytes": 3896702
+      "bytes": 3896930
     },
     {
       "path": "water/02_county_Hall_water.json",
@@ -1151,7 +1151,7 @@ const MAWEI_MANIFEST = {
       "county": "Hall",
       "kind": "data",
       "label": "county Hall water",
-      "bytes": 14245
+      "bytes": 14240
     },
     {
       "path": "water/02_county_Henry_water.html",
@@ -1160,7 +1160,7 @@ const MAWEI_MANIFEST = {
       "county": "Henry",
       "kind": "diagram",
       "label": "county Henry water",
-      "bytes": 3914817
+      "bytes": 3914919
     },
     {
       "path": "water/02_county_Henry_water.json",
@@ -1169,7 +1169,7 @@ const MAWEI_MANIFEST = {
       "county": "Henry",
       "kind": "data",
       "label": "county Henry water",
-      "bytes": 23361
+      "bytes": 23363
     },
     {
       "path": "water/02_county_Paulding_water.html",
@@ -1178,7 +1178,7 @@ const MAWEI_MANIFEST = {
       "county": "Paulding",
       "kind": "diagram",
       "label": "county Paulding water",
-      "bytes": 3903651
+      "bytes": 3903865
     },
     {
       "path": "water/02_county_Paulding_water.json",
@@ -1187,7 +1187,7 @@ const MAWEI_MANIFEST = {
       "county": "Paulding",
       "kind": "data",
       "label": "county Paulding water",
-      "bytes": 17023
+      "bytes": 17018
     },
     {
       "path": "water/02_county_Rockdale_water.html",
@@ -1196,7 +1196,7 @@ const MAWEI_MANIFEST = {
       "county": "Rockdale",
       "kind": "diagram",
       "label": "county Rockdale water",
-      "bytes": 3896744
+      "bytes": 3896846
     },
     {
       "path": "water/02_county_Rockdale_water.json",

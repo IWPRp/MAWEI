@@ -1,0 +1,506 @@
+year,source,target,units,value
+2020,Basins,Bowen Plant,MGD,25.7
+2020,Basins,Jack McDonough Plant,MGD,11.022055
+2020,Basins,Yates Plant,MGD,19.1
+2020,Basins,industrial,MGD,11.54725
+2020,Basins,publicWatSup,MGD,608.418396321053
+2020,Biomass,Small-scale generation,PJ,0.80001916
+2020,Biomass,commercial,PJ,0.49336187503074674
+2020,Biomass,industrial,PJ,100.06812055651565
+2020,Biomass,residential,PJ,2.4783854638416054
+2020,Biomass,transport,PJ,19.878900488669036
+2020,Bowen Plant,Disposal,MGD,16.9
+2020,Bowen Plant,Energy Losses,PJ,51.854784841
+2020,Bowen Plant,Water Losses,MGD,8.8
+2020,Bowen Plant,elec_own_use,PJ,2.854503684000007
+2020,Bowen Plant,electricity,PJ,28.686726
+2020,Coal,Bowen Plant,PJ,83.09048125
+2020,Coal,Jack McDonough,PJ,0
+2020,Coal,industrial,PJ,3.8035719974437447
+2020,Energy Storage,Small-scale generation,PJ,0
+2020,Jack McDonough,Energy Losses,PJ,69.75757897400001
+2020,Jack McDonough,elec_own_use,PJ,0.950372855999998
+2020,Jack McDonough,electricity,PJ,67.358322
+2020,Jack McDonough Plant,Disposal,MGD,2.8220550000000006
+2020,Jack McDonough Plant,Water Losses,MGD,8.2
+2020,Natural Gas,Jack McDonough,PJ,138.0662675
+2020,Natural Gas,On-Site Backup Generation,PJ,0
+2020,Natural Gas,Small-scale generation,PJ,0.31612231
+2020,Natural Gas,Yates Plant,PJ,25.980390964999998
+2020,Natural Gas,commercial,PJ,28.57970924340122
+2020,Natural Gas,industrial,PJ,86.83113876309295
+2020,Natural Gas,residential,PJ,67.83312349933915
+2020,Natural Gas,transport,PJ,4.246219579175241
+2020,Petroleum,Bowen Plant,PJ,0.305533275
+2020,Petroleum,Jack McDonough,PJ,6.3299999999999995e-6
+2020,Petroleum,Small-scale generation,PJ,0.003090095
+2020,Petroleum,Yates Plant,PJ,0
+2020,Petroleum,commercial,PJ,12.743619918391955
+2020,Petroleum,industrial,PJ,40.88839897252026
+2020,Petroleum,residential,PJ,4.731864061747406
+2020,Petroleum,transport,PJ,450.27732666144146
+2020,Renewables,Small-scale generation,PJ,1.9123985675199997
+2020,Renewables,commercial,PJ,0.10040810780614934
+2020,Renewables,industrial,PJ,0.0038888719108206475
+2020,Renewables,residential,PJ,0.40887462211246967
+2020,Small-scale generation,commercial,PJ,8.316e-4
+2020,Small-scale generation,electricity,PJ,2.2785372
+2020,Yates Plant,Disposal,MGD,15.400000000000002
+2020,Yates Plant,Energy Losses,PJ,17.240761937
+2020,Yates Plant,Water Losses,MGD,3.7
+2020,Yates Plant,elec_own_use,PJ,0.6343838280000007
+2020,Yates Plant,electricity,PJ,8.105245199999999
+2020,agricultural,Water Losses,MGD,1.9522872035021137
+2020,agricultural,wastewater,MGD,0
+2020,commercial,Water Losses,MGD,38.04330534516276
+2020,commercial,energy_services,PJ,64.50803293968771
+2020,commercial,rejected_energy,PJ,34.73509465983185
+2020,commercial,wastewater,MGD,88.90800557371647
+2020,electricity,Bowen Plant,PJ,0.018494288869146006
+2020,electricity,Energy Losses,PJ,9.335835862464984
+2020,electricity,Jack McDonough Plant,PJ,0.007931714751035605
+2020,electricity,Yates Plant,PJ,0.013744782778236918
+2020,electricity,agricultural,PJ,0.0015820960192837465
+2020,electricity,commercial,PJ,57.3251968548895
+2020,electricity,en4water,PJ,3.5840793063435044
+2020,electricity,government,PJ,0.6190801314479385
+2020,electricity,in-county treatment,PJ,1.8312909196821843
+2020,electricity,industrial,PJ,41.4984345099622
+2020,electricity,publicWatSup,PJ,1.278689466872198
+2020,electricity,residential,PJ,52.360785889771456
+2020,electricity,transport,PJ,0.2644878409174865
+2020,electricity,ww_exports,PJ,0.37754587845576576
+2020,en4water,energy_services,PJ,2.329651549123279
+2020,en4water,rejected_energy,PJ,1.2544277572202267
+2020,government,energy_services,PJ,0.40240208544115996
+2020,government,rejected_energy,PJ,0.21667804600677842
+2020,groundwaterAllBasins,agricultural,MGD,1.688
+2020,groundwaterAllBasins,industrial,MGD,6.217749999999998
+2020,groundwaterAllBasins,publicWatSup,MGD,3.66
+2020,groundwaterAllBasins,residential,MGD,5.7170407469999995
+2020,in-county treatment,Disposal,MGD,446.69118557599234
+2020,industrial,Disposal,MGD,22.718775779465393
+2020,industrial,energy_services,PJ,133.79619762874947
+2020,industrial,rejected_energy,PJ,139.25726691971886
+2020,industrial,wastewater,MGD,16.901600503543886
+2020,out_metro_elec_import,electricity,PJ,58.50426983688152
+2020,publicWatSup,Water Losses,MGD,117.33841944999999
+2020,publicWatSup,agricultural,MGD,0.26428720350211365
+2020,publicWatSup,commercial,MGD,126.95131091887923
+2020,publicWatSup,industrial,MGD,21.85537628300928
+2020,publicWatSup,residential,MGD,345.66900246566235
+2020,residential,Water Losses,MGD,66.45834987230357
+2020,residential,energy_services,PJ,83.06890962556791
+2020,residential,rejected_energy,PJ,44.729412875305805
+2020,residential,septic,MGD,67.4966854690411
+2020,residential,wastewater,MGD,217.43100787131772
+2020,subsurface,wastewater,MGD,123.45057162741425
+2020,surfaceWater,Basins,MGD,675.7877013210531
+2020,transport,energy_services,PJ,308.53350747063206
+2020,transport,rejected_energy,PJ,166.13342709957112
+2020,wastewater,in-county treatment,MGD,377.6225244019924
+2020,wastewater,ww_exports,MGD,69.06866117400001
+2020,ww_imports,in-county treatment,MGD,69.06866117400003
+2021,Basins,Bowen Plant,MGD,28.4
+2021,Basins,Jack McDonough Plant,MGD,11.4
+2021,Basins,Yates Plant,MGD,14.7
+2021,Basins,industrial,MGD,11.54725
+2021,Basins,publicWatSup,MGD,618.3291396737295
+2021,Biomass,Small-scale generation,PJ,0.79581815
+2021,Biomass,commercial,PJ,0.49314772470918433
+2021,Biomass,industrial,PJ,100.06986689981433
+2021,Biomass,residential,PJ,2.56161315326592
+2021,Biomass,transport,PJ,20.673634224679994
+2021,Bowen Plant,Disposal,MGD,21.4
+2021,Bowen Plant,Energy Losses,PJ,60.82663341899998
+2021,Bowen Plant,Water Losses,MGD,7
+2021,Bowen Plant,elec_own_use,PJ,3.202428276000001
+2021,Bowen Plant,electricity,PJ,34.027585200000004
+2021,Coal,Bowen Plant,PJ,97.84400848
+2021,Coal,industrial,PJ,3.9991800960215196
+2021,Energy Storage,Small-scale generation,PJ,0
+2021,Jack McDonough,Energy Losses,PJ,67.82410751199998
+2021,Jack McDonough,elec_own_use,PJ,0.8859503880000175
+2021,Jack McDonough,electricity,PJ,65.6475048
+2021,Jack McDonough Plant,Disposal,MGD,3.3000000000000007
+2021,Jack McDonough Plant,Water Losses,MGD,8.1
+2021,Natural Gas,Jack McDonough,PJ,134.346743675
+2021,Natural Gas,On-Site Backup Generation,PJ,0
+2021,Natural Gas,Small-scale generation,PJ,0.39360573
+2021,Natural Gas,Yates Plant,PJ,15.692581675000001
+2021,Natural Gas,commercial,PJ,30.036277954577724
+2021,Natural Gas,industrial,PJ,91.66982548842714
+2021,Natural Gas,residential,PJ,71.67557801745265
+2021,Natural Gas,transport,PJ,4.4642266654679466
+2021,Petroleum,Bowen Plant,PJ,0.212638415
+2021,Petroleum,Jack McDonough,PJ,0.010819025
+2021,Petroleum,Small-scale generation,PJ,0.00251723
+2021,Petroleum,Yates Plant,PJ,0
+2021,Petroleum,commercial,PJ,13.60591817457418
+2021,Petroleum,industrial,PJ,45.015846718760834
+2021,Petroleum,residential,PJ,4.351822044416915
+2021,Petroleum,transport,PJ,469.8750091242215
+2021,Renewables,Small-scale generation,PJ,1.60307618406
+2021,Renewables,commercial,PJ,0.12874912296091684
+2021,Renewables,industrial,PJ,0.003988898666206823
+2021,Renewables,residential,PJ,0.46516678273654155
+2021,Small-scale generation,commercial,PJ,6.156e-4
+2021,Small-scale generation,electricity,PJ,2.017746
+2021,Yates Plant,Disposal,MGD,12.5
+2021,Yates Plant,Energy Losses,PJ,10.543379383000001
+2021,Yates Plant,Water Losses,MGD,2.2
+2021,Yates Plant,elec_own_use,PJ,0.5999974920000003
+2021,Yates Plant,electricity,PJ,4.5492048
+2021,agricultural,Water Losses,MGD,1.9564739569730423
+2021,agricultural,wastewater,MGD,0
+2021,commercial,Water Losses,MGD,38.79538551166182
+2021,commercial,energy_services,PJ,67.07942155888871
+2021,commercial,rejected_energy,PJ,36.11968853170931
+2021,commercial,wastewater,MGD,90.22606717905965
+2021,electricity,Bowen Plant,PJ,0.020437268633608816
+2021,electricity,Energy Losses,PJ,9.575729164766068
+2021,electricity,Jack McDonough Plant,PJ,0.008203692338842975
+2021,electricity,Yates Plant,PJ,0.01057844538429752
+2021,electricity,agricultural,PJ,0.0015820960192837465
+2021,electricity,commercial,PJ,58.93440151377602
+2021,electricity,en4water,PJ,3.6441014775240332
+2021,electricity,government,PJ,0.5938329549426152
+2021,electricity,in-county treatment,PJ,1.8622089943721465
+2021,electricity,industrial,PJ,43.797422534913615
+2021,electricity,publicWatSup,PJ,1.2993650825989853
+2021,electricity,residential,PJ,52.41193610624255
+2021,electricity,transport,PJ,0.26882911034160295
+2021,electricity,ww_exports,PJ,0.3866882798709216
+2021,en4water,energy_services,PJ,2.3686659603906217
+2021,en4water,rejected_energy,PJ,1.2754355171334117
+2021,government,energy_services,PJ,0.38599142071269993
+2021,government,rejected_energy,PJ,0.2078415342299153
+2021,groundwaterAllBasins,agricultural,MGD,1.688
+2021,groundwaterAllBasins,industrial,MGD,6.217749999999998
+2021,groundwaterAllBasins,publicWatSup,MGD,3.66
+2021,groundwaterAllBasins,residential,MGD,5.809322828000001
+2021,in-county treatment,Disposal,MGD,454.23276801412464
+2021,industrial,Disposal,MGD,22.78182995173501
+2021,industrial,energy_services,PJ,139.41286034167695
+2021,industrial,rejected_energy,PJ,145.10318117194944
+2021,industrial,wastewater,MGD,17.23118840279593
+2021,out_metro_elec_import,electricity,PJ,62.9291744442006
+2021,publicWatSup,Water Losses,MGD,119.21624826000001
+2021,publicWatSup,agricultural,MGD,0.26847395697304216
+2021,publicWatSup,commercial,MGD,129.02145269072147
+2021,publicWatSup,industrial,MGD,22.248018354530938
+2021,publicWatSup,residential,MGD,351.23494641150415
+2021,residential,Water Losses,MGD,67.7173624549899
+2021,residential,energy_services,PJ,85.44325894571085
+2021,residential,rejected_energy,PJ,46.00790866307507
+2021,residential,septic,MGD,67.99955104547945
+2021,residential,wastewater,MGD,221.32735573903477
+2021,subsurface,wastewater,MGD,125.44815669323422
+2021,surfaceWater,Basins,MGD,684.3763896737296
+2021,transport,energy_services,PJ,321.93310443106225
+2021,transport,rejected_energy,PJ,173.34859469364883
+2021,wastewater,in-county treatment,MGD,383.49158579912455
+2021,wastewater,ww_exports,MGD,70.74118221500001
+2021,ww_imports,in-county treatment,MGD,70.74118221500002
+2022,Basins,Bowen Plant,MGD,24.5
+2022,Basins,Jack McDonough Plant,MGD,11.2
+2022,Basins,Yates Plant,MGD,12.7
+2022,Basins,industrial,MGD,11.54725
+2022,Basins,publicWatSup,MGD,628.2397196092005
+2022,Biomass,Small-scale generation,PJ,0.6331477
+2022,Biomass,commercial,PJ,0.4936117518081416
+2022,Biomass,industrial,PJ,104.12946724959144
+2022,Biomass,residential,PJ,3.2302614864137253
+2022,Biomass,transport,PJ,20.32853135183943
+2022,Bowen Plant,Disposal,MGD,14.52
+2022,Bowen Plant,Energy Losses,PJ,55.460680139
+2022,Bowen Plant,Water Losses,MGD,9.98
+2022,Bowen Plant,elec_own_use,PJ,2.9894497560000075
+2022,Bowen Plant,electricity,PJ,30.514147199999996
+2022,Coal,Bowen Plant,PJ,88.72516873
+2022,Coal,industrial,PJ,3.59536872629863
+2022,Energy Storage,Small-scale generation,PJ,0
+2022,Jack McDonough,Energy Losses,PJ,67.542002688
+2022,Jack McDonough,elec_own_use,PJ,0.9123358320000108
+2022,Jack McDonough,electricity,PJ,66.34278359999999
+2022,Jack McDonough Plant,Disposal,MGD,3.6999999999999993
+2022,Jack McDonough Plant,Water Losses,MGD,7.5
+2022,Natural Gas,Jack McDonough,PJ,134.79656297
+2022,Natural Gas,On-Site Backup Generation,PJ,0
+2022,Natural Gas,Small-scale generation,PJ,0.41547166
+2022,Natural Gas,Yates Plant,PJ,16.790455820000002
+2022,Natural Gas,commercial,PJ,31.64409818071947
+2022,Natural Gas,industrial,PJ,87.5529367330043
+2022,Natural Gas,residential,PJ,76.19600579084425
+2022,Natural Gas,transport,PJ,5.560439867854393
+2022,Petroleum,Bowen Plant,PJ,0.23910836500000002
+2022,Petroleum,Jack McDonough,PJ,5.5915e-4
+2022,Petroleum,Small-scale generation,PJ,0.002718735
+2022,Petroleum,Yates Plant,PJ,0
+2022,Petroleum,commercial,PJ,14.135496311556052
+2022,Petroleum,industrial,PJ,46.0459793817988
+2022,Petroleum,residential,PJ,4.210866731905207
+2022,Petroleum,transport,PJ,477.6220401786201
+2022,Renewables,Small-scale generation,PJ,1.39489704728
+2022,Renewables,commercial,PJ,0.1346888852608359
+2022,Renewables,industrial,PJ,0.0046393578624009495
+2022,Renewables,residential,PJ,0.5829810092417587
+2022,Small-scale generation,commercial,PJ,5.22e-4
+2022,Small-scale generation,electricity,PJ,1.7327016
+2022,Yates Plant,Disposal,MGD,10.5
+2022,Yates Plant,Energy Losses,PJ,11.270036072
+2022,Yates Plant,Water Losses,MGD,2.2
+2022,Yates Plant,elec_own_use,PJ,0.5463969479999999
+2022,Yates Plant,electricity,PJ,4.9740228
+2022,agricultural,Water Losses,MGD,1.9603928722095667
+2022,agricultural,wastewater,MGD,0
+2022,commercial,Water Losses,MGD,39.5286733442218
+2022,commercial,energy_services,PJ,70.01342365701258
+2022,commercial,rejected_energy,PJ,37.699535815314455
+2022,commercial,wastewater,MGD,91.56437849813028
+2022,electricity,Bowen Plant,PJ,0.017630742307162533
+2022,electricity,Energy Losses,PJ,9.928074920758158
+2022,electricity,Jack McDonough Plant,PJ,0.00805976791184573
+2022,electricity,Yates Plant,PJ,0.009139201114325068
+2022,electricity,agricultural,PJ,0.0015820960192837465
+2022,electricity,commercial,PJ,61.304542342982515
+2022,electricity,en4water,PJ,3.700463621610323
+2022,electricity,government,PJ,0.5671219889910221
+2022,electricity,in-county treatment,PJ,1.8930341713224266
+2022,electricity,industrial,PJ,44.92718526410921
+2022,electricity,publicWatSup,PJ,1.3200403574077177
+2022,electricity,residential,PJ,54.75345932080077
+2022,electricity,transport,PJ,0.27042202697940543
+2022,electricity,ww_exports,PJ,0.39569806602361146
+2022,en4water,energy_services,PJ,2.40530135404671
+2022,en4water,rejected_energy,PJ,1.2951622675636125
+2022,government,energy_services,PJ,0.3686292928441644
+2022,government,rejected_energy,PJ,0.1984926961468577
+2022,groundwaterAllBasins,agricultural,MGD,1.688
+2022,groundwaterAllBasins,industrial,MGD,6.217749999999998
+2022,groundwaterAllBasins,publicWatSup,MGD,3.66
+2022,groundwaterAllBasins,residential,MGD,5.9032145090000006
+2022,in-county treatment,Disposal,MGD,461.7516906984024
+2022,industrial,Disposal,MGD,22.85406530019175
+2022,industrial,energy_services,PJ,140.24558891894685
+2022,industrial,rejected_energy,PJ,145.96989867074063
+2022,industrial,wastewater,MGD,17.565921643613812
+2022,out_metro_elec_import,electricity,PJ,71.83233506672751
+2022,publicWatSup,Water Losses,MGD,121.09464751899999
+2022,publicWatSup,agricultural,MGD,0.27239287220956676
+2022,publicWatSup,commercial,MGD,131.09305184235208
+2022,publicWatSup,industrial,MGD,22.65498694380556
+2022,publicWatSup,residential,MGD,356.7846404318332
+2022,residential,Water Losses,MGD,68.99380448879101
+2022,residential,energy_services,PJ,90.3229497577414
+2022,residential,rejected_energy,PJ,48.635434484937655
+2022,residential,septic,MGD,68.50487596931507
+2022,residential,wastewater,MGD,225.18917448272714
+2022,subsurface,wastewater,MGD,127.43221607393124
+2022,surfaceWater,Basins,MGD,688.1869696092004
+2022,transport,energy_services,PJ,327.4579317264407
+2022,transport,rejected_energy,PJ,176.32350169885262
+2022,wastewater,in-county treatment,MGD,389.3622482254025
+2022,wastewater,ww_exports,MGD,72.38944247299999
+2022,ww_imports,in-county treatment,MGD,72.38944247299999
+2023,Basins,Bowen Plant,MGD,31.7
+2023,Basins,Jack McDonough Plant,MGD,11.2
+2023,Basins,Yates Plant,MGD,11.2
+2023,Basins,industrial,MGD,11.54725
+2023,Basins,publicWatSup,MGD,638.1791812764029
+2023,Biomass,Small-scale generation,PJ,0.764637625
+2023,Biomass,commercial,PJ,0.49354063805308757
+2023,Biomass,industrial,PJ,99.67590841484453
+2023,Biomass,residential,PJ,2.745629985325501
+2023,Biomass,transport,PJ,22.405642083502798
+2023,Bowen Plant,Disposal,MGD,17.5
+2023,Bowen Plant,Energy Losses,PJ,65.8157581
+2023,Bowen Plant,Water Losses,MGD,14.2
+2023,Bowen Plant,elec_own_use,PJ,3.393160199999995
+2023,Bowen Plant,electricity,PJ,36.8211348
+2023,Coal,Bowen Plant,PJ,105.86951796999999
+2023,Coal,industrial,PJ,2.415867637218522
+2023,Energy Storage,Small-scale generation,PJ,0
+2023,Jack McDonough,Energy Losses,PJ,65.09781900500002
+2023,Jack McDonough,elec_own_use,PJ,0.8709894000000079
+2023,Jack McDonough,electricity,PJ,64.16849159999998
+2023,Jack McDonough Plant,Disposal,MGD,3.6999999999999993
+2023,Jack McDonough Plant,Water Losses,MGD,7.5
+2023,Natural Gas,Jack McDonough,PJ,130.13106390000002
+2023,Natural Gas,On-Site Backup Generation,PJ,0
+2023,Natural Gas,Small-scale generation,PJ,0.46392781
+2023,Natural Gas,Yates Plant,PJ,25.420202845
+2023,Natural Gas,commercial,PJ,29.049415946367155
+2023,Natural Gas,industrial,PJ,88.57813708432118
+2023,Natural Gas,residential,PJ,69.03944223795584
+2023,Natural Gas,transport,PJ,7.001659755709556
+2023,Petroleum,Bowen Plant,PJ,0.16053513
+2023,Petroleum,Jack McDonough,PJ,0.006236105
+2023,Petroleum,Small-scale generation,PJ,0.001773455
+2023,Petroleum,Yates Plant,PJ,0
+2023,Petroleum,commercial,PJ,13.449671689513753
+2023,Petroleum,industrial,PJ,46.78103518278841
+2023,Petroleum,residential,PJ,3.867263122532183
+2023,Petroleum,transport,PJ,515.4698342022017
+2023,Renewables,Small-scale generation,PJ,1.1391052076800001
+2023,Renewables,commercial,PJ,0.15906959540384336
+2023,Renewables,industrial,PJ,0.004447335922143604
+2023,Renewables,residential,PJ,0.7168829267132509
+2023,Small-scale generation,commercial,PJ,0.0035928
+2023,Small-scale generation,electricity,PJ,1.5162335999999998
+2023,Yates Plant,Disposal,MGD,7.999999999999999
+2023,Yates Plant,Energy Losses,PJ,16.849046292999997
+2023,Yates Plant,Water Losses,MGD,3.2
+2023,Yates Plant,elec_own_use,PJ,0.5101049520000005
+2023,Yates Plant,electricity,PJ,8.0610516
+2023,agricultural,Water Losses,MGD,1.9640760475271597
+2023,agricultural,wastewater,MGD,0
+2023,commercial,Water Losses,MGD,40.271207775615224
+2023,commercial,energy_services,PJ,67.93288438220189
+2023,commercial,rejected_energy,PJ,36.57924543657025
+2023,commercial,wastewater,MGD,92.90447326609981
+2023,electricity,Bowen Plant,PJ,0.022812021679063363
+2023,electricity,Energy Losses,PJ,9.724401631958006
+2023,electricity,Jack McDonough Plant,PJ,0.00805976791184573
+2023,electricity,Yates Plant,PJ,0.00805976791184573
+2023,electricity,agricultural,PJ,0.0015820960192837465
+2023,electricity,commercial,PJ,61.3568391494343
+2023,electricity,en4water,PJ,3.766045434547328
+2023,electricity,government,PJ,0.5270090414303781
+2023,electricity,in-county treatment,PJ,1.9238975371422995
+2023,electricity,industrial,PJ,44.214808863725366
+2023,electricity,publicWatSup,PJ,1.340775884769216
+2023,electricity,residential,PJ,51.992985672739295
+2023,electricity,transport,PJ,0.27119596130292095
+2023,electricity,ww_exports,PJ,0.40533476856762246
+2023,en4water,energy_services,PJ,2.4479295324557633
+2023,en4water,rejected_energy,PJ,1.3181159020915647
+2023,government,energy_services,PJ,0.34255587692974576
+2023,government,rejected_energy,PJ,0.18445316450063232
+2023,groundwaterAllBasins,agricultural,MGD,1.688
+2023,groundwaterAllBasins,industrial,MGD,6.217749999999998
+2023,groundwaterAllBasins,publicWatSup,MGD,3.66
+2023,groundwaterAllBasins,residential,MGD,5.998182614
+2023,in-county treatment,Disposal,MGD,469.27992846814846
+2023,industrial,Disposal,MGD,22.92452013405694
+2023,industrial,energy_services,PJ,137.99875654396303
+2023,industrial,rejected_energy,PJ,143.63135885187987
+2023,industrial,wastewater,MGD,17.910874368497804
+2023,out_metro_elec_import,electricity,PJ,61.230850564591364
+2023,publicWatSup,Water Losses,MGD,122.98393958900002
+2023,publicWatSup,agricultural,MGD,0.2760760475271594
+2023,publicWatSup,commercial,MGD,133.17568104171505
+2023,publicWatSup,industrial,MGD,23.070394502554745
+2023,publicWatSup,residential,MGD,362.333090095606
+2023,residential,Water Losses,MGD,70.28509257140364
+2023,residential,energy_services,PJ,83.42540016050316
+2023,residential,rejected_energy,PJ,44.921369317194
+2023,residential,septic,MGD,69.00500200547945
+2023,residential,wastewater,MGD,229.04117813272293
+2023,subsurface,wastewater,MGD,129.42340270082806
+2023,surfaceWater,Basins,MGD,703.826431276403
+2023,transport,energy_services,PJ,354.34641580176606
+2023,transport,rejected_energy,PJ,190.80191620095093
+2023,wastewater,in-county treatment,MGD,395.1275369581487
+2023,wastewater,ww_exports,MGD,74.15239151
+2023,ww_imports,in-county treatment,MGD,74.15239151
+2024,Basins,Bowen Plant,MGD,33.6
+2024,Basins,Jack McDonough Plant,MGD,11.2
+2024,Basins,Yates Plant,MGD,6.2
+2024,Basins,industrial,MGD,11.54725
+2024,Basins,publicWatSup,MGD,647.9286740589723
+2024,Biomass,Small-scale generation,PJ,0.72391779
+2024,Biomass,commercial,PJ,0.49346947942281455
+2024,Biomass,industrial,PJ,96.4873429721047
+2024,Biomass,residential,PJ,2.5732090061075703
+2024,Biomass,transport,PJ,21.7429820346801
+2024,Bowen Plant,Disposal,MGD,18.3
+2024,Bowen Plant,Energy Losses,PJ,70.177038099
+2024,Bowen Plant,Water Losses,MGD,15.3
+2024,Bowen Plant,elec_own_use,PJ,3.6016785359999983
+2024,Bowen Plant,electricity,PJ,38.5644744
+2024,Coal,Bowen Plant,PJ,112.15639589999999
+2024,Coal,industrial,PJ,2.5329595401881675
+2024,Energy Storage,Small-scale generation,PJ,0
+2024,Jack McDonough,Energy Losses,PJ,65.19024186899999
+2024,Jack McDonough,elec_own_use,PJ,0.9114015960000055
+2024,Jack McDonough,electricity,PJ,64.7548416
+2024,Jack McDonough Plant,Disposal,MGD,2.799999999999999
+2024,Jack McDonough Plant,Water Losses,MGD,8.4
+2024,Natural Gas,Jack McDonough,PJ,130.82349310499998
+2024,Natural Gas,Small-scale generation,PJ,0.39491287500000005
+2024,Natural Gas,Yates Plant,PJ,23.78409091
+2024,Natural Gas,commercial,PJ,31.45302784709931
+2024,Natural Gas,industrial,PJ,88.88239936352497
+2024,Natural Gas,residential,PJ,74.68481378236577
+2024,Natural Gas,transport,PJ,6.712287645243961
+2024,Petroleum,Bowen Plant,PJ,0.186795135
+2024,Petroleum,Jack McDonough,PJ,0.032991959999999994
+2024,Petroleum,Small-scale generation,PJ,0.0021173850000000003
+2024,Petroleum,Yates Plant,PJ,0
+2024,Petroleum,commercial,PJ,12.729307118921254
+2024,Petroleum,industrial,PJ,45.67266793013215
+2024,Petroleum,residential,PJ,4.571898238406678
+2024,Petroleum,transport,PJ,508.15171268264714
+2024,Renewables,Small-scale generation,PJ,1.13655304874
+2024,Renewables,commercial,PJ,0.19383171121705073
+2024,Renewables,industrial,PJ,0.0044326388810468015
+2024,Renewables,residential,PJ,0.8016575309444651
+2024,Small-scale generation,commercial,PJ,0.021816000000000002
+2024,Small-scale generation,electricity,PJ,1.4543099999999998
+2024,Yates Plant,Disposal,MGD,2.7
+2024,Yates Plant,Energy Losses,PJ,15.787816306
+2024,Yates Plant,Water Losses,MGD,3.5
+2024,Yates Plant,elec_own_use,PJ,0.4520426040000008
+2024,Yates Plant,electricity,PJ,7.544232
+2024,agricultural,Water Losses,MGD,1.9676492259525797
+2024,agricultural,wastewater,MGD,0
+2024,commercial,Water Losses,MGD,41.015867654947556
+2024,commercial,energy_services,PJ,70.81781023249249
+2024,commercial,rejected_energy,PJ,38.13266704826518
+2024,commercial,wastewater,MGD,94.21456198498329
+2024,electricity,Bowen Plant,PJ,0.02417930373553719
+2024,electricity,Energy Losses,PJ,10.075984679398218
+2024,electricity,Jack McDonough Plant,PJ,0.00805976791184573
+2024,electricity,Yates Plant,PJ,0.004461657236914601
+2024,electricity,agricultural,PJ,0.0015820960192837465
+2024,electricity,commercial,PJ,64.05902512409726
+2024,electricity,en4water,PJ,3.8238918707565674
+2024,electricity,government,PJ,0.4862773077667783
+2024,electricity,in-county treatment,PJ,1.9538591283913558
+2024,electricity,industrial,PJ,44.54396586989979
+2024,electricity,publicWatSup,PJ,1.3611151024373895
+2024,electricity,residential,PJ,54.79032870019729
+2024,electricity,transport,PJ,0.28535598760741326
+2024,electricity,ww_exports,PJ,0.41486794466944316
+2024,en4water,energy_services,PJ,2.485529715991769
+2024,en4water,rejected_energy,PJ,1.3383621547647986
+2024,government,energy_services,PJ,0.31608025004840584
+2024,government,rejected_energy,PJ,0.1701970577183724
+2024,groundwaterAllBasins,agricultural,MGD,1.688
+2024,groundwaterAllBasins,industrial,MGD,6.217749999999998
+2024,groundwaterAllBasins,publicWatSup,MGD,3.66
+2024,groundwaterAllBasins,residential,MGD,6.0927266410000005
+2024,in-county treatment,Disposal,MGD,476.588204052842
+2024,industrial,Disposal,MGD,22.995850635923638
+2024,industrial,energy_services,PJ,136.26100280395923
+2024,industrial,rejected_energy,PJ,141.82267638779436
+2024,industrial,wastewater,MGD,18.26337332452725
+2024,out_metro_elec_import,electricity,PJ,65.6912046693685
+2024,publicWatSup,Water Losses,MGD,124.841256902
+2024,publicWatSup,agricultural,MGD,0.2796492259525799
+2024,publicWatSup,commercial,MGD,135.23042963993086
+2024,publicWatSup,industrial,MGD,23.494223960450896
+2024,publicWatSup,residential,MGD,367.74311433063804
+2024,residential,Water Losses,MGD,71.57032640304996
+2024,residential,energy_services,PJ,89.31404918191876
+2024,residential,rejected_energy,PJ,48.09218032872549
+2024,residential,septic,MGD,69.51189748767125
+2024,residential,wastewater,MGD,232.7536170809168
+2024,subsurface,wastewater,MGD,131.35665166241466
+2024,surfaceWater,Basins,MGD,710.4759240589723
+2024,transport,energy_services,PJ,348.9800199276161
+2024,transport,rejected_energy,PJ,187.91231842256252
+2024,wastewater,in-county treatment,MGD,400.691802747842
+2024,wastewater,ww_exports,MGD,75.89640130500001
+2024,ww_imports,in-county treatment,MGD,75.89640130500001

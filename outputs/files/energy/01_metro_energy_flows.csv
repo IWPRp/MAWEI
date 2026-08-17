@@ -1,0 +1,338 @@
+year,source,target,units,value
+2020,Biomass,Distributed-scale Generation,EJ,8.000191599999999e-4
+2020,Biomass,commercial,EJ,4.933618750307467e-4
+2020,Biomass,industrial,EJ,0.10006812055651565
+2020,Biomass,residential,EJ,0.0024783854638416054
+2020,Biomass,transport,EJ,0.019878900488669037
+2020,Bowen Plant,efficiency_losses,EJ,0.051854784841
+2020,Bowen Plant,elec_own_use,EJ,0.0028545036840000072
+2020,Bowen Plant,electricity,EJ,0.028686726
+2020,Coal,Bowen Plant,EJ,0.08309048125
+2020,Coal,Jack McDonough,EJ,0
+2020,Coal,industrial,EJ,0.0038035719974437447
+2020,Distributed-scale Generation,electricity,EJ,3.792132e-4
+2020,Energy Storage,Distributed-scale Generation,EJ,0
+2020,Geothermal,commercial,EJ,2.2049692738804318e-6
+2020,Geothermal,industrial,EJ,3.307453910820648e-6
+2020,Geothermal,residential,EJ,1.6757766481491284e-4
+2020,Hydroelectric,Utility-scale Generation,EJ,0.0018991446193999998
+2020,Jack McDonough,efficiency_losses,EJ,0.069757578974
+2020,Jack McDonough,elec_own_use,EJ,9.50372855999998e-4
+2020,Jack McDonough,electricity,EJ,0.067358322
+2020,Natural Gas,Distributed-scale Generation,EJ,3.1612231e-4
+2020,Natural Gas,Jack McDonough,EJ,0.1380662675
+2020,Natural Gas,On-Site Backup Generation,EJ,0
+2020,Natural Gas,Yates Plant,EJ,0.025980390965
+2020,Natural Gas,commercial,EJ,0.028579709243401218
+2020,Natural Gas,industrial,EJ,0.08683113876309295
+2020,Natural Gas,residential,EJ,0.06783312349933915
+2020,Natural Gas,transport,EJ,0.0042462195791752415
+2020,On-Site Backup Generation,commercial,EJ,8.316e-7
+2020,Petroleum,Bowen Plant,EJ,3.05533275e-4
+2020,Petroleum,Distributed-scale Generation,EJ,0
+2020,Petroleum,Jack McDonough,EJ,6.3299999999999994e-9
+2020,Petroleum,On-Site Backup Generation,EJ,3.0900950000000004e-6
+2020,Petroleum,Yates Plant,EJ,0
+2020,Petroleum,commercial,EJ,0.012743619918391956
+2020,Petroleum,industrial,EJ,0.04088839897252026
+2020,Petroleum,residential,EJ,0.004731864061747406
+2020,Petroleum,transport,EJ,0.4502773266614415
+2020,Solar,Distributed-scale Generation,EJ,1.3253948119999998e-5
+2020,Solar,commercial,EJ,9.64674057322689e-5
+2020,Solar,residential,EJ,2.3868792389755678e-4
+2020,Utility-scale Generation,electricity,EJ,0.001899324
+2020,Yates Plant,efficiency_losses,EJ,0.017240761937
+2020,Yates Plant,elec_own_use,EJ,6.343838280000007e-4
+2020,Yates Plant,electricity,EJ,0.0081052452
+2020,commercial,energy_services,EJ,0.06450803293968771
+2020,commercial,rejected_energy,EJ,0.03473509465983185
+2020,electricity,commercial,EJ,0.0573251968548895
+2020,electricity,en4water,EJ,0.0035840793063435044
+2020,electricity,government,EJ,6.190801314479385e-4
+2020,electricity,industrial,EJ,0.041458345386984924
+2020,electricity,residential,EJ,0.05234607485383308
+2020,electricity,td_losses,EJ,0.009335835862464984
+2020,electricity,transport,EJ,2.644878409174865e-4
+2020,en4water,energy_services,EJ,0.002329651549123279
+2020,en4water,rejected_energy,EJ,0.0012544277572202266
+2020,government,energy_services,EJ,4.0240208544115995e-4
+2020,government,rejected_energy,EJ,2.1667804600677843e-4
+2020,industrial,energy_services,EJ,0.13379619762874947
+2020,industrial,rejected_energy,EJ,0.13925726691971885
+2020,onsiteBTM,commercial,EJ,1.7357328e-6
+2020,onsiteBTM,industrial,EJ,5.81418e-7
+2020,onsiteBTM,residential,EJ,2.6090334e-6
+2020,out_metro_elec_import,electricity,EJ,0.05850426983688152
+2020,residential,energy_services,EJ,0.08306890962556791
+2020,residential,rejected_energy,EJ,0.0447294128753058
+2020,transport,energy_services,EJ,0.3085335074706321
+2020,transport,rejected_energy,EJ,0.16613342709957113
+2021,Biomass,Distributed-scale Generation,EJ,0.00079581815000000005
+2021,Biomass,commercial,EJ,4.931477247091844e-4
+2021,Biomass,industrial,EJ,0.10006986689981433
+2021,Biomass,residential,EJ,0.00256161315326592
+2021,Biomass,transport,EJ,0.020673634224679993
+2021,Bowen Plant,efficiency_losses,EJ,0.060826633418999985
+2021,Bowen Plant,elec_own_use,EJ,0.003202428276000001
+2021,Bowen Plant,electricity,EJ,0.0340275852
+2021,Coal,Bowen Plant,EJ,0.09784400848
+2021,Coal,industrial,EJ,0.0039991800960215195
+2021,Distributed-scale Generation,electricity,EJ,4.2834599999999997e-4
+2021,Energy Storage,Distributed-scale Generation,EJ,0
+2021,Geothermal,commercial,EJ,2.2040121774712146e-6
+2021,Geothermal,industrial,EJ,3.3060182662068228e-6
+2021,Geothermal,residential,EJ,1.6750492548781238e-4
+2021,Hydroelectric,Utility-scale Generation,EJ,0.00158924989
+2021,Jack McDonough,efficiency_losses,EJ,0.06782410751199998
+2021,Jack McDonough,elec_own_use,EJ,8.859503880000175e-4
+2021,Jack McDonough,electricity,EJ,0.06564750479999999
+2021,Natural Gas,Distributed-scale Generation,EJ,3.9360573e-4
+2021,Natural Gas,Jack McDonough,EJ,0.134346743675
+2021,Natural Gas,On-Site Backup Generation,EJ,0
+2021,Natural Gas,Yates Plant,EJ,0.015692581675
+2021,Natural Gas,commercial,EJ,0.030036277954577723
+2021,Natural Gas,industrial,EJ,0.09166982548842714
+2021,Natural Gas,residential,EJ,0.07167557801745265
+2021,Natural Gas,transport,EJ,0.004464226665467946
+2021,On-Site Backup Generation,commercial,EJ,6.156e-7
+2021,Petroleum,Bowen Plant,EJ,2.12638415e-4
+2021,Petroleum,Distributed-scale Generation,EJ,1.7934999999999998e-8
+2021,Petroleum,Jack McDonough,EJ,1.0819025e-5
+2021,Petroleum,On-Site Backup Generation,EJ,2.499295e-6
+2021,Petroleum,Yates Plant,EJ,0
+2021,Petroleum,commercial,EJ,0.01360591817457418
+2021,Petroleum,industrial,EJ,0.045015846718760834
+2021,Petroleum,residential,EJ,0.004351822044416915
+2021,Petroleum,transport,EJ,0.4698750091242215
+2021,Solar,Distributed-scale Generation,EJ,1.382629406e-5
+2021,Solar,commercial,EJ,1.1901665758344562e-4
+2021,Solar,residential,EJ,2.8872559524872914e-4
+2021,Utility-scale Generation,electricity,EJ,0.0015894
+2021,Yates Plant,efficiency_losses,EJ,0.010543379383000002
+2021,Yates Plant,elec_own_use,EJ,5.999974920000003e-4
+2021,Yates Plant,electricity,EJ,0.0045492048
+2021,commercial,energy_services,EJ,0.06707942155888871
+2021,commercial,rejected_energy,EJ,0.036119688531709306
+2021,electricity,commercial,EJ,0.05893440151377602
+2021,electricity,en4water,EJ,0.003644101477524033
+2021,electricity,government,EJ,5.938329549426152e-4
+2021,electricity,industrial,EJ,0.043757333411936335
+2021,electricity,residential,EJ,0.052396987610913874
+2021,electricity,td_losses,EJ,0.009575729164766069
+2021,electricity,transport,EJ,2.6882911034160293e-4
+2021,en4water,energy_services,EJ,0.002368665960390622
+2021,en4water,rejected_energy,EJ,0.0012754355171334117
+2021,government,energy_services,EJ,3.8599142071269995e-4
+2021,government,rejected_energy,EJ,2.078415342299153e-4
+2021,industrial,energy_services,EJ,0.13941286034167694
+2021,industrial,rejected_energy,EJ,0.14510318117194945
+2021,onsiteBTM,commercial,EJ,7.5284532000000005e-6
+2021,onsiteBTM,industrial,EJ,6.828804e-7
+2021,onsiteBTM,residential,EJ,8.936262000000002e-6
+2021,out_metro_elec_import,electricity,EJ,0.0629291744442006
+2021,residential,energy_services,EJ,0.08544325894571085
+2021,residential,rejected_energy,EJ,0.046007908663075074
+2021,transport,energy_services,EJ,0.32193310443106227
+2021,transport,rejected_energy,EJ,0.17334859469364883
+2022,Biomass,Distributed-scale Generation,EJ,6.331476999999999e-4
+2022,Biomass,commercial,EJ,4.936117518081416e-4
+2022,Biomass,industrial,EJ,0.10412946724959145
+2022,Biomass,residential,EJ,0.003230261486413725
+2022,Biomass,transport,EJ,0.02032853135183943
+2022,Bowen Plant,efficiency_losses,EJ,0.055460680139
+2022,Bowen Plant,elec_own_use,EJ,0.0029894497560000073
+2022,Bowen Plant,electricity,EJ,0.030514147199999998
+2022,Coal,Bowen Plant,EJ,0.08872516873
+2022,Coal,industrial,EJ,0.00359536872629863
+2022,Distributed-scale Generation,electricity,EJ,3.70692e-4
+2022,Energy Storage,Distributed-scale Generation,EJ,0
+2022,Geothermal,commercial,EJ,2.2060860416006323e-6
+2022,Geothermal,industrial,EJ,3.309129062400949e-6
+2022,Geothermal,residential,EJ,1.6766253916164806e-4
+2022,Hydroelectric,Utility-scale Generation,EJ,0.00136188096576
+2022,Jack McDonough,efficiency_losses,EJ,0.067542002688
+2022,Jack McDonough,elec_own_use,EJ,9.123358320000108e-4
+2022,Jack McDonough,electricity,EJ,0.0663427836
+2022,Natural Gas,Distributed-scale Generation,EJ,4.1547166e-4
+2022,Natural Gas,Jack McDonough,EJ,0.13479656297
+2022,Natural Gas,On-Site Backup Generation,EJ,0
+2022,Natural Gas,Yates Plant,EJ,0.01679045582
+2022,Natural Gas,commercial,EJ,0.03164409818071947
+2022,Natural Gas,industrial,EJ,0.08755293673300431
+2022,Natural Gas,residential,EJ,0.07619600579084425
+2022,Natural Gas,transport,EJ,0.005560439867854394
+2022,On-Site Backup Generation,commercial,EJ,5.22e-7
+2022,Petroleum,Bowen Plant,EJ,2.39108365e-4
+2022,Petroleum,Distributed-scale Generation,EJ,1.7934999999999998e-8
+2022,Petroleum,Jack McDonough,EJ,5.5915e-7
+2022,Petroleum,On-Site Backup Generation,EJ,2.7007999999999996e-6
+2022,Petroleum,Yates Plant,EJ,0
+2022,Petroleum,commercial,EJ,0.014135496311556053
+2022,Petroleum,industrial,EJ,0.0460459793817988
+2022,Petroleum,residential,EJ,0.004210866731905207
+2022,Petroleum,transport,EJ,0.47762204017862014
+2022,Solar,Distributed-scale Generation,EJ,3.301608152e-5
+2022,Solar,commercial,EJ,1.2298929681923526e-4
+2022,Solar,residential,EJ,3.860650572801106e-4
+2022,Utility-scale Generation,electricity,EJ,0.0013620096
+2022,Yates Plant,efficiency_losses,EJ,0.011270036072
+2022,Yates Plant,elec_own_use,EJ,5.463969479999999e-4
+2022,Yates Plant,electricity,EJ,0.0049740228
+2022,commercial,energy_services,EJ,0.07001342365701257
+2022,commercial,rejected_energy,EJ,0.037699535815314454
+2022,electricity,commercial,EJ,0.061304542342982514
+2022,electricity,en4water,EJ,0.003700463621610323
+2022,electricity,government,EJ,5.671219889910221e-4
+2022,electricity,industrial,EJ,0.044887096141131934
+2022,electricity,residential,EJ,0.05473826922427409
+2022,electricity,td_losses,EJ,0.009928074920758157
+2022,electricity,transport,EJ,2.7042202697940545e-4
+2022,en4water,energy_services,EJ,0.00240530135404671
+2022,en4water,rejected_energy,EJ,0.0012951622675636126
+2022,government,energy_services,EJ,3.6862929284416443e-4
+2022,government,rejected_energy,EJ,1.984926961468577e-4
+2022,industrial,energy_services,EJ,0.14024558891894684
+2022,industrial,rejected_energy,EJ,0.14596989867074064
+2022,onsiteBTM,commercial,EJ,9.4935024e-6
+2022,onsiteBTM,industrial,EJ,1.3302288000000003e-6
+2022,onsiteBTM,residential,EJ,2.92534128e-5
+2022,out_metro_elec_import,electricity,EJ,0.07183233506672751
+2022,residential,energy_services,EJ,0.0903229497577414
+2022,residential,rejected_energy,EJ,0.04863543448493766
+2022,transport,energy_services,EJ,0.32745793172644067
+2022,transport,rejected_energy,EJ,0.17632350169885264
+2023,Biomass,Distributed-scale Generation,EJ,7.64637625e-4
+2023,Biomass,commercial,EJ,4.935406380530876e-4
+2023,Biomass,industrial,EJ,0.09967590841484453
+2023,Biomass,residential,EJ,0.0027456299853255007
+2023,Biomass,transport,EJ,0.0224056420835028
+2023,Bowen Plant,efficiency_losses,EJ,0.0658157581
+2023,Bowen Plant,elec_own_use,EJ,0.003393160199999995
+2023,Bowen Plant,electricity,EJ,0.0368211348
+2023,Coal,Bowen Plant,EJ,0.10586951797
+2023,Coal,industrial,EJ,0.002415867637218522
+2023,Distributed-scale Generation,electricity,EJ,4.113792e-4
+2023,Energy Storage,Distributed-scale Generation,EJ,0
+2023,Geothermal,commercial,EJ,2.205768214762403e-6
+2023,Geothermal,industrial,EJ,3.308652322143604e-6
+2023,Geothermal,residential,EJ,1.6763838432194263e-4
+2023,Hydroelectric,Utility-scale Generation,EJ,0.00110475005264
+2023,Jack McDonough,efficiency_losses,EJ,0.06509781900500002
+2023,Jack McDonough,elec_own_use,EJ,8.709894000000079e-4
+2023,Jack McDonough,electricity,EJ,0.06416849159999999
+2023,Natural Gas,Distributed-scale Generation,EJ,4.6392781e-4
+2023,Natural Gas,Jack McDonough,EJ,0.1301310639
+2023,Natural Gas,On-Site Backup Generation,EJ,0
+2023,Natural Gas,Yates Plant,EJ,0.025420202845
+2023,Natural Gas,commercial,EJ,0.029049415946367157
+2023,Natural Gas,industrial,EJ,0.08857813708432119
+2023,Natural Gas,residential,EJ,0.06903944223795584
+2023,Natural Gas,transport,EJ,0.007001659755709556
+2023,On-Site Backup Generation,commercial,EJ,3.5928e-6
+2023,Petroleum,Bowen Plant,EJ,1.6053513e-4
+2023,Petroleum,Distributed-scale Generation,EJ,4.431e-8
+2023,Petroleum,Jack McDonough,EJ,6.236105e-6
+2023,Petroleum,On-Site Backup Generation,EJ,1.7291449999999999e-6
+2023,Petroleum,Yates Plant,EJ,0
+2023,Petroleum,commercial,EJ,0.013449671689513753
+2023,Petroleum,industrial,EJ,0.04678103518278841
+2023,Petroleum,residential,EJ,0.003867263122532183
+2023,Petroleum,transport,EJ,0.5154698342022017
+2023,Solar,Distributed-scale Generation,EJ,3.12270505e-5
+2023,Solar,On-Site Backup Generation,EJ,3.1281045399999997e-6
+2023,Solar,commercial,EJ,1.4778647038908097e-4
+2023,Solar,residential,EJ,5.216641827913083e-4
+2023,Utility-scale Generation,electricity,EJ,0.0011048543999999999
+2023,Yates Plant,efficiency_losses,EJ,0.016849046293
+2023,Yates Plant,elec_own_use,EJ,5.101049520000005e-4
+2023,Yates Plant,electricity,EJ,0.0080610516
+2023,commercial,energy_services,EJ,0.0679328843822019
+2023,commercial,rejected_energy,EJ,0.03657924543657025
+2023,electricity,commercial,EJ,0.0613568391494343
+2023,electricity,en4water,EJ,0.003766045434547328
+2023,electricity,government,EJ,5.270090414303781e-4
+2023,electricity,industrial,EJ,0.04417471974074808
+2023,electricity,residential,EJ,0.051977551205170405
+2023,electricity,td_losses,EJ,0.009724401631958006
+2023,electricity,transport,EJ,2.7119596130292095e-4
+2023,en4water,energy_services,EJ,0.0024479295324557632
+2023,en4water,rejected_energy,EJ,0.0013181159020915648
+2023,government,energy_services,EJ,3.4255587692974575e-4
+2023,government,rejected_energy,EJ,1.844531645006323e-4
+2023,industrial,energy_services,EJ,0.137998756543963
+2023,industrial,rejected_energy,EJ,0.14363135885187986
+2023,onsiteBTM,commercial,EJ,9.0773568e-6
+2023,onsiteBTM,industrial,EJ,1.1386835999999998e-6
+2023,onsiteBTM,residential,EJ,2.75803596e-5
+2023,out_metro_elec_import,electricity,EJ,0.06123085056459136
+2023,residential,energy_services,EJ,0.08342540016050316
+2023,residential,rejected_energy,EJ,0.044921369317193996
+2023,transport,energy_services,EJ,0.35434641580176607
+2023,transport,rejected_energy,EJ,0.19080191620095094
+2024,Biomass,Distributed-scale Generation,EJ,7.2391779e-4
+2024,Biomass,commercial,EJ,4.934694794228146e-4
+2024,Biomass,industrial,EJ,0.0964873429721047
+2024,Biomass,residential,EJ,0.00257320900610757
+2024,Biomass,transport,EJ,0.0217429820346801
+2024,Bowen Plant,efficiency_losses,EJ,0.070177038099
+2024,Bowen Plant,elec_own_use,EJ,0.0036016785359999984
+2024,Bowen Plant,electricity,EJ,0.0385644744
+2024,Coal,Bowen Plant,EJ,0.1121563959
+2024,Coal,industrial,EJ,0.0025329595401881676
+2024,Distributed-scale Generation,electricity,EJ,3.700944e-4
+2024,Energy Storage,Distributed-scale Generation,EJ,0
+2024,Geothermal,commercial,EJ,2.2054501873645347e-6
+2024,Geothermal,industrial,EJ,3.3081752810468015e-6
+2024,Geothermal,residential,EJ,1.6761421423970463e-4
+2024,Hydroelectric,Utility-scale Generation,EJ,0.00108411320186
+2024,Jack McDonough,efficiency_losses,EJ,0.06519024186899999
+2024,Jack McDonough,elec_own_use,EJ,9.114015960000055e-4
+2024,Jack McDonough,electricity,EJ,0.0647548416
+2024,Natural Gas,Distributed-scale Generation,EJ,3.9491287500000006e-4
+2024,Natural Gas,Jack McDonough,EJ,0.130823493105
+2024,Natural Gas,Yates Plant,EJ,0.02378409091
+2024,Natural Gas,commercial,EJ,0.03145302784709931
+2024,Natural Gas,industrial,EJ,0.08888239936352496
+2024,Natural Gas,residential,EJ,0.07468481378236576
+2024,Natural Gas,transport,EJ,0.0067122876452439615
+2024,On-Site Backup Generation,commercial,EJ,2.1816000000000003e-5
+2024,Petroleum,Bowen Plant,EJ,1.86795135e-4
+2024,Petroleum,Distributed-scale Generation,EJ,3.0595e-8
+2024,Petroleum,Jack McDonough,EJ,3.2991959999999996e-5
+2024,Petroleum,On-Site Backup Generation,EJ,2.0867900000000002e-6
+2024,Petroleum,Yates Plant,EJ,0
+2024,Petroleum,commercial,EJ,0.012729307118921254
+2024,Petroleum,industrial,EJ,0.04567266793013215
+2024,Petroleum,residential,EJ,0.0045718982384066785
+2024,Petroleum,transport,EJ,0.5081517126826471
+2024,Solar,Distributed-scale Generation,EJ,3.100387158e-5
+2024,Solar,On-Site Backup Generation,EJ,2.14359753e-5
+2024,Solar,commercial,EJ,1.780901026296862e-4
+2024,Solar,residential,EJ,5.838929371047606e-4
+2024,Utility-scale Generation,electricity,EJ,0.0010842156
+2024,Yates Plant,efficiency_losses,EJ,0.015787816306
+2024,Yates Plant,elec_own_use,EJ,4.520426040000008e-4
+2024,Yates Plant,electricity,EJ,0.007544232
+2024,commercial,energy_services,EJ,0.07081781023249249
+2024,commercial,rejected_energy,EJ,0.038132667048265186
+2024,electricity,commercial,EJ,0.06405902512409727
+2024,electricity,en4water,EJ,0.0038238918707565674
+2024,electricity,government,EJ,4.862773077667783e-4
+2024,electricity,industrial,EJ,0.044503876746922515
+2024,electricity,residential,EJ,0.05477465095281977
+2024,electricity,td_losses,EJ,0.010075984679398218
+2024,electricity,transport,EJ,2.8535598760741327e-4
+2024,en4water,energy_services,EJ,0.002485529715991769
+2024,en4water,rejected_energy,EJ,0.0013383621547647985
+2024,government,energy_services,EJ,3.1608025004840586e-4
+2024,government,rejected_energy,EJ,1.701970577183724e-4
+2024,industrial,energy_services,EJ,0.13626100280395922
+2024,industrial,rejected_energy,EJ,0.14182267638779436
+2024,onsiteBTM,commercial,EJ,1.3536158399999999e-5
+2024,onsiteBTM,industrial,EJ,1.1244636e-6
+2024,onsiteBTM,residential,EJ,5.0150379600000006e-5
+2024,out_metro_elec_import,electricity,EJ,0.06569120466936851
+2024,residential,energy_services,EJ,0.08931404918191876
+2024,residential,rejected_energy,EJ,0.04809218032872549
+2024,transport,energy_services,EJ,0.3489800199276161
+2024,transport,rejected_energy,EJ,0.1879123184225625

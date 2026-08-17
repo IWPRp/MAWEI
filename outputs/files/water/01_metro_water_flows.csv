@@ -1,0 +1,286 @@
+year,source,target,units,value
+2020,Bowen Plant,Discharge,MGD,16.9
+2020,Bowen Plant,Losses,MGD,8.8
+2020,Chattahoochee Basin,Jack McDonough Plant,MGD,11.022055
+2020,Chattahoochee Basin,Yates Plant,MGD,19.1
+2020,Chattahoochee Basin,industrial,MGD,3.8785499999999993
+2020,Chattahoochee Basin,publicWatSup,MGD,429.301507330195
+2020,Coosa_Etowah Basin,Bowen Plant,MGD,25.7
+2020,Coosa_Etowah Basin,industrial,MGD,6.978075
+2020,Coosa_Etowah Basin,publicWatSup,MGD,98.83173230308762
+2020,Flint Basin,industrial,MGD,0.690625
+2020,Flint Basin,publicWatSup,MGD,26.91523803709121
+2020,Jack McDonough Plant,Discharge,MGD,2.8220550000000006
+2020,Jack McDonough Plant,Losses,MGD,8.2
+2020,Ocmulgee Basin,industrial,MGD,0
+2020,Ocmulgee Basin,publicWatSup,MGD,52.13235804124404
+2020,Oconee Basin,industrial,MGD,0
+2020,Oconee Basin,publicWatSup,MGD,0
+2020,Tallapoosa Basin,industrial,MGD,0
+2020,Tallapoosa Basin,publicWatSup,MGD,1.2375606094351148
+2020,Yates Plant,Discharge,MGD,15.400000000000002
+2020,Yates Plant,Losses,MGD,3.7
+2020,agricultural,losses,MGD,1.9522872035021137
+2020,agricultural,wastewater,MGD,0
+2020,commercial,losses,MGD,38.04330534516276
+2020,commercial,wastewater,MGD,88.90800557371647
+2020,groundwaterAllBasins,agricultural,MGD,1.688
+2020,groundwaterAllBasins,industrial,MGD,6.217749999999998
+2020,groundwaterAllBasins,publicWatSup,MGD,3.66
+2020,groundwaterAllBasins,residential,MGD,5.7170407469999995
+2020,in-county treatment,Creek,MGD,49.65476998666927
+2020,in-county treatment,Lake,MGD,45.79401586394351
+2020,in-county treatment,Land,MGD,8.018752783953834
+2020,in-county treatment,Reservoir,MGD,1.4874923734911745
+2020,in-county treatment,Reuse,MGD,2.775024715937033
+2020,in-county treatment,River,MGD,329.6196564406142
+2020,in-county treatment,Wetland,MGD,9.341473411383273
+2020,industrial,discharge,MGD,17.764999999999997
+2020,industrial,losses,MGD,4.953775779465395
+2020,industrial,wastewater,MGD,16.901600503543886
+2020,publicWatSup,agricultural,MGD,0.26428720350211365
+2020,publicWatSup,commercial,MGD,126.95131091887923
+2020,publicWatSup,industrial,MGD,21.85537628300928
+2020,publicWatSup,losses,MGD,117.33841944999999
+2020,publicWatSup,residential,MGD,345.66900246566235
+2020,residential,losses,MGD,66.45834987230357
+2020,residential,septic,MGD,67.4966854690411
+2020,residential,wastewater,MGD,217.43100787131772
+2020,subsurface,wastewater,MGD,123.45057162741425
+2020,surfaceWater,Chattahoochee Basin,MGD,463.30211233019503
+2020,surfaceWater,Coosa_Etowah Basin,MGD,131.50980730308763
+2020,surfaceWater,Flint Basin,MGD,27.60586303709121
+2020,surfaceWater,Ocmulgee Basin,MGD,52.13235804124404
+2020,surfaceWater,Oconee Basin,MGD,0
+2020,surfaceWater,Tallapoosa Basin,MGD,1.2375606094351148
+2020,wastewater,in-county treatment,MGD,377.6225244019924
+2020,wastewater,ww_exports,MGD,69.06866117400001
+2020,ww_imports,in-county treatment,MGD,69.06866117400003
+2021,Bowen Plant,Discharge,MGD,21.4
+2021,Bowen Plant,Losses,MGD,7
+2021,Chattahoochee Basin,Jack McDonough Plant,MGD,11.4
+2021,Chattahoochee Basin,Yates Plant,MGD,14.7
+2021,Chattahoochee Basin,industrial,MGD,3.8785499999999993
+2021,Chattahoochee Basin,publicWatSup,MGD,436.63085088863
+2021,Coosa_Etowah Basin,Bowen Plant,MGD,28.4
+2021,Coosa_Etowah Basin,industrial,MGD,6.978075
+2021,Coosa_Etowah Basin,publicWatSup,MGD,100.2039078665241
+2021,Flint Basin,industrial,MGD,0.690625
+2021,Flint Basin,publicWatSup,MGD,27.312152580368753
+2021,Jack McDonough Plant,Discharge,MGD,3.3000000000000007
+2021,Jack McDonough Plant,Losses,MGD,8.1
+2021,Ocmulgee Basin,industrial,MGD,0
+2021,Ocmulgee Basin,publicWatSup,MGD,52.92039694474107
+2021,Oconee Basin,industrial,MGD,0
+2021,Oconee Basin,publicWatSup,MGD,0
+2021,Tallapoosa Basin,industrial,MGD,0
+2021,Tallapoosa Basin,publicWatSup,MGD,1.261831393465649
+2021,Yates Plant,Discharge,MGD,12.5
+2021,Yates Plant,Losses,MGD,2.2
+2021,agricultural,losses,MGD,1.9564739569730423
+2021,agricultural,wastewater,MGD,0
+2021,commercial,losses,MGD,38.79538551166182
+2021,commercial,wastewater,MGD,90.22606717905965
+2021,groundwaterAllBasins,agricultural,MGD,1.688
+2021,groundwaterAllBasins,industrial,MGD,6.217749999999998
+2021,groundwaterAllBasins,publicWatSup,MGD,3.66
+2021,groundwaterAllBasins,residential,MGD,5.809322828000001
+2021,in-county treatment,Creek,MGD,50.53845601784148
+2021,in-county treatment,Lake,MGD,46.80038053885688
+2021,in-county treatment,Land,MGD,8.17684961579094
+2021,in-county treatment,Reservoir,MGD,1.501210593223645
+2021,in-county treatment,Reuse,MGD,2.8385695080410924
+2021,in-county treatment,River,MGD,334.9536994147298
+2021,in-county treatment,Wetland,MGD,9.423602325640793
+2021,industrial,discharge,MGD,17.764999999999997
+2021,industrial,losses,MGD,5.016829951735012
+2021,industrial,wastewater,MGD,17.23118840279593
+2021,publicWatSup,agricultural,MGD,0.26847395697304216
+2021,publicWatSup,commercial,MGD,129.02145269072147
+2021,publicWatSup,industrial,MGD,22.248018354530938
+2021,publicWatSup,losses,MGD,119.21624826000001
+2021,publicWatSup,residential,MGD,351.23494641150415
+2021,residential,losses,MGD,67.7173624549899
+2021,residential,septic,MGD,67.99955104547945
+2021,residential,wastewater,MGD,221.32735573903477
+2021,subsurface,wastewater,MGD,125.44815669323422
+2021,surfaceWater,Chattahoochee Basin,MGD,466.60940088863
+2021,surfaceWater,Coosa_Etowah Basin,MGD,135.5819828665241
+2021,surfaceWater,Flint Basin,MGD,28.002777580368754
+2021,surfaceWater,Ocmulgee Basin,MGD,52.92039694474107
+2021,surfaceWater,Oconee Basin,MGD,0
+2021,surfaceWater,Tallapoosa Basin,MGD,1.261831393465649
+2021,wastewater,in-county treatment,MGD,383.49158579912455
+2021,wastewater,ww_exports,MGD,70.74118221500001
+2021,ww_imports,in-county treatment,MGD,70.74118221500002
+2022,Bowen Plant,Discharge,MGD,14.52
+2022,Bowen Plant,Losses,MGD,9.98
+2022,Chattahoochee Basin,Jack McDonough Plant,MGD,11.2
+2022,Chattahoochee Basin,Yates Plant,MGD,12.7
+2022,Chattahoochee Basin,industrial,MGD,3.8785499999999993
+2022,Chattahoochee Basin,publicWatSup,MGD,443.898940827252
+2022,Coosa_Etowah Basin,Bowen Plant,MGD,24.5
+2022,Coosa_Etowah Basin,industrial,MGD,6.978075
+2022,Coosa_Etowah Basin,publicWatSup,MGD,101.60506758074968
+2022,Flint Basin,industrial,MGD,0.690625
+2022,Flint Basin,publicWatSup,MGD,27.725806942100224
+2022,Jack McDonough Plant,Discharge,MGD,3.6999999999999993
+2022,Jack McDonough Plant,Losses,MGD,7.5
+2022,Ocmulgee Basin,industrial,MGD,0
+2022,Ocmulgee Basin,publicWatSup,MGD,53.72545167873214
+2022,Oconee Basin,industrial,MGD,0
+2022,Oconee Basin,publicWatSup,MGD,0
+2022,Tallapoosa Basin,industrial,MGD,0
+2022,Tallapoosa Basin,publicWatSup,MGD,1.2844525803664124
+2022,Yates Plant,Discharge,MGD,10.5
+2022,Yates Plant,Losses,MGD,2.2
+2022,agricultural,losses,MGD,1.9603928722095667
+2022,agricultural,wastewater,MGD,0
+2022,commercial,losses,MGD,39.5286733442218
+2022,commercial,wastewater,MGD,91.56437849813028
+2022,groundwaterAllBasins,agricultural,MGD,1.688
+2022,groundwaterAllBasins,industrial,MGD,6.217749999999998
+2022,groundwaterAllBasins,publicWatSup,MGD,3.66
+2022,groundwaterAllBasins,residential,MGD,5.9032145090000006
+2022,in-county treatment,Creek,MGD,51.45279175027376
+2022,in-county treatment,Lake,MGD,47.80320116672196
+2022,in-county treatment,Land,MGD,8.344546003845727
+2022,in-county treatment,Reservoir,MGD,1.5142790952441345
+2022,in-county treatment,Reuse,MGD,2.8980425733431296
+2022,in-county treatment,River,MGD,340.238455315632
+2022,in-county treatment,Wetland,MGD,9.50037479334167
+2022,industrial,discharge,MGD,17.764999999999997
+2022,industrial,losses,MGD,5.089065300191752
+2022,industrial,wastewater,MGD,17.565921643613812
+2022,publicWatSup,agricultural,MGD,0.27239287220956676
+2022,publicWatSup,commercial,MGD,131.09305184235208
+2022,publicWatSup,industrial,MGD,22.65498694380556
+2022,publicWatSup,losses,MGD,121.09464751899999
+2022,publicWatSup,residential,MGD,356.7846404318332
+2022,residential,losses,MGD,68.99380448879101
+2022,residential,septic,MGD,68.50487596931507
+2022,residential,wastewater,MGD,225.18917448272714
+2022,subsurface,wastewater,MGD,127.43221607393124
+2022,surfaceWater,Chattahoochee Basin,MGD,471.677490827252
+2022,surfaceWater,Coosa_Etowah Basin,MGD,133.08314258074967
+2022,surfaceWater,Flint Basin,MGD,28.416431942100225
+2022,surfaceWater,Ocmulgee Basin,MGD,53.72545167873214
+2022,surfaceWater,Oconee Basin,MGD,0
+2022,surfaceWater,Tallapoosa Basin,MGD,1.2844525803664124
+2022,wastewater,in-county treatment,MGD,389.3622482254025
+2022,wastewater,ww_exports,MGD,72.38944247299999
+2022,ww_imports,in-county treatment,MGD,72.38944247299999
+2023,Bowen Plant,Discharge,MGD,17.5
+2023,Bowen Plant,Losses,MGD,14.2
+2023,Chattahoochee Basin,Jack McDonough Plant,MGD,11.2
+2023,Chattahoochee Basin,Yates Plant,MGD,11.2
+2023,Chattahoochee Basin,industrial,MGD,3.8785499999999993
+2023,Chattahoochee Basin,publicWatSup,MGD,451.1926927936838
+2023,Coosa_Etowah Basin,Bowen Plant,MGD,31.7
+2023,Coosa_Etowah Basin,industrial,MGD,6.978075
+2023,Coosa_Etowah Basin,publicWatSup,MGD,102.99745249670957
+2023,Flint Basin,industrial,MGD,0.690625
+2023,Flint Basin,publicWatSup,MGD,28.148775438485153
+2023,Jack McDonough Plant,Discharge,MGD,3.6999999999999993
+2023,Jack McDonough Plant,Losses,MGD,7.5
+2023,Ocmulgee Basin,industrial,MGD,0
+2023,Ocmulgee Basin,publicWatSup,MGD,54.5341262029137
+2023,Oconee Basin,industrial,MGD,0
+2023,Oconee Basin,publicWatSup,MGD,0
+2023,Tallapoosa Basin,industrial,MGD,0
+2023,Tallapoosa Basin,publicWatSup,MGD,1.3061343446106872
+2023,Yates Plant,Discharge,MGD,7.999999999999999
+2023,Yates Plant,Losses,MGD,3.2
+2023,agricultural,losses,MGD,1.9640760475271597
+2023,agricultural,wastewater,MGD,0
+2023,commercial,losses,MGD,40.271207775615224
+2023,commercial,wastewater,MGD,92.90447326609981
+2023,groundwaterAllBasins,agricultural,MGD,1.688
+2023,groundwaterAllBasins,industrial,MGD,6.217749999999998
+2023,groundwaterAllBasins,publicWatSup,MGD,3.66
+2023,groundwaterAllBasins,residential,MGD,5.998182614
+2023,in-county treatment,Creek,MGD,52.36884751713228
+2023,in-county treatment,Lake,MGD,48.80066243929095
+2023,in-county treatment,Land,MGD,8.516450085052405
+2023,in-county treatment,Reservoir,MGD,1.5279922307777305
+2023,in-county treatment,Reuse,MGD,2.955005233814478
+2023,in-county treatment,River,MGD,345.5332758344164
+2023,in-county treatment,Wetland,MGD,9.577695127664267
+2023,industrial,discharge,MGD,17.764999999999997
+2023,industrial,losses,MGD,5.159520134056942
+2023,industrial,wastewater,MGD,17.910874368497804
+2023,publicWatSup,agricultural,MGD,0.2760760475271594
+2023,publicWatSup,commercial,MGD,133.17568104171505
+2023,publicWatSup,industrial,MGD,23.070394502554745
+2023,publicWatSup,losses,MGD,122.98393958900002
+2023,publicWatSup,residential,MGD,362.333090095606
+2023,residential,losses,MGD,70.28509257140364
+2023,residential,septic,MGD,69.00500200547945
+2023,residential,wastewater,MGD,229.04117813272293
+2023,subsurface,wastewater,MGD,129.42340270082806
+2023,surfaceWater,Chattahoochee Basin,MGD,477.4712427936838
+2023,surfaceWater,Coosa_Etowah Basin,MGD,141.67552749670958
+2023,surfaceWater,Flint Basin,MGD,28.839400438485153
+2023,surfaceWater,Ocmulgee Basin,MGD,54.5341262029137
+2023,surfaceWater,Oconee Basin,MGD,0
+2023,surfaceWater,Tallapoosa Basin,MGD,1.3061343446106872
+2023,wastewater,in-county treatment,MGD,395.1275369581487
+2023,wastewater,ww_exports,MGD,74.15239151
+2023,ww_imports,in-county treatment,MGD,74.15239151
+2024,Bowen Plant,Discharge,MGD,18.3
+2024,Bowen Plant,Losses,MGD,15.3
+2024,Chattahoochee Basin,Jack McDonough Plant,MGD,11.2
+2024,Chattahoochee Basin,Yates Plant,MGD,6.2
+2024,Chattahoochee Basin,industrial,MGD,3.8785499999999993
+2024,Chattahoochee Basin,publicWatSup,MGD,458.31469450670784
+2024,Coosa_Etowah Basin,Bowen Plant,MGD,33.6
+2024,Coosa_Etowah Basin,industrial,MGD,6.978075
+2024,Coosa_Etowah Basin,publicWatSup,MGD,104.38533808694538
+2024,Flint Basin,industrial,MGD,0.690625
+2024,Flint Basin,publicWatSup,MGD,28.574810543891306
+2024,Jack McDonough Plant,Discharge,MGD,2.799999999999999
+2024,Jack McDonough Plant,Losses,MGD,8.4
+2024,Ocmulgee Basin,industrial,MGD,0
+2024,Ocmulgee Basin,publicWatSup,MGD,55.32674653016072
+2024,Oconee Basin,industrial,MGD,0
+2024,Oconee Basin,publicWatSup,MGD,0
+2024,Tallapoosa Basin,industrial,MGD,0
+2024,Tallapoosa Basin,publicWatSup,MGD,1.327084391267176
+2024,Yates Plant,Discharge,MGD,2.7
+2024,Yates Plant,Losses,MGD,3.5
+2024,agricultural,losses,MGD,1.9676492259525797
+2024,agricultural,wastewater,MGD,0
+2024,commercial,losses,MGD,41.015867654947556
+2024,commercial,wastewater,MGD,94.21456198498329
+2024,groundwaterAllBasins,agricultural,MGD,1.688
+2024,groundwaterAllBasins,industrial,MGD,6.217749999999998
+2024,groundwaterAllBasins,publicWatSup,MGD,3.66
+2024,groundwaterAllBasins,residential,MGD,6.0927266410000005
+2024,in-county treatment,Creek,MGD,53.27015972534211
+2024,in-county treatment,Lake,MGD,49.77542425444991
+2024,in-county treatment,Land,MGD,8.679387953459683
+2024,in-county treatment,Reservoir,MGD,1.5424714961604746
+2024,in-county treatment,Reuse,MGD,3.009237009476969
+2024,in-county treatment,River,MGD,350.65481826964117
+2024,in-county treatment,Wetland,MGD,9.65670534431172
+2024,industrial,discharge,MGD,17.764999999999997
+2024,industrial,losses,MGD,5.230850635923641
+2024,industrial,wastewater,MGD,18.26337332452725
+2024,publicWatSup,agricultural,MGD,0.2796492259525799
+2024,publicWatSup,commercial,MGD,135.23042963993086
+2024,publicWatSup,industrial,MGD,23.494223960450896
+2024,publicWatSup,losses,MGD,124.841256902
+2024,publicWatSup,residential,MGD,367.74311433063804
+2024,residential,losses,MGD,71.57032640304996
+2024,residential,septic,MGD,69.51189748767125
+2024,residential,wastewater,MGD,232.7536170809168
+2024,subsurface,wastewater,MGD,131.35665166241466
+2024,surfaceWater,Chattahoochee Basin,MGD,479.59324450670783
+2024,surfaceWater,Coosa_Etowah Basin,MGD,144.96341308694537
+2024,surfaceWater,Flint Basin,MGD,29.265435543891307
+2024,surfaceWater,Ocmulgee Basin,MGD,55.32674653016072
+2024,surfaceWater,Oconee Basin,MGD,0
+2024,surfaceWater,Tallapoosa Basin,MGD,1.327084391267176
+2024,wastewater,in-county treatment,MGD,400.691802747842
+2024,wastewater,ww_exports,MGD,75.89640130500001
+2024,ww_imports,in-county treatment,MGD,75.89640130500001

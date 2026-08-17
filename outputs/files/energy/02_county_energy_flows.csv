@@ -1,0 +1,3217 @@
+county,year,source,target,units,value
+Bartow,2020,Coal,Bowen Plant,EJ,0.08309048125
+Bartow,2020,Hydroelectric,Utility-scale Generation,EJ,6.791586511799999e-4
+Bartow,2020,Petroleum,Bowen Plant,EJ,3.05533275e-4
+Bartow,2021,Coal,Bowen Plant,EJ,0.09784400848
+Bartow,2021,Hydroelectric,Utility-scale Generation,EJ,6.089796798199999e-4
+Bartow,2021,Petroleum,Bowen Plant,EJ,2.12638415e-4
+Bartow,2022,Coal,Bowen Plant,EJ,0.08872516873
+Bartow,2022,Hydroelectric,Utility-scale Generation,EJ,5.2684983726e-4
+Bartow,2022,Petroleum,Bowen Plant,EJ,2.39108365e-4
+Bartow,2023,Coal,Bowen Plant,EJ,0.10586951797
+Bartow,2023,Hydroelectric,Utility-scale Generation,EJ,4.0150967606e-4
+Bartow,2023,Petroleum,Bowen Plant,EJ,1.6053513e-4
+Bartow,2023,Solar,On-Site Backup Generation,EJ,3.1281045399999997e-6
+Bartow,2024,Coal,Bowen Plant,EJ,0.1121563959
+Bartow,2024,Hydroelectric,Utility-scale Generation,EJ,4.4089355611999997e-4
+Bartow,2024,Petroleum,Bowen Plant,EJ,1.86795135e-4
+Bartow,2024,Solar,On-Site Backup Generation,EJ,2.14359753e-5
+Cobb,2020,Coal,Jack McDonough,EJ,0
+Cobb,2020,Energy Storage,Distributed-scale Generation,EJ,0
+Cobb,2020,Natural Gas,Jack McDonough,EJ,0.1380662675
+Cobb,2020,Petroleum,Jack McDonough,EJ,6.3299999999999994e-9
+Cobb,2020,Solar,Distributed-scale Generation,EJ,2.5233616599999997e-6
+Cobb,2021,Energy Storage,Distributed-scale Generation,EJ,0
+Cobb,2021,Natural Gas,Jack McDonough,EJ,0.134346743675
+Cobb,2021,Petroleum,Jack McDonough,EJ,1.0819025e-5
+Cobb,2021,Solar,Distributed-scale Generation,EJ,8.39800678e-6
+Cobb,2022,Energy Storage,Distributed-scale Generation,EJ,0
+Cobb,2022,Natural Gas,Distributed-scale Generation,EJ,0
+Cobb,2022,Natural Gas,Jack McDonough,EJ,0.13479656297
+Cobb,2022,Petroleum,Jack McDonough,EJ,5.5915e-7
+Cobb,2022,Solar,Distributed-scale Generation,EJ,8.89835952e-6
+Cobb,2023,Energy Storage,Distributed-scale Generation,EJ,0
+Cobb,2023,Natural Gas,Distributed-scale Generation,EJ,3.0595e-8
+Cobb,2023,Natural Gas,Jack McDonough,EJ,0.1301310639
+Cobb,2023,Petroleum,Jack McDonough,EJ,6.236105e-6
+Cobb,2023,Solar,Distributed-scale Generation,EJ,8.531194199999999e-6
+Cobb,2024,Energy Storage,Distributed-scale Generation,EJ,0
+Cobb,2024,Natural Gas,Distributed-scale Generation,EJ,1.50443e-6
+Cobb,2024,Natural Gas,Jack McDonough,EJ,0.130823493105
+Cobb,2024,Petroleum,Jack McDonough,EJ,3.2991959999999996e-5
+Cobb,2024,Solar,Distributed-scale Generation,EJ,8.05963874e-6
+Coweta,2020,Natural Gas,Yates Plant,EJ,0.025980390965
+Coweta,2020,Petroleum,Yates Plant,EJ,0
+Coweta,2021,Natural Gas,Yates Plant,EJ,0.015692581675
+Coweta,2021,Petroleum,Yates Plant,EJ,0
+Coweta,2022,Natural Gas,Yates Plant,EJ,0.01679045582
+Coweta,2022,Petroleum,Yates Plant,EJ,0
+Coweta,2023,Natural Gas,Yates Plant,EJ,0.025420202845
+Coweta,2023,Petroleum,Yates Plant,EJ,0
+Coweta,2024,Natural Gas,Yates Plant,EJ,0.02378409091
+Coweta,2024,Petroleum,Yates Plant,EJ,0
+DeKalb,2020,Petroleum,On-Site Backup Generation,EJ,2.9750999999999997e-7
+DeKalb,2020,Solar,Distributed-scale Generation,EJ,6.342600919999999e-6
+DeKalb,2021,Petroleum,On-Site Backup Generation,EJ,4.5154e-7
+DeKalb,2021,Solar,Distributed-scale Generation,EJ,8.4232044e-7
+DeKalb,2022,Petroleum,On-Site Backup Generation,EJ,5.697e-7
+DeKalb,2022,Solar,Distributed-scale Generation,EJ,4.2116022e-7
+DeKalb,2023,Solar,Distributed-scale Generation,EJ,0
+DeKalb,2024,Petroleum,On-Site Backup Generation,EJ,5.79195e-7
+DeKalb,2024,Solar,Distributed-scale Generation,EJ,0
+Douglas,2022,Solar,Distributed-scale Generation,EJ,1.92041861e-5
+Douglas,2023,Solar,Distributed-scale Generation,EJ,1.8887416019999998e-5
+Douglas,2024,Solar,Distributed-scale Generation,EJ,1.914659154e-5
+Forsyth,2020,Hydroelectric,Utility-scale Generation,EJ,0.00105930434514
+Forsyth,2021,Hydroelectric,Utility-scale Generation,EJ,8.1206169804e-4
+Forsyth,2022,Hydroelectric,Utility-scale Generation,EJ,7.075383706199999e-4
+Forsyth,2023,Hydroelectric,Utility-scale Generation,EJ,5.981411035599999e-4
+Forsyth,2024,Hydroelectric,Utility-scale Generation,EJ,5.296071768199999e-4
+Fulton,2020,Biomass,Distributed-scale Generation,EJ,5.216131e-5
+Fulton,2020,Energy Storage,Distributed-scale Generation,EJ,0
+Fulton,2020,Hydroelectric,Utility-scale Generation,EJ,1.5475658272e-4
+Fulton,2020,Natural Gas,Distributed-scale Generation,EJ,3.1612231e-4
+Fulton,2020,Natural Gas,On-Site Backup Generation,EJ,0
+Fulton,2020,Petroleum,Distributed-scale Generation,EJ,0
+Fulton,2020,Petroleum,On-Site Backup Generation,EJ,2.7925850000000004e-6
+Fulton,2020,Solar,Distributed-scale Generation,EJ,4.38798554e-6
+Fulton,2021,Biomass,Distributed-scale Generation,EJ,3.534461e-5
+Fulton,2021,Energy Storage,Distributed-scale Generation,EJ,0
+Fulton,2021,Hydroelectric,Utility-scale Generation,EJ,1.6820851214e-4
+Fulton,2021,Natural Gas,Distributed-scale Generation,EJ,3.9360573e-4
+Fulton,2021,Natural Gas,On-Site Backup Generation,EJ,0
+Fulton,2021,Petroleum,Distributed-scale Generation,EJ,1.7934999999999998e-8
+Fulton,2021,Petroleum,On-Site Backup Generation,EJ,2.047755e-6
+Fulton,2021,Solar,Distributed-scale Generation,EJ,4.58596684e-6
+Fulton,2022,Biomass,Distributed-scale Generation,EJ,2.6719985e-5
+Fulton,2022,Energy Storage,Distributed-scale Generation,EJ,0
+Fulton,2022,Hydroelectric,Utility-scale Generation,EJ,1.2749275788e-4
+Fulton,2022,Natural Gas,Distributed-scale Generation,EJ,4.1547166e-4
+Fulton,2022,Natural Gas,On-Site Backup Generation,EJ,0
+Fulton,2022,Petroleum,Distributed-scale Generation,EJ,1.7934999999999998e-8
+Fulton,2022,Petroleum,On-Site Backup Generation,EJ,2.1311e-6
+Fulton,2022,Solar,Distributed-scale Generation,EJ,4.492375679999999e-6
+Fulton,2023,Biomass,Distributed-scale Generation,EJ,1.009213e-5
+Fulton,2023,Energy Storage,Distributed-scale Generation,EJ,0
+Fulton,2023,Hydroelectric,Utility-scale Generation,EJ,1.0509927302e-4
+Fulton,2023,Natural Gas,Distributed-scale Generation,EJ,4.63897215e-4
+Fulton,2023,Natural Gas,On-Site Backup Generation,EJ,0
+Fulton,2023,Petroleum,Distributed-scale Generation,EJ,4.431e-8
+Fulton,2023,Petroleum,On-Site Backup Generation,EJ,1.7291449999999999e-6
+Fulton,2023,Solar,Distributed-scale Generation,EJ,3.80844028e-6
+Fulton,2024,Biomass,Distributed-scale Generation,EJ,2.653325e-6
+Fulton,2024,Energy Storage,Distributed-scale Generation,EJ,0
+Fulton,2024,Hydroelectric,Utility-scale Generation,EJ,1.1361246892e-4
+Fulton,2024,Natural Gas,Distributed-scale Generation,EJ,3.9340844500000005e-4
+Fulton,2024,Petroleum,Distributed-scale Generation,EJ,3.0595e-8
+Fulton,2024,Petroleum,On-Site Backup Generation,EJ,1.507595e-6
+Fulton,2024,Solar,Distributed-scale Generation,EJ,3.7976412999999998e-06
+Gwinnett,2020,Biomass,Distributed-scale Generation,EJ,7.4785785e-4
+Gwinnett,2021,Biomass,Distributed-scale Generation,EJ,7.6047354e-4
+Gwinnett,2022,Biomass,Distributed-scale Generation,EJ,6.06427715e-4
+Gwinnett,2023,Biomass,Distributed-scale Generation,EJ,7.54545495e-4
+Gwinnett,2024,Biomass,Distributed-scale Generation,EJ,7.21264465e-4
+Rockdale,2020,Hydroelectric,Utility-scale Generation,EJ,5.92504036e-6
+Bartow,2020,Bowen Plant,electricity,EJ,0.028686726
+Bartow,2020,Utility-scale Generation,electricity,EJ,6.792228e-4
+Bartow,2021,Bowen Plant,electricity,EJ,0.0340275852
+Bartow,2021,Utility-scale Generation,electricity,EJ,6.090372e-4
+Bartow,2022,Bowen Plant,electricity,EJ,0.030514147199999998
+Bartow,2022,Utility-scale Generation,electricity,EJ,5.268996e-4
+Bartow,2023,Bowen Plant,electricity,EJ,0.0368211348
+Bartow,2023,On-Site Backup Generation,commercial,EJ,3.1284e-6
+Bartow,2023,Utility-scale Generation,electricity,EJ,4.0154759999999997e-4
+Bartow,2024,Bowen Plant,electricity,EJ,0.0385644744
+Bartow,2024,On-Site Backup Generation,commercial,EJ,2.1438e-5
+Bartow,2024,Utility-scale Generation,electricity,EJ,4.409352e-4
+Cobb,2020,Distributed-scale Generation,electricity,EJ,2.5055999999999998e-6
+Cobb,2020,Jack McDonough,electricity,EJ,0.067358322
+Cobb,2021,Distributed-scale Generation,electricity,EJ,8.064e-6
+Cobb,2021,Jack McDonough,electricity,EJ,0.06564750479999999
+Cobb,2022,Distributed-scale Generation,electricity,EJ,8.4564e-6
+Cobb,2022,Jack McDonough,electricity,EJ,0.0663427836
+Cobb,2023,Distributed-scale Generation,electricity,EJ,8.254800000000001e-6
+Cobb,2023,Jack McDonough,electricity,EJ,0.06416849159999999
+Cobb,2024,Distributed-scale Generation,electricity,EJ,8.1828e-6
+Cobb,2024,Jack McDonough,electricity,EJ,0.0647548416
+Coweta,2020,Yates Plant,electricity,EJ,0.0081052452
+Coweta,2021,Yates Plant,electricity,EJ,0.0045492048
+Coweta,2022,Yates Plant,electricity,EJ,0.0049740228
+Coweta,2023,Yates Plant,electricity,EJ,0.0080610516
+Coweta,2024,Yates Plant,electricity,EJ,0.007544232
+DeKalb,2020,Distributed-scale Generation,electricity,EJ,6.3432e-6
+DeKalb,2020,On-Site Backup Generation,commercial,EJ,9.36e-8
+DeKalb,2021,Distributed-scale Generation,electricity,EJ,8.424e-7
+DeKalb,2021,On-Site Backup Generation,commercial,EJ,1.116e-7
+DeKalb,2022,Distributed-scale Generation,electricity,EJ,4.212e-7
+DeKalb,2022,On-Site Backup Generation,commercial,EJ,1.8e-7
+DeKalb,2024,On-Site Backup Generation,commercial,EJ,1.8e-7
+Douglas,2022,Distributed-scale Generation,electricity,EJ,1.9206e-5
+Douglas,2023,Distributed-scale Generation,electricity,EJ,1.88892e-5
+Douglas,2024,Distributed-scale Generation,electricity,EJ,1.91484e-5
+Forsyth,2020,Utility-scale Generation,electricity,EJ,0.0010594044
+Forsyth,2021,Utility-scale Generation,electricity,EJ,8.121384e-4
+Forsyth,2022,Utility-scale Generation,electricity,EJ,7.076052e-4
+Forsyth,2023,Utility-scale Generation,electricity,EJ,5.981976e-4
+Forsyth,2024,Utility-scale Generation,electricity,EJ,5.296572e-4
+Fulton,2020,Distributed-scale Generation,electricity,EJ,1.440468e-4
+Fulton,2020,On-Site Backup Generation,commercial,EJ,7.38e-7
+Fulton,2020,Utility-scale Generation,electricity,EJ,1.5477119999999999e-4
+Fulton,2021,Distributed-scale Generation,electricity,EJ,1.815372e-4
+Fulton,2021,On-Site Backup Generation,commercial,EJ,5.04e-7
+Fulton,2021,Utility-scale Generation,electricity,EJ,1.682244e-4
+Fulton,2022,Distributed-scale Generation,electricity,EJ,1.572228e-4
+Fulton,2022,On-Site Backup Generation,commercial,EJ,3.42e-7
+Fulton,2022,Utility-scale Generation,electricity,EJ,1.275048e-4
+Fulton,2023,Distributed-scale Generation,electricity,EJ,1.581804e-4
+Fulton,2023,On-Site Backup Generation,commercial,EJ,4.644e-7
+Fulton,2023,Utility-scale Generation,electricity,EJ,1.051092e-4
+Fulton,2024,Distributed-scale Generation,electricity,EJ,1.481184e-4
+Fulton,2024,On-Site Backup Generation,commercial,EJ,1.98e-7
+Fulton,2024,Utility-scale Generation,electricity,EJ,0.00011362319999999999
+Gwinnett,2020,Distributed-scale Generation,electricity,EJ,2.263176e-4
+Gwinnett,2021,Distributed-scale Generation,electricity,EJ,2.379024e-4
+Gwinnett,2022,Distributed-scale Generation,electricity,EJ,1.853856e-4
+Gwinnett,2023,Distributed-scale Generation,electricity,EJ,2.260548e-4
+Gwinnett,2024,Distributed-scale Generation,electricity,EJ,1.946448e-4
+Rockdale,2020,Utility-scale Generation,electricity,EJ,5.9256e-6
+Bartow,2020,onsiteBTM,residential,EJ,7.05528e-8
+Bartow,2021,onsiteBTM,residential,EJ,1.815624e-7
+Bartow,2022,onsiteBTM,residential,EJ,1.2388212e-6
+Bartow,2023,onsiteBTM,residential,EJ,1.1232072e-6
+Bartow,2024,onsiteBTM,residential,EJ,2.6613288e-6
+Cherokee,2020,onsiteBTM,residential,EJ,5.88852e-8
+Cherokee,2021,onsiteBTM,residential,EJ,8.28828e-8
+Cherokee,2022,onsiteBTM,residential,EJ,4.3203960000000003e-7
+Cherokee,2023,onsiteBTM,residential,EJ,4.71096e-7
+Cherokee,2024,onsiteBTM,residential,EJ,1.0300176e-6
+Clayton,2020,onsiteBTM,residential,EJ,1.357452e-7
+Clayton,2021,onsiteBTM,residential,EJ,8.419536e-7
+Clayton,2022,onsiteBTM,residential,EJ,4.4874972e-6
+Clayton,2023,onsiteBTM,residential,EJ,4.2581016e-6
+Clayton,2024,onsiteBTM,residential,EJ,7.1859996e-6
+Cobb,2020,onsiteBTM,residential,EJ,7.35912e-8
+Cobb,2021,onsiteBTM,residential,EJ,4.439232e-7
+Cobb,2022,onsiteBTM,residential,EJ,1.6147152e-6
+Cobb,2023,onsiteBTM,residential,EJ,1.464624e-6
+Cobb,2024,onsiteBTM,residential,EJ,2.8447092e-6
+Coweta,2020,onsiteBTM,residential,EJ,3.4974e-8
+Coweta,2021,onsiteBTM,residential,EJ,9.01584e-8
+Coweta,2022,onsiteBTM,residential,EJ,2.086848e-7
+Coweta,2023,onsiteBTM,residential,EJ,2.01816e-7
+Coweta,2024,onsiteBTM,residential,EJ,5.185836e-7
+DeKalb,2020,onsiteBTM,residential,EJ,1.1479428e-6
+DeKalb,2021,onsiteBTM,residential,EJ,4.1015412e-6
+DeKalb,2022,onsiteBTM,residential,EJ,8.9338356e-6
+DeKalb,2023,onsiteBTM,residential,EJ,8.368632e-6
+DeKalb,2024,onsiteBTM,residential,EJ,1.37854296e-5
+Douglas,2020,onsiteBTM,residential,EJ,3.5856e-9
+Douglas,2021,onsiteBTM,residential,EJ,9.4752e-9
+Douglas,2022,onsiteBTM,residential,EJ,2.789676e-7
+Douglas,2023,onsiteBTM,residential,EJ,2.730636e-7
+Douglas,2024,onsiteBTM,residential,EJ,5.326632e-7
+Fayette,2020,onsiteBTM,residential,EJ,4.84956e-8
+Fayette,2021,onsiteBTM,residential,EJ,6.82776e-8
+Fayette,2022,onsiteBTM,residential,EJ,2.99736e-7
+Fayette,2023,onsiteBTM,residential,EJ,3.122748e-7
+Fayette,2024,onsiteBTM,residential,EJ,5.535252e-7
+Forsyth,2020,onsiteBTM,residential,EJ,2.81826e-8
+Forsyth,2021,onsiteBTM,residential,EJ,5.04252e-8
+Forsyth,2022,onsiteBTM,residential,EJ,2.156868e-7
+Forsyth,2023,onsiteBTM,residential,EJ,2.370564e-7
+Forsyth,2024,onsiteBTM,residential,EJ,4.965408e-7
+Fulton,2020,onsiteBTM,residential,EJ,7.439508e-7
+Fulton,2021,onsiteBTM,residential,EJ,1.62558e-6
+Fulton,2022,onsiteBTM,residential,EJ,4.9875228e-6
+Fulton,2023,onsiteBTM,residential,EJ,4.8057516e-6
+Fulton,2024,onsiteBTM,residential,EJ,8.4108816e-6
+Gwinnett,2020,onsiteBTM,residential,EJ,1.315224e-7
+Gwinnett,2021,onsiteBTM,residential,EJ,7.751772e-7
+Gwinnett,2022,onsiteBTM,residential,EJ,3.37689e-6
+Gwinnett,2023,onsiteBTM,residential,EJ,3.027744e-6
+Gwinnett,2024,onsiteBTM,residential,EJ,5.9829588e-6
+Hall,2020,onsiteBTM,residential,EJ,4.16844e-8
+Hall,2021,onsiteBTM,residential,EJ,1.956132e-7
+Hall,2022,onsiteBTM,residential,EJ,7.21278e-7
+Hall,2023,onsiteBTM,residential,EJ,6.725484e-7
+Hall,2024,onsiteBTM,residential,EJ,1.2519252e-6
+Henry,2020,onsiteBTM,residential,EJ,7.88868e-8
+Henry,2021,onsiteBTM,residential,EJ,4.10274e-7
+Henry,2022,onsiteBTM,residential,EJ,2.0712636e-6
+Henry,2023,onsiteBTM,residential,EJ,1.9801224e-6
+Henry,2024,onsiteBTM,residential,EJ,4.2511932e-6
+Paulding,2020,onsiteBTM,residential,EJ,8.8524e-9
+Paulding,2021,onsiteBTM,residential,EJ,1.53468e-8
+Paulding,2022,onsiteBTM,residential,EJ,1.2339e-7
+Paulding,2023,onsiteBTM,residential,EJ,1.467324e-7
+Paulding,2024,onsiteBTM,residential,EJ,2.661192e-7
+Rockdale,2020,onsiteBTM,residential,EJ,2.1816e-9
+Rockdale,2021,onsiteBTM,residential,EJ,4.40712e-8
+Rockdale,2022,onsiteBTM,residential,EJ,2.630844e-7
+Rockdale,2023,onsiteBTM,residential,EJ,2.375892e-7
+Rockdale,2024,onsiteBTM,residential,EJ,3.78504e-7
+Bartow,2020,onsiteBTM,commercial,EJ,9.5364e-9
+Bartow,2021,onsiteBTM,commercial,EJ,9.5364e-9
+Bartow,2022,onsiteBTM,commercial,EJ,9.5364e-9
+Bartow,2023,onsiteBTM,commercial,EJ,9.5364e-9
+Bartow,2024,onsiteBTM,commercial,EJ,3.98088e-8
+Cherokee,2020,onsiteBTM,commercial,EJ,7.11e-9
+Cherokee,2021,onsiteBTM,commercial,EJ,7.11e-9
+Cherokee,2022,onsiteBTM,commercial,EJ,7.11e-9
+Cherokee,2023,onsiteBTM,commercial,EJ,2.20608e-8
+Cherokee,2024,onsiteBTM,commercial,EJ,2.53278e-7
+Clayton,2020,onsiteBTM,commercial,EJ,1.37808e-7
+Clayton,2021,onsiteBTM,commercial,EJ,2.572128e-7
+Clayton,2022,onsiteBTM,commercial,EJ,4.694328e-7
+Clayton,2023,onsiteBTM,commercial,EJ,3.899196e-7
+Clayton,2024,onsiteBTM,commercial,EJ,4.816728e-7
+Cobb,2020,onsiteBTM,commercial,EJ,1.11456e-7
+Cobb,2021,onsiteBTM,commercial,EJ,1.071936e-6
+Cobb,2022,onsiteBTM,commercial,EJ,1.174608e-6
+Cobb,2023,onsiteBTM,commercial,EJ,9.76824e-7
+Cobb,2024,onsiteBTM,commercial,EJ,1.393884e-6
+DeKalb,2020,onsiteBTM,commercial,EJ,8.79696e-7
+DeKalb,2021,onsiteBTM,commercial,EJ,2.1015936e-6
+DeKalb,2022,onsiteBTM,commercial,EJ,2.3509152e-6
+DeKalb,2023,onsiteBTM,commercial,EJ,2.2715388e-6
+DeKalb,2024,onsiteBTM,commercial,EJ,5.3035056e-6
+Douglas,2020,onsiteBTM,commercial,EJ,8.1576e-9
+Douglas,2021,onsiteBTM,commercial,EJ,8.1576e-9
+Douglas,2022,onsiteBTM,commercial,EJ,8.1576e-9
+Douglas,2023,onsiteBTM,commercial,EJ,8.1576e-9
+Douglas,2024,onsiteBTM,commercial,EJ,8.1576e-9
+Fayette,2020,onsiteBTM,commercial,EJ,8.84412e-8
+Fayette,2021,onsiteBTM,commercial,EJ,8.84412e-8
+Fayette,2022,onsiteBTM,commercial,EJ,8.84412e-8
+Fayette,2023,onsiteBTM,commercial,EJ,1.498896e-7
+Fayette,2024,onsiteBTM,commercial,EJ,2.620836e-7
+Fulton,2020,onsiteBTM,commercial,EJ,2.076948e-7
+Fulton,2021,onsiteBTM,commercial,EJ,1.849716e-6
+Fulton,2022,onsiteBTM,commercial,EJ,2.0994768e-6
+Fulton,2023,onsiteBTM,commercial,EJ,1.7960328e-6
+Fulton,2024,onsiteBTM,commercial,EJ,2.4697584e-6
+Gwinnett,2020,onsiteBTM,commercial,EJ,1.007424e-7
+Gwinnett,2021,onsiteBTM,commercial,EJ,1.6564104e-6
+Gwinnett,2022,onsiteBTM,commercial,EJ,2.732202e-6
+Gwinnett,2023,onsiteBTM,commercial,EJ,2.972862e-6
+Gwinnett,2024,onsiteBTM,commercial,EJ,2.6962092e-6
+Hall,2020,onsiteBTM,commercial,EJ,5.472e-9
+Hall,2021,onsiteBTM,commercial,EJ,2.3328e-8
+Hall,2022,onsiteBTM,commercial,EJ,1.86552e-8
+Hall,2023,onsiteBTM,commercial,EJ,2.37348e-8
+Hall,2024,onsiteBTM,commercial,EJ,7.488e-9
+Henry,2020,onsiteBTM,commercial,EJ,1.796184e-7
+Henry,2021,onsiteBTM,commercial,EJ,4.550112e-7
+Henry,2022,onsiteBTM,commercial,EJ,5.349672e-7
+Henry,2023,onsiteBTM,commercial,EJ,4.568004e-7
+Henry,2024,onsiteBTM,commercial,EJ,6.203124e-7
+Bartow,2020,onsiteBTM,industrial,EJ,1.60704e-7
+Bartow,2021,onsiteBTM,industrial,EJ,1.60704e-7
+Bartow,2022,onsiteBTM,industrial,EJ,7.704e-7
+Bartow,2023,onsiteBTM,industrial,EJ,6.26688e-7
+Bartow,2024,onsiteBTM,industrial,EJ,6.09984e-7
+Cherokee,2020,onsiteBTM,industrial,EJ,3.9132e-9
+Cherokee,2021,onsiteBTM,industrial,EJ,6.1596e-9
+Cherokee,2022,onsiteBTM,industrial,EJ,1.3698e-8
+Cherokee,2023,onsiteBTM,industrial,EJ,1.1196e-8
+Cherokee,2024,onsiteBTM,industrial,EJ,8.2332e-9
+Cobb,2020,onsiteBTM,industrial,EJ,6.4584e-8
+Cobb,2021,onsiteBTM,industrial,EJ,7.3656e-8
+Cobb,2022,onsiteBTM,industrial,EJ,1.0152e-7
+Cobb,2023,onsiteBTM,industrial,EJ,1.02816e-7
+Cobb,2024,onsiteBTM,industrial,EJ,1.09728e-7
+Fayette,2020,onsiteBTM,industrial,EJ,1.232568e-7
+Fayette,2021,onsiteBTM,industrial,EJ,1.232568e-7
+Fayette,2022,onsiteBTM,industrial,EJ,1.292508e-7
+Fayette,2023,onsiteBTM,industrial,EJ,1.21428e-7
+Fayette,2024,onsiteBTM,industrial,EJ,1.370448e-7
+Fulton,2020,onsiteBTM,industrial,EJ,2.88e-9
+Fulton,2021,onsiteBTM,industrial,EJ,9.3024e-8
+Fulton,2022,onsiteBTM,industrial,EJ,1.00512e-7
+Fulton,2023,onsiteBTM,industrial,EJ,9.71316e-8
+Fulton,2024,onsiteBTM,industrial,EJ,1.223856e-7
+Hall,2020,onsiteBTM,industrial,EJ,2.2608e-7
+Hall,2021,onsiteBTM,industrial,EJ,2.2608e-7
+Hall,2022,onsiteBTM,industrial,EJ,2.14848e-7
+Hall,2023,onsiteBTM,industrial,EJ,1.79424e-7
+Hall,2024,onsiteBTM,industrial,EJ,1.37088e-7
+Bartow,2020,Coal,industrial,EJ,7.414614030259145e-5
+Cherokee,2020,Coal,industrial,EJ,1.8188359326026696e-4
+Clayton,2020,Coal,industrial,EJ,2.0309291217797114e-4
+Cobb,2020,Coal,industrial,EJ,5.19793465514594e-4
+Coweta,2020,Coal,industrial,EJ,9.953818026424947e-5
+DeKalb,2020,Coal,industrial,EJ,5.186045065410168e-4
+Douglas,2020,Coal,industrial,EJ,9.812675777479463e-5
+Fayette,2020,Coal,industrial,EJ,8.105810887060407e-5
+Forsyth,2020,Coal,industrial,EJ,1.7153497031740202e-4
+Fulton,2020,Coal,industrial,EJ,7.252670086094256e-4
+Gwinnett,2020,Coal,industrial,EJ,6.500126201820051e-4
+Hall,2020,Coal,industrial,EJ,1.3796061372297932e-4
+Henry,2020,Coal,industrial,EJ,1.6404446095962243e-4
+Paulding,2020,Coal,industrial,EJ,1.1501363770869499e-4
+Rockdale,2020,Coal,industrial,EJ,6.349502123752712e-5
+Bartow,2021,Coal,industrial,EJ,7.872345058033407e-5
+Cherokee,2021,Coal,industrial,EJ,1.9496067977939338e-4
+Clayton,2021,Coal,industrial,EJ,2.123127180964524e-4
+Cobb,2021,Coal,industrial,EJ,5.44022870603944e-4
+Coweta,2021,Coal,industrial,EJ,1.0642739595684235e-4
+DeKalb,2021,Coal,industrial,EJ,5.387624841105405e-4
+Douglas,2021,Coal,industrial,EJ,1.0343818523432969e-4
+Fayette,2021,Coal,industrial,EJ,8.567533443012734e-5
+Forsyth,2021,Coal,industrial,EJ,1.8505435172154344e-4
+Fulton,2021,Coal,industrial,EJ,7.539196707060562e-4
+Gwinnett,2021,Coal,industrial,EJ,6.850124390542678e-4
+Hall,2021,Coal,industrial,EJ,1.4686936651760649e-4
+Henry,2021,Coal,industrial,EJ,1.7392268140929536e-4
+Paulding,2021,Coal,industrial,EJ,1.2345518331254647e-4
+Rockdale,2021,Coal,industrial,EJ,6.662328450824032e-5
+Bartow,2022,Coal,industrial,EJ,7.096920076099053e-5
+Cherokee,2022,Coal,industrial,EJ,1.7707226098297583e-4
+Clayton,2022,Coal,industrial,EJ,1.880235563834152e-4
+Cobb,2022,Coal,industrial,EJ,4.870498506230216e-4
+Coweta,2022,Coal,industrial,EJ,9.625840747159322e-5
+DeKalb,2022,Coal,industrial,EJ,4.809334322922884e-4
+Douglas,2022,Coal,industrial,EJ,9.29164599121554e-5
+Fayette,2022,Coal,industrial,EJ,7.684843644302108e-5
+Forsyth,2022,Coal,industrial,EJ,1.6865447891496418e-4
+Fulton,2022,Coal,industrial,EJ,6.773036788622739e-4
+Gwinnett,2022,Coal,industrial,EJ,6.165584972632607e-4
+Hall,2022,Coal,industrial,EJ,1.3408432145194687e-4
+Henry,2022,Coal,industrial,EJ,1.5637634477151763e-4
+Paulding,2022,Coal,industrial,EJ,1.125422231118283e-4
+Rockdale,2022,Coal,industrial,EJ,5.9777577053377745e-5
+Bartow,2023,Coal,industrial,EJ,4.80294442620281e-5
+Cherokee,2023,Coal,industrial,EJ,1.1999027334299674e-4
+Clayton,2023,Coal,industrial,EJ,1.2506027312563357e-4
+Cobb,2023,Coal,industrial,EJ,3.263347112296411e-4
+Coweta,2023,Coal,industrial,EJ,6.527838807224809e-5
+DeKalb,2023,Coal,industrial,EJ,3.2083695501811577e-4
+Douglas,2023,Coal,industrial,EJ,6.24094123363043e-5
+Fayette,2023,Coal,industrial,EJ,5.167247533266959e-5
+Forsyth,2023,Coal,industrial,EJ,1.1468174922354805e-4
+Fulton,2023,Coal,industrial,EJ,4.5280816794797965e-4
+Gwinnett,2023,Coal,industrial,EJ,4.142227835925062e-4
+Hall,2023,Coal,industrial,EJ,9.116893075396913e-5
+Henry,2023,Coal,industrial,EJ,1.064938060959659e-4
+Paulding,2023,Coal,industrial,EJ,7.666823845318044e-5
+Rockdale,2023,Coal,industrial,EJ,4.021202843173513e-5
+Bartow,2024,Coal,industrial,EJ,5.0937189222527957e-5
+Cherokee,2024,Coal,industrial,EJ,1.272315690869715e-4
+Clayton,2024,Coal,industrial,EJ,1.2904784391798213e-4
+Cobb,2024,Coal,industrial,EJ,3.4138077514663873e-4
+Coweta,2024,Coal,industrial,EJ,6.859060031868695e-5
+DeKalb,2024,Coal,industrial,EJ,3.339115074585377e-4
+Douglas,2024,Coal,industrial,EJ,6.583974588489382e-5
+Fayette,2024,Coal,industrial,EJ,5.423119219170444e-5
+Forsyth,2024,Coal,industrial,EJ,1.2141558832141805e-4
+Fulton,2024,Coal,industrial,EJ,4.7264499453262974e-4
+Gwinnett,2024,Coal,industrial,EJ,4.3515560819373935e-4
+Hall,2024,Coal,industrial,EJ,9.612168553757585e-5
+Henry,2024,Coal,industrial,EJ,1.1240747202947746e-4
+Paulding,2024,Coal,industrial,EJ,8.17319339169965e-5
+Rockdale,2024,Coal,industrial,EJ,4.231183442838747e-5
+Bartow,2020,Biomass,transport,EJ,3.875156683466743e-4
+Cherokee,2020,Biomass,transport,EJ,9.505921942248909e-4
+Clayton,2020,Biomass,transport,EJ,0.0010614400868060863
+Cobb,2020,Biomass,transport,EJ,0.0027166365149836657
+Coweta,2020,Biomass,transport,EJ,5.202240372013572e-4
+DeKalb,2020,Biomass,transport,EJ,0.0027104225673742245
+Douglas,2020,Biomass,transport,EJ,5.128474114311078e-4
+Fayette,2020,Biomass,transport,EJ,4.236402205930035e-4
+Forsyth,2020,Biomass,transport,EJ,8.965063912443697e-4
+Fulton,2020,Biomass,transport,EJ,0.0037905186760105953
+Gwinnett,2020,Biomass,transport,EJ,0.003397210885362821
+Hall,2020,Biomass,transport,EJ,7.21034152475084e-4
+Henry,2020,Biomass,transport,EJ,8.573581668298412e-4
+Paulding,2020,Biomass,transport,EJ,6.011046091378201e-4
+Rockdale,2020,Biomass,transport,EJ,3.318489066474932e-4
+Bartow,2021,Biomass,transport,EJ,4.069583722477452e-4
+Cherokee,2021,Biomass,transport,EJ,0.0010078430291158502
+Clayton,2021,Biomass,transport,EJ,0.0010975438389334382
+Cobb,2021,Biomass,transport,EJ,0.0028123089149986193
+Coweta,2021,Biomass,transport,EJ,5.501730361395323e-4
+DeKalb,2021,Biomass,transport,EJ,0.002785115514443026
+Douglas,2021,Biomass,transport,EJ,5.34720406446962e-4
+Fayette,2021,Biomass,transport,EJ,4.4289591455199474e-4
+Forsyth,2021,Biomass,transport,EJ,9.566325815089984e-4
+Fulton,2021,Biomass,transport,EJ,0.003897363742751616
+Gwinnett,2021,Biomass,transport,EJ,0.003541150001834683
+Hall,2021,Biomass,transport,EJ,7.592365158088448e-4
+Henry,2021,Biomass,transport,EJ,8.990877661169416e-4
+Paulding,2021,Biomass,transport,EJ,6.381976409323152e-4
+Rockdale,2021,Biomass,transport,EJ,3.444069488494319e-4
+Bartow,2022,Biomass,transport,EJ,4.012661099630848e-4
+Cherokee,2022,Biomass,transport,EJ,0.001001182154866008
+Clayton,2022,Biomass,transport,EJ,0.0010631017433250958
+Cobb,2022,Biomass,transport,EJ,0.0027538227403150714
+Coweta,2022,Biomass,transport,EJ,5.442535114274359e-4
+DeKalb,2022,Biomass,transport,EJ,0.002719239972520549
+Douglas,2022,Biomass,transport,EJ,5.253578456668409e-4
+Fayette,2022,Biomass,transport,EJ,4.345078261778361e-4
+Forsyth,2022,Biomass,transport,EJ,9.535872738651119e-4
+Fulton,2022,Biomass,transport,EJ,0.003829534637089209
+Gwinnett,2022,Biomass,transport,EJ,0.0034860760316960467
+Hall,2022,Biomass,transport,EJ,7.581245596559763e-4
+Henry,2022,Biomass,transport,EJ,8.841656223244926e-4
+Paulding,2022,Biomass,transport,EJ,6.363236388524128e-4
+Rockdale,2022,Biomass,transport,EJ,3.3798768409425524e-4
+Bartow,2023,Biomass,transport,EJ,4.4544267286246604e-4
+Cherokee,2023,Biomass,transport,EJ,0.001112833781373956
+Clayton,2023,Biomass,transport,EJ,0.0011598548179337178
+Cobb,2023,Biomass,transport,EJ,0.003026547740691976
+Coweta,2023,Biomass,transport,EJ,6.054157009275307e-4
+DeKalb,2023,Biomass,transport,EJ,0.002975559534202479
+Douglas,2023,Biomass,transport,EJ,5.788077682347363e-4
+Fayette,2023,Biomass,transport,EJ,4.7922947848475194e-4
+Forsyth,2023,Biomass,transport,EJ,0.0010636005826756404
+Fulton,2023,Biomass,transport,EJ,0.004199508941313481
+Gwinnett,2023,Biomass,transport,EJ,0.0038416539420559506
+Hall,2023,Biomass,transport,EJ,8.455340847898927e-4
+Henry,2023,Biomass,transport,EJ,9.87662596549918e-4
+Paulding,2023,Biomass,transport,EJ,7.110493486854997e-4
+Rockdale,2023,Biomass,transport,EJ,3.729410927208012e-4
+Bartow,2024,Biomass,transport,EJ,4.372459854136678e-4
+Cherokee,2024,Biomass,transport,EJ,0.0010921586693392951
+Clayton,2024,Biomass,transport,EJ,0.0011077496136059262
+Cobb,2024,Biomass,transport,EJ,0.0029304203021131253
+Coweta,2024,Biomass,transport,EJ,5.887832659049674e-4
+DeKalb,2024,Biomass,transport,EJ,0.002866303939187513
+Douglas,2024,Biomass,transport,EJ,5.65169869170829e-4
+Fayette,2024,Biomass,transport,EJ,4.655217814714551e-4
+Forsyth,2024,Biomass,transport,EJ,0.00104223415878431
+Fulton,2024,Biomass,transport,EJ,0.004057195332911244
+Gwinnett,2024,Biomass,transport,EJ,0.0037353855918850916
+Hall,2024,Biomass,transport,EJ,8.251107246787775e-4
+Henry,2024,Biomass,transport,EJ,9.649082846065398e-4
+Paulding,2024,Biomass,transport,EJ,7.015887710093072e-4
+Rockdale,2024,Biomass,transport,EJ,3.6320574459805397e-4
+Bartow,2020,Geothermal,commercial,EJ,4.298326974063272e-8
+Cherokee,2020,Geothermal,commercial,EJ,1.0543976420885041e-7
+Clayton,2020,Geothermal,commercial,EJ,1.1773502155244704e-7
+Cobb,2020,Geothermal,commercial,EJ,3.0132954522585165e-7
+Coweta,2020,Geothermal,commercial,EJ,5.770329290681129e-8
+DeKalb,2020,Geothermal,commercial,EJ,3.006402936469663e-7
+Douglas,2020,Geothermal,commercial,EJ,5.688507697089544e-8
+Fayette,2020,Geothermal,commercial,EJ,4.6990208040929895e-8
+Forsyth,2020,Geothermal,commercial,EJ,9.944056250284174e-8
+Fulton,2020,Geothermal,commercial,EJ,4.204446426721308e-7
+Gwinnett,2020,Geothermal,commercial,EJ,3.768189102504377e-7
+Hall,2020,Geothermal,commercial,EJ,7.997716737564019e-8
+Henry,2020,Geothermal,commercial,EJ,9.509823823746227e-8
+Paulding,2020,Geothermal,commercial,EJ,6.667457258475072e-8
+Rockdale,2020,Geothermal,commercial,EJ,3.680870796378384e-8
+Bartow,2021,Geothermal,commercial,EJ,4.3385753970974963e-8
+Cherokee,2021,Geothermal,commercial,EJ,1.074459519313273e-7
+Clayton,2021,Geothermal,commercial,EJ,1.1700893805260535e-7
+Cobb,2021,Geothermal,commercial,EJ,2.9981971375251806e-7
+Coweta,2021,Geothermal,commercial,EJ,5.865384180592028e-8
+DeKalb,2021,Geothermal,commercial,EJ,2.96920630537636e-7
+Douglas,2021,Geothermal,commercial,EJ,5.700643991971876e-8
+Fayette,2021,Geothermal,commercial,EJ,4.7217048459700934e-8
+Forsyth,2021,Geothermal,commercial,EJ,1.0198641593912562e-7
+Fulton,2021,Geothermal,commercial,EJ,4.1549720071978847e-7
+Gwinnett,2021,Geothermal,commercial,EJ,3.7752132215721565e-7
+Hall,2021,Geothermal,commercial,EJ,8.094205925467427e-8
+Henry,2021,Geothermal,commercial,EJ,9.585157421289356e-8
+Paulding,2021,Geothermal,commercial,EJ,6.803812803116366e-8
+Rockdale,2021,Geothermal,commercial,EJ,3.671715872595223e-8
+Bartow,2022,Geothermal,commercial,EJ,4.35460658143829e-8
+Cherokee,2022,Geothermal,commercial,EJ,1.0864995304983944e-7
+Clayton,2022,Geothermal,commercial,EJ,1.1536956980114447e-7
+Cobb,2022,Geothermal,commercial,EJ,2.98849425140679e-7
+Coweta,2022,Geothermal,commercial,EJ,5.906329650044069e-8
+DeKalb,2022,Geothermal,commercial,EJ,2.9509644564644174e-7
+Douglas,2022,Geothermal,commercial,EJ,5.701270741657027e-8
+Fayette,2022,Geothermal,commercial,EJ,4.7153512160160196e-8
+Forsyth,2022,Geothermal,commercial,EJ,1.0348487738301223e-7
+Fulton,2022,Geothermal,commercial,EJ,4.155874697728326e-7
+Gwinnett,2022,Geothermal,commercial,EJ,3.7831477052508715e-7
+Hall,2022,Geothermal,commercial,EJ,8.227293845801312e-8
+Henry,2022,Geothermal,commercial,EJ,9.595112426538894e-8
+Paulding,2022,Geothermal,commercial,EJ,6.90548998998793e-8
+Rockdale,2022,Geothermal,commercial,EJ,3.667898576676039e-8
+Bartow,2023,Geothermal,commercial,EJ,4.385249419039315e-8
+Cherokee,2023,Geothermal,commercial,EJ,1.0955514571376101e-7
+Clayton,2023,Geothermal,commercial,EJ,1.1418422563399549e-7
+Cobb,2023,Geothermal,commercial,EJ,2.979545411820508e-7
+Coweta,2023,Geothermal,commercial,EJ,5.9601358659893254e-8
+DeKalb,2023,Geothermal,commercial,EJ,2.9293490528930905e-7
+Douglas,2023,Geothermal,commercial,EJ,5.6981887547413194e-8
+Fayette,2023,Geothermal,commercial,EJ,4.717870379609184e-8
+Forsyth,2023,Geothermal,commercial,EJ,1.0470828507057571e-7
+Fulton,2023,Geothermal,commercial,EJ,4.134290508541243e-7
+Gwinnett,2023,Geothermal,commercial,EJ,3.7819930024424215e-7
+Hall,2023,Geothermal,commercial,EJ,8.324029285913638e-8
+Henry,2023,Geothermal,commercial,EJ,9.723241825698781e-8
+Paulding,2023,Geothermal,commercial,EJ,7.000067423253179e-8
+Rockdale,2023,Geothermal,commercial,EJ,3.6714931231896944e-8
+Bartow,2024,Geothermal,commercial,EJ,4.4351057224665185e-8
+Cherokee,2024,Geothermal,commercial,EJ,1.107806435237018e-7
+Clayton,2024,Geothermal,commercial,EJ,1.123620756795665e-7
+Cobb,2024,Geothermal,commercial,EJ,2.9724055302275906e-7
+Coweta,2024,Geothermal,commercial,EJ,5.972189840547406e-8
+DeKalb,2024,Geothermal,commercial,EJ,2.9073705481805635e-7
+Douglas,2024,Geothermal,commercial,EJ,5.7326726935040345e-8
+Fayette,2024,Geothermal,commercial,EJ,4.7219148621423116e-8
+Forsyth,2024,Geothermal,commercial,EJ,1.0571666375395565e-7
+Fulton,2024,Geothermal,commercial,EJ,4.11532428848611e-7
+Gwinnett,2024,Geothermal,commercial,EJ,3.7889038588919406e-7
+Hall,2024,Geothermal,commercial,EJ,8.369323947546875e-8
+Henry,2024,Geothermal,commercial,EJ,9.787328866301913e-8
+Paulding,2024,Geothermal,commercial,EJ,7.116406958380192e-8
+Rockdale,2024,Geothermal,commercial,EJ,3.6840952919797534e-8
+Bartow,2020,Geothermal,industrial,EJ,6.447490461094908e-8
+Cherokee,2020,Geothermal,industrial,EJ,1.5815964631327563e-7
+Clayton,2020,Geothermal,industrial,EJ,1.7660253232867055e-7
+Cobb,2020,Geothermal,industrial,EJ,4.5199431783877745e-7
+Coweta,2020,Geothermal,industrial,EJ,8.655493936021693e-8
+DeKalb,2020,Geothermal,industrial,EJ,4.509604404704494e-7
+Douglas,2020,Geothermal,industrial,EJ,8.532761545634316e-8
+Fayette,2020,Geothermal,industrial,EJ,7.048531206139485e-8
+Forsyth,2020,Geothermal,industrial,EJ,1.4916084375426262e-7
+Fulton,2020,Geothermal,industrial,EJ,6.306669640081962e-7
+Gwinnett,2020,Geothermal,industrial,EJ,5.652283653756566e-7
+Hall,2020,Geothermal,industrial,EJ,1.1996575106346026e-7
+Henry,2020,Geothermal,industrial,EJ,1.426473573561934e-7
+Paulding,2020,Geothermal,industrial,EJ,1.0001185887712608e-7
+Rockdale,2020,Geothermal,industrial,EJ,5.521306194567576e-8
+Bartow,2021,Geothermal,industrial,EJ,6.507863095646245e-8
+Cherokee,2021,Geothermal,industrial,EJ,1.6116892789699096e-7
+Clayton,2021,Geothermal,industrial,EJ,1.7551340707890804e-7
+Cobb,2021,Geothermal,industrial,EJ,4.497295706287771e-7
+Coweta,2021,Geothermal,industrial,EJ,8.798076270888043e-8
+DeKalb,2021,Geothermal,industrial,EJ,4.45380945806454e-7
+Douglas,2021,Geothermal,industrial,EJ,8.550965987957815e-8
+Fayette,2021,Geothermal,industrial,EJ,7.08255726895514e-8
+Forsyth,2021,Geothermal,industrial,EJ,1.5297962390868844e-7
+Fulton,2021,Geothermal,industrial,EJ,6.232458010796827e-7
+Gwinnett,2021,Geothermal,industrial,EJ,5.662819832358235e-7
+Hall,2021,Geothermal,industrial,EJ,1.2141308888201142e-7
+Henry,2021,Geothermal,industrial,EJ,1.4377736131934033e-7
+Paulding,2021,Geothermal,industrial,EJ,1.0205719204674549e-7
+Rockdale,2021,Geothermal,industrial,EJ,5.507573808892835e-8
+Bartow,2022,Geothermal,industrial,EJ,6.531909872157435e-8
+Cherokee,2022,Geothermal,industrial,EJ,1.6297492957475918e-7
+Clayton,2022,Geothermal,industrial,EJ,1.730543547017167e-7
+Cobb,2022,Geothermal,industrial,EJ,4.4827413771101846e-7
+Coweta,2022,Geothermal,industrial,EJ,8.859494475066103e-8
+DeKalb,2022,Geothermal,industrial,EJ,4.426446684696626e-7
+Douglas,2022,Geothermal,industrial,EJ,8.55190611248554e-8
+Fayette,2022,Geothermal,industrial,EJ,7.07302682402403e-8
+Forsyth,2022,Geothermal,industrial,EJ,1.5522731607451833e-7
+Fulton,2022,Geothermal,industrial,EJ,6.233812046592489e-7
+Gwinnett,2022,Geothermal,industrial,EJ,5.674721557876307e-7
+Hall,2022,Geothermal,industrial,EJ,1.2340940768701967e-7
+Henry,2022,Geothermal,industrial,EJ,1.439266863980834e-7
+Paulding,2022,Geothermal,industrial,EJ,1.0358234984981896e-7
+Rockdale,2022,Geothermal,industrial,EJ,5.5018478650140586e-8
+Bartow,2023,Geothermal,industrial,EJ,6.577874128558973e-8
+Cherokee,2023,Geothermal,industrial,EJ,1.643327185706415e-7
+Clayton,2023,Geothermal,industrial,EJ,1.7127633845099323e-7
+Cobb,2023,Geothermal,industrial,EJ,4.4693181177307617e-7
+Coweta,2023,Geothermal,industrial,EJ,8.940203798983988e-8
+DeKalb,2023,Geothermal,industrial,EJ,4.3940235793396357e-7
+Douglas,2023,Geothermal,industrial,EJ,8.547283132111978e-8
+Fayette,2023,Geothermal,industrial,EJ,7.076805569413776e-8
+Forsyth,2023,Geothermal,industrial,EJ,1.5706242760586355e-7
+Fulton,2023,Geothermal,industrial,EJ,6.201435762811865e-7
+Gwinnett,2023,Geothermal,industrial,EJ,5.672989503663632e-7
+Hall,2023,Geothermal,industrial,EJ,1.248604392887046e-7
+Henry,2023,Geothermal,industrial,EJ,1.4584862738548172e-7
+Paulding,2023,Geothermal,industrial,EJ,1.0500101134879767e-7
+Rockdale,2023,Geothermal,industrial,EJ,5.5072396847845416e-8
+Bartow,2024,Geothermal,industrial,EJ,6.652658583699778e-8
+Cherokee,2024,Geothermal,industrial,EJ,1.6617096528555272e-7
+Clayton,2024,Geothermal,industrial,EJ,1.6854311351934974e-7
+Cobb,2024,Geothermal,industrial,EJ,4.4586082953413854e-7
+Coweta,2024,Geothermal,industrial,EJ,8.95828476082111e-8
+DeKalb,2024,Geothermal,industrial,EJ,4.361055822270845e-7
+Douglas,2024,Geothermal,industrial,EJ,8.599009040256052e-8
+Fayette,2024,Geothermal,industrial,EJ,7.082872293213467e-8
+Forsyth,2024,Geothermal,industrial,EJ,1.5857499563093347e-7
+Fulton,2024,Geothermal,industrial,EJ,6.172986432729165e-7
+Gwinnett,2024,Geothermal,industrial,EJ,5.683355788337911e-7
+Hall,2024,Geothermal,industrial,EJ,1.2553985921320313e-7
+Henry,2024,Geothermal,industrial,EJ,1.468099329945287e-7
+Paulding,2024,Geothermal,industrial,EJ,1.067461043757029e-7
+Rockdale,2024,Geothermal,industrial,EJ,5.5261429379696305e-8
+Bartow,2020,Geothermal,residential,EJ,3.266728500288087e-6
+Cherokee,2020,Geothermal,residential,EJ,8.013422079872632e-6
+Clayton,2020,Geothermal,residential,EJ,8.947861637985974e-6
+Cobb,2020,Geothermal,residential,EJ,2.2901045437164725e-5
+Coweta,2020,Geothermal,residential,EJ,4.385450260917659e-6
+DeKalb,2020,Geothermal,residential,EJ,2.2848662317169437e-5
+Douglas,2020,Geothermal,residential,EJ,4.323265849788054e-6
+Fayette,2020,Geothermal,residential,EJ,3.5712558111106724e-6
+Forsyth,2020,Geothermal,residential,EJ,7.557482750215973e-6
+Fulton,2020,Geothermal,residential,EJ,3.195379284308194e-5
+Gwinnett,2020,Geothermal,residential,EJ,2.863823717903327e-5
+Hall,2020,Geothermal,residential,EJ,6.078264720548654e-6
+Henry,2020,Geothermal,residential,EJ,7.2274661060471335e-6
+Paulding,2020,Geothermal,residential,EJ,5.067267516441055e-6
+Rockdale,2020,Geothermal,residential,EJ,2.797461805247572e-6
+Bartow,2021,Geothermal,residential,EJ,3.2973173017940973e-06
+Cherokee,2021,Geothermal,residential,EJ,8.165892346780875e-6
+Clayton,2021,Geothermal,residential,EJ,8.892679291998008e-6
+Cobb,2021,Geothermal,residential,EJ,2.2786298245191373e-5
+Coweta,2021,Geothermal,residential,EJ,4.457691977249941e-6
+DeKalb,2021,Geothermal,residential,EJ,2.256596792086034e-5
+Douglas,2021,Geothermal,residential,EJ,4.332489433898626e-6
+Fayette,2021,Geothermal,residential,EJ,3.588495682937271e-6
+Forsyth,2021,Geothermal,residential,EJ,7.750967611373549e-6
+Fulton,2021,Geothermal,residential,EJ,3.1577787254703924e-5
+Gwinnett,2021,Geothermal,residential,EJ,2.8691620483948388e-5
+Hall,2021,Geothermal,residential,EJ,6.151596503355245e-6
+Henry,2021,Geothermal,residential,EJ,7.284719640179911e-6
+Paulding,2021,Geothermal,residential,EJ,5.170897730368439e-6
+Rockdale,2021,Geothermal,residential,EJ,2.7905040631723698e-6
+Bartow,2022,Geothermal,residential,EJ,3.3095010018931005e-6
+Cherokee,2022,Geothermal,residential,EJ,8.257396431787798e-6
+Clayton,2022,Geothermal,residential,EJ,8.76808730488698e-6
+Cobb,2022,Geothermal,residential,EJ,2.2712556310691603e-5
+Coweta,2022,Geothermal,residential,EJ,4.488810534033493e-6
+DeKalb,2022,Geothermal,residential,EJ,2.242732986912957e-5
+Douglas,2022,Geothermal,residential,EJ,4.332965763659341e-6
+Fayette,2022,Geothermal,residential,EJ,3.5836669241721747e-6
+Forsyth,2022,Geothermal,residential,EJ,7.86485068110893e-6
+Fulton,2022,Geothermal,residential,EJ,3.158464770273528e-5
+Gwinnett,2022,Geothermal,residential,EJ,2.8751922559906625e-5
+Hall,2022,Geothermal,residential,EJ,6.252743322808997e-6
+Henry,2022,Geothermal,residential,EJ,7.29228544416956e-6
+Paulding,2022,Geothermal,residential,EJ,5.248172392390828e-6
+Rockdale,2022,Geothermal,residential,EJ,2.7876029182737894e-6
+Bartow,2023,Geothermal,residential,EJ,3.3327895584698794e-6
+Cherokee,2023,Geothermal,residential,EJ,8.326191074245837e-6
+Clayton,2023,Geothermal,residential,EJ,8.678001148183657e-6
+Cobb,2023,Geothermal,residential,EJ,2.264454512983586e-5
+Coweta,2023,Geothermal,residential,EJ,4.529703258151887e-6
+DeKalb,2023,Geothermal,residential,EJ,2.2263052801987487e-5
+Douglas,2023,Geothermal,residential,EJ,4.3306234536034025e-6
+Fayette,2023,Geothermal,residential,EJ,3.5855814885029802e-6
+Forsyth,2023,Geothermal,residential,EJ,7.957829665363755e-6
+Fulton,2023,Geothermal,residential,EJ,3.142060786491345e-5
+Gwinnett,2023,Geothermal,residential,EJ,2.8743146818562403e-5
+Hall,2023,Geothermal,residential,EJ,6.326262257294366e-6
+Henry,2023,Geothermal,residential,EJ,7.389663787531073e-6
+Paulding,2023,Geothermal,residential,EJ,5.320051241672416e-6
+Rockdale,2023,Geothermal,residential,EJ,2.790334773624168e-6
+Bartow,2024,Geothermal,residential,EJ,3.370680349074554e-6
+Cherokee,2024,Geothermal,residential,EJ,8.419328907801338e-6
+Clayton,2024,Geothermal,residential,EJ,8.539517751647054e-6
+Cobb,2024,Geothermal,residential,EJ,2.2590282029729688e-5
+Coweta,2024,Geothermal,residential,EJ,4.538864278816029e-6
+DeKalb,2024,Geothermal,residential,EJ,2.2096016166172286e-5
+Douglas,2024,Geothermal,residential,EJ,4.356831247063067e-6
+Fayette,2024,Geothermal,residential,EJ,3.588655295228157e-6
+Forsyth,2024,Geothermal,residential,EJ,8.034466445300629e-6
+Fulton,2024,Geothermal,residential,EJ,3.1276464592494443e-5
+Gwinnett,2024,Geothermal,residential,EJ,2.879566932757875e-5
+Hall,2024,Geothermal,residential,EJ,6.360686200135626e-6
+Henry,2024,Geothermal,residential,EJ,7.4383699383894545e-6
+Paulding,2024,Geothermal,residential,EJ,5.408469288368947e-6
+Rockdale,2024,Geothermal,residential,EJ,2.799912421904613e-6
+Bartow,2020,Natural Gas,transport,EJ,8.277503170302346e-5
+Cherokee,2020,Natural Gas,transport,EJ,2.0305062592519368e-4
+Clayton,2020,Natural Gas,transport,EJ,2.2672821775462487e-4
+Cobb,2020,Natural Gas,transport,EJ,5.802853717186838e-4
+Coweta,2020,Natural Gas,transport,EJ,1.1112211631529184e-4
+DeKalb,2020,Natural Gas,transport,EJ,5.789580454906453e-4
+Douglas,2020,Natural Gas,transport,EJ,1.0954643697670189e-4
+Fayette,2020,Natural Gas,transport,EJ,9.049139313482074e-5
+Forsyth,2020,Natural Gas,transport,EJ,1.9149766323984748e-4
+Fulton,2020,Natural Gas,transport,EJ,8.096712706258558e-4
+Gwinnett,2020,Natural Gas,transport,EJ,7.256590164147804e-4
+Hall,2020,Natural Gas,transport,EJ,1.5401603007363907e-4
+Henry,2020,Natural Gas,transport,EJ,1.8313543228579298e-4
+Paulding,2020,Natural Gas,transport,EJ,1.283985581550837e-4
+Rockdale,2020,Natural Gas,transport,EJ,7.088436936125672e-5
+Bartow,2021,Natural Gas,transport,EJ,8.787784466820979e-5
+Cherokee,2021,Natural Gas,transport,EJ,2.1763177563690345e-4
+Clayton,2021,Natural Gas,transport,EJ,2.3700160402555215e-4
+Cobb,2021,Natural Gas,transport,EJ,6.072848302057254e-4
+Coweta,2021,Natural Gas,transport,EJ,1.1880335657789153e-4
+DeKalb,2021,Natural Gas,transport,EJ,6.014127371539818e-4
+Douglas,2021,Natural Gas,transport,EJ,1.1546654405739035e-4
+Fayette,2021,Natural Gas,transport,EJ,9.563813165512424e-5
+Forsyth,2021,Natural Gas,transport,EJ,2.0657348548469895e-4
+Fulton,2021,Natural Gas,transport,EJ,8.415895800579315e-4
+Gwinnett,2021,Natural Gas,transport,EJ,7.646694380294402e-4
+Hall,2021,Natural Gas,transport,EJ,1.6394814102034275e-4
+Henry,2021,Natural Gas,transport,EJ,1.941473635682159e-4
+Paulding,2021,Natural Gas,transport,EJ,1.37811228327122e-4
+Rockdale,2021,Natural Gas,transport,EJ,7.437060499941624e-5
+Bartow,2022,Natural Gas,transport,EJ,1.0975785888515209e-4
+Cherokee,2022,Natural Gas,transport,EJ,2.738522066621203e-4
+Clayton,2022,Natural Gas,transport,EJ,2.9078900068378464e-4
+Cobb,2022,Natural Gas,transport,EJ,7.532499760670813e-4
+Coweta,2022,Natural Gas,transport,EJ,1.4886903882936075e-4
+DeKalb,2022,Natural Gas,transport,EJ,7.437905912518563e-4
+Douglas,2022,Natural Gas,transport,EJ,1.4370052904346536e-4
+Fayette,2022,Natural Gas,transport,EJ,1.1885042739968376e-4
+Forsyth,2022,Natural Gas,transport,EJ,2.608336334438823e-4
+Fulton,2022,Natural Gas,transport,EJ,0.0010474882175624245
+Gwinnett,2022,Natural Gas,transport,EJ,9.535423791084821e-4
+Hall,2022,Natural Gas,transport,EJ,2.0736894138342205e-4
+Henry,2022,Natural Gas,transport,EJ,2.418448087109128e-4
+Paulding,2022,Natural Gas,transport,EJ,1.7405287519764578e-4
+Rockdale,2022,Natural Gas,transport,EJ,9.244938362511955e-5
+Bartow,2023,Natural Gas,transport,EJ,1.3919877968385547e-4
+Cherokee,2023,Natural Gas,transport,EJ,3.477554212819059e-4
+Clayton,2023,Natural Gas,transport,EJ,3.624492782187102e-4
+Cobb,2023,Natural Gas,transport,EJ,9.457822023471247e-4
+Coweta,2023,Natural Gas,transport,EJ,1.8918961272616617e-4
+DeKalb,2023,Natural Gas,transport,EJ,9.298486231145893e-4
+Douglas,2023,Natural Gas,transport,EJ,1.8087475654737634e-4
+Fayette,2023,Natural Gas,transport,EJ,1.4975700052474454e-4
+Forsyth,2023,Natural Gas,transport,EJ,3.3237027388527494e-4
+Fulton,2023,Natural Gas,transport,EJ,0.0013123271646737042
+Gwinnett,2023,Natural Gas,transport,EJ,0.0012004991288002856
+Hall,2023,Natural Gas,transport,EJ,2.6422549960811365e-4
+Henry,2023,Natural Gas,transport,EJ,3.0864000365224355e-4
+Paulding,2023,Natural Gas,transport,EJ,2.2219964018261402e-4
+Rockdale,2023,Natural Gas,transport,EJ,1.1654237046284888e-4
+Bartow,2024,Natural Gas,transport,EJ,1.3498244266326847e-4
+Cherokee,2024,Natural Gas,transport,EJ,3.3716088856438643e-4
+Clayton,2024,Natural Gas,transport,EJ,3.419739773307606e-4
+Cobb,2024,Natural Gas,transport,EJ,9.046516231247671e-4
+Coweta,2024,Natural Gas,transport,EJ,1.817635977970603e-4
+DeKalb,2024,Natural Gas,transport,EJ,8.848582263387546e-4
+Douglas,2024,Natural Gas,transport,EJ,1.744738934267953e-4
+Fayette,2024,Natural Gas,transport,EJ,1.4371147882930125e-4
+Forsyth,2024,Natural Gas,transport,EJ,3.21748666135164e-4
+Fulton,2024,Natural Gas,transport,EJ,0.0012524989472007476
+Gwinnett,2024,Natural Gas,transport,EJ,0.0011531528894537621
+Hall,2024,Natural Gas,transport,EJ,2.5472037434358917e-4
+Henry,2024,Natural Gas,transport,EJ,2.978773540458987e-4
+Paulding,2024,Natural Gas,transport,EJ,2.1658784577830115e-4
+Rockdale,2024,Natural Gas,transport,EJ,1.121254402114038e-4
+Bartow,2020,Natural Gas,commercial,EJ,5.57127650743211e-4
+Cherokee,2020,Natural Gas,commercial,EJ,0.0013666575037930145
+Clayton,2020,Natural Gas,commercial,EJ,0.0015260224818520421
+Cobb,2020,Natural Gas,commercial,EJ,0.003905682900444876
+Coweta,2020,Natural Gas,commercial,EJ,7.479212310116345e-4
+DeKalb,2020,Natural Gas,commercial,EJ,0.003896749166105153
+Douglas,2020,Natural Gas,commercial,EJ,7.373159251582612e-4
+Fayette,2020,Natural Gas,commercial,EJ,6.090635815225128e-4
+Forsyth,2020,Natural Gas,commercial,EJ,0.0012888988508805831
+Fulton,2020,Natural Gas,commercial,EJ,0.005449593235994823
+Gwinnett,2020,Natural Gas,commercial,EJ,0.004884138305211048
+Hall,2020,Natural Gas,commercial,EJ,0.0010366240549393602
+Henry,2020,Natural Gas,commercial,EJ,0.0012326158149148672
+Paulding,2020,Natural Gas,commercial,EJ,8.642024725572465e-4
+Rockdale,2020,Natural Gas,commercial,EJ,4.770960682725842e-4
+Bartow,2021,Natural Gas,commercial,EJ,5.912610551164468e-4
+Cherokee,2021,Natural Gas,commercial,EJ,0.0014642734329201284
+Clayton,2021,Natural Gas,commercial,EJ,0.0015945978077809059
+Cobb,2021,Natural Gas,commercial,EJ,0.004085943059019316
+Coweta,2021,Natural Gas,commercial,EJ,7.993345561310816e-4
+DeKalb,2021,Natural Gas,commercial,EJ,0.004046434352966904
+Douglas,2021,Natural Gas,commercial,EJ,7.768837632259273e-4
+Fayette,2021,Natural Gas,commercial,EJ,6.434739364088043e-4
+Forsyth,2021,Natural Gas,commercial,EJ,0.001389870876418404
+Fulton,2021,Natural Gas,commercial,EJ,0.005662395851409277
+Gwinnett,2021,Natural Gas,commercial,EJ,0.005144860578358535
+Hall,2021,Natural Gas,commercial,EJ,0.0011030783835227012
+Henry,2021,Natural Gas,commercial,EJ,0.0013062652533733135
+Paulding,2021,Natural Gas,commercial,EJ,9.272236088086984e-4
+Rockdale,2021,Natural Gas,commercial,EJ,5.00381439117277e-4
+Bartow,2022,Natural Gas,commercial,EJ,6.246247680415083e-4
+Cherokee,2022,Natural Gas,commercial,EJ,0.001558474926546897
+Clayton,2022,Natural Gas,commercial,EJ,0.0016548611092276162
+Cobb,2022,Natural Gas,commercial,EJ,0.004286696154217899
+Coweta,2022,Natural Gas,commercial,EJ,8.472039250023213e-4
+DeKalb,2022,Natural Gas,commercial,EJ,0.00423286341635256
+Douglas,2022,Natural Gas,commercial,EJ,8.17790275183284e-4
+Fayette,2022,Natural Gas,commercial,EJ,6.763699784253378e-4
+Forsyth,2022,Natural Gas,commercial,EJ,0.0014843870811819275
+Fulton,2022,Natural Gas,commercial,EJ,0.00596118666642151
+Gwinnett,2022,Natural Gas,commercial,EJ,0.00542654706841185
+Hall,2022,Natural Gas,commercial,EJ,0.00118012302924174
+Henry,2022,Natural Gas,commercial,EJ,0.001376322926462739
+Paulding,2022,Natural Gas,commercial,EJ,9.905234841638688e-4
+Rockdale,2022,Natural Gas,commercial,EJ,5.261233718384111e-4
+Bartow,2023,Natural Gas,commercial,EJ,5.775263853639302e-4
+Cherokee,2023,Natural Gas,commercial,EJ,0.001442813880263804
+Clayton,2023,Natural Gas,commercial,EJ,0.0015037777055433121
+Cobb,2023,Natural Gas,commercial,EJ,0.003923986818732314
+Coweta,2023,Natural Gas,commercial,EJ,7.849349932111292e-4
+DeKalb,2023,Natural Gas,commercial,EJ,0.003857879468933878
+Douglas,2023,Natural Gas,commercial,EJ,7.504372135275449e-4
+Fayette,2023,Natural Gas,commercial,EJ,6.213317343185806e-4
+Forsyth,2023,Natural Gas,commercial,EJ,0.0013789819373082146
+Fulton,2023,Natural Gas,commercial,EJ,0.005444757242486104
+Gwinnett,2023,Natural Gas,commercial,EJ,0.004980790234391608
+Hall,2023,Natural Gas,commercial,EJ,0.0010962538468816114
+Henry,2023,Natural Gas,commercial,EJ,0.0012805266403399652
+Paulding,2023,Natural Gas,commercial,EJ,9.218913794738855e-4
+Rockdale,2023,Natural Gas,commercial,EJ,4.835264655912748e-4
+Bartow,2024,Natural Gas,commercial,EJ,6.325126026095625e-4
+Cherokee,2024,Natural Gas,commercial,EJ,0.0015798981476132733
+Clayton,2024,Natural Gas,commercial,EJ,0.0016024517423041376
+Cobb,2024,Natural Gas,commercial,EJ,0.004239096146934078
+Coweta,2024,Natural Gas,commercial,EJ,8.517238541096684e-4
+DeKalb,2024,Natural Gas,commercial,EJ,0.004146346507287711
+Douglas,2024,Natural Gas,commercial,EJ,8.175651161840779e-4
+Fayette,2024,Natural Gas,commercial,EJ,6.734158880644257e-4
+Forsyth,2024,Natural Gas,commercial,EJ,0.0015076782001270386
+Fulton,2024,Natural Gas,commercial,EJ,0.005869069734024466
+Gwinnett,2024,Natural Gas,commercial,EJ,0.005403545238358742
+Hall,2024,Natural Gas,commercial,EJ,0.0011935911347793976
+Henry,2024,Natural Gas,commercial,EJ,0.0013958199062676475
+Paulding,2024,Natural Gas,commercial,EJ,0.0010149063783693913
+Rockdale,2024,Natural Gas,commercial,EJ,5.254072500656926e-4
+Bartow,2020,Natural Gas,industrial,EJ,0.0016926704165686815
+Cherokee,2020,Natural Gas,industrial,EJ,0.004152191554603477
+Clayton,2020,Natural Gas,industrial,EJ,0.004636375714979976
+Cobb,2020,Natural Gas,industrial,EJ,0.011866282158607732
+Coweta,2020,Natural Gas,industrial,EJ,0.0022723412488470022
+DeKalb,2020,Natural Gas,industrial,EJ,0.011839139603744121
+Douglas,2020,Natural Gas,industrial,EJ,0.00224012010984462
+Fayette,2020,Natural Gas,industrial,EJ,0.0018504626450998093
+Forsyth,2020,Natural Gas,industrial,EJ,0.003915944491221283
+Fulton,2020,Natural Gas,industrial,EJ,0.01655700491726784
+Gwinnett,2020,Natural Gas,industrial,EJ,0.014839034480934675
+Hall,2020,Natural Gas,industrial,EJ,0.0031494808569608665
+Henry,2020,Natural Gas,industrial,EJ,0.0037449448472317054
+Paulding,2020,Natural Gas,industrial,EJ,0.0026256279997443374
+Rockdale,2020,Natural Gas,industrial,EJ,0.0014495177174368168
+Bartow,2021,Natural Gas,industrial,EJ,0.0018045111255992835
+Cherokee,2021,Natural Gas,industrial,EJ,0.004468918894215748
+Clayton,2021,Natural Gas,industrial,EJ,0.004866665003718475
+Cobb,2021,Natural Gas,industrial,EJ,0.01247017648932317
+Coweta,2021,Natural Gas,industrial,EJ,0.002439545251852288
+DeKalb,2021,Natural Gas,industrial,EJ,0.012349597095478991
+Douglas,2021,Natural Gas,industrial,EJ,0.002371026100750923
+Fayette,2021,Natural Gas,industrial,EJ,0.001963863283797996
+Forsyth,2021,Natural Gas,industrial,EJ,0.004241844508344098
+Fulton,2021,Natural Gas,industrial,EJ,0.017281463446637623
+Gwinnett,2021,Natural Gas,industrial,EJ,0.01570196121149345
+Hall,2021,Natural Gas,industrial,EJ,0.0033665623640352265
+Henry,2021,Natural Gas,industrial,EJ,0.003986682637556222
+Paulding,2021,Natural Gas,industrial,EJ,0.002829858830604167
+Rockdale,2021,Natural Gas,industrial,EJ,0.0015271492450194867
+Bartow,2022,Natural Gas,industrial,EJ,0.001728212713975414
+Cherokee,2022,Natural Gas,industrial,EJ,0.004311990686688978
+Clayton,2022,Natural Gas,industrial,EJ,0.00457867211669802
+Cobb,2022,Natural Gas,industrial,EJ,0.011860437135558127
+Coweta,2022,Natural Gas,industrial,EJ,0.0023440450482129895
+DeKalb,2022,Natural Gas,industrial,EJ,0.011711492638370333
+Douglas,2022,Natural Gas,industrial,EJ,0.0022626633192414244
+Fayette,2022,Natural Gas,industrial,EJ,0.0018713814371002775
+Forsyth,2022,Natural Gas,industrial,EJ,0.004107004328699606
+Fulton,2022,Natural Gas,industrial,EJ,0.016493419912874407
+Gwinnett,2022,Natural Gas,industrial,EJ,0.015014178297829132
+Hall,2022,Natural Gas,industrial,EJ,0.0032651661085831662
+Henry,2022,Natural Gas,industrial,EJ,0.0038080122687204907
+Paulding,2022,Natural Gas,industrial,EJ,0.0027405818123265096
+Rockdale,2022,Natural Gas,industrial,EJ,0.0014556789081254194
+Bartow,2023,Natural Gas,industrial,EJ,0.0017610065354507131
+Cherokee,2023,Natural Gas,industrial,EJ,0.004399460764000358
+Clayton,2023,Natural Gas,industrial,EJ,0.004585353040897174
+Cobb,2023,Natural Gas,industrial,EJ,0.011965109487518204
+Coweta,2023,Natural Gas,industrial,EJ,0.0023934415603846636
+DeKalb,2023,Natural Gas,industrial,EJ,0.011763533459155429
+Douglas,2023,Natural Gas,industrial,EJ,0.0022882501491852452
+Fayette,2023,Natural Gas,industrial,EJ,0.0018945787976915583
+Forsyth,2023,Natural Gas,industrial,EJ,0.004204822957721645
+Fulton,2023,Natural Gas,industrial,EJ,0.016602277109674497
+Gwinnett,2023,Natural Gas,industrial,EJ,0.015187538399558154
+Hall,2023,Natural Gas,industrial,EJ,0.0033427220604907697
+Henry,2023,Natural Gas,industrial,EJ,0.0039046108361549883
+Paulding,2023,Natural Gas,industrial,EJ,0.002811052075492895
+Rockdale,2023,Natural Gas,industrial,EJ,0.0014743798509449016
+Bartow,2024,Natural Gas,industrial,EJ,0.0017874030449755377
+Cherokee,2024,Natural Gas,industrial,EJ,0.0044645984098095875
+Clayton,2024,Natural Gas,industrial,EJ,0.00452833210248113
+Cobb,2024,Natural Gas,industrial,EJ,0.011979165837508469
+Coweta,2024,Natural Gas,industrial,EJ,0.0024068671581136116
+DeKalb,2024,Natural Gas,industrial,EJ,0.011717066730486196
+Douglas,2024,Natural Gas,industrial,EJ,0.0023103387538907947
+Fayette,2024,Natural Gas,industrial,EJ,0.0019029907133791284
+Forsyth,2024,Natural Gas,industrial,EJ,0.004260513695114106
+Fulton,2024,Natural Gas,industrial,EJ,0.016585271298135088
+Gwinnett,2024,Natural Gas,industrial,EJ,0.015269756164316884
+Hall,2024,Natural Gas,industrial,EJ,0.0033729421674107353
+Henry,2024,Natural Gas,industrial,EJ,0.0039444158747305004
+Paulding,2024,Natural Gas,industrial,EJ,0.0028680009593141974
+Rockdale,2024,Natural Gas,industrial,EJ,0.0014847364538589907
+Bartow,2020,Natural Gas,residential,EJ,0.00132232656448339
+Cherokee,2020,Natural Gas,residential,EJ,0.003243722546180022
+Clayton,2020,Natural Gas,residential,EJ,0.0036219707692840926
+Cobb,2020,Natural Gas,residential,EJ,0.009270026796941794
+Coweta,2020,Natural Gas,residential,EJ,0.0017751696771619158
+DeKalb,2020,Natural Gas,residential,EJ,0.009248822833681858
+Douglas,2020,Natural Gas,residential,EJ,0.0017499982866633847
+Fayette,2020,Natural Gas,residential,EJ,0.0014455950126191573
+Forsyth,2020,Natural Gas,residential,EJ,0.003059164604696798
+Fulton,2020,Natural Gas,residential,EJ,0.012934453876004764
+Gwinnett,2020,Natural Gas,residential,EJ,0.011592362750216903
+Hall,2020,Natural Gas,residential,EJ,0.0024603975828523506
+Henry,2020,Natural Gas,residential,EJ,0.00292557842657773
+Paulding,2020,Natural Gas,residential,EJ,0.002051159882354125
+Rockdale,2020,Natural Gas,residential,EJ,0.0011323738896208552
+Bartow,2021,Natural Gas,residential,EJ,0.0014109264120130912
+Cherokee,2021,Natural Gas,residential,EJ,0.0034941960797827292
+Clayton,2021,Natural Gas,residential,EJ,0.0038051891699397524
+Cobb,2021,Natural Gas,residential,EJ,0.009750287001088764
+Coweta,2021,Natural Gas,residential,EJ,0.0019074522624494305
+DeKalb,2021,Natural Gas,residential,EJ,0.009656007365399191
+Douglas,2021,Natural Gas,residential,EJ,0.001853877929409214
+Fayette,2021,Natural Gas,residential,EJ,0.001535522024433704
+Forsyth,2021,Natural Gas,residential,EJ,0.003316649239548335
+Fulton,2021,Natural Gas,residential,EJ,0.01351217671600788
+Gwinnett,2021,Natural Gas,residential,EJ,0.012277182157213731
+Hall,2021,Natural Gas,residential,EJ,0.002632276237991635
+Henry,2021,Natural Gas,residential,EJ,0.003117141119190405
+Paulding,2021,Natural Gas,residential,EJ,0.002212633942637458
+Rockdale,2021,Natural Gas,residential,EJ,0.0011940603603473295
+Bartow,2022,Natural Gas,residential,EJ,0.001504037567162971
+Cherokee,2022,Natural Gas,residential,EJ,0.003752660728388405
+Clayton,2022,Natural Gas,residential,EJ,0.003984749571361729
+Cobb,2022,Natural Gas,residential,EJ,0.010321960294933912
+Coweta,2022,Natural Gas,residential,EJ,0.0020399871978287213
+DeKalb,2022,Natural Gas,residential,EJ,0.010192336136182452
+Douglas,2022,Natural Gas,residential,EJ,0.0019691619014609208
+Fayette,2022,Natural Gas,residential,EJ,0.001628635156499773
+Forsyth,2022,Natural Gas,residential,EJ,0.0035742641799318595
+Fulton,2022,Natural Gas,residential,EJ,0.014353975618483866
+Gwinnett,2022,Natural Gas,residential,EJ,0.013066613859165986
+Hall,2022,Natural Gas,residential,EJ,0.002841625021401315
+Henry,2022,Natural Gas,residential,EJ,0.0033140558810022687
+Paulding,2022,Natural Gas,residential,EJ,0.0023850871876419317
+Rockdale,2022,Natural Gas,residential,EJ,0.0012668554893981371
+Bartow,2023,Natural Gas,residential,EJ,0.0013725611419122105
+Cherokee,2023,Natural Gas,residential,EJ,0.0034290212832678627
+Clayton,2023,Natural Gas,residential,EJ,0.003573909170231242
+Cobb,2023,Natural Gas,residential,EJ,0.009325828161727598
+Coweta,2023,Natural Gas,residential,EJ,0.0018654927253753289
+DeKalb,2023,Natural Gas,residential,EJ,0.009168716068102729
+Douglas,2023,Natural Gas,residential,EJ,0.0017835045892902592
+Fayette,2023,Natural Gas,residential,EJ,0.0014766698394657767
+Forsyth,2023,Natural Gas,residential,EJ,0.0032773169685664846
+Fulton,2023,Natural Gas,residential,EJ,0.012940122577208665
+Gwinnett,2023,Natural Gas,residential,EJ,0.011837448997994656
+Hall,2023,Natural Gas,residential,EJ,0.002605379546344539
+Henry,2023,Natural Gas,residential,EJ,0.00304332607523459
+Paulding,2023,Natural Gas,residential,EJ,0.0021909861031411287
+Rockdale,2023,Natural Gas,residential,EJ,0.0011491589900927584
+Bartow,2024,Natural Gas,residential,EJ,0.0015018931140917556
+Cherokee,2024,Natural Gas,residential,EJ,0.0037514480171257575
+Clayton,2024,Natural Gas,residential,EJ,0.0038050012402939203
+Cobb,2024,Natural Gas,residential,EJ,0.010065679777424457
+Coweta,2024,Natural Gas,residential,EJ,0.0020224074371283725
+DeKalb,2024,Natural Gas,residential,EJ,0.009845446940094957
+Douglas,2024,Natural Gas,residential,EJ,0.0019412979492464727
+Fayette,2024,Natural Gas,residential,EJ,0.0015990174441287172
+Forsyth,2024,Natural Gas,residential,EJ,0.003579962672198016
+Fulton,2024,Natural Gas,residential,EJ,0.013936031287422154
+Gwinnett,2024,Natural Gas,residential,EJ,0.012830649305155196
+Hall,2024,Natural Gas,residential,EJ,0.002834166938287405
+Henry,2024,Natural Gas,residential,EJ,0.0033143565789623144
+Paulding,2024,Natural Gas,residential,EJ,0.0024098822613684728
+Rockdale,2024,Natural Gas,residential,EJ,0.001247572819437794
+Bartow,2020,Petroleum,transport,EJ,0.008777624259552043
+Cherokee,2020,Petroleum,transport,EJ,0.021531880609030395
+Clayton,2020,Petroleum,transport,EJ,0.024042698184980598
+Cobb,2020,Petroleum,transport,EJ,0.06153458176295747
+Coweta,2020,Petroleum,transport,EJ,0.011783603870323161
+DeKalb,2020,Petroleum,transport,EJ,0.061393829525720395
+Douglas,2020,Petroleum,transport,EJ,0.011616515789495801
+Fayette,2020,Petroleum,transport,EJ,0.009595882131590305
+Forsyth,2020,Petroleum,transport,EJ,0.02030678212884594
+Fulton,2020,Petroleum,transport,EJ,0.0858591055912365
+Gwinnett,2020,Petroleum,transport,EJ,0.07695028386696945
+Hall,2020,Petroleum,transport,EJ,0.016332157344071327
+Henry,2020,Petroleum,transport,EJ,0.01942003500503173
+Paulding,2020,Petroleum,transport,EJ,0.013615631136175092
+Rockdale,2020,Petroleum,transport,EJ,0.007516715455461289
+Bartow,2021,Petroleum,transport,EJ,0.00924944142838763
+Cherokee,2021,Petroleum,transport,EJ,0.022906483076703614
+Clayton,2021,Petroleum,transport,EJ,0.024945223260138476
+Cobb,2021,Petroleum,transport,EJ,0.06391878963968464
+Coweta,2021,Petroleum,transport,EJ,0.0125044565249855
+DeKalb,2021,Petroleum,transport,EJ,0.06330073191479152
+Douglas,2021,Petroleum,transport,EJ,0.012153245681314782
+Fayette,2021,Petroleum,transport,EJ,0.010066237973909986
+Forsyth,2021,Petroleum,transport,EJ,0.021742560503874145
+Fulton,2021,Petroleum,transport,EJ,0.08858015984435225
+Gwinnett,2021,Petroleum,transport,EJ,0.08048405381168841
+Hall,2021,Petroleum,transport,EJ,0.01725609831904845
+Henry,2021,Petroleum,transport,EJ,0.02043466899512744
+Paulding,2021,Petroleum,transport,EJ,0.014505099543559804
+Rockdale,2021,Petroleum,transport,EJ,0.0078277586066548
+Bartow,2022,Petroleum,transport,EJ,0.009427810340945527
+Cherokee,2022,Petroleum,transport,EJ,0.02352293213519634
+Clayton,2022,Petroleum,transport,EJ,0.02497774260108738
+Cobb,2022,Petroleum,transport,EJ,0.06470149824180728
+Coweta,2022,Petroleum,transport,EJ,0.012787321818938411
+DeKalb,2022,Petroleum,transport,EJ,0.06388897067534592
+Douglas,2022,Petroleum,transport,EJ,0.012343365181102297
+Fayette,2022,Petroleum,transport,EJ,0.010208829689699002
+Forsyth,2022,Petroleum,transport,EJ,0.022404682923176912
+Fulton,2022,Petroleum,transport,EJ,0.0899755183807578
+Gwinnett,2022,Petroleum,transport,EJ,0.08190590444822242
+Hall,2022,Petroleum,transport,EJ,0.017812255722036756
+Henry,2022,Petroleum,transport,EJ,0.020773610305705237
+Paulding,2022,Petroleum,transport,EJ,0.01495052393812367
+Rockdale,2022,Petroleum,transport,EJ,0.007941073776475158
+Bartow,2023,Petroleum,transport,EJ,0.010247966109217807
+Cherokee,2023,Petroleum,transport,EJ,0.025602133723353807
+Clayton,2023,Petroleum,transport,EJ,0.026683911510803265
+Cobb,2023,Petroleum,transport,EJ,0.0696295181492805
+Coweta,2023,Petroleum,transport,EJ,0.013928345807608109
+DeKalb,2023,Petroleum,transport,EJ,0.06845647065314288
+Douglas,2023,Petroleum,transport,EJ,0.013316197019258196
+Fayette,2023,Petroleum,transport,EJ,0.011025273852840346
+Forsyth,2023,Petroleum,transport,EJ,0.02446946237764171
+Fulton,2023,Petroleum,transport,EJ,0.0966149583949393
+Gwinnett,2023,Petroleum,transport,EJ,0.08838205632285237
+Hall,2023,Petroleum,transport,EJ,0.019452569708764085
+Henry,2023,Petroleum,transport,EJ,0.02272241397920743
+Paulding,2023,Petroleum,transport,EJ,0.016358580062580258
+Rockdale,2023,Petroleum,transport,EJ,0.008579976530711653
+Bartow,2024,Petroleum,transport,EJ,0.010218805129727736
+Cherokee,2024,Petroleum,transport,EJ,0.025524663427526444
+Clayton,2024,Petroleum,transport,EJ,0.0258890368616208
+Cobb,2024,Petroleum,transport,EJ,0.0684863784104531
+Coweta,2024,Petroleum,transport,EJ,0.013760358376384663
+DeKalb,2024,Petroleum,transport,EJ,0.06698792527372761
+Douglas,2024,Petroleum,transport,EJ,0.013208493504603574
+Fayette,2024,Petroleum,transport,EJ,0.010879634181203392
+Forsyth,2024,Petroleum,transport,EJ,0.024357885774723597
+Fulton,2024,Petroleum,transport,EJ,0.09482005521682914
+Gwinnett,2024,Petroleum,transport,EJ,0.08729909186416801
+Hall,2024,Petroleum,transport,EJ,0.0192835291511342
+Henry,2024,Petroleum,transport,EJ,0.022550715289302414
+Paulding,2024,Petroleum,transport,EJ,0.016396717571612447
+Rockdale,2024,Petroleum,transport,EJ,0.00848842264963002
+Bartow,2020,Petroleum,commercial,EJ,2.484218074659868e-4
+Cherokee,2020,Petroleum,commercial,EJ,6.093891172450509e-4
+Clayton,2020,Petroleum,commercial,EJ,6.804495570623676e-4
+Cobb,2020,Petroleum,commercial,EJ,0.0017415341066328094
+Coweta,2020,Petroleum,commercial,EJ,3.3349618135491586e-4
+DeKalb,2020,Petroleum,commercial,EJ,0.0017375505771326414
+Douglas,2020,Petroleum,commercial,EJ,3.287673023532902e-4
+Fayette,2020,Petroleum,commercial,EJ,2.7157990737255435e-4
+Forsyth,2020,Petroleum,commercial,EJ,5.747167309851738e-4
+Fulton,2020,Petroleum,commercial,EJ,0.0024299598123235797
+Gwinnett,2020,Petroleum,commercial,EJ,0.0021778248917924048
+Hall,2020,Petroleum,commercial,EJ,4.622280388475124e-4
+Henry,2020,Petroleum,commercial,EJ,5.496202678934132e-4
+Paulding,2020,Petroleum,commercial,EJ,3.8534569225356674e-4
+Rockdale,2020,Petroleum,commercial,EJ,2.1273592767668867e-4
+Bartow,2021,Petroleum,commercial,EJ,2.6783110570132124e-4
+Cherokee,2021,Petroleum,commercial,EJ,6.632907227600663e-4
+Clayton,2021,Petroleum,commercial,EJ,7.223254268332461e-4
+Cobb,2021,Petroleum,commercial,EJ,0.0018508620479227322
+Coweta,2021,Petroleum,commercial,EJ,3.620848289283974e-4
+DeKalb,2021,Petroleum,commercial,EJ,0.0018329652824664617
+Douglas,2021,Petroleum,commercial,EJ,3.5191500523440385e-4
+Fayette,2021,Petroleum,commercial,EJ,2.9148264440384883e-4
+Forsyth,2021,Petroleum,commercial,EJ,6.295876421962073e-4
+Fulton,2021,Petroleum,commercial,EJ,0.0025649680943434345
+Gwinnett,2021,Petroleum,commercial,EJ,0.0023305335020070315
+Hall,2021,Petroleum,commercial,EJ,4.99675567293918e-4
+Henry,2021,Petroleum,commercial,EJ,5.917157305097452e-4
+Paulding,2021,Petroleum,commercial,EJ,4.200163738683811e-4
+Rockdale,2021,Petroleum,commercial,EJ,2.2666420010498462e-4
+Bartow,2022,Petroleum,commercial,EJ,2.7902141670565843e-4
+Cherokee,2022,Petroleum,commercial,EJ,6.961745741668463e-4
+Clayton,2022,Petroleum,commercial,EJ,7.392305185008332e-4
+Cobb,2022,Petroleum,commercial,EJ,0.0019148776915889007
+Coweta,2022,Petroleum,commercial,EJ,3.7844807232657375e-4
+DeKalb,2022,Petroleum,commercial,EJ,0.0018908304754795754
+Douglas,2022,Petroleum,commercial,EJ,3.65308922771674e-4
+Fayette,2022,Petroleum,commercial,EJ,3.0213612916622643e-4
+Forsyth,2022,Petroleum,commercial,EJ,6.630793518316508e-4
+Fulton,2022,Petroleum,commercial,EJ,0.0026628767125694247
+Gwinnett,2022,Petroleum,commercial,EJ,0.002424051892139496
+Hall,2022,Petroleum,commercial,EJ,5.27163853169719e-4
+Henry,2022,Petroleum,commercial,EJ,6.148068287304796e-4
+Paulding,2022,Petroleum,commercial,EJ,4.424692711084766e-4
+Rockdale,2022,Petroleum,commercial,EJ,2.350206013005172e-4
+Bartow,2023,Petroleum,commercial,EJ,2.6739058332592223e-4
+Cherokee,2023,Petroleum,commercial,EJ,6.680125009896578e-4
+Clayton,2023,Petroleum,commercial,EJ,6.962383158032876e-4
+Cobb,2023,Petroleum,commercial,EJ,0.0018167778148575546
+Coweta,2023,Petroleum,commercial,EJ,3.634192844286991e-4
+DeKalb,2023,Petroleum,commercial,EJ,0.001786170585001562
+Douglas,2023,Petroleum,commercial,EJ,3.47447059320352e-4
+Fayette,2023,Petroleum,commercial,EJ,2.8767214639667e-4
+Forsyth,2023,Petroleum,commercial,EJ,6.384587682178354e-4
+Fulton,2023,Petroleum,commercial,EJ,0.002520883637583023
+Gwinnett,2023,Petroleum,commercial,EJ,0.0023060702332392664
+Hall,2023,Petroleum,commercial,EJ,5.075576857085842e-4
+Henry,2023,Petroleum,commercial,EJ,5.928746703219832e-4
+Paulding,2023,Petroleum,commercial,EJ,4.2682911113286256e-4
+Rockdale,2023,Petroleum,commercial,EJ,2.2386929318649165e-4
+Bartow,2024,Petroleum,commercial,EJ,2.559832145364613e-4
+Cherokee,2024,Petroleum,commercial,EJ,6.393981792579259e-4
+Clayton,2024,Petroleum,commercial,EJ,6.48525810303538e-4
+Cobb,2024,Petroleum,commercial,EJ,0.0017155981619091096
+Coweta,2024,Petroleum,commercial,EJ,3.446998671217949e-4
+DeKalb,2024,Petroleum,commercial,EJ,0.0016780615961461169
+Douglas,2024,Petroleum,commercial,EJ,3.308755361873191e-4
+Fayette,2024,Petroleum,commercial,EJ,2.725371210556989e-4
+Forsyth,2024,Petroleum,commercial,EJ,6.101701540218935e-4
+Fulton,2024,Petroleum,commercial,EJ,0.002375262296206971
+Gwinnett,2024,Petroleum,commercial,EJ,0.002186860584755956
+Hall,2024,Petroleum,commercial,EJ,4.830564549425368e-4
+Henry,2024,Petroleum,commercial,EJ,5.649001538407807e-4
+Paulding,2024,Petroleum,commercial,EJ,4.1074121862030876e-4
+Rockdale,2024,Petroleum,commercial,EJ,2.1263677001484146e-4
+Bartow,2020,Petroleum,industrial,EJ,7.97071008252858e-4
+Cherokee,2020,Petroleum,industrial,EJ,0.00195524862754787
+Clayton,2020,Petroleum,industrial,EJ,0.0021832488059131895
+Cobb,2020,Petroleum,industrial,EJ,0.005587779754281887
+Coweta,2020,Petroleum,industrial,EJ,0.001070035437840682
+DeKalb,2020,Petroleum,industrial,EJ,0.005574998445315931
+Douglas,2020,Petroleum,industrial,EJ,0.0010548626460790424
+Fayette,2020,Petroleum,industrial,EJ,8.713746703589939e-4
+Forsyth,2020,Petroleum,industrial,EJ,0.0018440009309120718
+Fulton,2020,Petroleum,industrial,EJ,0.007796620342551326
+Gwinnett,2020,Petroleum,industrial,EJ,0.006987635666956555
+Hall,2020,Petroleum,industrial,EJ,0.0014830765975220278
+Henry,2020,Petroleum,industrial,EJ,0.0017634779553159412
+Paulding,2020,Petroleum,industrial,EJ,0.0012363966053684713
+Rockdale,2020,Petroleum,industrial,EJ,6.825714783034166e-4
+Bartow,2021,Petroleum,industrial,EJ,8.861323319801781e-4
+Cherokee,2021,Petroleum,industrial,EJ,0.0021945298452213944
+Clayton,2021,Petroleum,industrial,EJ,0.002389849055255438
+Cobb,2021,Petroleum,industrial,EJ,0.006123667743538305
+Coweta,2021,Petroleum,industrial,EJ,0.0011979753919650188
+DeKalb,2021,Petroleum,industrial,EJ,0.006064455418415947
+Douglas,2021,Petroleum,industrial,EJ,0.001164328032140296
+Fayette,2021,Petroleum,industrial,EJ,9.643846062651618e-4
+Forsyth,2021,Petroleum,industrial,EJ,0.002083021552348671
+Fulton,2021,Petroleum,industrial,EJ,0.00848632257610132
+Gwinnett,2021,Petroleum,industrial,EJ,0.007710684244400051
+Hall,2021,Petroleum,industrial,EJ,0.0016532010892470947
+Henry,2021,Petroleum,industrial,EJ,0.0019577204775112446
+Paulding,2021,Petroleum,industrial,EJ,0.0013896447459725023
+Rockdale,2021,Petroleum,industrial,EJ,7.499296083982113e-4
+Bartow,2022,Petroleum,industrial,EJ,9.089043721942535e-4
+Cherokee,2022,Petroleum,industrial,EJ,0.0022677689825445113
+Clayton,2022,Petroleum,industrial,EJ,0.0024080225032819375
+Cobb,2022,Petroleum,industrial,EJ,0.006237659913892537
+Coweta,2022,Petroleum,industrial,EJ,0.0012327838903813232
+DeKalb,2022,Petroleum,industrial,EJ,0.006159326787643944
+Douglas,2022,Petroleum,industrial,EJ,0.0011899834823755088
+Fayette,2022,Petroleum,industrial,EJ,9.841998941849037e-4
+Forsyth,2022,Petroleum,industrial,EJ,0.002159962231957577
+Fulton,2022,Petroleum,industrial,EJ,0.008674245565966006
+Gwinnett,2022,Petroleum,industrial,EJ,0.00789628046909225
+Hall,2022,Petroleum,industrial,EJ,0.0017172213397302642
+Henry,2022,Petroleum,industrial,EJ,0.0020027158534482643
+Paulding,2022,Petroleum,industrial,EJ,0.0014413311344352558
+Rockdale,2022,Petroleum,industrial,EJ,7.655729606702645e-4
+Bartow,2023,Petroleum,industrial,EJ,9.300456230369532e-4
+Cherokee,2023,Petroleum,industrial,EJ,0.0023235003078703005
+Clayton,2023,Petroleum,industrial,EJ,0.0024216761493585934
+Cobb,2023,Petroleum,industrial,EJ,0.0063191688866595245
+Coweta,2023,Petroleum,industrial,EJ,0.001264055415138346
+DeKalb,2023,Petroleum,industrial,EJ,0.006212709938828311
+Douglas,2023,Petroleum,industrial,EJ,0.0012085003620493128
+Fayette,2023,Petroleum,industrial,EJ,0.0010005895394594139
+Forsyth,2023,Petroleum,industrial,EJ,0.002220705663919305
+Fulton,2023,Petroleum,industrial,EJ,0.008768210025039696
+Gwinnett,2023,Petroleum,industrial,EJ,0.008021039859230009
+Hall,2023,Petroleum,industrial,EJ,0.001765401751102994
+Henry,2023,Petroleum,industrial,EJ,0.0020621537426033262
+Paulding,2023,Petroleum,industrial,EJ,0.0014846092994606503
+Rockdale,2023,Petroleum,industrial,EJ,7.786686190316864e-4
+Bartow,2024,Petroleum,industrial,EJ,9.184660440655913e-4
+Cherokee,2024,Petroleum,industrial,EJ,0.0022941563467323406
+Clayton,2024,Petroleum,industrial,EJ,0.0023269062252481427
+Cobb,2024,Petroleum,industrial,EJ,0.006155554612548317
+Coweta,2024,Petroleum,industrial,EJ,0.0012367807940789623
+DeKalb,2024,Petroleum,industrial,EJ,0.006020873668227129
+Douglas,2024,Petroleum,industrial,EJ,0.0011871791880977505
+Fayette,2024,Petroleum,industrial,EJ,9.778613488010512e-4
+Forsyth,2024,Petroleum,industrial,EJ,0.0021892863896806674
+Fulton,2024,Petroleum,industrial,EJ,0.008522425069025886
+Gwinnett,2024,Petroleum,industrial,EJ,0.00784644100137932
+Hall,2024,Petroleum,industrial,EJ,0.0017332032962974824
+Henry,2024,Petroleum,industrial,EJ,0.002026857934922463
+Paulding,2024,Petroleum,industrial,EJ,0.001473736717010954
+Rockdale,2024,Petroleum,industrial,EJ,7.629392940160872e-4
+Bartow,2020,Petroleum,residential,EJ,9.224209686339783e-5
+Cherokee,2020,Petroleum,residential,EJ,2.2627373399219301e-4
+Clayton,2020,Petroleum,residential,EJ,2.5265935625155134e-4
+Cobb,2020,Petroleum,residential,EJ,6.466532040546776e-4
+Coweta,2020,Petroleum,residential,EJ,1.2383126657801704e-4
+DeKalb,2020,Petroleum,residential,EJ,6.451740701663896e-4
+Douglas,2020,Petroleum,residential,EJ,1.2207537517954162e-4
+Fayette,2020,Petroleum,residential,EJ,1.0084098645583557e-4
+Forsyth,2020,Petroleum,residential,EJ,2.133994471310984e-4
+Fulton,2020,Petroleum,residential,EJ,9.022742031743927e-4
+Gwinnett,2020,Petroleum,residential,EJ,8.086533813974393e-4
+Hall,2020,Petroleum,residential,EJ,1.7163100118812384e-4
+Henry,2020,Petroleum,residential,EJ,2.0408081925759404e-4
+Paulding,2020,Petroleum,residential,EJ,1.4308363276687504e-4
+Rockdale,2020,Petroleum,residential,EJ,7.899148729028012e-5
+Bartow,2021,Petroleum,residential,EJ,8.566517121569006e-5
+Cherokee,2021,Petroleum,residential,EJ,2.1215203208840576e-4
+Clayton,2021,Petroleum,residential,EJ,2.3103414818486927e-4
+Cobb,2021,Petroleum,residential,EJ,5.919940248043469e-4
+Coweta,2021,Petroleum,residential,EJ,1.158120106457896e-4
+DeKalb,2021,Petroleum,residential,EJ,5.862697849965623e-4
+Douglas,2021,Petroleum,residential,EJ,1.1255921562148469e-4
+Fayette,2021,Petroleum,residential,EJ,9.323006218367948e-5
+Forsyth,2021,Petroleum,residential,EJ,2.0137217827180355e-4
+Fulton,2021,Petroleum,residential,EJ,8.203992228212223e-4
+Gwinnett,2021,Petroleum,residential,EJ,7.454158505994222e-4
+Hall,2021,Petroleum,residential,EJ,1.5982009599835436e-4
+Henry,2021,Petroleum,residential,EJ,1.8925893328335832e-4
+Paulding,2021,Petroleum,residential,EJ,1.3434128379753265e-4
+Rockdale,2021,Petroleum,residential,EJ,7.249802990439268e-5
+Bartow,2022,Petroleum,residential,EJ,8.311855312320337e-5
+Cherokee,2022,Petroleum,residential,EJ,2.0738559788388106e-4
+Clayton,2022,Petroleum,residential,EJ,2.202116663579345e-4
+Cobb,2022,Petroleum,residential,EJ,5.70428840237271e-4
+Coweta,2022,Petroleum,residential,EJ,1.1273706719521618e-4
+DeKalb,2022,Petroleum,residential,EJ,5.632653406276457e-4
+Douglas,2022,Petroleum,residential,EJ,1.0882300528137852e-4
+Fayette,2022,Petroleum,residential,EJ,9.000426633570577e-5
+Forsyth,2022,Petroleum,residential,EJ,1.975267597048246e-4
+Fulton,2022,Petroleum,residential,EJ,7.932525829288942e-4
+Gwinnett,2022,Petroleum,residential,EJ,7.221083182397601e-4
+Hall,2022,Petroleum,residential,EJ,1.5703847128173255e-4
+Henry,2022,Petroleum,residential,EJ,1.8314670844156114e-4
+Paulding,2022,Petroleum,residential,EJ,1.3180854018389463e-4
+Rockdale,2022,Petroleum,residential,EJ,7.001101408230389e-5
+Bartow,2023,Petroleum,residential,EJ,7.688438543930679e-5
+Cherokee,2023,Petroleum,residential,EJ,1.9207755922265147e-4
+Clayton,2023,Petroleum,residential,EJ,2.001934935928026e-4
+Cobb,2023,Petroleum,residential,EJ,5.223887993274305e-4
+Coweta,2023,Petroleum,residential,EJ,0.00010449608207045783
+DeKalb,2023,Petroleum,residential,EJ,5.135881226984811e-4
+Douglas,2023,Petroleum,residential,EJ,9.990349434250218e-5
+Fayette,2023,Petroleum,residential,EJ,8.271606243049803e-5
+Forsyth,2023,Petroleum,residential,EJ,1.8357980079998685e-4
+Fulton,2023,Petroleum,residential,EJ,7.248444834099934e-4
+Gwinnett,2023,Petroleum,residential,EJ,6.630779231532175e-4
+Hall,2023,Petroleum,residential,EJ,1.4594104345528087e-4
+Henry,2023,Petroleum,residential,EJ,1.7047273730906386e-4
+Paulding,2023,Petroleum,residential,EJ,1.2272868209818635e-4
+Rockdale,2023,Petroleum,residential,EJ,6.437045318232331e-5
+Bartow,2024,Petroleum,residential,EJ,9.193974162673092e-5
+Cherokee,2024,Petroleum,residential,EJ,2.2964827402463384e-4
+Clayton,2024,Petroleum,residential,EJ,2.3292658288374135e-4
+Cobb,2024,Petroleum,residential,EJ,6.161796664161795e-4
+Coweta,2024,Petroleum,residential,EJ,1.2380349539454772e-4
+DeKalb,2024,Petroleum,residential,EJ,6.026979146378309e-4
+Douglas,2024,Petroleum,residential,EJ,1.1883830493633863e-4
+Fayette,2024,Petroleum,residential,EJ,9.788529509221011e-5
+Forsyth,2024,Petroleum,residential,EJ,2.1915064396195005e-4
+Fulton,2024,Petroleum,residential,EJ,8.531067250031706e-4
+Gwinnett,2024,Petroleum,residential,EJ,7.854397699482992e-4
+Hall,2024,Petroleum,residential,EJ,1.7349608543264672e-4
+Henry,2024,Petroleum,residential,EJ,2.0289132739843865e-4
+Paulding,2024,Petroleum,residential,EJ,1.475231162472214e-4
+Rockdale,2024,Petroleum,residential,EJ,7.637129540274029e-5
+Bartow,2020,Solar,commercial,EJ,1.8805180511526815e-6
+Cherokee,2020,Solar,commercial,EJ,4.612989684137206e-6
+Clayton,2020,Solar,commercial,EJ,5.1509071929195575e-6
+Cobb,2020,Solar,commercial,EJ,1.3183167603631009e-5
+Coweta,2020,Solar,commercial,EJ,2.5245190646729938e-6
+DeKalb,2020,Solar,commercial,EJ,1.3153012847054774e-5
+Douglas,2020,Solar,commercial,EJ,2.4887221174766755e-6
+Fayette,2020,Solar,commercial,EJ,2.055821601790683e-6
+Forsyth,2020,Solar,commercial,EJ,4.350524609499326e-6
+Fulton,2020,Solar,commercial,EJ,1.8394453116905722e-5
+Gwinnett,2020,Solar,commercial,EJ,1.648582732345665e-5
+Hall,2020,Solar,commercial,EJ,3.4990010726842577e-6
+Henry,2020,Solar,commercial,EJ,4.160547922888974e-6
+Paulding,2020,Solar,commercial,EJ,2.917012550582844e-6
+Rockdale,2020,Solar,commercial,EJ,1.610380973415543e-6
+Bartow,2021,Solar,commercial,EJ,2.342830714432648e-6
+Cherokee,2021,Solar,commercial,EJ,5.802081404291674e-6
+Clayton,2021,Solar,commercial,EJ,6.318482654840689e-6
+Cobb,2021,Solar,commercial,EJ,1.6190264542635975e-5
+Coweta,2021,Solar,commercial,EJ,3.1673074575196954e-6
+DeKalb,2021,Solar,commercial,EJ,1.6033714049032346e-5
+Douglas,2021,Solar,commercial,EJ,3.0783477556648132e-6
+Fayette,2021,Solar,commercial,EJ,2.5497206168238507e-6
+Forsyth,2021,Solar,commercial,EJ,5.507266460712784e-6
+Fulton,2021,Solar,commercial,EJ,2.243684883886858e-5
+Gwinnett,2021,Solar,commercial,EJ,2.0386151396489645e-5
+Hall,2021,Solar,commercial,EJ,4.370871199752411e-6
+Henry,2021,Solar,commercial,EJ,5.1759850074962525e-6
+Paulding,2021,Solar,commercial,EJ,3.6740589136828378e-6
+Rockdale,2021,Solar,commercial,EJ,1.9827265712014206e-6
+Bartow,2022,Solar,commercial,EJ,2.4276931691518465e-6
+Cherokee,2022,Solar,commercial,EJ,6.057234882528549e-6
+Clayton,2022,Solar,commercial,EJ,6.431853516413804e-6
+Cobb,2022,Solar,commercial,EJ,1.6660855451592853e-5
+Coweta,2022,Solar,commercial,EJ,3.2927787798995687e-6
+DeKalb,2022,Solar,commercial,EJ,1.6451626844789128e-5
+Douglas,2022,Solar,commercial,EJ,3.178458438473793e-6
+Fayette,2022,Solar,commercial,EJ,2.628808302928931e-6
+Forsyth,2022,Solar,commercial,EJ,5.769281914102932e-6
+Fulton,2022,Solar,commercial,EJ,2.3169001439835418e-5
+Gwinnett,2022,Solar,commercial,EJ,2.109104845677361e-5
+Hall,2022,Solar,commercial,EJ,4.586716319034231e-6
+Henry,2022,Solar,commercial,EJ,5.349275177795433e-6
+Paulding,2022,Solar,commercial,EJ,3.849810669418271e-6
+Rockdale,2022,Solar,commercial,EJ,2.044853456496892e-6
+Bartow,2023,Solar,commercial,EJ,2.938117110756341e-6
+Cherokee,2023,Solar,commercial,EJ,7.340194762821987e-6
+Clayton,2023,Solar,commercial,EJ,7.650343117477698e-6
+Cobb,2023,Solar,commercial,EJ,1.99629542591974e-5
+Coweta,2023,Solar,commercial,EJ,3.993291030212848e-6
+DeKalb,2023,Solar,commercial,EJ,1.9626638654383706e-5
+Douglas,2023,Solar,commercial,EJ,3.817786465676684e-6
+Fayette,2023,Solar,commercial,EJ,3.1609731543381535e-6
+Forsyth,2023,Solar,commercial,EJ,7.015455099728573e-6
+Fulton,2023,Solar,commercial,EJ,2.769974640722633e-5
+Gwinnett,2023,Solar,commercial,EJ,2.5339353116364222e-5
+Hall,2023,Solar,commercial,EJ,5.577099621562138e-6
+Henry,2023,Solar,commercial,EJ,6.514572023218183e-6
+Paulding,2023,Solar,commercial,EJ,4.690045173579629e-6
+Rockdale,2023,Solar,commercial,EJ,2.4599003925370952e-6
+Bartow,2024,Solar,commercial,EJ,3.5813478708917136e-6
+Cherokee,2024,Solar,commercial,EJ,8.94553696453892e-6
+Clayton,2024,Solar,commercial,EJ,9.073237611124996e-6
+Cobb,2024,Solar,commercial,EJ,2.4002174656587795e-5
+Coweta,2024,Solar,commercial,EJ,4.822543296242031e-6
+DeKalb,2024,Solar,commercial,EJ,2.3477017176558054e-5
+Douglas,2024,Solar,commercial,EJ,4.629133200004508e-6
+Fayette,2024,Solar,commercial,EJ,3.8129462511799167e-6
+Forsyth,2024,Solar,commercial,EJ,8.53662059813192e-6
+Fulton,2024,Solar,commercial,EJ,3.323124362952534e-5
+Gwinnett,2024,Solar,commercial,EJ,3.059539866055242e-5
+Hall,2024,Solar,commercial,EJ,6.758229087644102e-6
+Henry,2024,Solar,commercial,EJ,7.903268059538795e-6
+Paulding,2024,Solar,commercial,EJ,5.746498618892006e-6
+Rockdale,2024,Solar,commercial,EJ,2.9749069482736512e-6
+Bartow,2020,Solar,residential,EJ,4.652938949423492e-6
+Cherokee,2020,Solar,residential,EJ,1.1413854475608056e-5
+Clayton,2020,Solar,residential,EJ,1.2744816083052391e-5
+Cobb,2020,Solar,residential,EJ,3.261892327069844e-5
+Coweta,2020,Solar,residential,EJ,6.246381457162322e-6
+DeKalb,2020,Solar,residential,EJ,3.25443117872841e-5
+Douglas,2020,Solar,residential,EJ,6.1578095820994315e-6
+Fayette,2020,Solar,residential,EJ,5.086690020430661e-6
+Forsyth,2020,Solar,residential,EJ,1.0764440890932618e-5
+Fulton,2020,Solar,residential,EJ,4.551313256925816e-5
+Gwinnett,2020,Solar,residential,EJ,4.079064703460988e-5
+Hall,2020,Solar,residential,EJ,8.65752836841305e-6
+Henry,2020,Solar,residential,EJ,1.029438428920529e-5
+Paulding,2020,Solar,residential,EJ,7.217522482299265e-6
+Rockdale,2020,Solar,residential,EJ,3.9845426370796e-6
+Bartow,2021,Solar,residential,EJ,5.68353377019772e-6
+Cherokee,2021,Solar,residential,EJ,1.4075419703003874e-5
+Clayton,2021,Solar,residential,EJ,1.53281708848913e-5
+Cobb,2021,Solar,residential,EJ,3.927638250157986e-5
+Coweta,2021,Solar,residential,EJ,7.683653276575556e-6
+DeKalb,2021,Solar,residential,EJ,3.889660260043031e-5
+Douglas,2021,Solar,residential,EJ,7.4678436294831566e-6
+Fayette,2021,Solar,residential,EJ,6.185433348220822e-6
+Forsyth,2021,Solar,residential,EJ,1.3360220488025455e-5
+Fulton,2021,Solar,residential,EJ,5.443013329429228e-5
+Gwinnett,2021,Solar,residential,EJ,4.9455293202595246e-5
+Hall,2021,Solar,residential,EJ,1.060340976236233e-5
+Henry,2021,Solar,residential,EJ,1.2556556221889055e-5
+Paulding,2021,Solar,residential,EJ,8.912994772082438e-6
+Rockdale,2021,Solar,residential,EJ,4.809947793099742e-6
+Bartow,2022,Solar,residential,EJ,7.620561517517007e-6
+Cherokee,2022,Solar,residential,EJ,1.9013741783721903e-5
+Clayton,2022,Solar,residential,EJ,2.018967471520028e-5
+Cobb,2022,Solar,residential,EJ,5.229864939961882e-5
+Coweta,2022,Solar,residential,EJ,1.033607688757712e-5
+DeKalb,2022,Solar,residential,EJ,5.16418779881273e-5
+Douglas,2022,Solar,residential,EJ,9.977223797899798e-6
+Fayette,2022,Solar,residential,EJ,8.251864628028033e-6
+Forsyth,2022,Solar,residential,EJ,1.810985354202714e-5
+Fulton,2022,Solar,residential,EJ,7.27278072102457e-5
+Gwinnett,2022,Solar,residential,EJ,6.620508484189025e-5
+Hall,2022,Solar,residential,EJ,1.4397764230152294e-5
+Henry,2022,Solar,residential,EJ,1.6791446746443064e-5
+Paulding,2022,Solar,residential,EJ,1.2084607482478878e-5
+Rockdale,2022,Solar,residential,EJ,6.418822509183068e-6
+Bartow,2023,Solar,residential,EJ,1.0371114876027979e-5
+Cherokee,2023,Solar,residential,EJ,2.5909791961304474e-5
+Clayton,2023,Solar,residential,EJ,2.7004569362439934e-5
+Cobb,2023,Solar,residential,EJ,7.0466248989555e-5
+Coweta,2023,Solar,residential,EJ,1.4095721323064753e-5
+DeKalb,2023,Solar,residential,EJ,6.927910510092159e-5
+Douglas,2023,Solar,residential,EJ,1.347621640496322e-5
+Fayette,2023,Solar,residential,EJ,1.115776344777572e-5
+Forsyth,2023,Solar,residential,EJ,2.4763509419191153e-5
+Fulton,2023,Solar,residential,EJ,9.777597052700039e-5
+Gwinnett,2023,Solar,residential,EJ,8.944413450776326e-5
+Hall,2023,Solar,residential,EJ,1.9686329261185754e-5
+Henry,2023,Solar,residential,EJ,2.2995466917777614e-5
+Paulding,2023,Solar,residential,EJ,1.6555159455993765e-5
+Rockdale,2023,Solar,residential,EJ,8.683081236343627e-6
+Bartow,2024,Solar,residential,EJ,1.1741942400230106e-5
+Cherokee,2024,Solar,residential,EJ,2.9329175372900053e-5
+Clayton,2024,Solar,residential,EJ,2.974785953616523e-5
+Cobb,2024,Solar,residential,EJ,7.869443641277545e-5
+Coweta,2024,Solar,residential,EJ,1.581137260284926e-5
+DeKalb,2024,Solar,residential,EJ,7.697263526308042e-5
+Douglas,2024,Solar,residential,EJ,1.517725095605193e-5
+Fayette,2024,Solar,residential,EJ,1.250126959752177e-5
+Forsyth,2024,Solar,residential,EJ,2.7988486728859755e-5
+Fulton,2024,Solar,residential,EJ,1.0895321053766976e-4
+Gwinnett,2024,Solar,residential,EJ,1.0031122966416412e-4
+Hall,2024,Solar,residential,EJ,2.215778515113035e-5
+Henry,2024,Solar,residential,EJ,2.5911953173534313e-5
+Paulding,2024,Solar,residential,EJ,1.8840687422311558e-5
+Rockdale,2024,Solar,residential,EJ,9.753642285516398e-6
+Bartow,2020,Biomass,residential,EJ,4.8313195188471177e-5
+Cherokee,2020,Biomass,residential,EJ,1.1851429497074786e-4
+Clayton,2020,Biomass,residential,EJ,1.3233416422495046e-4
+Cobb,2020,Biomass,residential,EJ,3.3869440883385724e-4
+Coweta,2020,Biomass,residential,EJ,6.485850122725589e-5
+DeKalb,2020,Biomass,residential,EJ,3.379196900591901e-4
+Douglas,2020,Biomass,residential,EJ,6.393882651528647e-5
+Fayette,2020,Biomass,residential,EJ,5.28169938380052e-5
+Forsyth,2020,Biomass,residential,EJ,1.1177119225319412e-4
+Fulton,2020,Biomass,residential,EJ,4.7257977836347495e-4
+Gwinnett,2020,Biomass,residential,EJ,4.2354445512149196e-4
+Hall,2020,Biomass,residential,EJ,8.989433613021955e-5
+Henry,2020,Biomass,residential,EJ,1.0689041977890759e-4
+Paulding,2020,Biomass,residential,EJ,7.494221958525981e-5
+Rockdale,2020,Biomass,residential,EJ,4.137298775129303e-5
+Bartow,2021,Biomass,residential,EJ,5.0425092552765655e-5
+Cherokee,2021,Biomass,residential,EJ,1.2487905763218515e-4
+Clayton,2021,Biomass,residential,EJ,1.3599363825164058e-4
+Cobb,2021,Biomass,residential,EJ,3.4846546230886416e-4
+Coweta,2021,Biomass,residential,EJ,6.817042763893085e-5
+DeKalb,2021,Biomass,residential,EJ,3.450960028423675e-4
+Douglas,2021,Biomass,residential,EJ,6.625573479669313e-5
+Fayette,2021,Biomass,residential,EJ,5.487801457228741e-5
+Forsyth,2021,Biomass,residential,EJ,1.1853371192524876e-4
+Fulton,2021,Biomass,residential,EJ,4.8291162153657415e-4
+Gwinnett,2021,Biomass,residential,EJ,4.387741566772239e-4
+Hall,2021,Biomass,residential,EJ,9.407490836874518e-5
+Henry,2021,Biomass,residential,EJ,1.1140349212893555e-4
+Paulding,2021,Biomass,residential,EJ,7.907731430421997e-5
+Rockdale,2021,Biomass,residential,EJ,4.2674517729237985e-5
+Bartow,2022,Biomass,residential,EJ,6.376232686871016e-5
+Cherokee,2022,Biomass,residential,EJ,1.5909069375322741e-4
+Clayton,2022,Biomass,residential,EJ,1.6892989258132578e-4
+Cobb,2022,Biomass,residential,EJ,4.375902707622392e-4
+Coweta,2022,Biomass,residential,EJ,8.648343190077028e-5
+DeKalb,2022,Biomass,residential,EJ,4.320949705378023e-4
+Douglas,2022,Biomass,residential,EJ,8.348085683471302e-5
+Fayette,2022,Biomass,residential,EJ,6.904453018051456e-5
+Forsyth,2022,Biomass,residential,EJ,1.5152773170807565e-4
+Fulton,2022,Biomass,residential,EJ,6.085239526148702e-4
+Gwinnett,2022,Biomass,residential,EJ,5.539474027413589e-4
+Hall,2022,Biomass,residential,EJ,1.204681501371457e-4
+Henry,2022,Biomass,residential,EJ,1.4049643370559576e-4
+Paulding,2022,Biomass,residential,EJ,1.0111363717839827e-4
+Rockdale,2022,Biomass,residential,EJ,5.37072049089789e-5
+Bartow,2023,Biomass,residential,EJ,5.4585392143491866e-5
+Cherokee,2023,Biomass,residential,EJ,1.36368767627204e-4
+Clayton,2023,Biomass,residential,EJ,1.4213081485791587e-4
+Cobb,2023,Biomass,residential,EJ,3.708789151363577e-4
+Coweta,2023,Biomass,residential,EJ,7.418879119190212e-5
+DeKalb,2023,Biomass,residential,EJ,3.646307233588674e-4
+Douglas,2023,Biomass,residential,EJ,7.092820452464257e-5
+Fayette,2023,Biomass,residential,EJ,5.872569155018532e-5
+Forsyth,2023,Biomass,residential,EJ,1.303356378415991e-4
+Fulton,2023,Biomass,residential,EJ,5.146158110506712e-4
+Gwinnett,2023,Biomass,residential,EJ,4.7076357897902035e-4
+Hall,2023,Biomass,residential,EJ,1.0361335453641001e-4
+Henry,2023,Biomass,residential,EJ,1.2103005262538556e-4
+Paulding,2023,Biomass,residential,EJ,8.713333925094393e-5
+Rockdale,2023,Biomass,residential,EJ,4.570091065090372e-5
+Bartow,2024,Biomass,residential,EJ,5.1746596016878107e-5
+Cherokee,2024,Biomass,residential,EJ,1.292533158312791e-4
+Clayton,2024,Biomass,residential,EJ,1.3109845179913422e-4
+Cobb,2024,Biomass,residential,EJ,3.4680541523930415e-4
+Coweta,2024,Biomass,residential,EJ,6.968052496458687e-5
+DeKalb,2024,Biomass,residential,EJ,3.392174587089673e-4
+Douglas,2024,Biomass,residential,EJ,6.688595865145833e-5
+Fayette,2024,Biomass,residential,EJ,5.509294165404542e-5
+Forsyth,2024,Biomass,residential,EJ,1.2334491743492775e-4
+Fulton,2024,Biomass,residential,EJ,4.8015546135911694e-4
+Gwinnett,2024,Biomass,residential,EJ,4.420703577362172e-4
+Hall,2024,Biomass,residential,EJ,9.764908715800317e-5
+Henry,2024,Biomass,residential,EJ,1.1419365954757757e-4
+Paulding,2024,Biomass,residential,EJ,8.303067818690091e-5
+Rockdale,2024,Biomass,residential,EJ,4.298418181917378e-5
+Bartow,2020,Biomass,commercial,EJ,9.61750660446657e-6
+Cherokee,2020,Biomass,commercial,EJ,2.359214724173028e-5
+Clayton,2020,Biomass,commercial,EJ,2.634321107236002e-5
+Cobb,2020,Biomass,commercial,EJ,6.74224857442843e-5
+Coweta,2020,Biomass,commercial,EJ,1.2911111787899027e-5
+DeKalb,2020,Biomass,commercial,EJ,6.72682657035087e-5
+Douglas,2020,Biomass,commercial,EJ,1.2728035972237854e-5
+Fayette,2020,Biomass,commercial,EJ,1.0514059049158065e-5
+Forsyth,2020,Biomass,commercial,EJ,2.224982586001084e-5
+Fulton,2020,Biomass,commercial,EJ,9.407448879788926e-5
+Gwinnett,2020,Biomass,commercial,EJ,8.431323116853544e-5
+Hall,2020,Biomass,commercial,EJ,1.789489120029949e-5
+Henry,2020,Biomass,commercial,EJ,2.1278230805632184e-5
+Paulding,2020,Biomass,commercial,EJ,1.4918435615837974e-5
+Rockdale,2020,Biomass,commercial,EJ,8.235948406896633e-6
+Bartow,2021,Biomass,commercial,EJ,9.707562451005648e-6
+Cherokee,2021,Biomass,commercial,EJ,2.404103174463448e-5
+Clayton,2021,Biomass,commercial,EJ,2.6180749889270447e-5
+Cobb,2021,Biomass,commercial,EJ,6.708466095212591e-5
+Coweta,2021,Biomass,commercial,EJ,1.3123797104074664e-5
+DeKalb,2021,Biomass,commercial,EJ,6.643599108279606e-5
+Douglas,2021,Biomass,commercial,EJ,1.2755190932037073e-5
+Fayette,2021,Biomass,commercial,EJ,1.0564814592858083e-5
+Forsyth,2021,Biomass,commercial,EJ,2.281946056637936e-5
+Fulton,2021,Biomass,commercial,EJ,9.296749866105267e-5
+Gwinnett,2021,Biomass,commercial,EJ,8.447039583267699e-5
+Hall,2021,Biomass,commercial,EJ,1.811078575823337e-5
+Henry,2021,Biomass,commercial,EJ,2.1446789730134932e-5
+Paulding,2021,Biomass,commercial,EJ,1.5223531146972868e-5
+Rockdale,2021,Biomass,commercial,EJ,8.215464264931812e-6
+Bartow,2022,Biomass,commercial,EJ,9.743432225968173e-6
+Cherokee,2022,Biomass,commercial,EJ,2.4310426994901574e-5
+Clayton,2022,Biomass,commercial,EJ,2.5813941243006074e-5
+Cobb,2022,Biomass,commercial,EJ,6.686755887522692e-5
+Coweta,2022,Biomass,commercial,EJ,1.3215412591973604e-5
+DeKalb,2022,Biomass,commercial,EJ,6.602782971339133e-5
+Douglas,2022,Biomass,commercial,EJ,1.2756593284457599e-5
+Fayette,2022,Biomass,commercial,EJ,1.0550598345835842e-5
+Forsyth,2022,Biomass,commercial,EJ,2.3154741314448987e-5
+Fulton,2022,Biomass,commercial,EJ,9.298769636167128e-5
+Gwinnett,2022,Biomass,commercial,EJ,8.464792990498825e-5
+Hall,2022,Biomass,commercial,EJ,1.8408569979980434e-5
+Henry,2022,Biomass,commercial,EJ,2.1469064054380775e-5
+Paulding,2022,Biomass,commercial,EJ,1.5451033852597993e-5
+Rockdale,2022,Biomass,commercial,EJ,8.206923065312636e-6
+Bartow,2023,Biomass,commercial,EJ,9.811995575100467e-6
+Cherokee,2023,Biomass,commercial,EJ,2.4512963853454022e-5
+Clayton,2023,Biomass,commercial,EJ,2.5548720485606492e-5
+Cobb,2023,Biomass,commercial,EJ,6.666732858948386e-5
+Coweta,2023,Biomass,commercial,EJ,1.3335804000151115e-5
+DeKalb,2023,Biomass,commercial,EJ,6.55441850584829e-5
+Douglas,2023,Biomass,commercial,EJ,1.2749697338733701e-5
+Fayette,2023,Biomass,commercial,EJ,1.0556234974375549e-5
+Forsyth,2023,Biomass,commercial,EJ,2.3428478784541314e-5
+Fulton,2023,Biomass,commercial,EJ,9.250475012861032e-5
+Gwinnett,2023,Biomass,commercial,EJ,8.462209342964918e-5
+Hall,2023,Biomass,commercial,EJ,1.8625015527231765e-5
+Henry,2023,Biomass,commercial,EJ,2.1755753585001022e-5
+Paulding,2023,Biomass,commercial,EJ,1.5662650859528985e-5
+Rockdale,2023,Biomass,commercial,EJ,8.214965863136942e-6
+Bartow,2024,Biomass,commercial,EJ,9.923549054018835e-6
+Cherokee,2024,Biomass,commercial,EJ,2.478716898842828e-5
+Clayton,2024,Biomass,commercial,EJ,2.5141014433303005e-5
+Cobb,2024,Biomass,commercial,EJ,6.650757373884233e-5
+Coweta,2024,Biomass,commercial,EJ,1.3362774768224821e-5
+DeKalb,2024,Biomass,commercial,EJ,6.50524160155401e-5
+Douglas,2024,Biomass,commercial,EJ,1.2826855151715277e-5
+Fayette,2024,Biomass,commercial,EJ,1.0565284504043421e-5
+Forsyth,2024,Biomass,commercial,EJ,2.3654103514947574e-5
+Fulton,2024,Biomass,commercial,EJ,9.208038095487672e-5
+Gwinnett,2024,Biomass,commercial,EJ,8.477672384270717e-5
+Hall,2024,Biomass,commercial,EJ,1.8726362332636134e-5
+Henry,2024,Biomass,commercial,EJ,2.189914833835053e-5
+Paulding,2024,Biomass,commercial,EJ,1.592296056937568e-5
+Rockdale,2024,Biomass,commercial,EJ,8.2431632158047e-6
+Bartow,2020,Biomass,industrial,EJ,0.0019507097306391348
+Cherokee,2020,Biomass,industrial,EJ,0.004785172819090259
+Clayton,2020,Biomass,industrial,EJ,0.005343168483114704
+Cobb,2020,Biomass,industrial,EJ,0.013675238750984826
+Coweta,2020,Biomass,industrial,EJ,0.002618748541989817
+DeKalb,2020,Biomass,industrial,EJ,0.01364395844658027
+Douglas,2020,Biomass,industrial,EJ,0.002581615448170148
+Fayette,2020,Biomass,industrial,EJ,0.0021325566115215217
+Forsyth,2020,Biomass,industrial,EJ,0.004512911048066467
+Fulton,2020,Biomass,industrial,EJ,0.01908103921838931
+Gwinnett,2020,Biomass,industrial,EJ,0.017101172603895615
+Hall,2020,Biomass,industrial,EJ,0.0036296037870086786
+Henry,2020,Biomass,industrial,EJ,0.004315843345930751
+Paulding,2020,Biomass,industrial,EJ,0.003025892127613742
+Rockdale,2020,Biomass,industrial,EJ,0.0016704895935204021
+Bartow,2021,Biomass,industrial,EJ,0.001969865080421162
+Cherokee,2021,Biomass,industrial,EJ,0.004878422278514019
+Clayton,2021,Biomass,industrial,EJ,0.005312615318871467
+Cobb,2021,Biomass,industrial,EJ,0.013612864373362454
+Coweta,2021,Biomass,industrial,EJ,0.0026630897064351014
+DeKalb,2021,Biomass,industrial,EJ,0.013481235848615556
+Douglas,2021,Biomass,industrial,EJ,0.0025882918948949506
+Fayette,2021,Biomass,industrial,EJ,0.002143819259740031
+Forsyth,2021,Biomass,industrial,EJ,0.00463054023609209
+Fulton,2021,Biomass,industrial,EJ,0.018865027152880916
+Gwinnett,2021,Biomass,industrial,EJ,0.01714078935056514
+Hall,2021,Biomass,industrial,EJ,0.0036750527873696034
+Henry,2021,Biomass,industrial,EJ,0.004351996949775113
+Paulding,2021,Biomass,industrial,EJ,0.003089169146062939
+Rockdale,2021,Biomass,industrial,EJ,0.001667087516213772
+Bartow,2022,Biomass,industrial,EJ,0.002055417852504687
+Cherokee,2022,Biomass,industrial,EJ,0.005128386433905471
+Clayton,2022,Biomass,industrial,EJ,0.00544555906418382
+Cobb,2022,Biomass,industrial,EJ,0.014105991716065188
+Coweta,2022,Biomass,industrial,EJ,0.0027878466581173007
+DeKalb,2022,Biomass,industrial,EJ,0.013928847330957695
+Douglas,2022,Biomass,industrial,EJ,0.0026910568027695334
+Fayette,2022,Biomass,industrial,EJ,0.002225692927471721
+Forsyth,2022,Biomass,industrial,EJ,0.0048845896973555595
+Fulton,2022,Biomass,industrial,EJ,0.01961614416074747
+Gwinnett,2022,Biomass,industrial,EJ,0.01785683548355464
+Hall,2022,Biomass,industrial,EJ,0.0038833649681566766
+Henry,2022,Biomass,industrial,EJ,0.004528989016450623
+Paulding,2022,Biomass,industrial,EJ,0.0032594603301742027
+Rockdale,2022,Biomass,industrial,EJ,0.001731284807176857
+Bartow,2023,Biomass,industrial,EJ,0.0019816393968461283
+Cherokee,2023,Biomass,industrial,EJ,0.004950660090872717
+Clayton,2023,Biomass,industrial,EJ,0.005159842426118214
+Cobb,2023,Biomass,industrial,EJ,0.013464193272840397
+Coweta,2023,Biomass,industrial,EJ,0.002693310896142251
+DeKalb,2023,Biomass,industrial,EJ,0.013237362201392263
+Douglas,2023,Biomass,industrial,EJ,0.002574940270908168
+Fayette,2023,Biomass,industrial,EJ,0.0021319466511656453
+Forsyth,2023,Biomass,industrial,EJ,0.004731636516982978
+Fulton,2023,Biomass,industrial,EJ,0.018682342021784308
+Gwinnett,2023,Biomass,industrial,EJ,0.017090353628911994
+Hall,2023,Biomass,industrial,EJ,0.0037615247839382993
+Henry,2023,Biomass,industrial,EJ,0.004393811440510458
+Paulding,2023,Biomass,industrial,EJ,0.0031632429677253206
+Rockdale,2023,Biomass,industrial,EJ,0.0016591018487053832
+Bartow,2024,Biomass,industrial,EJ,0.0019403365780504894
+Cherokee,2024,Biomass,industrial,EJ,0.004846597763840192
+Clayton,2024,Biomass,industrial,EJ,0.004915784629943194
+Cobb,2024,Biomass,industrial,EJ,0.013004125574469196
+Coweta,2024,Biomass,industrial,EJ,0.0026128031942902873
+DeKalb,2024,Biomass,industrial,EJ,0.012719600779762558
+Douglas,2024,Biomass,industrial,EJ,0.0025080156400445475
+Fayette,2024,Biomass,industrial,EJ,0.0020658141426129505
+Forsyth,2024,Biomass,industrial,EJ,0.0046250511809036825
+Fulton,2024,Biomass,industrial,EJ,0.01800433799591231
+Gwinnett,2024,Biomass,industrial,EJ,0.016576264937459294
+Hall,2024,Biomass,industrial,EJ,0.0036615373804320204
+Henry,2024,Biomass,industrial,EJ,0.0042819074423627555
+Paulding,2024,Biomass,industrial,EJ,0.0031133924622565425
+Rockdale,2024,Biomass,industrial,EJ,0.0016117732697646823
+Bartow,2020,electricity,commercial,EJ,0.001117486954823753
+Cherokee,2020,electricity,commercial,EJ,0.0027412423888194494
+Clayton,2020,electricity,commercial,EJ,0.0030608967513325396
+Cobb,2020,electricity,commercial,EJ,0.007834020955705604
+Coweta,2020,electricity,commercial,EJ,0.0015001808253032735
+DeKalb,2020,electricity,commercial,EJ,0.007816101666348517
+Douglas,2020,electricity,commercial,EJ,0.0014789086968651122
+Fayette,2020,electricity,commercial,EJ,0.0012216600739555653
+Forsyth,2020,electricity,commercial,EJ,0.0025852740391272507
+Fulton,2020,electricity,commercial,EJ,0.010930797174033793
+Gwinnett,2020,electricity,commercial,EJ,0.009796607356226878
+Hall,2020,electricity,commercial,EJ,0.002079261111714536
+Henry,2020,electricity,commercial,EJ,0.00247238149397057
+Paulding,2020,electricity,commercial,EJ,0.0017334178049157318
+Rockdale,2020,electricity,commercial,EJ,9.56959561746922e-4
+Bartow,2020,electricity,government,EJ,1.2068235415481836e-5
+Cherokee,2020,electricity,government,EJ,2.9603887845284516e-5
+Clayton,2020,electricity,government,EJ,3.305597655356135e-5
+Cobb,2020,electricity,government,EJ,8.46030539642266e-5
+Coweta,2020,electricity,government,EJ,1.620111562591541e-5
+DeKalb,2020,electricity,government,EJ,8.440953564036074e-5
+Douglas,2020,electricity,government,EJ,1.597138851127488e-5
+Fayette,2020,electricity,government,EJ,1.3193246960557121e-5
+Forsyth,2020,electricity,government,EJ,2.791951671833341e-5
+Fulton,2020,electricity,government,EJ,1.1804650873613887e-4
+Gwinnett,2020,electricity,government,EJ,1.0579789172271247e-4
+Hall,2020,electricity,government,EJ,2.2454859520382584e-5
+Henry,2020,electricity,government,EJ,2.670034023871301e-5
+Paulding,2020,electricity,government,EJ,1.871994483050601e-5
+Rockdale,2020,electricity,government,EJ,1.0334629164489557e-5
+Bartow,2020,electricity,industrial,EJ,8.081814399313586e-4
+Cherokee,2020,electricity,industrial,EJ,0.001982502982637851
+Clayton,2020,electricity,industrial,EJ,0.00221368127233602
+Cobb,2020,electricity,industrial,EJ,0.005665668229150067
+Coweta,2020,electricity,industrial,EJ,0.0010849507408721678
+DeKalb,2020,electricity,industrial,EJ,0.0056527087605740415
+Douglas,2020,electricity,industrial,EJ,0.0010695664544450663
+Fayette,2020,electricity,industrial,EJ,8.835208262737858e-4
+Forsyth,2020,electricity,industrial,EJ,0.0018697045961387094
+Fulton,2020,electricity,industrial,EJ,0.00790529800958754
+Gwinnett,2020,electricity,industrial,EJ,0.0070850368368249065
+Hall,2020,electricity,industrial,EJ,0.0015037493117973466
+Henry,2020,electricity,industrial,EJ,0.0017880592048360143
+Paulding,2020,electricity,industrial,EJ,0.0012536308290063214
+Rockdale,2020,electricity,industrial,EJ,6.920858925737415e-4
+Bartow,2020,electricity,residential,EJ,0.0010204248566901659
+Cherokee,2020,electricity,residential,EJ,0.0025031449894690415
+Clayton,2020,electricity,residential,EJ,0.0027950349803542163
+Cobb,2020,electricity,residential,EJ,0.007153577656120776
+Coweta,2020,electricity,residential,EJ,0.001369878902891412
+DeKalb,2020,electricity,residential,EJ,0.007137214791037418
+Douglas,2020,electricity,residential,EJ,0.0013504544178723193
+Fayette,2020,electricity,residential,EJ,0.0011155497614617053
+Forsyth,2020,electricity,residential,EJ,0.0023607236572146845
+Fulton,2020,electricity,residential,EJ,0.009981375703470194
+Gwinnett,2020,electricity,residential,EJ,0.008945698752344085
+Hall,2020,electricity,residential,EJ,0.001898661736304003
+Henry,2020,electricity,residential,EJ,0.0022576366737688124
+Paulding,2020,electricity,residential,EJ,0.0015828575067744675
+Rockdale,2020,electricity,residential,EJ,8.738404680597804e-4
+Bartow,2020,electricity,transport,EJ,5.155877836459302e-6
+Cherokee,2020,electricity,transport,EJ,1.26475846683204e-5
+Clayton,2020,electricity,transport,EJ,1.4122410692816323e-5
+Cobb,2020,electricity,transport,EJ,3.6144721727199615e-5
+Coweta,2020,electricity,transport,EJ,6.921556474976725e-6
+DeKalb,2020,electricity,transport,EJ,3.6062045444991135e-5
+Douglas,2020,electricity,transport,EJ,6.823410814237509e-6
+Fayette,2020,electricity,transport,EJ,5.636513313918863e-6
+Forsyth,2020,electricity,transport,EJ,1.1927975590204612e-5
+Fulton,2020,electricity,transport,EJ,5.0432673635390587e-5
+Gwinnett,2020,electricity,transport,EJ,4.5199731882714134e-5
+Hall,2020,electricity,transport,EJ,9.593325663288389e-6
+Henry,2020,electricity,transport,EJ,1.140711029601725e-5
+Paulding,2020,electricity,transport,EJ,7.997668700390797e-6
+Rockdale,2020,electricity,transport,EJ,4.415234176560865e-6
+Bartow,2021,electricity,commercial,EJ,0.0011601176575335571
+Cherokee,2021,electricity,commercial,EJ,0.0028730616540495143
+Clayton,2021,electricity,commercial,EJ,0.0031287720668607107
+Cobb,2021,electricity,commercial,EJ,0.008017058876829668
+Coweta,2021,electricity,commercial,EJ,0.0015683802016383155
+DeKalb,2021,electricity,commercial,EJ,0.007939538554594543
+Douglas,2021,electricity,commercial,EJ,0.0015243293360358635
+Fayette,2021,electricity,commercial,EJ,0.0012625649352864235
+Forsyth,2021,electricity,commercial,EJ,0.002727075851642337
+Fulton,2021,electricity,commercial,EJ,0.011110228475763404
+Gwinnett,2021,electricity,commercial,EJ,0.010094768716546944
+Hall,2021,electricity,commercial,EJ,0.002164358195579491
+Henry,2021,electricity,commercial,EJ,0.0025630326447976014
+Paulding,2021,electricity,commercial,EJ,0.0018193122509127639
+Rockdale,2021,electricity,commercial,EJ,9.818020957048793e-4
+Bartow,2021,electricity,government,EJ,1.1689540895621412e-5
+Cherokee,2021,electricity,government,EJ,2.8949453085694485e-5
+Clayton,2021,electricity,government,EJ,3.152603427000962e-5
+Cobb,2021,electricity,government,EJ,8.078123541585203e-5
+Coweta,2021,electricity,government,EJ,1.5803263046536065e-5
+DeKalb,2021,electricity,government,EJ,8.000012759361976e-5
+Douglas,2021,electricity,government,EJ,1.535939910600942e-5
+Fayette,2021,electricity,government,EJ,1.2721816919661307e-5
+Forsyth,2021,electricity,government,EJ,2.7478475554806034e-5
+Fulton,2021,electricity,government,EJ,1.1194853322312887e-4
+Gwinnett,2021,electricity,government,EJ,1.0171658967314861e-4
+Hall,2021,electricity,government,EJ,2.1808437683630375e-5
+Henry,2021,electricity,government,EJ,2.5825548575712146e-5
+Paulding,2021,electricity,government,EJ,1.8331696635118784e-5
+Rockdale,2021,electricity,government,EJ,9.892803264066361e-6
+Bartow,2021,electricity,industrial,EJ,8.613586264366211e-4
+Cherokee,2021,electricity,industrial,EJ,0.0021331771169324117
+Clayton,2021,electricity,industrial,EJ,0.002323035764901678
+Cobb,2021,electricity,industrial,EJ,0.005952467646160084
+Coweta,2021,electricity,industrial,EJ,0.0011644834534160116
+DeKalb,2021,electricity,industrial,EJ,0.005894910726956448
+Douglas,2021,electricity,industrial,EJ,0.0011317767767765562
+Fayette,2021,electricity,industrial,EJ,9.374231927108635e-4
+Forsyth,2021,electricity,industrial,EJ,0.002024786274482833
+Fulton,2021,electricity,industrial,EJ,0.008249069460442881
+Gwinnett,2021,electricity,industrial,EJ,0.007495115740559041
+Hall,2021,electricity,industrial,EJ,0.0016069823524837335
+Henry,2021,electricity,industrial,EJ,0.0019029882564917543
+Paulding,2021,electricity,industrial,EJ,0.00135079428481176
+Rockdale,2021,electricity,industrial,EJ,7.289637383736563e-4
+Bartow,2021,electricity,residential,EJ,0.0010314293344402458
+Cherokee,2021,electricity,residential,EJ,0.0025543616635766665
+Clayton,2021,electricity,residential,EJ,0.0027817068980729906
+Cobb,2021,electricity,residential,EJ,0.007127750920606519
+Coweta,2021,electricity,residential,EJ,0.0013944045563139566
+DeKalb,2021,electricity,residential,EJ,0.007058829691928251
+Douglas,2021,electricity,residential,EJ,0.0013552401192460381
+Fayette,2021,electricity,residential,EJ,0.0011225124472794257
+Forsyth,2021,electricity,residential,EJ,0.0024245696221946874
+Fulton,2021,electricity,residential,EJ,0.009877804624229887
+Gwinnett,2021,electricity,residential,EJ,0.00897498672744325
+Hall,2021,electricity,residential,EJ,0.0019242725241360036
+Henry,2021,electricity,residential,EJ,0.0022787232293253372
+Paulding,2021,electricity,residential,EJ,0.0016175014766066165
+Rockdale,2021,electricity,residential,EJ,8.728937755139982e-4
+Bartow,2021,electricity,transport,EJ,5.2918735026677024e-6
+Cherokee,2021,electricity,transport,EJ,1.310546282945054e-5
+Clayton,2021,electricity,transport,EJ,1.4271885173877833e-5
+Cobb,2021,electricity,transport,EJ,3.6569792006975494e-5
+Coweta,2021,electricity,transport,EJ,7.1541619742292016e-6
+DeKalb,2021,electricity,transport,EJ,3.6216183270404346e-5
+Douglas,2021,electricity,transport,EJ,6.953224071993669e-6
+Fayette,2021,electricity,transport,EJ,5.75918647824419e-6
+Forsyth,2021,electricity,transport,EJ,1.2439548993463712e-5
+Fulton,2021,electricity,transport,EJ,5.067927662136793e-5
+Gwinnett,2021,electricity,transport,EJ,4.6047259723834e-5
+Hall,2021,electricity,transport,EJ,9.872713953703e-6
+Henry,2021,electricity,transport,EJ,1.1691266356821589e-5
+Paulding,2021,electricity,transport,EJ,8.298787826531728e-6
+Rockdale,2021,electricity,transport,EJ,4.478487558038039e-6
+Bartow,2022,electricity,commercial,EJ,0.0012100940694276929
+Cherokee,2022,electricity,commercial,EJ,0.003019254698912028
+Clayton,2022,electricity,commercial,EJ,0.003205984963231232
+Cobb,2022,electricity,commercial,EJ,0.008304674836898023
+Coweta,2022,electricity,commercial,EJ,0.0016412997013481305
+DeKalb,2022,electricity,commercial,EJ,0.00820038394072342
+Douglas,2022,electricity,commercial,EJ,0.001584316236991055
+Fayette,2022,electricity,commercial,EJ,0.0013103407701838808
+Forsyth,2022,electricity,commercial,EJ,0.0028757233071391225
+Fulton,2022,electricity,commercial,EJ,0.011548688109832913
+Gwinnett,2022,electricity,commercial,EJ,0.010512923535749128
+Hall,2022,electricity,commercial,EJ,0.0022862684157692165
+Henry,2022,electricity,commercial,EJ,0.0026663691485561626
+Paulding,2022,electricity,commercial,EJ,0.0019189546350744456
+Rockdale,2022,electricity,commercial,EJ,0.0010192659731460632
+Bartow,2022,electricity,government,EJ,1.1194455244124826e-5
+Cherokee,2022,electricity,government,EJ,2.793081335698908e-5
+Clayton,2022,electricity,government,EJ,2.9658235744600273e-5
+Cobb,2022,electricity,government,EJ,7.682568911574987e-5
+Coweta,2022,electricity,government,EJ,1.518349400524433e-5
+DeKalb,2022,electricity,government,EJ,7.586090480757752e-5
+Douglas,2022,electricity,government,EJ,1.4656345862371308e-5
+Fayette,2022,electricity,government,EJ,1.2121827118211493e-5
+Forsyth,2022,electricity,government,EJ,2.6603019277237378e-5
+Fulton,2022,electricity,government,EJ,1.0683572082542634e-4
+Gwinnett,2022,electricity,government,EJ,9.72539697360134e-5
+Hall,2022,electricity,government,EJ,2.1150032962717502e-5
+Henry,2022,electricity,government,EJ,2.4666305580642903e-5
+Paulding,2022,electricity,government,EJ,1.7752051117816315e-5
+Rockdale,2022,electricity,government,EJ,9.429124236299495e-6
+Bartow,2022,electricity,industrial,EJ,8.860291058095163e-4
+Cherokee,2022,electricity,industrial,EJ,0.002210693869736425
+Clayton,2022,electricity,industrial,EJ,0.002347417495859613
+Cobb,2022,electricity,industrial,EJ,0.006080670755832691
+Coweta,2022,electricity,industrial,EJ,0.001201757238128342
+DeKalb,2022,electricity,industrial,EJ,0.006004309114356869
+Douglas,2022,electricity,industrial,EJ,0.0011600340289615483
+Fayette,2022,electricity,industrial,EJ,9.594295933215053e-4
+Forsyth,2022,electricity,industrial,EJ,0.002105600394839644
+Fulton,2022,electricity,industrial,EJ,0.008455932524376092
+Gwinnett,2022,electricity,industrial,EJ,0.007697547219803316
+Hall,2022,electricity,industrial,EJ,0.0016740023864612293
+Henry,2022,electricity,industrial,EJ,0.0019523115864625467
+Paulding,2022,electricity,industrial,EJ,0.0014050557740590871
+Rockdale,2022,electricity,industrial,EJ,7.463050531235052e-4
+Bartow,2022,electricity,residential,EJ,0.0010804820071642332
+Cherokee,2022,electricity,residential,EJ,0.0026958651063907564
+Clayton,2022,electricity,residential,EJ,0.0028625948639255092
+Cobb,2022,electricity,residential,EJ,0.007415168756972449
+Coweta,2022,electricity,residential,EJ,0.0014655016006395285
+DeKalb,2022,electricity,residential,EJ,0.0073220483627199715
+Douglas,2022,electricity,residential,EJ,0.001414621582714291
+Fayette,2022,electricity,residential,EJ,0.0011699913760481457
+Forsyth,2022,electricity,residential,EJ,0.0025677072299149133
+Fulton,2022,electricity,residential,EJ,0.010311718753342417
+Gwinnett,2022,electricity,residential,EJ,0.009386893969691557
+Hall,2022,electricity,residential,EJ,0.0020413883095508566
+Henry,2022,electricity,residential,EJ,0.0023807768026127803
+Paulding,2022,electricity,residential,EJ,0.0017134171699089036
+Rockdale,2022,electricity,residential,EJ,9.100933326777784e-4
+Bartow,2022,electricity,transport,EJ,5.337876747527055e-6
+Cherokee,2022,electricity,transport,EJ,1.3318311244849316e-5
+Clayton,2022,electricity,transport,EJ,1.4142001866224287e-5
+Cobb,2022,electricity,transport,EJ,3.6632962533744424e-5
+Coweta,2022,electricity,transport,EJ,7.239978885024019e-6
+DeKalb,2022,electricity,transport,EJ,3.6172922307340823e-5
+Douglas,2022,electricity,transport,EJ,6.988617675123183e-6
+Fayette,2022,electricity,transport,EJ,5.780077520592436e-6
+Forsyth,2022,electricity,transport,EJ,1.2685176269609636e-5
+Fulton,2022,electricity,transport,EJ,5.094271204475381e-5
+Gwinnett,2022,electricity,transport,EJ,4.6373824570965176e-5
+Hall,2022,electricity,transport,EJ,1.0085016796183247e-5
+Henry,2022,electricity,transport,EJ,1.1761688812451374e-5
+Paulding,2022,electricity,transport,EJ,8.464749629727203e-6
+Rockdale,2022,electricity,transport,EJ,4.496110075289487e-6
+Bartow,2023,electricity,commercial,EJ,0.001219824646276935
+Cherokee,2023,electricity,commercial,EJ,0.003047445061799539
+Clayton,2023,electricity,commercial,EJ,0.0031762100472476126
+Cobb,2023,electricity,commercial,EJ,0.008288064328245751
+Coweta,2023,electricity,commercial,EJ,0.0016579035602690131
+DeKalb,2023,electricity,commercial,EJ,0.008148435427077251
+Douglas,2023,electricity,commercial,EJ,0.0015850389380347404
+Fayette,2023,electricity,commercial,EJ,0.0013123482878763953
+Forsyth,2023,electricity,commercial,EJ,0.002912622170222204
+Fulton,2023,electricity,commercial,EJ,0.011500165612683019
+Gwinnett,2023,electricity,commercial,EJ,0.010520195855671145
+Hall,2023,electricity,commercial,EJ,0.0023154569122576557
+Henry,2023,electricity,commercial,EJ,0.0027046694240932027
+Paulding,2023,electricity,commercial,EJ,0.0019471765349107844
+Rockdale,2023,electricity,commercial,EJ,0.0010212823427690457
+Bartow,2023,electricity,government,EJ,1.0477375080907905e-5
+Cherokee,2023,electricity,government,EJ,2.617525809827382e-5
+Clayton,2023,electricity,government,EJ,2.7281252352402726e-5
+Cobb,2023,electricity,government,EJ,7.118823096972353e-5
+Coweta,2023,electricity,government,EJ,1.4240143041811815e-5
+DeKalb,2023,electricity,government,EJ,6.998892386099891e-5
+Douglas,2023,electricity,government,EJ,1.3614290810011757e-5
+Fayette,2023,electricity,government,EJ,1.1272083484158971e-5
+Forsyth,2023,electricity,government,EJ,2.5017230992607665e-5
+Fulton,2023,electricity,government,EJ,9.87777620204634e-5
+Gwinnett,2023,electricity,government,EJ,9.036055980742617e-5
+Hall,2023,electricity,government,EJ,1.9888031142384898e-5
+Henry,2023,electricity,government,EJ,2.3231073509277297e-5
+Paulding,2023,electricity,government,EJ,1.672478004709144e-5
+Rockdale,2023,electricity,government,EJ,8.772046212837676e-6
+Bartow,2023,electricity,industrial,EJ,8.78229919095133e-4
+Cherokee,2023,electricity,industrial,EJ,0.002194050954979198
+Clayton,2023,electricity,industrial,EJ,0.002286757118194951
+Cobb,2023,electricity,industrial,EJ,0.005967108540286063
+Coweta,2023,electricity,industrial,EJ,0.0011936309977393508
+DeKalb,2023,electricity,industrial,EJ,0.0058665807480736114
+Douglas,2023,electricity,industrial,EJ,0.001141171087632587
+Fayette,2023,electricity,industrial,EJ,9.448436168297117e-4
+Forsyth,2023,electricity,industrial,EJ,0.0020969833170006377
+Fulton,2023,electricity,industrial,EJ,0.008279706059746475
+Gwinnett,2023,electricity,industrial,EJ,0.007574163043344078
+Hall,2023,electricity,industrial,EJ,0.0016670457863979281
+Henry,2023,electricity,industrial,EJ,0.0019472648111761364
+Paulding,2023,electricity,industrial,EJ,0.0014018971463955856
+Rockdale,2023,electricity,industrial,EJ,7.352865938566389e-4
+Bartow,2023,electricity,residential,EJ,0.0010333566541582977
+Cherokee,2023,electricity,residential,EJ,0.0025815986276419792
+Clayton,2023,electricity,residential,EJ,0.0026906800066266393
+Cobb,2023,electricity,residential,EJ,0.007021112788485482
+Coweta,2023,electricity,residential,EJ,0.0014044688154036284
+DeKalb,2023,electricity,residential,EJ,0.006902828201782251
+Douglas,2023,electricity,residential,EJ,0.001342742613634934
+Fayette,2023,electricity,residential,EJ,0.0011117367073942882
+Forsyth,2023,electricity,residential,EJ,0.0024673853818533114
+Fulton,2023,electricity,residential,EJ,0.009742197533112047
+Gwinnett,2023,electricity,residential,EJ,0.008912030449365317
+Hall,2023,electricity,residential,EJ,0.0019615055450806695
+Henry,2023,electricity,residential,EJ,0.002291221246607508
+Paulding,2023,electricity,residential,EJ,0.0016495221959256473
+Rockdale,2023,electricity,residential,EJ,8.651644380984039e-4
+Bartow,2023,electricity,transport,EJ,5.391599732873771e-6
+Cherokee,2023,electricity,transport,EJ,1.3469644207709895e-5
+Clayton,2023,electricity,transport,EJ,1.4038782782884832e-5
+Cobb,2023,electricity,transport,EJ,3.663307308521576e-5
+Coweta,2023,electricity,transport,EJ,7.327899481256697e-6
+DeKalb,2023,electricity,transport,EJ,3.6015916227023674e-5
+Douglas,2023,electricity,transport,EJ,7.005839356489334e-6
+Fayette,2023,electricity,transport,EJ,5.800552317046189e-6
+Forsyth,2023,electricity,transport,EJ,1.2873729812610354e-5
+Fulton,2023,electricity,transport,EJ,5.083049439490432e-5
+Gwinnett,2023,electricity,transport,EJ,4.6499048316768545e-5
+Hall,2023,electricity,transport,EJ,1.0234271710865954e-5
+Henry,2023,electricity,transport,EJ,1.1954582971380728e-5
+Paulding,2023,electricity,transport,EJ,8.606480052297308e-6
+Rockdale,2023,electricity,transport,EJ,4.514046853593568e-6
+Bartow,2024,electricity,commercial,EJ,0.001288211134992869
+Cherokee,2024,electricity,commercial,EJ,0.003217710410058566
+Clayton,2024,electricity,commercial,EJ,0.0032636443435407132
+Cobb,2024,electricity,commercial,EJ,0.008633584273666594
+Coweta,2024,electricity,commercial,EJ,0.0017346692354846193
+DeKalb,2024,electricity,commercial,EJ,0.008444685083253498
+Douglas,2024,electricity,commercial,EJ,0.0016650996073515156
+Fayette,2024,electricity,commercial,EJ,0.0013715170921601327
+Forsyth,2024,electricity,commercial,EJ,0.003070623158142107
+Fulton,2024,electricity,commercial,EJ,0.011953281171358672
+Gwinnett,2024,electricity,commercial,EJ,0.011005167510928247
+Hall,2024,electricity,commercial,EJ,0.00243093557995195
+Henry,2024,electricity,commercial,EJ,0.0028428061959243273
+Paulding,2024,electricity,commercial,EJ,0.002067016043943991
+Rockdale,2024,electricity,commercial,EJ,0.0010700742833394659
+Bartow,2024,electricity,government,EJ,9.778916262712104e-6
+Cherokee,2024,electricity,government,EJ,2.4425903334389303e-5
+Clayton,2024,electricity,government,EJ,2.4774591586599908e-5
+Cobb,2024,electricity,government,EJ,6.553824552969812e-5
+Coweta,2024,electricity,government,EJ,1.3168016279723292e-5
+DeKalb,2024,electricity,government,EJ,6.410429629966449e-5
+Douglas,2024,electricity,government,EJ,1.263990753305778e-5
+Fayette,2024,electricity,government,EJ,1.041129860842771e-5
+Forsyth,2024,electricity,government,EJ,2.330935195493592e-5
+Fulton,2024,electricity,government,EJ,9.07383366469789e-5
+Gwinnett,2024,electricity,government,EJ,8.354112817623089e-5
+Hall,2024,electricity,government,EJ,1.8453431142348573e-5
+Henry,2024,electricity,government,EJ,2.15799747307859e-5
+Paulding,2024,electricity,government,EJ,1.5690888130323937e-5
+Rockdale,2024,electricity,government,EJ,8.12302155090146e-6
+Bartow,2024,electricity,industrial,EJ,8.949619427500416e-4
+Cherokee,2024,electricity,industrial,EJ,0.0022354474989140566
+Clayton,2024,electricity,industrial,EJ,0.0022673592882400825
+Cobb,2024,electricity,industrial,EJ,0.005998030248744615
+Coweta,2024,electricity,industrial,EJ,0.0012051308258771089
+DeKalb,2024,electricity,industrial,EJ,0.005866795871208397
+Douglas,2024,electricity,industrial,EJ,0.0011567985549790275
+Fayette,2024,electricity,industrial,EJ,9.528372857305838e-4
+Forsyth,2024,electricity,industrial,EJ,0.002133261227461242
+Fulton,2024,electricity,industrial,EJ,0.008304331059377053
+Gwinnett,2024,electricity,industrial,EJ,0.00764564583267983
+Hall,2024,electricity,industrial,EJ,0.0016888495761574359
+Henry,2024,electricity,industrial,EJ,0.001974989415054524
+Paulding,2024,electricity,industrial,EJ,0.0014360229034923375
+Rockdale,2024,electricity,industrial,EJ,7.434152162561831e-4
+Bartow,2024,electricity,residential,EJ,0.0011015046691090985
+Cherokee,2024,electricity,residential,EJ,0.002751352588285213
+Clayton,2024,electricity,residential,EJ,0.002790629101914644
+Cobb,2024,electricity,residential,EJ,0.007382278518065504
+Coweta,2024,electricity,residential,EJ,0.0014832555086218809
+DeKalb,2024,electricity,residential,EJ,0.007220757370965572
+Douglas,2024,electricity,residential,EJ,0.0014237689321320562
+Fayette,2024,electricity,residential,EJ,0.0011727367042093475
+Forsyth,2024,electricity,residential,EJ,0.002625583379844624
+Fulton,2024,electricity,residential,EJ,0.010220836215251576
+Gwinnett,2024,electricity,residential,EJ,0.009410137102783484
+Hall,2024,electricity,residential,EJ,0.002078608714739397
+Henry,2024,electricity,residential,EJ,0.00243078499566009
+Paulding,2024,electricity,residential,EJ,0.001767433739454773
+Rockdale,2024,electricity,residential,EJ,9.149834117825094e-4
+Bartow,2024,electricity,transport,EJ,5.738438260036466e-6
+Cherokee,2024,electricity,transport,EJ,1.4333545197076651e-5
+Clayton,2024,electricity,transport,EJ,1.4538161532215986e-5
+Cobb,2024,electricity,transport,EJ,3.8458983136744713e-5
+Coweta,2024,electricity,transport,EJ,7.727221135585237e-6
+DeKalb,2024,electricity,transport,EJ,3.7617516771402033e-05
+Douglas,2024,electricity,transport,EJ,7.417317731577073e-6
+Fayette,2024,electricity,transport,EJ,6.109531226796321e-6
+Forsyth,2024,electricity,transport,EJ,1.367833341460304e-5
+Fulton,2024,electricity,transport,EJ,5.3246835199167725e-5
+Gwinnett,2024,electricity,transport,EJ,4.902338800477029e-5
+Hall,2024,electricity,transport,EJ,1.0828794566938304e-5
+Henry,2024,electricity,transport,EJ,1.2663504760538484e-5
+Paulding,2024,electricity,transport,EJ,9.207686246822479e-6
+Rockdale,2024,electricity,transport,EJ,4.7667304231385055e-6
+Bartow,2020,electricity,en4water,EJ,1.1468521719357942e-4
+Bartow,2021,electricity,en4water,EJ,1.1767228724052486e-4
+Bartow,2022,electricity,en4water,EJ,1.1609325356961305e-4
+Bartow,2023,electricity,en4water,EJ,1.226069122177527e-4
+Bartow,2024,electricity,en4water,EJ,1.253890936633456e-4
+Cherokee,2020,electricity,en4water,EJ,1.0482492344220462e-4
+Cherokee,2021,electricity,en4water,EJ,1.0671174644823765e-4
+Cherokee,2022,electricity,en4water,EJ,1.0843531015218997e-4
+Cherokee,2023,electricity,en4water,EJ,1.1002920444218043e-4
+Cherokee,2024,electricity,en4water,EJ,1.1155843306418916e-4
+Clayton,2020,electricity,en4water,EJ,1.737300344577223e-4
+Clayton,2021,electricity,en4water,EJ,1.7615469128413143e-4
+Clayton,2022,electricity,en4water,EJ,1.7846811485241386e-4
+Clayton,2023,electricity,en4water,EJ,1.8075005624228918e-4
+Clayton,2024,electricity,en4water,EJ,1.8302663896387132e-4
+Cobb,2020,electricity,en4water,EJ,5.114767549074079e-4
+Cobb,2021,electricity,en4water,EJ,5.190511855512675e-4
+Cobb,2022,electricity,en4water,EJ,5.264569547050098e-4
+Cobb,2023,electricity,en4water,EJ,5.339315271988066e-4
+Cobb,2024,electricity,en4water,EJ,5.412896265030679e-4
+Coweta,2020,electricity,en4water,EJ,6.826290432597519e-5
+Coweta,2021,electricity,en4water,EJ,6.616891906282444e-5
+Coweta,2022,electricity,en4water,EJ,6.579801352939632e-5
+Coweta,2023,electricity,en4water,EJ,6.579503286710822e-5
+Coweta,2024,electricity,en4water,EJ,6.326581420609473e-5
+DeKalb,2020,electricity,en4water,EJ,4.890353323594718e-4
+DeKalb,2021,electricity,en4water,EJ,4.976788262778014e-4
+DeKalb,2022,electricity,en4water,EJ,5.057505302622561e-4
+DeKalb,2023,electricity,en4water,EJ,5.136217587245957e-4
+DeKalb,2024,electricity,en4water,EJ,5.201054965305374e-4
+Douglas,2020,electricity,en4water,EJ,8.553429138520581e-5
+Douglas,2021,electricity,en4water,EJ,9.222719798204797e-5
+Douglas,2022,electricity,en4water,EJ,9.886905799821271e-5
+Douglas,2023,electricity,en4water,EJ,1.0543560985721289e-4
+Douglas,2024,electricity,en4water,EJ,1.1195854066647188e-4
+Fayette,2020,electricity,en4water,EJ,5.3672990429412824e-5
+Fayette,2021,electricity,en4water,EJ,5.424887660230551e-5
+Fayette,2022,electricity,en4water,EJ,5.496090352809246e-5
+Fayette,2023,electricity,en4water,EJ,5.5699568571338526e-5
+Fayette,2024,electricity,en4water,EJ,5.644246472934297e-5
+Forsyth,2020,electricity,en4water,EJ,1.0097063507182688e-4
+Forsyth,2021,electricity,en4water,EJ,1.0311063346725953e-4
+Forsyth,2022,electricity,en4water,EJ,1.0523171867078197e-4
+Forsyth,2023,electricity,en4water,EJ,1.0731931441651322e-4
+Forsyth,2024,electricity,en4water,EJ,1.093764602014558e-4
+Fulton,2020,electricity,en4water,EJ,0.0011394417260830298
+Fulton,2021,electricity,en4water,EJ,0.0011532338821392642
+Fulton,2022,electricity,en4water,EJ,0.0011671070505678053
+Fulton,2023,electricity,en4water,EJ,0.0011820479577883116
+Fulton,2024,electricity,en4water,EJ,0.0011974948184053336
+Gwinnett,2020,electricity,en4water,EJ,4.4073353220659884e-4
+Gwinnett,2021,electricity,en4water,EJ,4.4979286683821614e-4
+Gwinnett,2022,electricity,en4water,EJ,4.588427358198678e-4
+Gwinnett,2023,electricity,en4water,EJ,4.679007195621292e-4
+Gwinnett,2024,electricity,en4water,EJ,4.7674353821337335e-4
+Hall,2020,electricity,en4water,EJ,1.0529831351190773e-4
+Hall,2021,electricity,en4water,EJ,1.0777828646221667e-4
+Hall,2022,electricity,en4water,EJ,1.1024570279523607e-4
+Hall,2023,electricity,en4water,EJ,1.12752272783725e-4
+Hall,2024,electricity,en4water,EJ,1.1525364701484193e-4
+Henry,2020,electricity,en4water,EJ,9.407823391321725e-5
+Henry,2021,electricity,en4water,EJ,9.592374870802964e-5
+Henry,2022,electricity,en4water,EJ,9.791987626322142e-5
+Henry,2023,electricity,en4water,EJ,9.996457114468124e-5
+Henry,2024,electricity,en4water,EJ,1.0194281457858844e-4
+Paulding,2020,electricity,en4water,EJ,4.651667746601701e-5
+Paulding,2021,electricity,en4water,EJ,4.772879232415934e-5
+Paulding,2022,electricity,en4water,EJ,4.88982926312211e-5
+Paulding,2023,electricity,en4water,EJ,5.0055460527382235e-5
+Paulding,2024,electricity,en4water,EJ,5.117907293013447e-5
+Rockdale,2020,electricity,en4water,EJ,5.5817739589927805e-5
+Rockdale,2021,electricity,en4water,EJ,5.661953713574696e-5
+Rockdale,2022,electricity,en4water,EJ,5.738610626500453e-5
+Rockdale,2023,electricity,en4water,EJ,5.8135468203301194e-5
+Rockdale,2024,electricity,en4water,EJ,5.886541108591901e-5
+Bartow,2020,Bowen Plant,elec_own_use,EJ,0.0028545036840000072
+Bartow,2021,Bowen Plant,elec_own_use,EJ,0.003202428276000001
+Bartow,2022,Bowen Plant,elec_own_use,EJ,0.0029894497560000073
+Bartow,2023,Bowen Plant,elec_own_use,EJ,0.003393160199999995
+Bartow,2024,Bowen Plant,elec_own_use,EJ,0.0036016785359999984
+Cobb,2020,Jack McDonough,elec_own_use,EJ,9.50372855999998e-4
+Cobb,2021,Jack McDonough,elec_own_use,EJ,8.859503880000175e-4
+Cobb,2022,Jack McDonough,elec_own_use,EJ,9.123358320000108e-4
+Cobb,2023,Jack McDonough,elec_own_use,EJ,8.709894000000079e-4
+Cobb,2024,Jack McDonough,elec_own_use,EJ,9.114015960000055e-4
+Coweta,2020,Yates Plant,elec_own_use,EJ,6.343838280000007e-4
+Coweta,2021,Yates Plant,elec_own_use,EJ,5.999974920000003e-4
+Coweta,2022,Yates Plant,elec_own_use,EJ,5.463969479999999e-4
+Coweta,2023,Yates Plant,elec_own_use,EJ,5.101049520000005e-4
+Coweta,2024,Yates Plant,elec_own_use,EJ,4.520426040000008e-4
+Bartow,2020,Bowen Plant,efficiency_losses,EJ,0.051854784841
+Bartow,2021,Bowen Plant,efficiency_losses,EJ,0.060826633418999985
+Bartow,2022,Bowen Plant,efficiency_losses,EJ,0.055460680139
+Bartow,2023,Bowen Plant,efficiency_losses,EJ,0.0658157581
+Bartow,2024,Bowen Plant,efficiency_losses,EJ,0.070177038099
+Cobb,2020,Jack McDonough,efficiency_losses,EJ,0.069757578974
+Cobb,2021,Jack McDonough,efficiency_losses,EJ,0.06782410751199998
+Cobb,2022,Jack McDonough,efficiency_losses,EJ,0.067542002688
+Cobb,2023,Jack McDonough,efficiency_losses,EJ,0.06509781900500002
+Cobb,2024,Jack McDonough,efficiency_losses,EJ,0.06519024186899999
+Coweta,2020,Yates Plant,efficiency_losses,EJ,0.017240761937
+Coweta,2021,Yates Plant,efficiency_losses,EJ,0.010543379383000002
+Coweta,2022,Yates Plant,efficiency_losses,EJ,0.011270036072
+Coweta,2023,Yates Plant,efficiency_losses,EJ,0.016849046293
+Coweta,2024,Yates Plant,efficiency_losses,EJ,0.015787816306
+Bartow,2020,electricity,td_losses,EJ,1.8468015491344787e-4
+Bartow,2021,electricity,td_losses,EJ,1.912535592029543e-4
+Bartow,2022,electricity,td_losses,EJ,1.9855384607776245e-4
+Bartow,2023,electricity,td_losses,EJ,1.9619322639371402e-4
+Bartow,2024,electricity,td_losses,EJ,2.0553505170228621e-4
+Cherokee,2020,electricity,td_losses,EJ,4.424380054129291e-4
+Cherokee,2021,electricity,td_losses,EJ,4.625620258153185e-4
+Cherokee,2022,electricity,td_losses,EJ,4.8452988658759423e-4
+Cherokee,2023,electricity,td_losses,EJ,4.783661250701329e-4
+Cherokee,2024,electricity,td_losses,EJ,5.012897027312095e-4
+Clayton,2020,electricity,td_losses,EJ,4.974312855436125e-4
+Clayton,2021,electricity,td_losses,EJ,5.07328040433804e-4
+Clayton,2022,electricity,td_losses,EJ,5.182959405287755e-4
+Clayton,2023,electricity,td_losses,EJ,5.025430358068068e-4
+Clayton,2024,electricity,td_losses,EJ,5.126383275466875e-4
+Cobb,2020,electricity,td_losses,EJ,0.0012771294822945167
+Cobb,2021,electricity,td_losses,EJ,0.0013040207793942218
+Cobb,2022,electricity,td_losses,EJ,0.00134642579736346
+Cobb,2023,electricity,td_losses,EJ,0.0013150823092962624
+Cobb,2024,electricity,td_losses,EJ,0.0013595507937387732
+Coweta,2020,electricity,td_losses,EJ,2.4278376272962322e-4
+Coweta,2021,electricity,td_losses,EJ,2.5298367332711236e-4
+Coweta,2022,electricity,td_losses,EJ,2.6380680159213994e-4
+Coweta,2023,electricity,td_losses,EJ,2.606019869281301e-4
+Coweta,2024,electricity,td_losses,EJ,2.7043299729630075e-4
+DeKalb,2020,electricity,td_losses,EJ,0.001272931927884288
+DeKalb,2021,electricity,td_losses,EJ,0.001290430446637264
+DeKalb,2022,electricity,td_losses,EJ,0.001328671546510646
+DeKalb,2023,electricity,td_losses,EJ,0.001292248258544744
+DeKalb,2024,electricity,td_losses,EJ,0.0013292439381017444
+Douglas,2020,electricity,td_losses,EJ,2.404355195935929e-4
+Douglas,2021,electricity,td_losses,EJ,2.4755316319311047e-4
+Douglas,2022,electricity,td_losses,EJ,2.567691522121561e-4
+Douglas,2023,electricity,td_losses,EJ,2.517005027595585e-4
+Douglas,2024,electricity,td_losses,EJ,2.626609716236224e-4
+Fayette,2020,electricity,td_losses,EJ,1.975940047436967e-4
+Fayette,2021,electricity,td_losses,EJ,2.037138273166154e-4
+Fayette,2022,electricity,td_losses,EJ,2.1075747286322566e-4
+Fayette,2023,electricity,td_losses,EJ,2.0650204898837633e-4
+Fayette,2024,electricity,td_losses,EJ,2.1420326259987785e-4
+Forsyth,2020,electricity,td_losses,EJ,4.1739122519166054e-4
+Forsyth,2021,electricity,td_losses,EJ,4.3916762438012325e-4
+Forsyth,2022,electricity,td_losses,EJ,4.6161305076667845e-4
+Forsyth,2023,electricity,td_losses,EJ,4.5733206865787313e-4
+Forsyth,2024,electricity,td_losses,EJ,4.7854991466113805e-4
+Fulton,2020,electricity,td_losses,EJ,0.0018075235077327648
+Fulton,2021,electricity,td_losses,EJ,0.0018331778551451963
+Fulton,2022,electricity,td_losses,EJ,0.0018984734922593645
+Fulton,2023,electricity,td_losses,EJ,0.0018512235251847131
+Fulton,2024,electricity,td_losses,EJ,0.0019091957061743272
+Gwinnett,2020,electricity,td_losses,EJ,0.0015851444460724738
+Gwinnett,2021,electricity,td_losses,EJ,0.0016297456740470661
+Gwinnett,2022,electricity,td_losses,EJ,0.0016919901153222509
+Gwinnett,2023,electricity,td_losses,EJ,0.0016566689805640117
+Gwinnett,2024,electricity,td_losses,EJ,0.001720215510047156
+Hall,2020,electricity,td_losses,EJ,3.371411195106878e-4
+Hall,2021,electricity,td_losses,EJ,3.501043506179267e-4
+Hall,2022,electricity,td_losses,EJ,3.685883918601263e-4
+Hall,2023,electricity,td_losses,EJ,3.6521296916239374e-4
+Hall,2024,electricity,td_losses,EJ,3.8057578461437474e-4
+Henry,2020,electricity,td_losses,EJ,3.990157834214006e-4
+Henry,2021,electricity,td_losses,EJ,4.1269108165531535e-4
+Henry,2022,electricity,td_losses,EJ,4.280283244972683e-4
+Henry,2023,electricity,td_losses,EJ,4.2469834257013116e-4
+Henry,2024,electricity,td_losses,EJ,4.430860140425312e-4
+Paulding,2020,electricity,td_losses,EJ,2.785884259016061e-4
+Paulding,2021,electricity,td_losses,EJ,2.9171803734701703e-4
+Paulding,2022,electricity,td_losses,EJ,3.06752560345272e-4
+Paulding,2023,electricity,td_losses,EJ,3.044389558715272e-4
+Paulding,2024,electricity,td_losses,EJ,3.207930200519029e-4
+Rockdale,2020,electricity,td_losses,EJ,1.5560721151868531e-4
+Rockdale,2021,electricity,td_losses,EJ,1.5927902625302313e-4
+Rockdale,2022,electricity,td_losses,EJ,1.6481854197143643e-4
+Rockdale,2023,electricity,td_losses,EJ,1.6158929615962925e-4
+Rockdale,2024,electricity,td_losses,EJ,1.6801368446628704e-4
+Bartow,2020,commercial,energy_services,EJ,0.0012574815222829018
+Bartow,2020,en4water,energy_services,EJ,7.454539117582663e-5
+Bartow,2020,government,energy_services,EJ,7.844353020063194e-6
+Bartow,2020,industrial,energy_services,EJ,0.0026082719181536253
+Bartow,2020,residential,energy_services,EJ,0.0016193430067588388
+Bartow,2020,transport,energy_services,EJ,0.0060144960443348295
+Bartow,2021,commercial,energy_services,EJ,0.0013203535368859775
+Bartow,2021,en4water,energy_services,EJ,7.648698670634116e-5
+Bartow,2021,government,energy_services,EJ,7.598201582153918e-6
+Bartow,2021,industrial,energy_services,EJ,0.0027444000348477823
+Bartow,2021,residential,energy_services,EJ,0.0016819454754009601
+Bartow,2021,transport,energy_services,EJ,0.006337220187224064
+Bartow,2022,commercial,energy_services,EJ,0.001381876900323266
+Bartow,2022,en4water,energy_services,EJ,7.546061482024849e-5
+Bartow,2022,government,energy_services,EJ,7.276395908681137e-6
+Bartow,2022,industrial,energy_services,EJ,0.0027686807925283554
+Bartow,2022,residential,energy_services,EJ,0.0017833200697250434
+Bartow,2022,transport,energy_services,EJ,0.006463711921251839
+Bartow,2023,commercial,energy_services,EJ,0.0013524377857554427
+Bartow,2023,en4water,energy_services,EJ,7.969449294153926e-5
+Bartow,2023,government,energy_services,EJ,6.810293802590139e-6
+Bartow,2023,industrial,energy_services,EJ,0.0027438252588617984
+Bartow,2023,residential,energy_services,EJ,0.001658939545437073
+Bartow,2023,transport,energy_services,EJ,0.007044699454973052
+Bartow,2024,commercial,energy_services,EJ,0.0014376271057986681
+Bartow,2024,en4water,energy_services,EJ,8.150291088117465e-5
+Bartow,2024,government,energy_services,EJ,6.356295570762868e-6
+Bartow,2024,industrial,energy_services,EJ,0.0027404628417285123
+Bartow,2024,residential,energy_services,EJ,0.0017971577470559492
+Bartow,2024,transport,energy_services,EJ,0.00701790179744206
+Cherokee,2020,commercial,energy_services,EJ,0.003084644352755935
+Cherokee,2020,en4water,energy_services,EJ,6.8136200237433e-5
+Cherokee,2020,government,energy_services,EJ,1.9242527099434937e-5
+Cherokee,2020,industrial,energy_services,EJ,0.006398009208493159
+Cherokee,2020,residential,energy_services,EJ,0.003972242122138865
+Cherokee,2020,transport,energy_services,EJ,0.01475381115900172
+Cherokee,2021,commercial,energy_services,EJ,0.0032698792612398686
+Cherokee,2021,en4water,energy_services,EJ,6.936263519135447e-5
+Cherokee,2021,government,energy_services,EJ,1.8817144505701418e-5
+Cherokee,2021,industrial,energy_services,EJ,0.006796386310163523
+Cherokee,2021,residential,energy_services,EJ,0.004165143468154351
+Cherokee,2021,transport,energy_services,EJ,0.015694291173785783
+Cherokee,2022,commercial,energy_services,EJ,0.0034478519539465637
+Cherokee,2022,en4water,energy_services,EJ,7.048295159892349e-5
+Cherokee,2022,government,energy_services,EJ,1.81550286820429e-5
+Cherokee,2022,industrial,energy_services,EJ,0.006907083564326089
+Cherokee,2022,residential,energy_services,EJ,0.004447758447750657
+Cherokee,2022,transport,energy_services,EJ,0.016127335125180057
+Cherokee,2023,commercial,energy_services,EJ,0.0033736665414497444
+Cherokee,2023,en4water,energy_services,EJ,7.151898288741728e-5
+Cherokee,2023,government,energy_services,EJ,1.7013917763877984e-5
+Cherokee,2023,industrial,energy_services,EJ,0.006854040580694228
+Cherokee,2023,residential,energy_services,EJ,0.004142952655916911
+Cherokee,2023,transport,energy_services,EJ,0.017599525170641298
+Cherokee,2024,commercial,energy_services,EJ,0.0035562172759920664
+Cherokee,2024,en4water,energy_services,EJ,7.251298149172295e-5
+Cherokee,2024,government,energy_services,EJ,1.5876837167353048e-5
+Cherokee,2024,industrial,energy_services,EJ,0.006844420936348732
+Cherokee,2024,residential,energy_services,EJ,0.00448531246614593
+Cherokee,2024,transport,energy_services,EJ,0.017529405744907682
+Clayton,2020,commercial,energy_services,EJ,0.003444426993496958
+Clayton,2020,en4water,energy_services,EJ,1.129245223975195e-4
+Clayton,2020,government,energy_services,EJ,2.148638475981488e-5
+Clayton,2020,industrial,energy_services,EJ,0.007144074457616553
+Clayton,2020,residential,energy_services,EJ,0.004435488000473302
+Clayton,2020,transport,energy_services,EJ,0.016474242785152183
+Clayton,2021,commercial,energy_services,EJ,0.003561069691242067
+Clayton,2021,en4water,energy_services,EJ,1.1450054933468542e-4
+Clayton,2021,government,energy_services,EJ,2.0491922275506255e-5
+Clayton,2021,industrial,energy_services,EJ,0.007401280153382789
+Clayton,2021,residential,energy_services,EJ,0.004536341327846994
+Clayton,2021,transport,energy_services,EJ,0.017091126382376375
+Clayton,2022,commercial,energy_services,EJ,0.003661389672257787
+Clayton,2022,en4water,energy_services,EJ,1.1600427465406902e-4
+Clayton,2022,government,energy_services,EJ,1.9277853233990177e-5
+Clayton,2022,industrial,energy_services,EJ,0.007334255217473138
+Clayton,2022,residential,energy_services,EJ,0.0047254553147402815
+Clayton,2022,transport,energy_services,EJ,0.017124753975525615
+Clayton,2023,commercial,energy_services,EJ,0.0035164540034149047
+Clayton,2023,en4water,energy_services,EJ,1.1748753655748797e-4
+Clayton,2023,government,energy_services,EJ,1.7732814029061774e-5
+Clayton,2023,industrial,energy_services,EJ,0.007143641539176178
+Clayton,2023,residential,energy_services,EJ,0.0043204552023224955
+Clayton,2023,transport,energy_services,EJ,0.018343165353330075
+Clayton,2024,commercial,energy_services,EJ,0.003607129618994523
+Clayton,2024,en4water,energy_services,EJ,1.1896731532651636e-4
+Clayton,2024,government,energy_services,EJ,1.610348453128994e-5
+Clayton,2024,industrial,energy_services,EJ,0.006942123330142585
+Clayton,2024,residential,energy_services,EJ,0.0045533336899565135
+Clayton,2024,transport,energy_services,EJ,0.017779644099158307
+Cobb,2020,commercial,energy_services,EJ,0.00881546666108968
+Cobb,2020,en4water,energy_services,EJ,3.3245989068981515e-4
+Cobb,2020,government,energy_services,EJ,5.4991985076747294e-5
+Cobb,2020,industrial,energy_services,EJ,0.0182844866790599
+Cobb,2020,residential,energy_services,EJ,0.01135195465680833
+Cobb,2020,transport,energy_services,EJ,0.04216397144140156
+Cobb,2021,commercial,energy_services,EJ,0.00912503193223715
+Cobb,2021,en4water,energy_services,EJ,3.3738327060832385e-4
+Cobb,2021,government,energy_services,EJ,5.250780302030382e-5
+Cobb,2021,industrial,energy_services,EJ,0.018964824029193708
+Cobb,2021,residential,energy_services,EJ,0.011622652608290922
+Cobb,2021,transport,energy_services,EJ,0.043793719564982375
+Cobb,2022,commercial,energy_services,EJ,0.009484312860396908
+Cobb,2022,en4water,energy_services,EJ,3.421970205582564e-4
+Cobb,2022,government,energy_services,EJ,4.9936697925237417e-5
+Cobb,2022,industrial,energy_services,EJ,0.018998455991393545
+Cobb,2022,residential,energy_services,EJ,0.01223415315448052
+Cobb,2022,transport,energy_services,EJ,0.044359382548470064
+Cobb,2023,commercial,energy_services,EJ,0.009175877115096565
+Cobb,2023,en4water,energy_services,EJ,3.470554926792243e-4
+Cobb,2023,government,energy_services,EJ,4.627235013032029e-5
+Cobb,2023,industrial,energy_services,EJ,0.018640807676709347
+Cobb,2023,residential,energy_services,EJ,0.01126760965381757
+Cobb,2023,transport,energy_services,EJ,0.047865012757513134
+Cobb,2024,commercial,energy_services,EJ,0.009542311646047854
+Cobb,2024,en4water,energy_services,EJ,3.5183825722699414e-4
+Cobb,2024,government,energy_services,EJ,4.259985959430378e-5
+Cobb,2024,industrial,energy_services,EJ,0.01836461819225092
+Cobb,2024,residential,energy_services,EJ,0.012034797323112167
+Cobb,2024,transport,energy_services,EJ,0.047033941057238036
+Coweta,2020,commercial,energy_services,EJ,0.0016881095216799468
+Coweta,2020,en4water,energy_services,EJ,4.4370887811883875e-5
+Coweta,2020,government,energy_services,EJ,1.0530725156845017e-5
+Coweta,2020,industrial,energy_services,EJ,0.0035013933453291067
+Coweta,2020,residential,energy_services,EJ,0.0021738633498248425
+Coweta,2020,transport,energy_services,EJ,0.008074216527204612
+Coweta,2021,commercial,energy_services,EJ,0.0017849970743157766
+Coweta,2021,en4water,energy_services,EJ,4.300979739083589e-5
+Coweta,2021,government,energy_services,EJ,1.0272120980248442e-5
+Coweta,2021,industrial,energy_services,EJ,0.003710088498390106
+Coweta,2021,residential,energy_services,EJ,0.0022737459944562567
+Coweta,2021,transport,energy_services,EJ,0.008567381601790151
+Coweta,2022,commercial,energy_services,EJ,0.0018742873196745094
+Coweta,2022,en4water,energy_services,EJ,4.276870879410761e-5
+Coweta,2022,government,energy_services,EJ,9.869271103408814e-6
+Coweta,2022,industrial,energy_services,EJ,0.0037547621202555868
+Coweta,2022,residential,energy_services,EJ,0.0024178328653608008
+Coweta,2022,transport,energy_services,EJ,0.00876699482625215
+Coweta,2023,commercial,energy_services,EJ,0.0018353702472936127
+Coweta,2023,en4water,energy_services,EJ,4.276677136362035e-5
+Coweta,2023,government,energy_services,EJ,9.25609297717768e-6
+Coweta,2023,industrial,energy_services,EJ,0.0037288052631622762
+Coweta,2023,residential,energy_services,EJ,0.002253857875504647
+Coweta,2023,transport,energy_services,EJ,0.00957468136348299
+Coweta,2024,commercial,energy_services,EJ,0.0019170696978413207
+Coweta,2024,en4water,energy_services,EJ,4.1122779233961574e-5
+Coweta,2024,government,energy_services,EJ,8.55921058182014e-6
+Coweta,2024,industrial,energy_services,EJ,0.0036898284562078697
+Coweta,2024,residential,energy_services,EJ,0.0024180102612841848
+Coweta,2024,transport,energy_services,EJ,0.009450111099794479
+DeKalb,2020,commercial,energy_services,EJ,0.00879586280587984
+DeKalb,2020,en4water,energy_services,EJ,3.178729660336567e-4
+DeKalb,2020,government,energy_services,EJ,5.4866198166234486e-5
+DeKalb,2020,industrial,energy_services,EJ,0.018242631754365968
+DeKalb,2020,residential,energy_services,EJ,0.011326686996202052
+DeKalb,2020,transport,energy_services,EJ,0.04206752691961966
+DeKalb,2021,commercial,energy_services,EJ,0.00903754670610368
+DeKalb,2021,en4water,energy_services,EJ,3.234912370805709e-4
+DeKalb,2021,government,energy_services,EJ,5.2000082935852844e-5
+DeKalb,2021,industrial,energy_services,EJ,0.01878140940771641
+DeKalb,2021,residential,energy_services,EJ,0.011512648521976981
+DeKalb,2021,transport,energy_services,EJ,0.04337025962727831
+DeKalb,2022,commercial,energy_services,EJ,0.009366099145493599
+DeKalb,2022,en4water,energy_services,EJ,3.287378446704665e-4
+DeKalb,2022,government,energy_services,EJ,4.9309588124925386e-5
+DeKalb,2022,industrial,energy_services,EJ,0.018759822454661904
+DeKalb,2022,residential,energy_services,EJ,0.012085286104791334
+DeKalb,2022,transport,energy_services,EJ,0.04380231320492669
+DeKalb,2023,commercial,energy_services,EJ,0.009022143505980051
+DeKalb,2023,en4water,energy_services,EJ,3.338541431709872e-4
+DeKalb,2023,government,energy_services,EJ,4.5492800509649295e-5
+DeKalb,2023,industrial,energy_services,EJ,0.018326716725364577
+DeKalb,2023,residential,energy_services,EJ,0.011082288038799404
+DeKalb,2023,transport,energy_services,EJ,0.04705863157234653
+DeKalb,2024,commercial,energy_services,EJ,0.009336207960647257
+DeKalb,2024,en4water,energy_services,EJ,3.380685727448493e-4
+DeKalb,2024,government,energy_services,EJ,4.166779259478192e-5
+DeKalb,2024,industrial,energy_services,EJ,0.017962755484735273
+DeKalb,2024,residential,energy_services,EJ,0.011778632947533778
+DeKalb,2024,transport,energy_services,EJ,0.046004858221416436
+Douglas,2020,commercial,energy_services,EJ,0.0016641779213431769
+Douglas,2020,en4water,energy_services,EJ,5.559728940038378e-5
+Douglas,2020,government,energy_services,EJ,1.0381402532328671e-5
+Douglas,2020,industrial,energy_services,EJ,0.003451744604525273
+Douglas,2020,residential,energy_services,EJ,0.0021430185187205726
+Douglas,2020,transport,energy_services,EJ,0.007959726481666603
+Douglas,2021,commercial,energy_services,EJ,0.0017348674246954806
+Douglas,2021,en4water,energy_services,EJ,5.994767868833119e-5
+Douglas,2021,government,energy_services,EJ,9.983609418906124e-6
+Douglas,2021,industrial,energy_services,EJ,0.003605883784733898
+Douglas,2021,residential,energy_services,EJ,0.0022098328247689273
+Douglas,2021,transport,energy_services,EJ,0.008326750806329235
+Douglas,2022,commercial,energy_services,EJ,0.0018092201770346346
+Douglas,2022,en4water,energy_services,EJ,6.426488769883826e-5
+Douglas,2022,government,energy_services,EJ,9.52662481054135e-6
+Douglas,2022,industrial,energy_services,EJ,0.0036244024100374342
+Douglas,2022,residential,energy_services,EJ,0.002333939727244361
+Douglas,2022,transport,energy_services,EJ,0.008462617912767022
+Douglas,2023,commercial,energy_services,EJ,0.0017547112922134869
+Douglas,2023,en4water,energy_services,EJ,6.853314640718838e-5
+Douglas,2023,government,energy_services,EJ,8.849289026507642e-6
+Douglas,2023,industrial,energy_services,EJ,0.0035649248099220397
+Douglas,2023,residential,energy_services,EJ,0.002154853223413088
+Douglas,2023,transport,energy_services,EJ,0.009153875499207919
+Douglas,2024,commercial,energy_services,EJ,0.0018401901260610188
+Douglas,2024,en4water,energy_services,EJ,7.277305143320672e-5
+Douglas,2024,government,energy_services,EJ,8.215939896487558e-6
+Douglas,2024,industrial,energy_services,EJ,0.003541846357763834
+Douglas,2024,residential,energy_services,EJ,0.0023210576287401364
+Douglas,2024,transport,energy_services,EJ,0.009071110480206304
+Fayette,2020,commercial,energy_services,EJ,0.0013747557686912544
+Fayette,2020,en4water,energy_services,EJ,3.488744377911834e-5
+Fayette,2020,government,energy_services,EJ,8.57561052436213e-6
+Fayette,2020,industrial,energy_services,EJ,0.00285139163607602
+Fayette,2020,residential,energy_services,EJ,0.0017702809772740591
+Fayette,2020,transport,energy_services,EJ,0.006575172668110832
+Fayette,2021,commercial,energy_services,EJ,0.001437001611212192
+Fayette,2021,en4water,energy_services,EJ,3.5261769791498584e-5
+Fayette,2021,government,energy_services,EJ,8.26918099777985e-6
+Fayette,2021,industrial,energy_services,EJ,0.0029867262820652656
+Fayette,2021,residential,energy_services,EJ,0.0018303900908151656
+Fayette,2021,transport,energy_services,EJ,0.006896845284286976
+Fayette,2022,commercial,energy_services,EJ,0.0014964052214386406
+Fayette,2022,en4water,energy_services,EJ,3.5724587293260104e-5
+Fayette,2022,government,energy_services,EJ,7.879187626837471e-6
+Fayette,2022,industrial,energy_services,EJ,0.002997698612098937
+Fayette,2022,residential,energy_services,EJ,0.0019303768878006207
+Fayette,2022,transport,energy_services,EJ,0.006999179213518125
+Fayette,2023,commercial,energy_services,EJ,0.0014529231892657013
+Fayette,2023,en4water,energy_services,EJ,3.620471957137004e-5
+Fayette,2023,government,energy_services,EJ,7.3268542647033315e-6
+Fayette,2023,industrial,energy_services,EJ,0.002951673405501999
+Fayette,2023,residential,energy_services,EJ,0.0017841875483750676
+Fayette,2023,transport,energy_services,EJ,0.007579039574708478
+Fayette,2024,commercial,energy_services,EJ,0.0015159024626096665
+Fayette,2024,en4water,energy_services,EJ,3.668760207407293e-5
+Fayette,2024,government,energy_services,EJ,6.767344095478012e-6
+Fayette,2024,industrial,energy_services,EJ,0.0029174318525567915
+Fayette,2024,residential,energy_services,EJ,0.0019118942928650958
+Fayette,2024,transport,energy_services,EJ,0.007471735032275113
+Forsyth,2020,commercial,energy_services,EJ,0.002909133117816263
+Forsyth,2020,en4water,energy_services,EJ,6.563091279668747e-5
+Forsyth,2020,government,energy_services,EJ,1.8147685866916715e-5
+Forsyth,2020,industrial,energy_services,EJ,0.006033980146774846
+Forsyth,2020,residential,energy_services,EJ,0.003746215854899
+Forsyth,2020,transport,energy_services,EJ,0.013914364203298234
+Forsyth,2021,commercial,energy_services,EJ,0.0031037260044049866
+Forsyth,2021,en4water,energy_services,EJ,6.70219117537187e-5
+Forsyth,2021,government,energy_services,EJ,1.7861009110623924e-5
+Forsyth,2021,industrial,energy_services,EJ,0.006451045952280441
+Forsyth,2021,residential,energy_services,EJ,0.003953486137405658
+Forsyth,2021,transport,energy_services,EJ,0.01489683397790985
+Forsyth,2022,commercial,energy_services,EJ,0.003283941211368113
+Forsyth,2022,en4water,energy_services,EJ,6.840061713600828e-5
+Forsyth,2022,government,energy_services,EJ,1.7291962530204298e-5
+Forsyth,2022,industrial,energy_services,EJ,0.006578723515950878
+Forsyth,2022,residential,energy_services,EJ,0.0042361905899838265
+Forsyth,2022,transport,energy_services,EJ,0.015360662854391085
+Forsyth,2023,commercial,energy_services,EJ,0.0032243974866464366
+Forsyth,2023,en4water,energy_services,EJ,6.97575543707336e-5
+Forsyth,2023,government,energy_services,EJ,1.6261200145194982e-5
+Forsyth,2023,industrial,energy_services,EJ,0.006550803760965103
+Forsyth,2023,residential,energy_services,EJ,0.003959524519954859
+Forsyth,2023,transport,energy_services,EJ,0.016820899526609905
+Forsyth,2024,commercial,energy_services,EJ,0.003393499169494117
+Forsyth,2024,en4water,energy_services,EJ,7.109469913094627e-5
+Forsyth,2024,government,energy_services,EJ,1.5151078770708348e-5
+Forsyth,2024,industrial,energy_services,EJ,0.006531546461673606
+Forsyth,2024,residential,energy_services,EJ,0.004279964719818891
+Forsyth,2024,transport,energy_services,EJ,0.016728105506487487
+Fulton,2020,commercial,energy_services,EJ,0.012300720447411283
+Fulton,2020,en4water,energy_services,EJ,7.406371219539694e-4
+Fulton,2020,government,energy_services,EJ,7.673023067849027e-5
+Fulton,2020,industrial,energy_services,EJ,0.02551227289125103
+Fulton,2020,residential,energy_services,EJ,0.01583978138419636
+Fulton,2020,transport,energy_services,EJ,0.05883132333748042
+Fulton,2021,commercial,energy_services,EJ,0.012646247888440891
+Fulton,2021,en4water,energy_services,EJ,7.496020233905218e-4
+Fulton,2021,government,energy_services,EJ,7.276654659503376e-5
+Fulton,2021,industrial,energy_services,EJ,0.02628189410251924
+Fulton,2021,residential,energy_services,EJ,0.016107601695343966
+Fulton,2021,transport,energy_services,EJ,0.060690365088459056
+Fulton,2022,commercial,energy_services,EJ,0.013189647413081833
+Fulton,2022,en4water,energy_services,EJ,7.586195828690734e-4
+Fulton,2022,government,energy_services,EJ,6.944321853652712e-5
+Fulton,2022,industrial,energy_services,EJ,0.02641970717065514
+Fulton,2022,residential,energy_services,EJ,0.01701490107530397
+Fulton,2022,transport,energy_services,EJ,0.06168726456584523
+Fulton,2023,commercial,energy_services,EJ,0.012732645153240242
+Fulton,2023,en4water,energy_services,EJ,7.683311725624025e-4
+Fulton,2023,government,energy_services,EJ,6.420554531330121e-5
+Fulton,2023,industrial,energy_services,EJ,0.025865169723090924
+Fulton,2023,residential,energy_services,EJ,0.01563625877760264
+Fulton,2023,transport,energy_services,EJ,0.06641545624695891
+Fulton,2024,commercial,energy_services,EJ,0.013211902676052184
+Fulton,2024,en4water,energy_services,EJ,7.783716319634669e-4
+Fulton,2024,government,energy_services,EJ,5.897991882053629e-5
+Fulton,2024,industrial,energy_services,EJ,0.02542597754960086
+Fulton,2024,residential,energy_services,EJ,0.016665200659748018
+Fulton,2024,transport,energy_services,EJ,0.0651189476158912
+Gwinnett,2020,commercial,energy_services,EJ,0.011023900662471173
+Gwinnett,2020,en4water,energy_services,EJ,2.8647679593428926e-4
+Gwinnett,2020,government,energy_services,EJ,6.876862961976311e-5
+Gwinnett,2020,industrial,energy_services,EJ,0.022865094144207974
+Gwinnett,2020,residential,energy_services,EJ,0.014195882834700815
+Gwinnett,2020,transport,energy_services,EJ,0.05272692977540935
+Gwinnett,2021,commercial,energy_services,EJ,0.011490084629311493
+Gwinnett,2021,en4water,energy_services,EJ,2.923653634448405e-4
+Gwinnett,2021,government,energy_services,EJ,6.61157832875466e-5
+Gwinnett,2021,industrial,energy_services,EJ,0.023879723341347043
+Gwinnett,2021,residential,energy_services,EJ,0.014634932638833111
+Gwinnett,2021,transport,energy_services,EJ,0.05514334833232964
+Gwinnett,2022,commercial,energy_services,EJ,0.012007041794431296
+Gwinnett,2022,en4water,energy_services,EJ,2.982477782829141e-4
+Gwinnett,2022,government,energy_services,EJ,6.321508032840872e-5
+Gwinnett,2022,industrial,energy_services,EJ,0.024050164045452207
+Gwinnett,2022,residential,energy_services,EJ,0.015488133340706298
+Gwinnett,2022,transport,energy_services,EJ,0.056154732844338646
+Gwinnett,2023,commercial,energy_services,EJ,0.011648239740246381
+Gwinnett,2023,en4water,energy_services,EJ,3.04135467715384e-4
+Gwinnett,2023,government,energy_services,EJ,5.8734363874827016e-5
+Gwinnett,2023,industrial,energy_services,EJ,0.023661063656657686
+Gwinnett,2023,residential,energy_services,EJ,0.014302948383632049
+Gwinnett,2023,transport,energy_services,EJ,0.0607559604873165
+Gwinnett,2024,commercial,energy_services,EJ,0.012164113361485861
+Gwinnett,2024,en4water,energy_services,EJ,3.0988329983869267e-4
+Gwinnett,2024,government,energy_services,EJ,5.430173331455008e-5
+Gwinnett,2024,industrial,energy_services,EJ,0.02340917762100787
+Gwinnett,2024,residential,energy_services,EJ,0.01534220115571971
+Gwinnett,2024,transport,energy_services,EJ,0.05995382492678257
+Hall,2020,commercial,energy_services,EJ,0.002339735155512149
+Hall,2020,en4water,energy_services,EJ,6.844390378274002e-5
+Hall,2020,government,energy_services,EJ,1.459565868824868e-5
+Hall,2020,industrial,energy_services,EJ,0.004853066434253852
+Hall,2020,residential,energy_services,EJ,0.0030129853870763785
+Hall,2020,transport,energy_services,EJ,0.011190920553984168
+Hall,2021,commercial,energy_services,EJ,0.002463303747718678
+Hall,2021,en4water,energy_services,EJ,7.005588620044084e-5
+Hall,2021,government,energy_services,EJ,1.4175484494359744e-5
+Hall,2021,industrial,energy_services,EJ,0.005120017571843651
+Hall,2021,residential,energy_services,EJ,0.0031378063508742957
+Hall,2021,transport,energy_services,EJ,0.011822951198390372
+Hall,2022,commercial,energy_services,EJ,0.0026108234832017962
+Hall,2022,en4water,energy_services,EJ,7.165970681690344e-5
+Hall,2022,government,energy_services,EJ,1.3747521425766377e-5
+Hall,2022,industrial,energy_services,EJ,0.005230346917077576
+Hall,2022,residential,energy_services,EJ,0.003368229629650607
+Hall,2022,transport,energy_services,EJ,0.01221209225591702
+Hall,2023,commercial,energy_services,EJ,0.002563325397808178
+Hall,2023,en4water,energy_services,EJ,7.328897730942125e-5
+Hall,2023,government,energy_services,EJ,1.2927220242550184e-5
+Hall,2023,industrial,energy_services,EJ,0.005207802122590392
+Hall,2023,residential,energy_services,EJ,0.0031480310090679967
+Hall,2023,transport,energy_services,EJ,0.013372166317167424
+Hall,2024,commercial,energy_services,EJ,0.0026865533125168665
+Hall,2024,en4water,energy_services,EJ,7.491487055964726e-5
+Hall,2024,government,energy_services,EJ,1.1994730242526572e-5
+Hall,2024,industrial,energy_services,EJ,0.005170929199510287
+Hall,2024,residential,energy_services,EJ,0.0033888992944096667
+Hall,2024,transport,energy_services,EJ,0.013243222879070277
+Henry,2020,commercial,energy_services,EJ,0.0027822151968946458
+Henry,2020,en4water,energy_services,EJ,6.115085204359121e-5
+Henry,2020,government,energy_services,EJ,1.7355221155163456e-5
+Henry,2020,industrial,energy_services,EJ,0.005770491106199381
+Henry,2020,residential,energy_services,EJ,0.0035826615997758926
+Henry,2020,transport,energy_services,EJ,0.0133067582143882
+Henry,2021,commercial,energy_services,EJ,0.0029173217230251277
+Henry,2021,en4water,energy_services,EJ,6.235043666021927e-5
+Henry,2021,government,energy_services,EJ,1.6786606574212897e-5
+Henry,2021,industrial,energy_services,EJ,0.006062992842251425
+Henry,2021,residential,energy_services,EJ,0.0037159059104635685
+Henry,2021,transport,energy_services,EJ,0.014000737004260123
+Henry,2022,commercial,energy_services,EJ,0.0030452163048487846
+Henry,2022,en4water,energy_services,EJ,6.364791957109392e-5
+Henry,2022,government,energy_services,EJ,1.603309862741789e-5
+Henry,2022,industrial,energy_services,EJ,0.0060997890083045216
+Henry,2022,residential,energy_services,EJ,0.003929010034009332
+Henry,2022,transport,energy_services,EJ,0.01424239857660951
+Henry,2023,commercial,energy_services,EJ,0.0029944818105680578
+Henry,2023,en4water,energy_services,EJ,6.49769712440428e-5
+Henry,2023,government,energy_services,EJ,1.5100197781030244e-5
+Henry,2023,industrial,energy_services,EJ,0.0060830954377324485
+Henry,2023,residential,energy_services,EJ,0.003677969987173206
+Henry,2023,transport,energy_services,EJ,0.015619936255547633
+Henry,2024,commercial,energy_services,EJ,0.00314213045777755
+Henry,2024,en4water,energy_services,EJ,6.626282947608249e-5
+Henry,2024,government,energy_services,EJ,1.4026983575010835e-5
+Henry,2024,industrial,energy_services,EJ,0.0060469552250260305
+Henry,2024,residential,energy_services,EJ,0.003964888250622224
+Henry,2024,transport,energy_services,EJ,0.015487006881265005
+Paulding,2020,commercial,energy_services,EJ,0.0019505642601026078
+Paulding,2020,en4water,energy_services,EJ,3.0235840352911055e-5
+Paulding,2020,government,energy_services,EJ,1.2167964139828906e-5
+Paulding,2020,industrial,energy_services,EJ,0.004045763993537218
+Paulding,2020,residential,energy_services,EJ,0.0025118189745216538
+Paulding,2020,transport,energy_services,EJ,0.009329535781909452
+Paulding,2021,commercial,energy_services,EJ,0.0020705866101560447
+Paulding,2021,en4water,energy_services,EJ,3.102371501070357e-5
+Paulding,2021,government,energy_services,EJ,1.191560281282721e-5
+Paulding,2021,industrial,energy_services,EJ,0.004303681881498421
+Paulding,2021,residential,energy_services,EJ,0.002637474616821381
+Paulding,2021,transport,energy_services,EJ,0.009938114680419751
+Paulding,2022,commercial,energy_services,EJ,0.0021913562383496597
+Paulding,2022,en4water,energy_services,EJ,3.1783890210293715e-5
+Paulding,2022,government,energy_services,EJ,1.1538833226580604e-5
+Paulding,2022,industrial,energy_services,EJ,0.004389946679663799
+Paulding,2022,residential,energy_services,EJ,0.0028267737581121988
+Paulding,2022,transport,energy_services,EJ,0.010250087381172245
+Paulding,2023,commercial,energy_services,EJ,0.002155607819446168
+Paulding,2023,en4water,energy_services,EJ,3.253604934279845e-5
+Paulding,2023,government,energy_services,EJ,1.0871107030609435e-5
+Paulding,2023,industrial,energy_services,EJ,0.004379411616984101
+Paulding,2023,residential,energy_services,EJ,0.0026470549712838223
+Paulding,2023,transport,energy_services,EJ,0.011245283095475435
+Paulding,2024,commercial,energy_services,EJ,0.0022843627717245027
+Paulding,2024,en4water,energy_services,EJ,3.326639740458741e-5
+Paulding,2024,government,energy_services,EJ,1.019907728471056e-5
+Paulding,2024,industrial,energy_services,EJ,0.004396765943826748
+Paulding,2024,residential,energy_services,EJ,0.0028810502962592316
+Paulding,2024,transport,energy_services,EJ,0.01126066621852047
+Rockdale,2020,commercial,energy_services,EJ,0.001076838552259906
+Rockdale,2020,en4water,energy_services,EJ,3.6281530733453076e-5
+Rockdale,2020,government,energy_services,EJ,6.717508956918212e-6
+Rockdale,2020,industrial,energy_services,EJ,0.0022335253089055865
+Rockdale,2020,residential,energy_services,EJ,0.0013866859621969486
+Rockdale,2020,transport,energy_services,EJ,0.005150511577670289
+Rockdale,2021,commercial,energy_services,EJ,0.0011174037178993002
+Rockdale,2021,en4water,energy_services,EJ,3.680269913823552e-5
+Rockdale,2021,government,energy_services,EJ,6.430322121643135e-6
+Rockdale,2021,industrial,energy_services,EJ,0.0023225061494432132
+Rockdale,2021,residential,energy_services,EJ,0.0014233512842582996
+Rockdale,2021,transport,energy_services,EJ,0.0053631595212400955
+Rockdale,2022,commercial,energy_services,EJ,0.001163953961165169
+Rockdale,2022,en4water,energy_services,EJ,3.730096907225294e-5
+Rockdale,2022,government,energy_services,EJ,6.128930753594672e-6
+Rockdale,2022,industrial,energy_services,EJ,0.0023317504190677562
+Rockdale,2022,residential,energy_services,EJ,0.001501588758081526
+Rockdale,2022,transport,energy_services,EJ,0.005444404520275384
+Rockdale,2023,commercial,energy_services,EJ,0.0011306032937769168
+Rockdale,2023,en4water,energy_services,EJ,3.7788054332145775e-5
+Rockdale,2023,government,energy_services,EJ,5.70183003834449e-6
+Rockdale,2023,industrial,energy_services,EJ,0.002296974966549925
+Rockdale,2023,residential,energy_services,EJ,0.0013884687682023322
+Rockdale,2023,transport,energy_services,EJ,0.005898083126486782
+Rockdale,2024,commercial,energy_services,EJ,0.001182592589449049
+Rockdale,2024,en4water,energy_services,EJ,3.826251720584736e-5
+Rockdale,2024,government,energy_services,EJ,5.279964008085949e-6
+Rockdale,2024,industrial,energy_services,EJ,0.0022761633515793185
+Rockdale,2024,residential,energy_services,EJ,0.001491648448647265
+Rockdale,2024,transport,energy_services,EJ,0.005829538367160702
+Bartow,2020,commercial,rejected_energy,EJ,6.771054350754086e-4
+Bartow,2020,en4water,rejected_energy,EJ,4.01398260177528e-5
+Bartow,2020,government,rejected_energy,EJ,4.223882395418642e-6
+Bartow,2020,industrial,rejected_energy,EJ,0.0027147319964456102
+Bartow,2020,residential,rejected_energy,EJ,8.719539267162977e-4
+Bartow,2020,transport,rejected_energy,EJ,0.0032385747931033696
+Bartow,2021,commercial,rejected_energy,EJ,7.109595967847571e-4
+Bartow,2021,en4water,rejected_energy,EJ,4.11853005341837e-5
+Bartow,2021,government,rejected_energy,EJ,4.0913393134674935e-6
+Bartow,2021,industrial,rejected_energy,EJ,0.002856416362800753
+Bartow,2021,residential,rejected_energy,EJ,9.056629482928246e-4
+Bartow,2021,transport,rejected_energy,EJ,0.0034123493315821878
+Bartow,2022,commercial,rejected_energy,EJ,7.440875617125278e-4
+Bartow,2022,en4water,rejected_energy,EJ,4.0632638749364565e-5
+Bartow,2022,government,rejected_energy,EJ,3.918059335443689e-6
+Bartow,2022,industrial,rejected_energy,EJ,0.0028816881718152273
+Bartow,2022,residential,rejected_energy,EJ,9.602492683134848e-4
+Bartow,2022,transport,rejected_energy,EJ,0.0034804602652894513
+Bartow,2023,commercial,rejected_energy,EJ,7.282357307913921e-4
+Bartow,2023,en4water,rejected_energy,EJ,4.2912419276213444e-5
+Bartow,2023,government,rejected_energy,EJ,3.6670812783177666e-6
+Bartow,2023,industrial,rejected_energy,EJ,0.002855818126570443
+Bartow,2023,residential,rejected_energy,EJ,8.932751398507315e-4
+Bartow,2023,transport,rejected_energy,EJ,0.0037932997065239504
+Bartow,2024,commercial,rejected_energy,EJ,7.741069031223598e-4
+Bartow,2024,en4water,rejected_energy,EJ,4.388618278217096e-5
+Bartow,2024,government,rejected_energy,EJ,3.422620691949236e-6
+Bartow,2024,industrial,rejected_energy,EJ,0.0028523184679215127
+Bartow,2024,residential,rejected_energy,EJ,9.677003253378187e-4
+Bartow,2024,transport,rejected_energy,EJ,0.0037788701986226476
+Cherokee,2020,commercial,rejected_energy,EJ,0.001660962343791657
+Cherokee,2020,en4water,rejected_energy,EJ,3.6688723204771614e-5
+Cherokee,2020,government,rejected_energy,EJ,1.036136074584958e-5
+Cherokee,2020,industrial,rejected_energy,EJ,0.006659152441492879
+Cherokee,2020,residential,rejected_energy,EJ,0.0021388996042286195
+Cherokee,2020,transport,rejected_energy,EJ,0.00794435985484708
+Cherokee,2021,commercial,rejected_energy,EJ,0.0017607042175906984
+Cherokee,2021,en4water,rejected_energy,EJ,3.734911125688318e-5
+Cherokee,2021,government,rejected_energy,EJ,1.013230857999307e-5
+Cherokee,2021,industrial,rejected_energy,EJ,0.00707378983302734
+Cherokee,2021,residential,rejected_energy,EJ,0.0022427695597754195
+Cherokee,2021,transport,rejected_energy,EJ,0.008450772170500036
+Cherokee,2022,commercial,rejected_energy,EJ,0.001856535667509688
+Cherokee,2022,en4water,rejected_energy,EJ,3.795235855326649e-5
+Cherokee,2022,government,rejected_energy,EJ,9.775784674946176e-6
+Cherokee,2022,industrial,rejected_energy,EJ,0.007189005342461847
+Cherokee,2022,residential,rejected_energy,EJ,0.002394946856481123
+Cherokee,2022,transport,rejected_energy,EJ,0.00868394968278926
+Cherokee,2023,commercial,rejected_energy,EJ,0.0018165896761652468
+Cherokee,2023,en4water,rejected_energy,EJ,3.8510221554763145e-5
+Cherokee,2023,government,rejected_energy,EJ,9.161340334395837e-6
+Cherokee,2023,industrial,rejected_energy,EJ,0.007133797339089912
+Cherokee,2023,residential,rejected_energy,EJ,0.0022308206608783365
+Cherokee,2023,transport,rejected_energy,EJ,0.009476667399576082
+Cherokee,2024,commercial,rejected_energy,EJ,0.0019148862255341894
+Cherokee,2024,en4water,rejected_energy,EJ,3.9045451572466204e-5
+Cherokee,2024,government,rejected_energy,EJ,8.549066167036255e-6
+Cherokee,2024,industrial,rejected_energy,EJ,0.007123785056199701
+Cherokee,2024,residential,rejected_energy,EJ,0.0024151682510016544
+Cherokee,2024,transport,rejected_energy,EJ,0.00943891078571952
+Clayton,2020,commercial,rejected_energy,EJ,0.0018546914580368232
+Clayton,2020,en4water,rejected_energy,EJ,6.08055120602028e-5
+Clayton,2020,government,rejected_energy,EJ,1.1569591793746473e-5
+Clayton,2020,industrial,rejected_energy,EJ,0.007435669333437637
+Clayton,2020,residential,rejected_energy,EJ,0.002388339692562547
+Clayton,2020,transport,rejected_energy,EJ,0.008870746115081943
+Clayton,2021,commercial,rejected_energy,EJ,0.001917499064514959
+Clayton,2021,en4water,rejected_energy,EJ,6.1654141949446e-5
+Clayton,2021,government,rejected_energy,EJ,1.1034111994503367e-5
+Clayton,2021,industrial,rejected_energy,EJ,0.007703373220867801
+Clayton,2021,residential,rejected_energy,EJ,0.00244264533037915
+Clayton,2021,transport,rejected_energy,EJ,0.00920291420589497
+Clayton,2022,commercial,rejected_energy,EJ,0.0019715175158311156
+Clayton,2022,en4water,rejected_energy,EJ,6.246384019834485e-5
+Clayton,2022,government,rejected_energy,EJ,1.0380382510610094e-5
+Clayton,2022,industrial,rejected_energy,EJ,0.007633612573288368
+Clayton,2022,residential,rejected_energy,EJ,0.0025444759387063054
+Clayton,2022,transport,rejected_energy,EJ,0.009221021371436868
+Clayton,2023,commercial,rejected_energy,EJ,0.0018934752326080254
+Clayton,2023,en4water,rejected_energy,EJ,6.32625196848012e-5
+Clayton,2023,government,rejected_energy,EJ,9.548438323340954e-6
+Clayton,2023,industrial,rejected_energy,EJ,0.007435218744856839
+Clayton,2023,residential,rejected_energy,EJ,0.002326398955096728
+Clayton,2023,transport,rejected_energy,EJ,0.009877089036408502
+Clayton,2024,commercial,rejected_energy,EJ,0.0019423005640739736
+Clayton,2024,en4water,rejected_energy,EJ,6.405932363735496e-5
+Clayton,2024,government,rejected_energy,EJ,8.671107055309967e-6
+Clayton,2024,industrial,rejected_energy,EJ,0.0072254753028014665
+Clayton,2024,residential,rejected_energy,EJ,0.002451795063822738
+Clayton,2024,transport,rejected_energy,EJ,0.009573654514931395
+Cobb,2020,commercial,rejected_energy,EJ,0.00474678974058675
+Cobb,2020,en4water,rejected_energy,EJ,1.7901686421759277e-4
+Cobb,2020,government,rejected_energy,EJ,2.961106888747931e-5
+Cobb,2020,industrial,rejected_energy,EJ,0.01903079225779704
+Cobb,2020,residential,rejected_energy,EJ,0.006112590969050639
+Cobb,2020,transport,rejected_energy,EJ,0.022703676929985456
+Cobb,2021,commercial,rejected_energy,EJ,0.00491347873274308
+Cobb,2021,en4water,rejected_energy,EJ,1.8166791494294361e-4
+Cobb,2021,government,rejected_energy,EJ,2.8273432395548208e-5
+Cobb,2021,industrial,rejected_energy,EJ,0.01973889847936488
+Cobb,2021,residential,rejected_energy,EJ,0.006258351404464342
+Cobb,2021,transport,rejected_energy,EJ,0.023581233611913582
+Cobb,2022,commercial,rejected_energy,EJ,0.005106937694059874
+Cobb,2022,en4water,rejected_energy,EJ,1.8425993414675343e-4
+Cobb,2022,government,rejected_energy,EJ,2.688899119051245e-5
+Cobb,2022,industrial,rejected_energy,EJ,0.019773903174715734
+Cobb,2022,residential,rejected_energy,EJ,0.006587620929335664
+Cobb,2022,transport,rejected_energy,EJ,0.02388582137225311
+Cobb,2023,commercial,rejected_energy,EJ,0.004940856908128919
+Cobb,2023,en4water,rejected_energy,EJ,1.868760345195823e-4
+Cobb,2023,government,rejected_energy,EJ,2.4915880839403232e-5
+Cobb,2023,industrial,rejected_energy,EJ,0.01940165696963626
+Cobb,2023,residential,rejected_energy,EJ,0.00606717442897869
+Cobb,2023,transport,rejected_energy,EJ,0.025773468407891686
+Cobb,2024,commercial,rejected_energy,EJ,0.005138167809410382
+Cobb,2024,en4water,rejected_energy,EJ,1.8945136927607374e-4
+Cobb,2024,government,rejected_energy,EJ,2.293838593539434e-5
+Cobb,2024,industrial,rejected_energy,EJ,0.019114194444995857
+Cobb,2024,residential,rejected_energy,EJ,0.0064802754816757815
+Cobb,2024,transport,rejected_energy,EJ,0.02532596826158971
+Coweta,2020,commercial,rejected_energy,EJ,9.089820501353558e-4
+Coweta,2020,en4water,rejected_energy,EJ,2.3892016514091317e-5
+Coweta,2020,government,rejected_energy,EJ,5.6703904690703935e-6
+Coweta,2020,industrial,rejected_energy,EJ,0.003644307359424172
+Coweta,2020,residential,rejected_energy,EJ,0.0011705418037518383
+Coweta,2020,transport,rejected_energy,EJ,0.004347655053110175
+Coweta,2021,commercial,rejected_energy,EJ,9.611522707854181e-4
+Coweta,2021,en4water,rejected_energy,EJ,2.3159121671988555e-5
+Coweta,2021,government,rejected_energy,EJ,5.531142066287622e-6
+Coweta,2021,industrial,rejected_energy,EJ,0.003861520681997865
+Coweta,2021,residential,rejected_energy,EJ,0.0012243247662456767
+Coweta,2021,transport,rejected_energy,EJ,0.004613205477887004
+Coweta,2022,commercial,rejected_energy,EJ,0.0010092316336708896
+Coweta,2022,en4water,rejected_energy,EJ,2.3029304735288713e-5
+Coweta,2022,government,rejected_energy,EJ,5.314222901835515e-6
+Coweta,2022,industrial,rejected_energy,EJ,0.003908017717000713
+Coweta,2022,residential,rejected_energy,EJ,0.0013019100044250466
+Coweta,2022,transport,rejected_energy,EJ,0.004720689521828081
+Coweta,2023,commercial,rejected_energy,EJ,9.882762870042528e-4
+Coweta,2023,en4water,rejected_energy,EJ,2.3028261503487877e-5
+Coweta,2023,government,rejected_energy,EJ,4.984050064634135e-6
+Coweta,2023,industrial,rejected_energy,EJ,0.003881001396352573
+Coweta,2023,residential,rejected_energy,EJ,0.0012136157791178867
+Coweta,2023,transport,rejected_energy,EJ,0.0051555976572600715
+Coweta,2024,commercial,rejected_energy,EJ,0.0010322682988376341
+Coweta,2024,en4water,rejected_energy,EJ,2.2143034972133155e-5
+Coweta,2024,government,rejected_energy,EJ,4.608805697903152e-6
+Coweta,2024,industrial,rejected_energy,EJ,0.003840433699318395
+Coweta,2024,residential,rejected_energy,EJ,0.0013020055253068687
+Coweta,2024,transport,rejected_energy,EJ,0.005088521361427796
+DeKalb,2020,commercial,rejected_energy,EJ,0.004736233818550682
+DeKalb,2020,en4water,rejected_energy,EJ,1.7116236632581513e-4
+DeKalb,2020,government,rejected_energy,EJ,2.954333747412626e-5
+DeKalb,2020,industrial,rejected_energy,EJ,0.018987228968829886
+DeKalb,2020,residential,rejected_energy,EJ,0.006098985305647258
+DeKalb,2020,transport,rejected_energy,EJ,0.022651745264410585
+DeKalb,2021,commercial,rejected_energy,EJ,0.004866371303286596
+DeKalb,2021,en4water,rejected_energy,EJ,1.7418758919723047e-4
+DeKalb,2021,government,rejected_energy,EJ,2.8000044657766915e-5
+DeKalb,2021,industrial,rejected_energy,EJ,0.01954799754680688
+DeKalb,2021,residential,rejected_energy,EJ,0.006199118434910682
+DeKalb,2021,transport,rejected_energy,EJ,0.023353216722380624
+DeKalb,2022,commercial,rejected_energy,EJ,0.005043284155265783
+DeKalb,2022,en4water,rejected_energy,EJ,1.7701268559178963e-4
+DeKalb,2022,government,rejected_energy,EJ,2.655131668265213e-5
+DeKalb,2022,industrial,rejected_energy,EJ,0.019525529493627698
+DeKalb,2022,residential,rejected_energy,EJ,0.0065074617487337946
+DeKalb,2022,transport,rejected_energy,EJ,0.023585860956498984
+DeKalb,2023,commercial,rejected_energy,EJ,0.004858077272450796
+DeKalb,2023,en4water,rejected_energy,EJ,1.7976761555360847e-4
+DeKalb,2023,government,rejected_energy,EJ,2.449612335134962e-5
+DeKalb,2023,industrial,rejected_energy,EJ,0.01907474597946109
+DeKalb,2023,residential,rejected_energy,EJ,0.005967385867045832
+DeKalb,2023,transport,rejected_energy,EJ,0.025339263154340437
+DeKalb,2024,commercial,rejected_energy,EJ,0.0050271889018869845
+DeKalb,2024,en4water,rejected_energy,EJ,1.8203692378568806e-4
+DeKalb,2024,government,rejected_energy,EJ,2.243650370488257e-5
+DeKalb,2024,industrial,rejected_energy,EJ,0.018695929177989772
+DeKalb,2024,residential,rejected_energy,EJ,0.006342340817902803
+DeKalb,2024,transport,rejected_energy,EJ,0.024771846734608846
+Douglas,2020,commercial,rejected_energy,EJ,8.960958038001721e-4
+Douglas,2020,en4water,rejected_energy,EJ,2.993700198482203e-5
+Douglas,2020,government,rejected_energy,EJ,5.589985978946207e-6
+Douglas,2020,industrial,rejected_energy,EJ,0.0035926321394038553
+Douglas,2020,residential,rejected_energy,EJ,0.0011539330485418468
+Douglas,2020,transport,rejected_energy,EJ,0.004286006567051247
+Douglas,2021,commercial,rejected_energy,EJ,9.341593825283356e-4
+Douglas,2021,en4water,rejected_energy,EJ,3.2279519293716786e-5
+Douglas,2021,government,rejected_energy,EJ,5.375789687103297e-6
+Douglas,2021,industrial,rejected_energy,EJ,0.003753062714723037
+Douglas,2021,residential,rejected_energy,EJ,0.0011899099825678839
+Douglas,2021,transport,rejected_energy,EJ,0.004483635049561895
+Douglas,2022,commercial,rejected_energy,EJ,9.741954799417263e-4
+Douglas,2022,en4water,rejected_energy,EJ,3.4604170299374445e-5
+Douglas,2022,government,rejected_energy,EJ,5.129721051829957e-6
+Douglas,2022,industrial,rejected_energy,EJ,0.0037723372022838604
+Douglas,2022,residential,rejected_energy,EJ,0.0012567367762085018
+Douglas,2022,transport,rejected_energy,EJ,0.004556794260720704
+Douglas,2023,commercial,rejected_energy,EJ,9.448445419611082e-4
+Douglas,2023,en4water,rejected_energy,EJ,3.690246345002451e-5
+Douglas,2023,government,rejected_energy,EJ,4.7650017835041145e-6
+Douglas,2023,industrial,rejected_energy,EJ,0.0037104319450208985
+Douglas,2023,residential,rejected_energy,EJ,0.0011603055818378166
+Douglas,2023,transport,rejected_energy,EJ,0.004929009884188879
+Douglas,2024,commercial,rejected_energy,EJ,9.908716063405487e-4
+Douglas,2024,en4water,rejected_energy,EJ,3.918548923326516e-5
+Douglas,2024,government,rejected_energy,EJ,4.423967636570223e-6
+Douglas,2024,industrial,rejected_energy,EJ,0.0036864115152235827
+Douglas,2024,residential,rejected_energy,EJ,0.001249800261629304
+Douglas,2024,transport,rejected_energy,EJ,0.0048844441047264705
+Fayette,2020,commercial,rejected_energy,EJ,7.402531062183676e-4
+Fayette,2020,en4water,rejected_energy,EJ,1.8785546650294486e-5
+Fayette,2020,government,rejected_energy,EJ,4.617636436194992e-6
+Fayette,2020,industrial,rejected_energy,EJ,0.002967774968160756
+Fayette,2020,residential,rejected_energy,EJ,9.532282185321856e-4
+Fayette,2020,transport,rejected_energy,EJ,0.0035404775905212168
+Fayette,2021,commercial,rejected_energy,EJ,7.737700983450264e-4
+Fayette,2021,en4water,rejected_energy,EJ,1.8987106810806927e-5
+Fayette,2021,government,rejected_energy,EJ,4.452635921881457e-6
+Fayette,2021,industrial,rejected_energy,EJ,0.0031086334772516032
+Fayette,2021,residential,rejected_energy,EJ,9.85594664285089e-4
+Fayette,2021,transport,rejected_energy,EJ,0.0037136859223083716
+Fayette,2022,commercial,rejected_energy,EJ,8.057566576977295e-4
+Fayette,2022,en4water,rejected_energy,EJ,1.923631623483236e-5
+Fayette,2022,government,rejected_energy,EJ,4.242639491374023e-6
+Fayette,2022,industrial,rejected_energy,EJ,0.003120053657490731
+Fayette,2022,residential,rejected_energy,EJ,0.0010394337088157188
+Fayette,2022,transport,rejected_energy,EJ,0.00376878880727899
+Fayette,2023,commercial,rejected_energy,EJ,7.823432557584545e-4
+Fayette,2023,en4water,rejected_energy,EJ,1.9494848999968483e-5
+Fayette,2023,government,rejected_energy,EJ,3.9452292194556395e-6
+Fayette,2023,industrial,rejected_energy,EJ,0.003072149871032693
+Fayette,2023,residential,rejected_energy,EJ,9.607163722019594e-4
+Fayette,2023,transport,rejected_energy,EJ,0.004081021309458411
+Fayette,2024,commercial,rejected_energy,EJ,8.162551721744357e-4
+Fayette,2024,en4water,rejected_energy,EJ,1.975486265527004e-5
+Fayette,2024,government,rejected_energy,EJ,3.6439545129496983e-6
+Fayette,2024,industrial,rejected_energy,EJ,0.0030365107036815584
+Fayette,2024,residential,rejected_energy,EJ,0.0010294815423119745
+Fayette,2024,transport,rejected_energy,EJ,0.00402324194045583
+Forsyth,2020,commercial,rejected_energy,EJ,0.0015664562942087571
+Forsyth,2020,en4water,rejected_energy,EJ,3.5339722275139405e-5
+Forsyth,2020,government,rejected_energy,EJ,9.771830851416692e-6
+Forsyth,2020,industrial,rejected_energy,EJ,0.00628026505072484
+Forsyth,2020,residential,rejected_energy,EJ,0.002017193152637923
+Forsyth,2020,transport,rejected_energy,EJ,0.007492349955622125
+Forsyth,2021,commercial,rejected_energy,EJ,0.0016712370792949928
+Forsyth,2021,en4water,rejected_energy,EJ,3.6088721713540836e-5
+Forsyth,2021,government,rejected_energy,EJ,9.617466444182112e-6
+Forsyth,2021,industrial,rejected_energy,EJ,0.006714353950332704
+Forsyth,2021,residential,rejected_energy,EJ,0.0021288002278338153
+Forsyth,2021,transport,rejected_energy,EJ,0.008021372141951458
+Forsyth,2022,commercial,rejected_energy,EJ,0.0017682760368905222
+Forsyth,2022,en4water,rejected_energy,EJ,3.6831101534773685e-5
+Forsyth,2022,government,rejected_energy,EJ,9.311056747033082e-6
+Forsyth,2022,industrial,rejected_energy,EJ,0.006847242843132547
+Forsyth,2022,residential,rejected_energy,EJ,0.002281025702298983
+Forsyth,2022,transport,rejected_energy,EJ,0.008271126152364429
+Forsyth,2023,commercial,rejected_energy,EJ,0.001736214031271158
+Forsyth,2023,en4water,rejected_energy,EJ,3.7561760045779624e-5
+Forsyth,2023,government,rejected_energy,EJ,8.756030847412682e-6
+Forsyth,2023,industrial,rejected_energy,EJ,0.006818183506310617
+Forsyth,2023,residential,rejected_energy,EJ,0.0021320516645910777
+Forsyth,2023,transport,rejected_energy,EJ,0.009057407437405332
+Forsyth,2024,commercial,rejected_energy,EJ,0.001827268783573755
+Forsyth,2024,en4water,rejected_energy,EJ,3.8281761070509526e-5
+Forsyth,2024,government,rejected_energy,EJ,8.158273184227571e-6
+Forsyth,2024,industrial,rejected_energy,EJ,0.006798140194803141
+Forsyth,2024,residential,rejected_energy,EJ,0.002304596387594787
+Forsyth,2024,transport,rejected_energy,EJ,0.009007441426570185
+Fulton,2020,commercial,rejected_energy,EJ,0.006623464856298382
+Fulton,2020,en4water,rejected_energy,EJ,3.988046041290604e-4
+Fulton,2020,government,rejected_energy,EJ,4.1316278057648604e-5
+Fulton,2020,industrial,rejected_energy,EJ,0.02655359015211842
+Fulton,2020,residential,rejected_energy,EJ,0.008529113053028808
+Fulton,2020,transport,rejected_energy,EJ,0.03167840487402791
+Fulton,2021,commercial,rejected_energy,EJ,0.006809518093775864
+Fulton,2021,en4water,rejected_energy,EJ,4.0363185874874247e-4
+Fulton,2021,government,rejected_energy,EJ,3.9181986628095104e-5
+Fulton,2021,industrial,rejected_energy,EJ,0.027354624474050637
+Fulton,2021,residential,rejected_energy,EJ,0.008673323989800596
+Fulton,2021,transport,rejected_energy,EJ,0.0326794273553241
+Fulton,2022,commercial,rejected_energy,EJ,0.007102117837813294
+Fulton,2022,en4water,rejected_energy,EJ,4.084874676987318e-4
+Fulton,2022,government,rejected_energy,EJ,3.739250228889922e-5
+Fulton,2022,industrial,rejected_energy,EJ,0.02749806256537576
+Fulton,2022,residential,rejected_energy,EJ,0.00916186980977906
+Fulton,2022,transport,rejected_energy,EJ,0.033216219381608965
+Fulton,2023,commercial,rejected_energy,EJ,0.006856039697898592
+Fulton,2023,en4water,rejected_energy,EJ,4.1371678522590904e-4
+Fulton,2023,government,rejected_energy,EJ,3.457221670716219e-5
+Fulton,2023,industrial,rejected_energy,EJ,0.02692089093627831
+Fulton,2023,residential,rejected_energy,EJ,0.00841952395717065
+Fulton,2023,transport,rejected_energy,EJ,0.03576216874836249
+Fulton,2024,commercial,rejected_energy,EJ,0.007114101440951175
+Fulton,2024,en4water,rejected_energy,EJ,4.1912318644186675e-4
+Fulton,2024,government,rejected_energy,EJ,3.175841782644261e-5
+Fulton,2024,industrial,rejected_energy,EJ,0.026463772551625388
+Fulton,2024,residential,rejected_energy,EJ,0.0089735695860181635
+Fulton,2024,transport,rejected_energy,EJ,0.0350640487162491
+Gwinnett,2020,commercial,rejected_energy,EJ,0.0059359465105614006
+Gwinnett,2020,en4water,rejected_energy,EJ,1.5425673627230958e-4
+Gwinnett,2020,government,rejected_energy,EJ,3.702926210294936e-5
+Gwinnett,2020,industrial,rejected_energy,EJ,0.02379836329295116
+Gwinnett,2020,residential,rejected_energy,EJ,0.007643936910992746
+Gwinnett,2020,transport,rejected_energy,EJ,0.028391423725220414
+Gwinnett,2021,commercial,rejected_energy,EJ,0.006186968646552341
+Gwinnett,2021,en4water,rejected_energy,EJ,1.5742750339337564e-4
+Gwinnett,2021,government,rejected_energy,EJ,3.560080638560201e-5
+Gwinnett,2021,industrial,rejected_energy,EJ,0.024854405926708147
+Gwinnett,2021,residential,rejected_energy,EJ,0.00788034834398706
+Gwinnett,2021,transport,rejected_energy,EJ,0.029692572178946726
+Gwinnett,2022,commercial,rejected_energy,EJ,0.006465330197001467
+Gwinnett,2022,en4water,rejected_energy,EJ,1.605949575369537e-4
+Gwinnett,2022,government,rejected_energy,EJ,3.403888940760469e-5
+Gwinnett,2022,industrial,rejected_energy,EJ,0.025031803394246172
+Gwinnett,2022,residential,rejected_energy,EJ,0.00833976410653416
+Gwinnett,2022,transport,rejected_energy,EJ,0.030237163839259267
+Gwinnett,2023,commercial,rejected_energy,EJ,0.006272129090901897
+Gwinnett,2023,en4water,rejected_energy,EJ,1.6376525184674522e-4
+Gwinnett,2023,government,rejected_energy,EJ,3.162619593259916e-5
+Gwinnett,2023,industrial,rejected_energy,EJ,0.024626821356929427
+Gwinnett,2023,residential,rejected_energy,EJ,0.007701587591186487
+Gwinnett,2023,transport,rejected_energy,EJ,0.03271474795470888
+Gwinnett,2024,commercial,rejected_energy,EJ,0.006549907194646232
+Gwinnett,2024,en4water,rejected_energy,EJ,1.6686023837468066e-4
+Gwinnett,2024,government,rejected_energy,EJ,2.923939486168081e-5
+Gwinnett,2024,industrial,rejected_energy,EJ,0.024364654258600026
+Gwinnett,2024,residential,rejected_energy,EJ,0.008261185237695227
+Gwinnett,2024,transport,rejected_energy,EJ,0.03228282880672907
+Hall,2020,commercial,rejected_energy,EJ,0.0012598573914296186
+Hall,2020,en4water,rejected_energy,EJ,3.6854409729167705e-5
+Hall,2020,government,rejected_energy,EJ,7.859200832133905e-6
+Hall,2020,industrial,rejected_energy,EJ,0.005051150778509111
+Hall,2020,residential,rejected_energy,EJ,0.0016223767468872806
+Hall,2020,transport,rejected_energy,EJ,0.006025880298299167
+Hall,2021,commercial,rejected_energy,EJ,0.0013263943256946725
+Hall,2021,en4water,rejected_energy,EJ,3.7722400261775834e-5
+Hall,2021,government,rejected_energy,EJ,7.632953189270631e-6
+Hall,2021,industrial,rejected_energy,EJ,0.005328997880898494
+Hall,2021,residential,rejected_energy,EJ,0.0016895880350861591
+Hall,2021,transport,rejected_energy,EJ,0.006366204491440969
+Hall,2022,commercial,rejected_energy,EJ,0.0014058280294163518
+Hall,2022,en4water,rejected_energy,EJ,3.858599597833262e-5
+Hall,2022,government,rejected_energy,EJ,7.402511536951125e-6
+Hall,2022,industrial,rejected_energy,EJ,0.005443830464713395
+Hall,2022,residential,rejected_energy,EJ,0.0018136621082734037
+Hall,2022,transport,rejected_energy,EJ,0.006575741983955318
+Hall,2023,commercial,rejected_energy,EJ,0.0013802521372813263
+Hall,2023,en4water,rejected_energy,EJ,3.946329547430375e-5
+Hall,2023,government,rejected_energy,EJ,6.960810899834714e-6
+Hall,2023,industrial,rejected_energy,EJ,0.005420365474532857
+Hall,2023,residential,rejected_energy,EJ,0.0016950936202673828
+Hall,2023,transport,rejected_energy,EJ,0.007200397247705536
+Hall,2024,commercial,rejected_energy,EJ,0.0014466056298167742
+Hall,2024,en4water,rejected_energy,EJ,4.0338776455194674e-5
+Hall,2024,government,rejected_energy,EJ,6.458700899822e-6
+Hall,2024,industrial,rejected_energy,EJ,0.0053819875341841765
+Hall,2024,residential,rejected_energy,EJ,0.001824791927759051
+Hall,2024,transport,rejected_energy,EJ,0.007130966165653225
+Henry,2020,commercial,rejected_energy,EJ,0.001498115875250963
+Henry,2020,en4water,rejected_energy,EJ,3.2927381869626034e-5
+Henry,2020,government,rejected_energy,EJ,9.345119083549553e-6
+Henry,2020,industrial,rejected_energy,EJ,0.00600602135543201
+Henry,2020,residential,rejected_energy,EJ,0.0019291254768024036
+Henry,2020,transport,rejected_energy,EJ,0.007165177500055184
+Henry,2021,commercial,rejected_energy,EJ,0.0015708655431673764
+Henry,2021,en4water,rejected_energy,EJ,3.3573312047810374e-5
+Henry,2021,government,rejected_energy,EJ,9.03894200149925e-6
+Henry,2021,industrial,rejected_energy,EJ,0.006310461937853525
+Henry,2021,residential,rejected_energy,EJ,0.002000872413326537
+Henry,2021,transport,rejected_energy,EJ,0.007538858386909296
+Henry,2022,commercial,rejected_energy,EJ,0.0016397318564570378
+Henry,2022,en4water,rejected_energy,EJ,3.4271956692127494e-5
+Henry,2022,government,rejected_energy,EJ,8.633206953225016e-6
+Henry,2022,industrial,rejected_energy,EJ,0.006348759988235319
+Henry,2022,residential,rejected_energy,EJ,0.0021156207875434865
+Henry,2022,transport,rejected_energy,EJ,0.007668983848943582
+Henry,2023,commercial,rejected_energy,EJ,0.0016124132826135693
+Henry,2023,en4water,rejected_energy,EJ,3.498759990063843e-5
+Henry,2023,government,rejected_energy,EJ,8.130875728247053e-6
+Henry,2023,industrial,rejected_energy,EJ,0.006331385047435813
+Henry,2023,residential,rejected_energy,EJ,0.0019804453777086495
+Henry,2023,transport,rejected_energy,EJ,0.00841073490683334
+Henry,2024,commercial,rejected_energy,EJ,0.0016919164003417577
+Henry,2024,en4water,rejected_energy,EJ,3.567998510250595e-5
+Henry,2024,government,rejected_energy,EJ,7.5529911557750645e-6
+Henry,2024,industrial,rejected_energy,EJ,0.006293769724006686
+Henry,2024,residential,rejected_energy,EJ,0.0021349398272581203
+Henry,2024,transport,rejected_energy,EJ,0.008339157551450387
+Paulding,2020,commercial,rejected_energy,EJ,0.0010503038323629425
+Paulding,2020,en4water,rejected_energy,EJ,1.6280837113105952e-5
+Paulding,2020,government,rejected_energy,EJ,6.551980690677103e-6
+Paulding,2020,industrial,rejected_energy,EJ,0.004210897217763227
+Paulding,2020,residential,rejected_energy,EJ,0.0013525179093578136
+Paulding,2020,transport,rejected_energy,EJ,0.005023596190258935
+Paulding,2021,commercial,rejected_energy,EJ,0.0011149312516224854
+Paulding,2021,en4water,rejected_energy,EJ,1.6705077313455768e-5
+Paulding,2021,government,rejected_energy,EJ,6.416093822291574e-6
+Paulding,2021,industrial,rejected_energy,EJ,0.00447934236645754
+Paulding,2021,residential,rejected_energy,EJ,0.0014201786398268974
+Paulding,2021,transport,rejected_energy,EJ,0.00535129252022602
+Paulding,2022,commercial,rejected_energy,EJ,0.0011799610514190474
+Paulding,2022,en4water,rejected_energy,EJ,1.7114402420927384e-5
+Paulding,2022,government,rejected_energy,EJ,6.21321789123571e-6
+Paulding,2022,industrial,rejected_energy,EJ,0.004569128176792934
+Paulding,2022,residential,rejected_energy,EJ,0.0015221089466757993
+Paulding,2022,transport,rejected_energy,EJ,0.005519277820631208
+Paulding,2023,commercial,rejected_energy,EJ,0.0011607119027787056
+Paulding,2023,en4water,rejected_energy,EJ,1.751941118458378e-5
+Paulding,2023,government,rejected_energy,EJ,5.853673016482003e-6
+Paulding,2023,industrial,rejected_energy,EJ,0.00455816311155488
+Paulding,2023,residential,rejected_energy,EJ,0.0014253372922297502
+Paulding,2023,transport,rejected_energy,EJ,0.0060551524360252336
+Paulding,2024,commercial,rejected_energy,EJ,0.0012300414924670397
+Paulding,2024,en4water,rejected_energy,EJ,1.7912675525547064e-5
+Paulding,2024,government,rejected_energy,EJ,5.491810845613377e-6
+Paulding,2024,industrial,rejected_energy,EJ,0.004576225778268656
+Paulding,2024,residential,rejected_energy,EJ,0.001551334774908817
+Paulding,2024,transport,rejected_energy,EJ,0.0060634356561264065
+Rockdale,2020,commercial,rejected_energy,EJ,5.798361435245648e-4
+Rockdale,2020,en4water,rejected_energy,EJ,1.953620885647473e-5
+Rockdale,2020,government,rejected_energy,EJ,3.6171202075713447e-6
+Rockdale,2020,industrial,rejected_energy,EJ,0.0023246896072282633
+Rockdale,2020,residential,rejected_energy,EJ,7.466770565675876e-4
+Rockdale,2020,transport,rejected_energy,EJ,0.0027733523879763093
+Rockdale,2021,commercial,rejected_energy,EJ,6.016789250227001e-4
+Rockdale,2021,en4water,rejected_energy,EJ,1.9816837997511434e-5
+Rockdale,2021,government,rejected_energy,EJ,3.4624811424232262e-6
+Rockdale,2021,industrial,rejected_energy,EJ,0.0024173023188082425
+Rockdale,2021,residential,rejected_energy,EJ,7.664199222929306e-4
+Rockdale,2021,transport,rejected_energy,EJ,0.0028878551268215896
+Rockdale,2022,commercial,rejected_energy,EJ,6.267444406273987e-4
+Rockdale,2022,en4water,rejected_energy,EJ,2.0085137192751583e-5
+Rockdale,2022,government,rejected_energy,EJ,3.300193482704823e-6
+Rockdale,2022,industrial,rejected_energy,EJ,0.0024269239055603174
+Rockdale,2022,residential,rejected_energy,EJ,8.085477928131293e-4
+Rockdale,2022,transport,rejected_energy,EJ,0.0029316024339944373
+Rockdale,2023,commercial,rejected_energy,EJ,6.087863889568013e-4
+Rockdale,2023,en4water,rejected_energy,EJ,2.0347413871155416e-5
+Rockdale,2023,government,rejected_energy,EJ,3.0702161744931865e-6
+Rockdale,2023,industrial,rejected_energy,EJ,0.0023907290468172687
+Rockdale,2023,residential,rejected_energy,EJ,7.476370290320249e-4
+Rockdale,2023,transport,rejected_energy,EJ,0.0031758909142621133
+Rockdale,2024,commercial,rejected_energy,EJ,6.367806250879494e-4
+Rockdale,2024,en4water,rejected_energy,EJ,2.060289388007165e-5
+Rockdale,2024,government,rejected_energy,EJ,2.8430575428155105e-6
+Rockdale,2024,industrial,rejected_energy,EJ,0.0023690679781743925
+Rockdale,2024,residential,rejected_energy,EJ,8.031953185023734e-4
+Rockdale,2024,transport,rejected_energy,EJ,0.003138982197701916
+Bartow,2020,electricity,elec_export,EJ,0.026103266063195754
+Bartow,2021,electricity,elec_export,EJ,0.03125780952074781
+Bartow,2022,electricity,elec_export,EJ,0.027533262185959525
+Bartow,2023,electricity,elec_export,EJ,0.033756602067044394
+Bartow,2024,electricity,elec_export,EJ,0.03537429035325961
+Cherokee,2020,elec_import,electricity,EJ,0.00781640476229508
+Cherokee,2021,elec_import,electricity,EJ,0.008171929122737294
+Cherokee,2022,elec_import,electricity,EJ,0.008560027996380832
+Cherokee,2023,elec_import,electricity,EJ,0.008451134876239014
+Cherokee,2024,elec_import,electricity,EJ,0.008856118081584702
+Clayton,2020,elec_import,electricity,EJ,0.008787952711270489
+Clayton,2021,elec_import,electricity,EJ,0.008962795380997203
+Clayton,2022,elec_import,electricity,EJ,0.009156561616008366
+Clayton,2023,elec_import,electricity,EJ,0.008878260299253586
+Clayton,2024,elec_import,electricity,EJ,0.009056610453324813
+Cobb,2020,electricity,elec_export,EJ,0.04479820674613019
+Cobb,2021,electricity,elec_export,EJ,0.0426178683640354
+Cobb,2022,electricity,elec_export,EJ,0.042564384246578865
+Cobb,2023,electricity,elec_export,EJ,0.040943625602432684
+Cobb,2024,electricity,elec_export,EJ,0.04074429371061501
+Coweta,2020,electricity,elec_export,EJ,0.003816065391776656
+Coweta,2021,electricity,elec_export,EJ,7.982657122101479e-5
+Coweta,2022,electricity,elec_export,EJ,3.1343597187219463e-4
+Coweta,2023,electricity,elec_export,EJ,0.0034570831642697017
+Coweta,2024,electricity,elec_export,EJ,0.0027665823810986865
+DeKalb,2020,elec_import,electricity,EJ,0.02248212085928909
+DeKalb,2021,elec_import,electricity,EJ,0.022796762157258333
+DeKalb,2022,elec_import,electricity,EJ,0.02347277612168808
+DeKalb,2023,elec_import,electricity,EJ,0.022829719234290478
+DeKalb,2024,elec_import,electricity,EJ,0.023483309573130818
+Douglas,2020,elec_import,electricity,EJ,0.004247694179486808
+Douglas,2021,elec_import,electricity,EJ,0.0043734392164116185
+Douglas,2022,elec_import,electricity,EJ,0.004517049022414757
+Douglas,2023,elec_import,electricity,EJ,0.004427819682085533
+Douglas,2024,elec_import,electricity,EJ,0.004621195432017329
+Fayette,2020,elec_import,electricity,EJ,0.0034908274171386415
+Fayette,2021,elec_import,electricity,EJ,0.0035989442825935386
+Fayette,2022,elec_import,electricity,EJ,0.0037233820205836536
+Fayette,2023,elec_import,electricity,EJ,0.003648202865461315
+Fayette,2024,elec_import,electricity,EJ,0.0037842576392645086
+Forsyth,2020,elec_import,electricity,EJ,0.0063145072450526704
+Forsyth,2021,elec_import,electricity,EJ,0.006946489630715511
+Forsyth,2022,elec_import,electricity,EJ,0.007447558696877987
+Forsyth,2023,elec_import,electricity,EJ,0.007481335612955759
+Forsyth,2024,elec_import,electricity,EJ,0.007924724625680106
+Fulton,2020,elec_import,electricity,EJ,0.031634097303278846
+Fulton,2021,elec_import,electricity,EJ,0.03203638050756514
+Fulton,2022,elec_import,electricity,EJ,0.03325497076324877
+Fulton,2023,elec_import,electricity,EJ,0.03244165934492993
+Fulton,2024,elec_import,electricity,EJ,0.03346738254241312
+Gwinnett,2020,elec_import,electricity,EJ,0.02777790094728037
+Gwinnett,2021,elec_import,electricity,EJ,0.028554271174831503
+Gwinnett,2022,elec_import,electricity,EJ,0.029706439770693097
+Gwinnett,2023,elec_import,electricity,EJ,0.029041763856630876
+Gwinnett,2024,elec_import,electricity,EJ,0.030195829210833088
+Hall,2020,elec_import,electricity,EJ,0.005956159778022152
+Hall,2021,elec_import,electricity,EJ,0.006185176860916705
+Hall,2022,elec_import,electricity,EJ,0.006511728256195565
+Hall,2023,elec_import,electricity,EJ,0.006452095788535623
+Hall,2024,elec_import,electricity,EJ,0.006723505528187287
+Henry,2020,elec_import,electricity,EJ,0.007049278840444744
+Henry,2021,elec_import,electricity,EJ,0.0072908757759105715
+Henry,2022,elec_import,electricity,EJ,0.0075618337327850735
+Henry,2023,elec_import,electricity,EJ,0.0075030040520723176
+Henry,2024,elec_import,electricity,EJ,0.007827852914751385
+Paulding,2020,elec_import,electricity,EJ,0.004921728857595041
+Paulding,2021,elec_import,electricity,EJ,0.005153685326463968
+Paulding,2022,elec_import,electricity,EJ,0.005419295232766473
+Paulding,2023,elec_import,electricity,EJ,0.005378421553730315
+Paulding,2024,elec_import,electricity,EJ,0.0056673433542502845
+Rockdale,2020,elec_import,electricity,EJ,0.002743135136830107
+Rockdale,2021,elec_import,electricity,EJ,0.0028139294638034086
+Rockdale,2022,elec_import,electricity,EJ,0.002911794241495377
+Rockdale,2023,elec_import,electricity,EJ,0.00285474423215345
+Rockdale,2024,elec_import,electricity,EJ,0.0029682417589044045
