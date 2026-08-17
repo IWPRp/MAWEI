@@ -14,6 +14,8 @@ library(zoo)
 library(jsonlite)
 
 DATA_DIR <- "data/"
+SCRIPTS_DIR <- "R/"
+
 # SAVE_DIR is overridable from the shell so a run can be diverted to a scratch tree
 # without editing this file, e.g.
 #   MAWEI_SAVE_DIR=outputs/files_test/ Rscript R/flows_energy_water.R
@@ -21,7 +23,9 @@ DATA_DIR <- "data/"
 # regenerated somewhere else and diffed against the published tree.
 SAVE_DIR <- Sys.getenv("MAWEI_SAVE_DIR", unset = "outputs/files/")
 if (!grepl("/$", SAVE_DIR)) SAVE_DIR <- paste0(SAVE_DIR, "/")
-SCRIPTS_DIR <- "R/"
+TAB_DIR <- "analysis/analysis_outputs/"
+dir.create(TAB_DIR, recursive = TRUE, showWarnings = FALSE)
+tab <- function(n) read_csv(paste0(TAB_DIR, n, ".csv"), show_col_types = FALSE)
 
 # Run-mode flags. Each is overridable from the shell, e.g.
 #   MAWEI_SAVE_FILES=0 MAWEI_MAKE_PLOT=0 Rscript R/run_qc.R
@@ -111,6 +115,10 @@ if (!HAS_PANDOC && identical(SAVE_MODE, "selfcontained")) SAVE_MODE <- "shared_l
 if (!dir.exists(SAVE_DIR)) {
   dir.create(SAVE_DIR, recursive = TRUE)
 }
+TAB_DIR <- file.path(SAVE_DIR, "tables")
+if (!dir.exists(TAB_DIR)) {
+  dir.create(TAB_DIR, recursive = TRUE)
+}
 
 # All artefacts for a domain live directly in its folder: CSV tables, HTML diagrams and
 # the slim JSON the web dashboard reads. A flat layout keeps a diagram next to the data it
@@ -190,7 +198,7 @@ TD_LOSSES_PCT <- 0.06
 # tables from R/analysis.R so the manuscript draws every number from one directory; the P-prefix
 # marks a result that can only be computed inside the pipeline, from intermediate objects that
 # no published flow table retains.
-ANALYSIS_DIR <- Sys.getenv("MAWEI_ANALYSIS_DIR", "docs_analysis/analysis_outputs")
+ANALYSIS_DIR <- Sys.getenv("MAWEI_ANALYSIS_DIR", "analysis/analysis_outputs")
 if (ANALYSIS) dir.create(ANALYSIS_DIR, recursive = TRUE, showWarnings = FALSE)
 
 # EIA non-combustible heat-rate convention ----
@@ -1179,7 +1187,7 @@ remap_plants_agg <- function(df, col_name = "target") {
         ) ~ "Distributed-scale Generation",
         # building-based or industrial on-site generation
         # ExtraNotes: Hewlett Packard Enterprise is a reciprocating-engine genset on natural
-        # gas and distillate, i.e. data-centre standby power, so it belongs with the other
+        # gas and distillate, i.e. data-center standby power, so it belongs with the other
         # building-scale units.
         !!sym(col_name) %in% c("Inforum",
                                "CNN Center",
@@ -2133,10 +2141,10 @@ plot_sankey_enhanced <- function(df_sankey, title = "Metro Atlanta Flows", yr = 
 
 suppressMessages({library(patchwork); library(sf); library(scales); library(ggrepel)})
 
-# Versioned output. Each run writes to a NEW docs_analysis/figures_v<n>/ so an earlier round can
+# Versioned output. Each run writes to a NEW analysis/figures_v<n>/ so an earlier round can
 # never be overwritten and versions do not have to be renamed by hand. Set MAWEI_FIG_DIR to
 # override, or MAWEI_FIG_REUSE=1 to write into the highest existing version.
-fig_dir <- function(root = "docs_analysis") {
+fig_dir <- function(root = "analysis") {
   override <- Sys.getenv("MAWEI_FIG_DIR", "")
   if (nzchar(override)) {
     dir.create(override, recursive = TRUE, showWarnings = FALSE)
