@@ -361,7 +361,7 @@ function initMap() {
       const lower = name.toLowerCase();
 
       // A layer can hold only one bound tooltip, so the resting label is a standalone
-      // tooltip added to the map at the polygon centre and the bound one is left for hover.
+      // tooltip added to the map at the polygon center and the bound one is left for hover.
       // Without the resting label the map is a set of unidentified shapes until the
       // pointer happens to cross one.
       L.tooltip({

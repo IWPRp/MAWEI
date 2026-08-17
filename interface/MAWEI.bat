@@ -1,4 +1,4 @@
 @echo off
 REM Open the MAWEI dashboard in the default browser. No server needed.
-cd /d "%~dp0interface"
+@REM cd /d "%~dp0interface"
 start "" "MAWEI.html"
