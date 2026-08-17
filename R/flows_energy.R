@@ -845,11 +845,7 @@ if (MAKE_PLOT) plot_sankey_enhanced(en_fuel_gen_use_loss_all_trade %>%
                      reg = "Fulton", animate = T, show_values_in_labels = T, label_units = "PJ")
 
 
-# TODO: improve colors; ability to pass on units column to have both MGD and PJ in labels
-# TODO: remove ww trade labeling but have insights of energy, water movement
-# TODO: push to repository; then to pnnl github
-# TODO: reporting
-# TODO: paper draft
+
 
 if (SAVE_FILES) {
 ###############################################################################%

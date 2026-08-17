@@ -1,7 +1,7 @@
 # MAWEI analysis — metrics, counter-factuals and validation
 #
 # Reads the published flow tables (fast: no pipeline rerun) and writes every number the
-# manuscript quotes to docs_analysis/analysis_outputs/ as CSV, so a figure or a sentence can
+# manuscript quotes to analysis/analysis_outputs/ as CSV, so a figure or a sentence can
 # always be traced to a file.
 #
 #   Rscript R/analysis.R
@@ -12,18 +12,22 @@
 #   C  energy performance: fuel shift, efficiency, LLNL comparison, self-sufficiency
 #   D  the coupling: intensities both ways, asymmetry
 #   E  networks and space: transfer network, basin concentration, spatial coverage
-#   F  scenarios: data-centre load growth
+#   F  scenarios: data-center load growth
 #   G  independent validation against EPA NPDES
+#   H  datacenter energy and water footprints
+#   I  costs and investments
+#   J  spatial facility network analysis: maps, distances, clustering
+#   K  basin analysis
+#   L  gross and net wastewater transfers
+#   M  demographics and socioeconomics
 #
-# Hassan Niazi / MAWEI
+# Hassan Niazi, Aug 2026
 
 source("functions.R")
 suppressMessages(library(sf))
 
-OUT <- "docs_analysis/analysis_outputs/"
-dir.create(OUT, recursive = TRUE, showWarnings = FALSE)
 put <- function(x, name) {
-  write_csv(x, paste0(OUT, name, ".csv"))
+  write_csv(x, paste0(TAB_DIR, name, ".csv"))
   message(sprintf("  %-42s %4d rows", paste0(name, ".csv"), nrow(x)))
   invisible(x)
 }
@@ -46,7 +50,7 @@ pop <- read_csv(paste0(DATA_DIR, "cc-est2024-agesex-all.csv.gz"), show_col_types
   filter(county %in% counties)
 pop_metro <- pop %>% group_by(year) %>% summarise(pop = sum(pop), .groups = "drop")
 
-# County geometry and the facility coordinates, needed by the spatial and data-centre sections.
+# County geometry and the facility coordinates, needed by the spatial and data-center sections.
 sf_cty <- st_read(paste0(DATA_DIR, "geojson-counties-fips.json"), quiet = TRUE) %>%
   rename_with(tolower) %>% filter(id %in% fips) %>%
   mutate(county = name) %>% select(county, geometry)
@@ -69,9 +73,10 @@ plant_key <- function(x) case_when(grepl("Bowen", x) ~ "Bowen",
                                   grepl("Yates", x) ~ "Yates", TRUE ~ NA_character_)
 
 ###############################################################################%
+# A. Traditional accounting ----
 message("\n== A. traditional accounting ==")
 
-# A1 water: the headline balance, every year. This is the paper's Table 1 water panel.
+## A1 water: the headline balance, every year. This is the paper's Table 1 water panel ----
 water_balance <- tibble(year = YEARS_TO_ENSURE) %>%
   left_join(outflow(wm, "surfaceWater") %>% rename(surface = v), by = "year") %>%
   left_join(outflow(wm, "groundwaterAllBasins") %>% rename(groundwater = v), by = "year") %>%
@@ -90,7 +95,7 @@ water_balance <- tibble(year = YEARS_TO_ENSURE) %>%
   mutate(withdrawal_gpcd = withdrawal * 1e6 / pop)
 put(water_balance, "A1_water_balance_metro")
 
-# A2 energy: the same, for energy. Source nodes are those never appearing as a target.
+## A2 energy: the same, for energy. Source nodes are those never appearing as a target ----
 en_sources <- setdiff(unique(em$source), unique(em$target))
 energy_balance <- tibble(year = YEARS_TO_ENSURE) %>%
   left_join(em %>% filter(source %in% en_sources) %>% group_by(year) %>%
@@ -113,7 +118,7 @@ energy_balance <- tibble(year = YEARS_TO_ENSURE) %>%
   mutate(energy_gj_per_capita = total_input * 1e6 / pop)
 put(energy_balance, "A2_energy_balance_metro")
 
-# A3 water by sector, with shares. Sector nodes receive from supply and emit to collection.
+## A3 water by sector, with shares. Sector nodes receive from supply and emit to collection ----
 WSEC <- c("residential", "commercial", "industrial", "agricultural")
 water_sector <- wm %>% filter(target %in% WSEC) %>%
   group_by(year, sector = target) %>% summarise(supplied = sum(value), .groups = "drop") %>%
@@ -130,14 +135,14 @@ water_sector <- wm %>% filter(target %in% WSEC) %>%
   mutate(return_ratio = returned / supplied)
 put(water_sector, "A3_water_by_sector")
 
-# A4 energy by sector
+## A4 energy by sector ----
 ESEC <- intersect(END_USE_SECTORS, unique(em$target))
 energy_sector <- em %>% filter(target %in% ESEC) %>%
   group_by(year, sector = target) %>% summarise(consumed = sum(value), .groups = "drop") %>%
   group_by(year) %>% mutate(share_pct = 100 * consumed / sum(consumed)) %>% ungroup()
 put(energy_sector, "A4_energy_by_sector")
 
-# A5 fuel mix and the 2020->2024 shift
+## A5 fuel mix and the 2020->2024 shift ----
 fuel_mix <- em %>% filter(source %in% en_sources) %>%
   group_by(year, fuel = source) %>% summarise(pj = sum(value), .groups = "drop") %>%
   group_by(year) %>% mutate(share_pct = 100 * pj / sum(pj)) %>% ungroup()
@@ -152,7 +157,7 @@ fuel_shift <- fuel_mix %>% filter(year %in% range(YEARS_TO_ENSURE)) %>%
   arrange(desc(pj_24))
 put(fuel_shift, "A5b_fuel_shift_2020_2024")
 
-# A6 basin withdrawals and concentration.
+## A6 basin withdrawals and concentration ----
 # Herfindahl index on basin shares: 1 means a single-source system, 1/n a perfectly spread one.
 basin <- wm %>% filter(source == "surfaceWater") %>%
   group_by(year, basin = target) %>% summarise(mgd = sum(value), .groups = "drop") %>%
@@ -164,13 +169,13 @@ put(basin %>% group_by(year) %>%
                 top_share_pct = max(share_pct), .groups = "drop"),
     "A6b_basin_concentration")
 
-# A7 discharge destinations
+## A7 discharge destinations ----
 discharge <- wm %>% filter(source == "in-county treatment") %>%
   group_by(year, destination = target) %>% summarise(mgd = sum(value), .groups = "drop") %>%
   group_by(year) %>% mutate(share_pct = 100 * mgd / sum(mgd)) %>% ungroup()
 put(discharge, "A7_discharge_destinations")
 
-# A8 county profile: the cross-sectional table behind most county figures
+## A8 county profile: the cross-sectional table behind most county figures ----
 county_profile <- wc %>% filter(source == "publicWatSup") %>%
   group_by(county, year) %>%
   summarise(pws_out = sum(value), nrw = sum(value[target == "losses"]), .groups = "drop") %>%
@@ -190,7 +195,7 @@ county_profile <- wc %>% filter(source == "publicWatSup") %>%
          pws_gpcd = pws_out * 1e6 / pop)
 put(county_profile, "A8_county_profile")
 
-# A9 growth rates. CAGR over the period, so water and energy are comparable to population.
+## A9 growth rates. CAGR over the period, so water and energy are comparable to population ----
 cagr <- function(first, last, n) 100 * ((last / first)^(1 / n) - 1)
 n_yr <- length(YEARS_TO_ENSURE) - 1
 growth <- tibble(
@@ -210,9 +215,11 @@ growth <- tibble(
 put(growth, "A9_growth_and_decoupling")
 
 ###############################################################################%
+# B. Water performance ----
 message("\n== B. water performance ==")
 
-# B1 NRW counter-factuals. NRW is supplied as a fixed per-county fraction, so this is a
+## B1 NRW counter-factuals ----
+# NRW is supplied as a fixed per-county fraction, so this is a
 # cross-sectional efficiency question, never a trend.
 nrw24 <- county_profile %>% filter(year == max(YEARS_TO_ENSURE))
 metro_nrw <- 100 * sum(nrw24$nrw) / sum(nrw24$pws_out)
@@ -241,7 +248,8 @@ put(tibble(scenario = c("all counties at metro average", "all counties at best o
                    thermo_total, dest_mgd("^reuse$"))),
     "B1b_nrw_scenarios")
 
-# B2 the energetic cost of I&I. Infiltration is collected, conveyed and treated at the same
+## B2 the energetic cost of I&I ----
+# Infiltration is collected, conveyed and treated at the same
 # intensity as real sewage, so it carries a real and avoidable energy penalty.
 ii_energy <- county_profile %>%
   mutate(ii_mg_yr = ii * DAYS_PER_YEAR,
@@ -260,7 +268,8 @@ ii_metro <- ii_energy %>% group_by(year) %>%
          homes_equivalent = (pj / EJ_to_PJ / kWh_to_EJ) / 10500)
 put(ii_metro, "B2b_ii_energy_metro")
 
-# B3 circularity. Reuse as a share of treated effluent is the standard water-reuse metric;
+## B3 circularity ----
+# Reuse as a share of treated effluent is the standard water-reuse metric;
 # adding septic return gives a broader "returned to land or reused" figure.
 circ <- discharge %>%
   mutate(d = str_to_lower(destination)) %>%
@@ -275,16 +284,17 @@ circ <- discharge %>%
          nonstream_return_pct = 100 * (reuse + land + septic) / (treated + septic))
 put(circ, "B3_circularity")
 
-# B4 septic vs sewered structure
+## B4 septic vs sewered structure ----
 septic_struct <- county_profile %>%
   select(county, year, septic, collected, septic_share_pct, pop) %>%
   mutate(septic_gpcd = septic * 1e6 / pop)
 put(septic_struct, "B4_septic_structure")
 
 ###############################################################################%
+# C. Energy performance ----
 message("\n== C. energy performance ==")
 
-# C1 county electricity self-sufficiency: local generation against local consumption.
+## C1 county electricity self-sufficiency: local generation against local consumption. ----
 # Both sides must exclude the trade flows themselves. The county electricity node balances by
 # construction, so counting elec_export as consumption makes every exporting county appear
 # exactly 100% self-sufficient and destroys the metric.
@@ -301,7 +311,7 @@ selfsuff <- full_join(elec_gen, elec_use, by = c("county", "year")) %>%
                                   TRUE ~ "balanced"))
 put(selfsuff, "C1_electricity_self_sufficiency")
 
-# C2 useful energy against the LLNL benchmark, and corrected for a realistic vehicle fleet.
+## C2 useful energy against the LLNL benchmark, and corrected for a realistic vehicle fleet ----
 # The LLNL convention gives transport 0.65, but a light-duty fleet delivers 0.20-0.25 of fuel
 # energy to motion. Since transport is about half of metro end use, the published efficiency is
 # materially optimistic and the corrected figure belongs beside it.
@@ -320,7 +330,7 @@ eff_corrected <- energy_sector %>%
          overstatement_pp = eff_llnl_pct - eff_real_pct)
 put(eff_corrected, "C2_efficiency_llnl_vs_corrected")
 
-# C3 generation by plant, with capacity factor where capacity is known
+## C3 generation by plant, with capacity factor where capacity is known ----
 plant_gen <- em %>% filter(target == "electricity", source != "out_metro_elec_import") %>%
   group_by(year, plant = source) %>% summarise(pj = sum(value), .groups = "drop")
 plant_cap <- xy %>% filter(kind == "power plant") %>%
@@ -334,11 +344,12 @@ put(plant_gen %>%
     "C3_generation_by_plant")
 
 ###############################################################################%
-message("\n== D. the coupling ==")
+# D. The coupling ----
+message("\n== D. The coupling ==")
 
-# D1 energy intensity of water, by county: kWh per million gallons delivered.
-# This is the standard comparable unit for water-sector energy and lets a county be placed
-# against published benchmarks rather than only against its neighbours.
+## D1 energy intensity of water, by county: kWh per million gallons delivered. ----
+## This is the standard comparable unit for water-sector energy and lets a county be placed
+## against published benchmarks rather than only against its neighbours.
 en4w_county <- ec %>% filter(target == "en4water") %>%
   group_by(county, year) %>% summarise(pj = sum(value), .groups = "drop")
 w_delivered <- wc %>% filter(source == "publicWatSup", target != "losses") %>%
@@ -348,9 +359,9 @@ intensity_w <- full_join(en4w_county, w_delivered, by = c("county", "year")) %>%
   mutate(kwh_per_mg = (pj / EJ_to_PJ / kWh_to_EJ) / (mgd * DAYS_PER_YEAR))
 put(intensity_w, "D1_energy_intensity_of_water")
 
-# D2 water intensity of electricity: gallons withdrawn per kWh generated, by plant.
-# Cooling technology is legible in this number: once-through withdraws far more per kWh than a
-# recirculating tower, which withdraws little and consumes most of what it takes.
+## D2 water intensity of electricity: gallons withdrawn per kWh generated, by plant. ----
+## Cooling technology is legible in this number: once-through withdraws far more per kWh than a
+## recirculating tower, which withdraws little and consumes most of what it takes.
 thermo_w <- wm %>% filter(grepl("Basin", source), grepl("Bowen|McDonough|Yates", target)) %>%
   mutate(plant = plant_key(target)) %>%
   group_by(year, plant) %>% summarise(mgd = sum(value), .groups = "drop")
@@ -374,8 +385,8 @@ intensity_e <- thermo_w %>%
          consumption_ratio = consumed_mgd / mgd)
 put(intensity_e, "D2_water_intensity_of_electricity")
 
-# D3 coupling asymmetry. Each direction is expressed as a share of its own system, so the two
-# are directly comparable and the binding direction is explicit.
+## D3 coupling asymmetry. Each direction is expressed as a share of its own system, so the two
+## are directly comparable and the binding direction is explicit. ----
 asym <- energy_balance %>% select(year, water_services_energy, total_input, elec_supply) %>%
   left_join(thermo_w %>% group_by(year) %>% summarise(thermo_mgd = sum(mgd), .groups = "drop"),
             by = "year") %>%
@@ -387,9 +398,11 @@ asym <- energy_balance %>% select(year, water_services_energy, total_input, elec
 put(asym, "D3_coupling_asymmetry")
 
 ###############################################################################%
-message("\n== E. networks and space ==")
+# E. Networks and space ----
+message("\n== E. Networks and space ==")
 
-# E1 inter-county sewage transfer network. Degree and net position show which counties are
+## E1 inter-county sewage transfer network ----
+# Degree and net position show which counties are
 # structurally dependent on a neighbour's treatment capacity.
 tr <- wc %>% filter(grepl("^inFrom", source)) %>%
   mutate(from_county = str_split_i(source, "_", 2)) %>%
@@ -413,19 +426,22 @@ net <- bind_rows(
                           imported > 0 ~ "net importer", TRUE ~ "self-contained"))
 put(net, "E1b_transfer_network_nodes")
 
-# E2 spatial coverage of the coordinate resolution. Reported because it is the binding constraint
-# on any facility-level map, and because the contrast between the two candidate sources is itself
-# a methodological result: the state permit inventory is usable, the federal outfall layer is not.
+## E2 spatial coverage of the coordinate resolution ----
+## Reported because it is the binding constraint
+## on any facility-level map, and because the contrast between the two candidate sources is itself
+## a methodological result: the state permit inventory is usable, the federal outfall layer is not.
 put(xy %>% group_by(kind, coord_decimals) %>% summarise(n = n(), .groups = "drop"),
     "E2_coordinate_precision")
 
 ###############################################################################%
-message("\n== F. scenarios ==")
+# F. Scenarios ----
+message("\n== F. Scenarios ==")
 
-# F1 data-centre load growth. Metro Atlanta has become one of the fastest-growing data-centre
+## F1 data-center load growth ----
+# Metro Atlanta has become one of the fastest-growing data-center
 # markets in the United States, so the question is what incremental electricity demand does to
 # the water footprint of supply. Two cooling routes bracket the answer: evaporative cooling at
-# the data centre, or no on-site water but more generation upstream.
+# the data center, or no on-site water but more generation upstream.
 DC_SCENARIOS <- c(500, 1000, 2000, 3000)   # MW of new continuous load
 DC_LOAD_FACTOR <- 0.9
 DC_WUE_L_PER_KWH <- 1.8                    # on-site evaporative water use efficiency
@@ -448,7 +464,8 @@ dc <- tibble(new_load_mw = DC_SCENARIOS) %>%
 put(dc, "F1_datacentre_scenarios")
 
 ###############################################################################%
-message("\n== G. validation against EPA NPDES ==")
+# G. Validation against EPA NPDES ----
+message("\n== G. Validation against EPA NPDES ==")
 
 norm_fac <- function(x) x %>% str_to_lower() %>% str_replace_all("[^a-z0-9 ]", " ") %>%
   str_remove_all("\\b(wpcp|wrf|wwtp|wtp|plant|water|pollution|control|reclamation|facility|the|of|city|county|authority|inc|llc|co|dept|department)\\b") %>%
@@ -513,16 +530,18 @@ if (file.exists(ECHO)) {
 }
 
 ###############################################################################%
-message("\n== H. data centres ==")
+# H. Data centers ----
+message("\n== H. Data centers ==")
 
-# Metro Atlanta is the second-largest US data-centre market after northern Virginia, so the
+# Metro Atlanta is the second-largest US data-center market after northern Virginia, so the
 # question is not whether load grows but what its water and cost consequences are. Two datasets
 # carry it: an inventory of existing facilities, and a siting projection that gives, per
 # projected facility, its IT power, cooling technology split, water demand, water consumption and
 # capital cost. That removes the need for the coarse assumptions the earlier scenario used.
 DC <- paste0(DATA_DIR, "datacenter_atlas/")
 
-# H1 existing inventory. County names arrive with a " County" suffix, so they are stripped and
+## H1 existing inventory ----
+# County names arrive with a " County" suffix, so they are stripped and
 # matched case-insensitively rather than assumed to be canonical.
 dc_existing <- read_csv(paste0(DC, "im3_open_source_data_center_atlas_v2026.02.09/",
                                "im3_open_source_data_center_atlas_v2026.02.09.csv"),
@@ -544,7 +563,8 @@ put(dc_metro %>% group_by(county) %>%
       arrange(desc(sqft)),
     "H1b_datacentres_existing_by_county")
 
-# H2 projections. Each file is one (growth, market-gravity) combination; every projected facility
+## H2 projections ----
+# Each file is one (growth, market-gravity) combination; every projected facility
 # is a polygon carrying its own engineering and cost attributes, so the metro figure comes from a
 # spatial intersection with the county boundaries rather than from a state share.
 dc_files <- list.files(paste0(DC, "im3_projected_data_centers_v1.1"),
@@ -591,7 +611,7 @@ put(dc_proj %>%
               market_gravity_weight),
     "H2_datacentre_projections")
 
-# H3 the cooling-technology trade-off, which is the substantive water-energy finding here.
+## H3 the cooling-technology trade-off, which is the substantive water-energy finding here ----
 # A water-cooled facility evaporates water but spends little energy on cooling; a mechanically
 # cooled one uses no water but adds electrical load, which is met upstream by generation that
 # itself withdraws water. The projection carries both fractions, so the trade-off can be
@@ -610,8 +630,8 @@ put(dc_proj %>% filter(in_metro) %>%
              upstream_share_pct = 100 * cooling_energy_water_mgd / total_water_mgd),
     "H3_datacentre_cooling_tradeoff")
 
-# H4 where projected sites fall, by county. This is what makes the scenario local rather than
-# regional: siting concentrates in a few counties, and those counties' own water systems differ.
+## H4 where projected sites fall, by county ----
+# This is what makes the scenario local rather than regional: siting concentrates in a few counties, and those counties' own water systems differ.
 dc_sites <- map_dfr(dc_files, function(f) {
   g <- suppressWarnings(st_read(f, quiet = TRUE)) %>% filter(region == "georgia")
   if (nrow(g) == 0) return(NULL)
@@ -631,11 +651,12 @@ put(dc_sites %>% group_by(growth_scenario, market_gravity_weight, county) %>%
     "H4b_datacentre_sites_by_county")
 
 ###############################################################################%
+# I. Cost ----
 message("\n== I. cost ==")
 
 # Costs are not in the flow data, so every figure here is an order-of-magnitude estimate built
 # from published unit costs and labelled as such. They are included because a volume alone does
-# not tell a utility whether an intervention is worth making, and because the data-centre
+# not tell a utility whether an intervention is worth making, and because the data-center
 # projection supplies a capital cost that would otherwise sit without comparison.
 #
 # Unit costs, mid-range US municipal values, stated so they can be replaced:
@@ -651,10 +672,10 @@ put(tibble(item = c("water treatment and delivery", "wastewater collection and t
                      COST_ELECTRICITY_USD_PER_KWH, COST_LEAK_REPAIR_USD_PER_MGD)),
     "I0_cost_assumptions")
 
-# I1 the annual operating cost of the losses the diagram quantifies. Non-revenue water is water
-# produced and paid for but never billed; infiltration is water never supplied yet collected,
-# pumped and treated. Both are pure waste in cost terms, which is what makes them the first
-# place a utility should look.
+## I1 the annual operating cost of the losses the diagram quantifies ----
+## Non-revenue water is water produced and paid for but never billed; infiltration is water never supplied yet collected,
+## pumped and treated. Both are pure waste in cost terms, which is what makes them the first
+## place a utility should look.
 cost_losses <- county_profile %>% filter(year == YR) %>%
   select(county, nrw, ii, collected) %>%
   left_join(ii_energy %>% filter(year == YR) %>% select(county, kwh_total), by = "county") %>%
@@ -665,7 +686,7 @@ cost_losses <- county_profile %>% filter(year == YR) %>%
   arrange(desc(total_loss_cost_usd_yr))
 put(cost_losses, "I1_cost_of_losses")
 
-# I2 payback on leakage recovery, the comparison that turns a volume into a decision.
+## I2 payback on leakage recovery, the comparison that turns a volume into a decision ----
 put(nrw_cf %>%
       mutate(annual_saving_usd = gap_to_best * DAYS_PER_YEAR * COST_WATER_TREAT_USD_PER_MG,
              capital_usd = gap_to_best * COST_LEAK_REPAIR_USD_PER_MGD,
@@ -676,9 +697,9 @@ put(nrw_cf %>%
       arrange(desc(recoverable_mgd)),
     "I2_leakage_recovery_payback")
 
-# I3 the data-centre capital cost against what the same money would buy in leakage recovery.
-# Both are capital, both buy water, so the comparison is legitimate and it is the sharpest way to
-# state the opportunity cost.
+## I3 the data-center capital cost against what the same money would buy in leakage recovery ----
+## Both are capital, both buy water, so the comparison is legitimate and it is the sharpest way to
+## state the opportunity cost.
 put(dc_proj %>% filter(in_metro) %>%
       group_by(growth_scenario) %>%
       summarise(sites = n() / n_distinct(market_gravity_weight),
@@ -690,8 +711,10 @@ put(dc_proj %>% filter(in_metro) %>%
     "I3_datacentre_capital_vs_leakage")
 
 ###############################################################################%
-message("\n== J. spatial facility network ==")
+# J. Spatial facility network ----
+message("\n== J. Spatial facility network ==")
 
+## J1 inter-county sewage transfer network, with coordinates and energy ----
 # The transfer records name a destination FACILITY, and every one of those facilities now has a
 # coordinate, so the sewage network can be drawn as it physically exists rather than as
 # county-to-county abstraction. Origins are given as places within a county, so an origin is
@@ -717,7 +740,7 @@ net_edges <- conn_raw %>%
   left_join(cty_xy %>% select(county, from_lon = lon, from_lat = lat),
             by = c("from_county" = "county")) %>%
   left_join(fac_xy, by = "facility") %>%
-  # Great-circle distance between origin county centre and receiving plant. Conveyance energy
+  # Great-circle distance between origin county center and receiving plant. Conveyance energy
   # scales with distance and lift, so a long haul is a different proposition from a short one and
   # the network cannot be read on volume alone.
   mutate(distance_km = 6371 * acos(pmin(1,
@@ -741,7 +764,8 @@ put(net_edges %>% filter(year == YR) %>%
                 energy_cost_musd_yr = sum(energy_cost_usd_yr) / 1e6),
     "J1b_spatial_network_summary")
 
-# J2 receiving-plant loading: how much of each plant's throughput arrives from another county.
+## J2 receiving-plant loading ----
+# how much of each plant's throughput arrives from another county.
 # A plant treating mostly imported sewage is doing regional work, which is invisible in a
 # county-level account.
 put(net_edges %>% filter(year == YR) %>%
@@ -752,7 +776,8 @@ put(net_edges %>% filter(year == YR) %>%
       arrange(desc(imported_mgd)),
     "J2_receiving_plant_loading")
 
-# J3 basin transfers. A transfer that crosses a basin divide moves water permanently out of one
+## J3 basin transfers ----
+# A transfer that crosses a basin divide moves water permanently out of one
 # watershed and into another, which is a different act from moving it within a basin and is the
 # form of transfer that matters legally in the ACF system.
 put(net_edges %>% filter(year == YR, !is.na(fac_basin)) %>%
@@ -767,6 +792,7 @@ put(net_edges %>% filter(year == YR, !is.na(fac_basin)) %>%
     "J3_interbasin_transfers")
 
 ###############################################################################%
+# K. basins ----
 message("\n== K. basins ==")
 
 # The basin is the unit that matters legally and hydrologically, and it is not the county. A
@@ -778,7 +804,8 @@ if (file.exists(BASIN_FILE)) {
   basins_sf <- st_read(BASIN_FILE, quiet = TRUE)
   cty_basin <- read_csv(paste0(DATA_DIR, "spatial_county_basin_area.csv"), show_col_types = FALSE)
 
-  # K1 the basin balance. Withdrawal comes straight from the metro table; discharge has to be
+  ## K1 the basin balance ----
+  # Withdrawal comes straight from the metro table; discharge has to be
   # routed through the receiving plant's basin, because effluent leaves the system where the plant
   # sits, not where the sewage was generated.
   basin_w <- wm %>% filter(source == "surfaceWater") %>%
@@ -827,6 +854,7 @@ if (file.exists(BASIN_FILE)) {
                                   discharge_mgd / total_withdrawal_mgd, NA_real_))
   put(basin_bal, "K1_basin_balance")
 
+  ## K2 county-basin attribution ----
   # K2 which counties draw on which basin, and how much. This is the join that lets a county
   # result be read as a basin result.
   put(cty_basin %>%
@@ -836,7 +864,7 @@ if (file.exists(BASIN_FILE)) {
                       .names = "{.col}_attributed")),
       "K2_county_basin_attribution")
 
-  # K3 basins ranked by the share of metro supply they carry, against their share of metro land.
+  ## K3 basins ranked by the share of metro supply they carry, against their share of metro land. ----
   # A basin supplying far more than its footprint is doing disproportionate work.
   put(basin_bal %>% filter(year == YR) %>%
         mutate(supply_share_pct = 100 * total_withdrawal_mgd / sum(total_withdrawal_mgd),
@@ -847,7 +875,8 @@ if (file.exists(BASIN_FILE)) {
         arrange(desc(burden_ratio)),
       "K3_basin_burden")
 
-  # K4 inter-basin transfer of sewage. A transfer that crosses a divide moves water permanently
+  ## K4 inter-basin transfer of sewage ----
+  # A transfer that crosses a divide moves water permanently
   # out of one watershed into another, which is the form of transfer that matters legally in the
   # Apalachicola-Chattahoochee-Flint system.
   cty_main <- cty_basin %>% group_by(county) %>% slice_max(share_pct, n = 1) %>%
@@ -872,8 +901,10 @@ if (file.exists(BASIN_FILE)) {
 }
 
 ###############################################################################%
+# L. gross and net transfers ----
 message("\n== L. gross and net transfers ==")
 
+## L1 county-pair gross and net ----
 # Transfers have to be reported BOTH ways. Gross is the water actually moved, which is what
 # determines pumping energy and pipe capacity. Net is the balance after offsetting exchanges,
 # which is what determines whether a county depends on a neighbour. Reporting only one hides
@@ -913,6 +944,7 @@ put(transfer_pairs %>% group_by(year) %>%
       mutate(offsetting_share_pct = 100 * offsetting_mgd / gross_mgd),
     "L1b_transfer_gross_net_summary")
 
+## L2 county-level gross and net ----
 # Per county, both measures side by side. A county with large gross and small net is trading, not
 # depending.
 put(bind_rows(
@@ -930,6 +962,7 @@ put(bind_rows(
     "L2_transfer_by_county_gross_net")
 
 ###############################################################################%
+# M. settlement, demographics and economics ----
 message("\n== M. settlement, demographics and economics ==")
 
 # Census tracts give a settlement geography 92 times finer than the county. The ACS 5-year tract
@@ -947,7 +980,7 @@ ACS_FILE <- paste0(DATA_DIR, "acs_tract_metro.csv")
 if (file.exists(ACS_FILE)) {
   acs <- read_csv(ACS_FILE, show_col_types = FALSE, progress = FALSE)
 
-  # M1 county settlement and socio-economic profile.
+  ## M1 county settlement and socio-economic profile ----
   #
   # ExtraNotes: two densities are reported and they answer different questions. Area density is
   # population over land area -- how crowded the county is. Population-weighted density is the
@@ -1010,7 +1043,7 @@ if (file.exists(ACS_FILE)) {
         pivot_longer(-c(tracts, pop), names_to = "metric", values_to = "value"),
       "M1b_tract_distribution_metro")
 
-  # M3 does settlement pattern explain the county spread in water performance?
+  ## M3 does settlement pattern explain the county spread in water performance? ----
   #
   # ExtraNotes: this is the question the tract data exists to answer. The infiltration factor and
   # the non-revenue rate are supplied per county with no stated basis, and if they track density or
@@ -1045,6 +1078,7 @@ if (file.exists(ACS_FILE)) {
   message("  ANALYSIS: strongest settlement association: ", top$y, " vs ", top$x,
           " rho = ", round(top$r, 3), ", p = ", signif(top$p, 3), ", n = ", top$n)
 
+  ## M2 settlement pattern by basin ----
   # M2 population allocated to BASIN by tract centroid. Now a measured sum rather than a tract
   # count, which is the substantive gain from the ACS extract: basin population no longer assumes
   # tracts hold equal population.
@@ -1076,4 +1110,4 @@ if (file.exists(ACS_FILE)) {
   message("  ACS tract extract absent; run Rscript R/prep_acs.R -- skipping settlement section")
 }
 
-message("\n== done: ", length(list.files(OUT)), " tables in ", OUT, " ==")
+message("\n== done: ", length(list.files(TAB_DIR)), " tables in ", TAB_DIR, " ==")

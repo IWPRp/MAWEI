@@ -1,6 +1,6 @@
 # MAWEI figures — publication figure suite
 #
-#   Rscript R/figures.R                       writes a NEW docs_analysis/figures_v<n>/
+#   Rscript R/figures.R                       writes a NEW analysis/figures_v<n>/
 #   MAWEI_FIG_REUSE=1 Rscript R/figures.R     overwrites the highest existing version
 #   MAWEI_FIG_DIR=path Rscript R/figures.R    writes to a chosen directory
 #
@@ -14,19 +14,19 @@
 #   - keep text off the data; put legends in dead space
 #   - no empty panels: if a row has spare width, the panels widen to fill it
 #
-# Hassan Niazi / MAWEI
+# Hassan Niazi, Aug 2026
 
 source("functions.R")
-source(paste0(SCRIPTS_DIR, "fig_helpers.R"))
 
-FIG_DIR <- fig_dir()
-TAB_DIR <- "docs_analysis/analysis_outputs/"
-message("== writing to ", FIG_DIR, " ==")
-tab <- function(n) read_csv(paste0(TAB_DIR, n, ".csv"), show_col_types = FALSE)
+FIG_DIR <- fig_dir(); message("== writing to ", FIG_DIR, " ==")
+FIG_DIR_P <- "analysis/figures_paper/"
+dir.create(FIG_DIR_P, showWarnings = FALSE, recursive = TRUE)
 
-save_fig <- function(p, name, w, h) {
-  ggsave(paste0(FIG_DIR, name, ".png"), p, width = w, height = h, dpi = 400, bg = "white")
-  ggsave(paste0(FIG_DIR, name, ".pdf"), p, width = w, height = h, device = cairo_pdf, bg = "white")
+save_fig <- function(p, name, w, h, save_pdf = FALSE) {
+  ggsave(paste0(FIG_DIR, name, ".png"), p, width = w, height = h, dpi = 300, bg = "white")
+  if (save_pdf) {
+    ggsave(paste0(FIG_DIR, name, ".pdf"), p, width = w, height = h, device = cairo_pdf, bg = "white")
+  }
   message(sprintf("  %-38s %4.1f x %4.1f in", name, w, h))
 }
 
@@ -121,6 +121,7 @@ base_layers <- function(basin = FALSE, all_fac = TRUE) {
 }
 
 ###############################################################################%
+# Fig 1: the system ----
 message("\n== Fig 1: the system ==")
 
 p1a <- ggplot(sf_cty) +
@@ -206,6 +207,7 @@ save_fig((p1a | (p1b / p1c) | p1d) + plot_layout(widths = c(1.15, 0.9, 1.25)) +
          "Fig1_system_and_scale", 16, 5.8)
 
 ###############################################################################%
+# Fig 2: water ----
 message("\n== Fig 2: water ==")
 
 b <- A6 %>% mutate(basin = str_remove(basin, " Basin")) %>% filter(mgd > 0) %>%
@@ -341,11 +343,12 @@ save_fig((p2a | p2b | p2e) / (p2c | p2d | p2f) +
          "Fig2_water_structure", 16, 8.8)
 
 ###############################################################################%
+# Fig 3: energy ----
 message("\n== Fig 3: energy ==")
 
 fm <- A5 %>% filter(pj > 0.05) %>%
   mutate(fuel = recode(fuel, "out_metro_elec_import" = "Imported electricity",
-                       "Hydroelectric Water" = "Hydro", "onsiteBTM" = "On-site"))
+                       "Hydroelectric" = "Hydro", "onsiteBTM" = "On-site"))
 fm <- fm %>% left_join(fm %>% filter(year == min(year)) %>% select(fuel, base = pj), by = "fuel")
 p3a <- ggplot(fm, aes(year, pj, group = fuel, colour = fuel)) +
   geom_line(aes(y = base), linetype = "dotted", linewidth = 0.4, alpha = 0.8) +
@@ -462,6 +465,7 @@ save_fig((p3a | p3b | p3c) / (p3d | p3e | p3f) +
          "Fig3_energy_structure", 16, 8.6)
 
 ###############################################################################%
+# Fig 4: county atlas ----
 message("\n== Fig 4: county atlas ==")
 
 c24m <- A8 %>% filter(year == YR)
@@ -580,6 +584,7 @@ save_fig(
   "Fig4_county_atlas_overview", 22, 11)
 
 ###############################################################################%
+# Fig 5: losses and opportunity ----
 message("\n== Fig 5: losses and opportunity ==")
 
 thermo_cons <- D2 %>% filter(year == YR) %>% pull(consumed_mgd) %>% sum()
@@ -650,6 +655,7 @@ save_fig((p5a | (p5b / p5c) | p5d) + plot_layout(widths = c(1, 1, 1.08)) +
          "Fig5_losses_and_opportunity", 16, 7.6)
 
 ###############################################################################%
+# Fig 6: the coupling ----
 message("\n== Fig 6: the coupling ==")
 
 p6a <- ggplot(d1m, aes(reorder(county, kwh_per_mg), kwh_per_mg)) +
@@ -746,7 +752,8 @@ save_fig((p6a | p6e | p6b) / (p6d | p6c | plot_spacer()) +
          "Fig6_coupling", 16, 8.2)
 
 ###############################################################################%
-message("\n== Fig 7: data centres ==")
+# Fig 7: data centers ----
+message("\n== Fig 7: data centers ==")
 
 dc_ex <- H1 %>% filter(!is.na(lat))
 dc_pr <- H4 %>% filter(growth_scenario == "higher", market_gravity_weight == 50)
@@ -758,7 +765,7 @@ p7a <- ggplot(sf_cty) +
   geom_point(data = dc_ex, aes(lon, lat, size = sqft), colour = "grey15", alpha = 0.75) +
   geom_sf_text(aes(label = county), size = 1.8, colour = "grey40", fontface = "bold") +
   scale_size_area(max_size = 7, guide = "none") + coord_sf(expand = FALSE) +
-  labs(title = "Existing and projected data centres",
+  labs(title = "Existing and projected data centers",
        subtitle = paste0(nrow(dc_ex), " existing (dark circles, area is floor space) and ",
                          nrow(dc_pr), " projected\nsites (orange squares), highest growth and mid market gravity")) +
   theme_map()
@@ -810,7 +817,7 @@ p7e <- ggplot(county_dc, aes(reorder(county, it_mw), it_mw, fill = idx_water_str
   theme_mawei() + theme(legend.position = c(0.80, 0.34))
 
 cmp <- I3 %>% mutate(growth = factor(growth_scenario, c("low","moderate","high","higher"))) %>%
-  select(growth, `data-centre cooling water` = water_mgd,
+  select(growth, `data-center cooling water` = water_mgd,
          `leakage recoverable for the same capital` = leakage_mgd_for_same_capital) %>%
   pivot_longer(-growth, names_to = "k", values_to = "v")
 p7f <- ggplot(cmp, aes(growth, v, fill = k)) +
@@ -818,7 +825,7 @@ p7f <- ggplot(cmp, aes(growth, v, fill = k)) +
   geom_text(aes(label = sprintf("%.0f", v)), position = position_dodge(width = 0.7),
             vjust = -0.35, size = 2.2, colour = "grey30") +
   scale_y_log10(expand = expansion(mult = c(0, 0.20))) +
-  scale_fill_manual(values = c("data-centre cooling water" = C_W4E,
+  scale_fill_manual(values = c("data-center cooling water" = C_W4E,
                                "leakage recoverable for the same capital" = C_GOOD), name = NULL) +
   labs(x = "growth scenario", y = "MGD (log scale)",
        title = "The same capital, two water outcomes",
@@ -830,6 +837,7 @@ save_fig((p7a | p7b | p7c) / (p7d | p7e | p7f) +
          "Fig7_datacentres", 16, 9)
 
 ###############################################################################%
+# Fig 8: spatial Sankey ----
 message("\n== Fig 8: spatial Sankey of the sewage network ==")
 
 ed <- J1 %>% filter(year == YR)
@@ -1028,6 +1036,7 @@ save_fig((p8a | p8b | p8f) / (p8c | p8g | p8d | p8e) +
          "Fig8_spatial_network", 21, 9.5)
 
 ###############################################################################%
+# Fig 9: the region in one map ----
 message("\n== Fig 9: the region in one map ==")
 
 # Basin names are placed inside their own polygons rather than in a legend, so the eye never
@@ -1052,7 +1061,7 @@ basin_lab <- local({
                        sprintf("%s\n%.0f%% of supply", str_replace(basin, "_", "-"),
                                supply_share_pct)))
 
-# Data-centre symbol area carries a quantity, not just presence. Floor space is the main variant
+# Data-center symbol area carries a quantity, not just presence. Floor space is the main variant
 # because it is the only measure the inventory reports for every facility; the intensity variants
 # are computed and shown in the SI, where a proxy can be labelled as such.
 # ExtraNotes: power is estimated at 150 W per square foot of IT load, a mid-range figure for a
@@ -1100,7 +1109,7 @@ save_fig(region_map(FALSE) +
        subtitle = paste0("River basins shaded and named in place. ",
                          sum(xy$kind == "wastewater plant"),
                          " treatment plants (circles), major power plants (triangles),\n",
-                         nrow(dc_ex), " data centres (squares, area is floor space). ",
+                         nrow(dc_ex), " data centers (squares, area is floor space). ",
                          "Ribbons are inter-county sewage transfers.")),
   "Fig9_regional_overview", 11, 9.5)
 
@@ -1110,6 +1119,7 @@ save_fig(region_map(TRUE) +
   "Fig9b_regional_overview_settlement", 11, 9.5)
 
 ###############################################################################%
+# Fig 10: settlement, demographics and basin population ----
 message("\n== Fig 10: settlement, demographics and basin population ==")
 
 # Counties are the unit the data arrives in, but neither water nor people respect them. These
@@ -1204,6 +1214,7 @@ save_fig((p10a | p10b | p10c) / (p10d | p10e | p10f) +
          "Fig10_settlement_and_basins", 17, 9)
 
 ###############################################################################%
+# SI ----
 message("\n== SI ==")
 
 si1 <- ggplot(G1, aes(epa_design_mgd, permitted_capacity)) +
@@ -1265,3 +1276,659 @@ save_fig((si1 | si2) / (si3 | si4) +
          "FigS1_validation_and_uncertainty", 13, 9)
 
 message("\n== ", length(list.files(FIG_DIR, pattern = "png$")), " figures in ", FIG_DIR, " ==")
+
+# END of MAIN FIGURES -----
+###############################################################################%
+
+
+
+# PAPER FIGURES  -----
+# fig_paper.R originally
+
+# Composite figures for the two manuscripts
+#
+#   Rscript R/fig_paper.R
+#
+# Writes analysis/figures_paper/{Fig1_accounts, Fig2_form, Fig3_consequence}.{pdf,png}
+# plus the standalone Sankeys used by the long article.
+#
+# ExtraNotes: kept separate from R/figures.R, which produces the fifteen exploratory analysis
+# figures. Those are for reading the results; these are for the papers, and they differ in
+# consequence -- panel sizes are set for a journal column, every panel has a caption commitment in
+# the .tex, and nothing is drawn that the text does not reference.
+#
+# Hassan Niazi, Aug 2026
+
+suppressMessages({library(patchwork); library(sf); library(scales); library(readr)})
+
+save_fig_p <- function(p, name, w, h, save_pdf = FALSE) {
+  ggsave(paste0(FIG_DIR_P, name, ".png"), p, width = w, height = h, dpi = 300, bg = "white")
+  if (save_pdf) {
+    ggsave(paste0(FIG_DIR_P, name, ".pdf"), p, width = w, height = h, device = cairo_pdf, bg = "white")
+  }
+  message(sprintf("  %-24s %4.1f x %4.1f in", name, w, h))
+}
+
+W <- "outputs/files/water/01_metro_water_flows.csv"
+E <- "outputs/files/energy/01_metro_energy_flows.csv"
+YR <- 2024
+
+###############################################################################%
+## Fig 1: the closed account and the asymmetry ----
+
+# ExtraNotes: the two loss sinks are split here. The metro table carries `losses` (municipal
+# non-revenue plus sectoral consumptive) and `Losses` (thermoelectric evaporation) and the display
+# mapping would merge them. Merging is exactly wrong for a figure whose subject is the comparison
+# between network loss and plant cooling.
+p1a <- sankey_static(W, YR, relabel = c(losses = "Water Losses", Losses = "Plant Evaporation"),
+                     unit = " MGD", label_size = 2.15) +
+  labs(title = "a   Water, 2024") +
+  theme(plot.title = element_text(face = "bold", size = 10, hjust = 0))
+
+p1b <- sankey_static(E, YR, scale = EJ_to_PJ, unit = " PJ", label_size = 2.15) +
+  labs(title = "b   Energy, 2024") +
+  theme(plot.title = element_text(face = "bold", size = 10, hjust = 0))
+
+d3 <- tab("D3_coupling_asymmetry")
+# ExtraNotes: both directions on one axis, each as a share of its OWN domain. Plotting them on a
+# shared absolute axis would be meaningless -- MGD and PJ are not comparable -- and the whole point
+# is that the two shares differ by a factor the reader can see.
+p1c <- d3 %>%
+  select(year, `water to energy` = w4e_share_of_withdrawal_pct,
+         `energy to water` = e4w_share_of_energy_pct) %>%
+  pivot_longer(-year, names_to = "dir", values_to = "pct") %>%
+  mutate(dir = factor(dir, levels = c("water to energy", "energy to water"))) %>%
+  ggplot(aes(year, pct, colour = dir, group = dir)) +
+  geom_line(linewidth = 0.7) +
+  geom_point(size = 1.9) +
+  geom_text(data = d3, aes(x = year, y = 11.2, label = sprintf("%.0f\u00d7", asymmetry_ratio)),
+            inherit.aes = FALSE, size = 2.5, colour = "grey25") +
+  annotate("text", x = 2022, y = 12.6, label = "asymmetry ratio", size = 2.4, colour = "grey45") +
+  scale_colour_manual(values = c(`water to energy` = C_WATER, `energy to water` = C_E4W),
+                      name = NULL) +
+  scale_y_continuous(limits = c(0, 13.4), breaks = c(0, 2, 4, 6, 8)) +
+  labs(title = "c   The coupling is asymmetric, and stable",
+       x = NULL, y = "share of own domain (%)") +
+  theme_mawei() +
+  theme(legend.position = c(0.76, 0.62), plot.title = element_text(face = "bold", size = 10))
+
+save_fig_p((p1a / p1b / p1c) + plot_layout(heights = c(1, 1, 0.62)),
+         "Fig1_accounts", 9.6, 13.2)
+
+# standalone versions for the long article, which shows the two accounts as separate figures
+save_fig_p(p1a + labs(title = NULL), "SankeyWater2024", 9.5, 6.2)
+save_fig_p(p1b + labs(title = NULL), "SankeyEnergy2024", 9.5, 6.2)
+
+###############################################################################%
+## Fig 2: settlement form and where losses sit ----
+
+m1 <- tab("M1_settlement_by_county")
+m3 <- tab("M3b_settlement_correlations")
+fips <- read_csv(paste0(DATA_DIR, "common_county_fips.csv"), show_col_types = FALSE)$fip
+sf_cty <- st_read(paste0(DATA_DIR, "geojson-counties-fips.json"), quiet = TRUE) %>%
+  rename_with(tolower) %>% filter(id %in% fips) %>%
+  mutate(county = name) %>% select(county, geometry) %>% st_set_crs(4326)
+
+p2a <- sf_cty %>% left_join(m1 %>% select(county, pw_density), by = "county") %>%
+  ggplot() +
+  geom_sf(aes(fill = pw_density), colour = "white", linewidth = 0.3) +
+  geom_sf_text(aes(label = sprintf("%s\n%.0f", county, pw_density)),
+               size = 1.75, colour = "grey12", lineheight = 0.95, fontface = "bold") +
+  scale_fill_distiller(palette = "Blues", direction = 1, name = "per km2",
+                       guide = guide_colourbar(title.position = "top", barwidth = 4.6,
+                                               barheight = 0.26)) +
+  labs(title = "a   Where the average resident lives",
+       subtitle = "population-weighted density") +
+  theme_map() + theme(plot.title = element_text(face = "bold", size = 10))
+
+met_pw <- weighted.mean(m1$pw_density, m1$acs_pop)
+met_ar <- sum(m1$acs_pop) / sum(m1$land_km2)
+
+p2b <- ggplot(m1, aes(area_density, pw_density)) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", colour = "grey60") +
+  geom_point(aes(size = acs_pop / 1e3), colour = C_WATER, alpha = 0.55) +
+  geom_text_repel(aes(label = county), size = 2.1, colour = "grey20",
+                  box.padding = 0.32, segment.colour = "grey70", segment.size = 0.2,
+                  max.overlaps = 20, seed = 1L) +
+  annotate("point", x = met_ar, y = met_pw, shape = 18, size = 3.4, colour = C_LOSS) +
+  annotate("text", x = met_ar + 40, y = met_pw + 90, hjust = 0, size = 2.3, colour = C_LOSS,
+           label = sprintf("metro: %.0f vs %.0f\n(%.2f\u00d7)", met_pw, met_ar, met_pw / met_ar)) +
+  scale_size_area(max_size = 7.5, name = "population\n(thousands)") +
+  labs(title = "b   Residents are concentrated, the region is not",
+       x = "area density (per km2)", y = "population-weighted density (per km2)") +
+  theme_mawei() +
+  theme(legend.position = c(0.86, 0.24), plot.title = element_text(face = "bold", size = 10))
+
+# ExtraNotes: only the nine associations significant at p < 0.05 are drawn, and the panel is framed
+# as association. Showing all forty would imply a screen we did not correct for; showing none would
+# hide the coherence of the signs, which is the actual argument.
+lbl_y <- c(nrw_pct = "non-revenue water", ii_share_pct = "infiltration share",
+           septic_share_pct = "septic share", pws_gpcd = "supply per person",
+           kwh_per_mg = "energy per million gal")
+lbl_x <- c(pw_density = "density (weighted)", area_density = "density (area)",
+           transit_pct = "transit commuting", poverty_pct = "poverty rate",
+           persons_per_hh = "household size", median_hh_income = "median income",
+           mean_commute_min = "mean commute")
+
+p2c <- m3 %>% filter(p < 0.05) %>%
+  mutate(lab = paste0(lbl_y[y], "  ~  ", lbl_x[x])) %>%
+  ggplot(aes(reorder(lab, r), r, fill = r > 0)) +
+  geom_col(width = 0.6) +
+  geom_hline(yintercept = 0, colour = "grey35", linewidth = 0.3) +
+  geom_text(aes(label = sprintf("%.2f", r), hjust = ifelse(r > 0, -0.22, 1.22)),
+            size = 2.15, colour = "grey20") +
+  coord_flip() +
+  scale_fill_manual(values = c(`TRUE` = C_WATER, `FALSE` = C_LOSS), guide = "none") +
+  scale_y_continuous(limits = c(-1, 1)) +
+  labs(title = "c   Losses track settlement form",
+       subtitle = "Spearman rho, only p < 0.05 of 40 tested; n = 15 counties",
+       x = NULL, y = "rho") +
+  theme_mawei() + theme(plot.title = element_text(face = "bold", size = 10))
+
+save_fig_p((p2a | p2b) / p2c + plot_layout(heights = c(1, 0.78)),
+         "Fig2_form", 10.6, 8.4)
+
+###############################################################################%
+## Fig 3: what the reframing changes ----
+
+b1b <- tab("B1b_nrw_scenarios")
+h2  <- tab("H2_datacentre_projections") %>% filter(market_gravity_weight == 50)
+l1b <- tab("L1b_transfer_gross_net_summary")
+
+# ExtraNotes: the counterfactuals and the two reference volumes go on ONE axis. Separate panels
+# would let a reader miss the comparison, which is the single most important number in the paper.
+p3a <- b1b %>%
+  mutate(lab = recode(scenario,
+           `all counties at best observed county` = "recoverable: all at best county (8.65%)",
+           `all counties at metro average` = "recoverable: all at metro mean (19.2%)",
+           `reference: thermoelectric withdrawal` = "power-plant cooling withdrawal",
+           `reference: reuse volume` = "total water reuse"),
+         kind = if_else(grepl("recoverable", lab), "recoverable loss", "reference")) %>%
+  ggplot(aes(reorder(lab, mgd), mgd, fill = kind)) +
+  geom_col(width = 0.58) +
+  geom_text(aes(label = sprintf(" %.1f", mgd)), hjust = 0, size = 2.6, colour = "grey20") +
+  coord_flip(clip = "off") +
+  scale_fill_manual(values = c(`recoverable loss` = C_WATER, reference = "grey65"), name = NULL) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.17))) +
+  labs(title = "a   Recoverable loss exceeds cooling withdrawal",
+       subtitle = "million gallons per day, 2024", x = NULL, y = NULL) +
+  theme_mawei() +
+  theme(legend.position = "bottom", plot.title = element_text(face = "bold", size = 10))
+
+# ExtraNotes: log axes because the two shares differ by a factor of 35 and a linear plot would
+# render the water share as a flat line at zero. The 1:1 line makes the disproportion the visual
+# subject rather than something the reader has to compute.
+p3b <- h2 %>%
+  mutate(sc = factor(growth_scenario, levels = c("low", "moderate", "high", "higher"))) %>%
+  ggplot(aes(pct_of_metro_withdrawal, pct_of_metro_electricity)) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", colour = "grey65") +
+  annotate("text", x = 0.14, y = 0.19, label = "equal shares", size = 2.2, colour = "grey55",
+           angle = 34, hjust = 0) +
+  geom_point(aes(size = metro_it_mw, colour = sc), alpha = 0.85) +
+  geom_text_repel(aes(label = sprintf("%s\n%.1f%% vs %.2f%%", sc, pct_of_metro_electricity,
+                                      pct_of_metro_withdrawal)),
+                  size = 2.05, colour = "grey20", lineheight = 0.94, box.padding = 0.4,
+                  segment.colour = "grey70", segment.size = 0.2, seed = 1L) +
+  scale_x_log10() + scale_y_log10() +
+  scale_colour_manual(values = c(low = "#A5D4E0", moderate = "#5AA9C7",
+                                 high = "#2E7CB0", higher = "#1F4E79"), guide = "none") +
+  scale_size_area(max_size = 6.5, name = "IT load (MW)") +
+  labs(title = "b   Data centers are an electricity question",
+       subtitle = "share of metro electricity vs share of metro water withdrawal",
+       x = "% of metro water withdrawal (log)", y = "% of metro electricity (log)") +
+  theme_mawei() +
+  theme(legend.position = c(0.83, 0.22), plot.title = element_text(face = "bold", size = 10))
+
+p3c <- l1b %>%
+  ggplot(aes(year)) +
+  geom_ribbon(aes(ymin = net_mgd, ymax = gross_mgd), fill = C_LOSS, alpha = 0.22) +
+  geom_line(aes(y = gross_mgd, colour = "gross"), linewidth = 0.7) +
+  geom_line(aes(y = net_mgd, colour = "net"), linewidth = 0.7) +
+  geom_point(aes(y = gross_mgd, colour = "gross"), size = 1.8) +
+  geom_point(aes(y = net_mgd, colour = "net"), size = 1.8) +
+  geom_text(data = l1b %>% filter(year == max(year)),
+            aes(y = (gross_mgd + net_mgd) / 2,
+                label = sprintf("  %.1f MGD offsetting\n  (%.1f%%)", offsetting_mgd,
+                                offsetting_share_pct)),
+            hjust = 0, size = 2.3, colour = C_LOSS, lineheight = 0.95) +
+  scale_colour_manual(values = c(gross = "grey25", net = C_W4E), name = NULL) +
+  scale_x_continuous(expand = expansion(mult = c(0.04, 0.30))) +
+  labs(title = "c   Gross transfers exceed net",
+       subtitle = "8 of 15 county pairs exchange sewage in both directions",
+       x = NULL, y = "inter-county transfers (MGD)") +
+  theme_mawei() +
+  theme(legend.position = c(0.14, 0.55), plot.title = element_text(face = "bold", size = 10))
+
+save_fig_p(p3a / (p3b | p3c) + plot_layout(heights = c(0.82, 1)),
+         "Fig3_consequence", 10.6, 8.2)
+
+message("== done: ", length(list.files(FIG_DIR, pattern = "pdf$")), " PDFs in ", FIG_DIR)
+
+# STATIS SANKEYS (probably discard) ----
+# originally fig_static_sankey.R
+
+# Static, mass-proportional Sankey diagrams for publication figures
+#
+#   source("R/fig_sankey_static.R")
+#   p <- sankey_static("outputs/files/water/01_metro_water_flows.csv", year = 2024)
+#
+# Writes nothing by itself; returns a ggplot. Use save_fig() from R/figures.R to export.
+#
+# ExtraNotes: this is deliberately NOT an export of the interactive plotly diagram. The interactive
+# layout pins node y positions (SANKEY_NODE_Y) and applies a minimum-width floor so that small nodes
+# stay clickable, both of which break proportionality on purpose. A journal figure has to be
+# mass-proportional or the reader cannot verify the balance by eye, which is the whole reason to show
+# a Sankey rather than a table. Same data, same layer assignment, different geometry and a different
+# goal.
+#
+# ExtraNotes: node height is max(inflow, outflow), never inflow + outflow. A node that both receives
+# and emits appears once as a target and again as a source, so summing the two double-counts every
+# intermediate node and inflates the middle of the diagram. For a closed account the two are equal
+# anyway, so max() reads as "the throughput of this node" and stays correct for sources and sinks
+# where only one side exists.
+#
+# Hassan Niazi, Aug 2026
+
+suppressMessages({
+  library(dplyr); library(tidyr); library(purrr); library(stringr)
+  library(ggplot2); library(readr); library(tibble); library(ggrepel)
+})
+
+###############################################################################%
+## palette ----
+
+# Semantic colours keyed on DISPLAY node names, reusing the constants in R/fig_helpers.R so these
+# figures match the other fifteen.
+# ExtraNotes: the loss sinks are deliberately the only warm reds in either diagram. A reader scanning
+# the figure should find the loss terms without reading a label, because the size and position of
+# those terms is the point being made. Everything else is desaturated so the reds carry.
+SANKEY_PAL_WATER <- c(
+  "Surface Water" = "#2E7CB0", "Groundwater" = "#5AA9C7",
+  "Infiltration and Inflow" = "#7E6BA8", "Transfers In" = "#9E9E9E",
+  "Chattahoochee Basin" = "#1F6FA8", "Coosa_Etowah Basin" = "#E8A33D",
+  "Ocmulgee Basin" = "#4E9B6E", "Flint Basin" = "#B4577A",
+  "Tallapoosa Basin" = "#7E6BA8", "Oconee Basin" = "#8C8C8C", "Basins" = "#4E8FB0",
+  "Public Water Supply" = "#3E7EA0",
+  "Residential Use" = "#4E9B6E", "Commercial Use" = "#6FAF8A",
+  "Industrial Use" = "#9CBF6B", "Agricultural Use" = "#C2CE7A",
+  "Bowen Plant" = "#B8892F", "Yates Plant" = "#D4A94A", "Jack McDonough Plant" = "#E0BC6A",
+  "Wastewater Collection" = "#26A69A", "In-County Treatment" = "#3D8F86",
+  # loss sinks -- the only warm reds
+  "Water Losses" = "#B0413E", "Losses" = "#B0413E", "Plant Evaporation" = "#D2705C",
+  "Septic Systems" = "#C58B6A", "Transfers Out" = "#9E9E9E",
+  # receiving waters -- cool
+  "Discharge" = "#4E8FB0", "River" = "#2E7CB0", "Creek" = "#5AA9C7",
+  "Lake" = "#7FBFD4", "Reservoir" = "#A5D4E0", "Wetland" = "#8FB89E",
+  "Land" = "#8D6E63", "Reuse" = "#2E8B57", "Disposal" = "#4E8FB0")
+
+SANKEY_PAL_ENERGY <- c(
+  "Coal" = "#4A4A4A", "Natural Gas" = "#E8A33D", "Petroleum" = "#8D6E63",
+  "Biomass" = "#8A9A5B", "Hydroelectric" = "#2E7CB0", "Solar" = "#E8C547",
+  "Wind" = "#26A69A", "Geothermal" = "#A1887F", "Energy Storage" = "#7E6BA8",
+  "Renewables" = "#4E9B6E", "Other" = "#9E9E9E",
+  "Onsite / BehindTheMeter" = "#B0BEC5", "Onsite Solar/DER" = "#CFD8DC",
+  "Electricity Imports" = "#78909C", "Imports (out-metro)" = "#78909C",
+  "Bowen Plant" = "#546E7A", "Yates Plant" = "#78909C", "Jack McDonough Plant" = "#90A4AE",
+  "Utility-scale Gen." = "#A5B4BC", "Distributed Gen." = "#BFC9CE",
+  "On-Site Gen." = "#D0D8DC", "Small-scale generation" = "#BFC9CE",
+  "Grid Electricity" = "#2E7CB0",
+  "Residential Use" = "#4E9B6E", "Commercial Use" = "#6FAF8A",
+  "Industrial Use" = "#9CBF6B", "Government Use" = "#C2CE7A",
+  "Transportation Use" = "#3D8F86", "Agricultural Use" = "#C2CE7A",
+  "Water Services Energy" = "#7E57C2",
+  # loss sinks -- the only warm reds
+  "Plants Own Use" = "#C58B6A", "Efficiency Losses" = "#C4564C",
+  "T&D Losses" = "#D2705C", "Energy Losses" = "#C4564C", "Rejected Energy" = "#B0413E",
+  "Energy Services" = "#2E8B57",
+  "Electricity Exports" = "#78909C", "Exports (out-metro)" = "#78909C")
+
+# ExtraNotes: a node absent from the palette gets grey and a message, rather than an arbitrary hue
+# from a ramp. A silent fallback colour hides the fact that a new node name has appeared.
+sankey_pal <- function(nodes, extra = NULL) {
+  base <- c(SANKEY_PAL_WATER, SANKEY_PAL_ENERGY, extra)
+  base <- base[!duplicated(names(base), fromLast = TRUE)]
+  out <- setNames(rep("grey70", length(nodes)), nodes)
+  hit <- intersect(nodes, names(base))
+  out[hit] <- base[hit]
+  miss <- setdiff(nodes, names(base))
+  if (length(miss)) message("  [fig] no palette entry, drawn grey: ", paste(miss, collapse = ", "))
+  out
+}
+
+# Keep precision on small nodes: a 3.8 PJ node printed with "%.0f" reads as 0 beside a 571 PJ one.
+fmt_val <- function(v) {
+  ifelse(v >= 10, sprintf("%.0f", v),
+  ifelse(v >= 1,  sprintf("%.1f", v), sprintf("%.2f", v)))
+}
+
+###############################################################################%
+## geometry ----
+
+# Cubic Bezier with HORIZONTAL tangents at both ends.
+# ExtraNotes: bezier_path() in fig_helpers.R bows perpendicular to the chord, which is right for the
+# geographic ribbon maps and wrong here -- a Sankey link has to leave its node face horizontally or
+# the ribbon appears to peel off the bar. This is a sibling function rather than a change to that
+# one, because the map figures depend on the existing behaviour.
+sigmoid_path <- function(x0, y0, x1, y1, n = 60, flat = 0.42) {
+  t <- seq(0, 1, length.out = n)
+  dx <- x1 - x0
+  c1x <- x0 + flat * dx; c2x <- x1 - flat * dx
+  tibble(
+    x = (1 - t)^3 * x0 + 3 * (1 - t)^2 * t * c1x + 3 * (1 - t) * t^2 * c2x + t^3 * x1,
+    y = (1 - t)^3 * y0 + 3 * (1 - t)^2 * t * y0 + 3 * (1 - t) * t^2 * y1 + t^3 * y1)
+}
+
+# One link ribbon: a closed polygon bounded above and below by sigmoids.
+# Width is exact at both faces, so a ribbon leaving a node covers exactly its share of the node bar.
+link_ribbon <- function(x0, y0_top, x1, y1_top, w0, w1, id, n = 60, flat = 0.42) {
+  top <- sigmoid_path(x0, y0_top, x1, y1_top, n, flat)
+  bot <- sigmoid_path(x0, y0_top + w0, x1, y1_top + w1, n, flat)
+  bind_rows(top, bot[rev(seq_len(nrow(bot))), ]) %>% mutate(rib = id)
+}
+
+###############################################################################%
+## layout ----
+
+# Assign every node a layer, then stack layers vertically in proportion to throughput.
+# ExtraNotes: unnamed nodes are placed by topology -- source if the node never appears as a target,
+# sink if it never appears as a source, otherwise mid-chain. Without this a single new node name in
+# the flow table silently lands at x = 0.5 on top of whatever else is there.
+sankey_layout_static <- function(d, gap_frac = 0.012, layer_x = NULL) {
+
+  nodes <- union(d$source, d$target)
+  doms  <- if (exists("sankey_detect_domains")) sankey_detect_domains(nodes) else names(SANKEY_LAYOUT)
+  layouts <- SANKEY_LAYOUT[doms]
+
+  lay_of <- vapply(nodes, function(n) {
+    l <- sankey_layer_of(n, layouts)
+    if (!is.na(l)) return(l)
+    if (!n %in% d$target) return("source")
+    if (!n %in% d$source) return("sink")
+    "treat"
+  }, character(1))
+
+  inflow  <- d %>% group_by(node = target) %>% summarise(i = sum(value), .groups = "drop")
+  outflow <- d %>% group_by(node = source) %>% summarise(o = sum(value), .groups = "drop")
+
+  nd <- tibble(node = nodes, layer = unname(lay_of[nodes])) %>%
+    left_join(inflow, by = "node") %>% left_join(outflow, by = "node") %>%
+    mutate(i = coalesce(i, 0), o = coalesce(o, 0),
+           value = pmax(i, o)) %>%
+    filter(value > 0)
+
+  # x: keep the declared layer order but rescale to the layers actually present, so the diagram
+  # fills the panel instead of leaving a gap where an unused layer would have been.
+  lx <- if (is.null(layer_x)) SANKEY_LAYER_X else layer_x
+  used <- names(lx)[names(lx) %in% unique(nd$layer)]
+  xs <- lx[used]; xs <- (xs - min(xs)) / (max(xs) - min(xs))
+  nd$x <- unname(xs[nd$layer])
+
+  # y: within each layer, order by the declared vertical order where one exists, then by descending
+  # throughput for anything unnamed. Stack proportionally with a fixed gap between bars.
+  declared <- unlist(lapply(layouts, function(l) unlist(l, use.names = FALSE)), use.names = FALSE)
+  nd <- nd %>%
+    mutate(ord = match(node, declared),
+           ord = if_else(is.na(ord), 1000L + rank(-value, ties.method = "first"), ord)) %>%
+    group_by(layer) %>%
+    arrange(ord, .by_group = TRUE) %>%
+    mutate(n_in_layer = n(),
+           span = 1 - gap_frac * pmax(0, n_in_layer - 1),
+           h = span * value / sum(value),
+           y0 = cumsum(h) - h + gap_frac * (row_number() - 1),
+           y1 = y0 + h) %>%
+    ungroup() %>%
+    select(node, layer, value, x, y0, y1, h)
+
+  nd
+}
+
+###############################################################################%
+## assemble ----
+
+# ExtraNotes: link order at each node face is sorted by the y of the node at the other end. This is a
+# deterministic crossing-reduction rule rather than an optimiser -- a greedy optimiser gave different
+# answers for the same graph between runs, which is unacceptable in a figure that has to be
+# reproducible.
+sankey_ribbons_static <- function(d, nd, flat = 0.42, n = 60) {
+  y_of <- setNames((nd$y0 + nd$y1) / 2, nd$node)
+  d <- d %>% filter(source %in% nd$node, target %in% nd$node, value > 0)
+
+  out <- d %>% mutate(ty = y_of[target]) %>%
+    group_by(source) %>% arrange(ty, .by_group = TRUE) %>%
+    mutate(off_out = cumsum(value) - value) %>% ungroup()
+
+  inn <- d %>% mutate(sy = y_of[source]) %>%
+    group_by(target) %>% arrange(sy, .by_group = TRUE) %>%
+    mutate(off_in = cumsum(value) - value) %>% ungroup()
+
+  ed <- out %>%
+    left_join(inn %>% select(source, target, off_in), by = c("source", "target")) %>%
+    left_join(nd %>% select(source = node, sx = x, sy0 = y0, s_val = value), by = "source") %>%
+    left_join(nd %>% select(target = node, tx = x, ty0 = y0, t_val = value), by = "target") %>%
+    left_join(nd %>% select(source = node, s_h = h), by = "source") %>%
+    left_join(nd %>% select(target = node, t_h = h), by = "target") %>%
+    mutate(id = row_number(),
+           # a link's thickness is its share of the node bar it leaves, and of the one it enters
+           w0 = s_h * value / s_val,
+           w1 = t_h * value / t_val,
+           y0 = sy0 + s_h * off_out / s_val,
+           y1 = ty0 + t_h * off_in  / t_val)
+
+  ribs <- pmap_dfr(list(ed$sx, ed$y0, ed$tx, ed$y1, ed$w0, ed$w1, ed$id),
+                   function(a, b, c, e, f, g, i)
+                     link_ribbon(a, b, c, e, f, g, i, n = n, flat = flat))
+  ribs %>% left_join(ed %>% select(rib = id, source, target, value), by = "rib")
+}
+
+# Main entry point.
+#   file      flow CSV with year, source, target, units, value
+#   year      single study year
+#   scale     multiply value by this (energy CSVs are in EJ; pass EJ_to_PJ for PJ)
+#   relabel   named vector applied to RAW node keys before pretty_labels(), for splitting or
+#             merging sinks that the display mapping would otherwise collapse
+#   min_share drop links below this share of total throughput. Default 0 -- see note below
+#
+# ExtraNotes: min_share defaults to 0 because dropping links corrupts the node totals printed in the
+# labels. A threshold of 0.15% removed 14 water links worth 0.87% of throughput, which sounds
+# harmless and made the groundwater node read 12 MGD against a true 17.66. In a figure whose purpose
+# is to let a reader verify a balance, a label that disagrees with the account is worse than a
+# hairline ribbon.
+sankey_static <- function(file, year, scale = 1, min_share = 0,
+                          relabel = NULL,
+                          label_size = 2.3, value_fmt = "%.1f", unit = "",
+                          flat = 0.42, gap_frac = 0.012, pal = NULL,
+                          label_nudge = 0.014) {
+
+  d <- read_csv(file, show_col_types = FALSE, progress = FALSE) %>%
+    filter(year == !!year) %>%
+    mutate(value = value * scale)
+
+  # ExtraNotes: relabel runs on the RAW keys, before pretty_labels(). The metro water table carries
+  # both `losses` (municipal non-revenue plus sectoral consumptive use) and `Losses` (thermoelectric
+  # evaporation), which the display mapping sends to the same string. Merging them is right for a
+  # general overview and wrong for any figure comparing network loss against plant cooling, so the
+  # split has to be available at the call site.
+  if (!is.null(relabel)) {
+    d <- d %>% mutate(source = if_else(source %in% names(relabel), relabel[source], source),
+                      target = if_else(target %in% names(relabel), relabel[target], target))
+  }
+
+  d <- d %>%
+    pretty_labels() %>%
+    group_by(source, target) %>% summarise(value = sum(value), .groups = "drop") %>%
+    filter(value > 0)
+
+  if (min_share > 0) {
+    tot <- sum(d$value)
+    keep <- d$value / tot >= min_share
+    if (any(!keep)) {
+      message(sprintf("  [fig] dropped %d links below %.2f%% of throughput (%.3f%% of total)",
+                      sum(!keep), 100 * min_share, 100 * sum(d$value[!keep]) / tot))
+      d <- d[keep, ]
+    }
+  }
+
+  nd <- sankey_layout_static(d, gap_frac = gap_frac)
+  ribs <- sankey_ribbons_static(d, nd, flat = flat)
+
+  # colour by source node, which is the convention the interactive diagrams use
+  if (is.null(pal)) pal <- sankey_pal(nd$node)
+  ribs$fill <- pal[ribs$source]
+  nd$fill <- pal[nd$node]
+
+  # labels sit outside the diagram at the extremes and above the bar in the middle, so text never
+  # lands on a ribbon
+  # ExtraNotes: labels are repelled vertically only (direction = "y"). Small nodes cluster at the
+  # bottom of a proportional diagram -- three plants at 6-34 MGD, four discharge types under 10 --
+  # and their labels collide. Free 2D repulsion would push text sideways out of its column and break
+  # the reader's association between a label and its layer.
+  nd <- nd %>%
+    mutate(lab = if (unit == "") node else sprintf("%s\n%s%s", node, fmt_val(value), unit),
+           side = case_when(x <= 0.001 ~ "left", x >= 0.999 ~ "right", TRUE ~ "mid"),
+           lab_x = case_when(side == "left" ~ x - label_nudge,
+                             side == "right" ~ x + label_nudge, TRUE ~ x),
+           lab_y = (y0 + y1) / 2,
+           hjust = case_when(side == "left" ~ 1, side == "right" ~ 0, TRUE ~ 0.5))
+
+  bar_w <- 0.008
+  # ExtraNotes: min.segment.length = 0 forces a leader line on every displaced label. In a
+  # proportional diagram the small sinks bunch at the bottom, and without leaders a repelled label
+  # sits nearer a neighbour's bar than its own.
+  rep_args <- list(size = label_size, colour = "grey15", lineheight = 0.92,
+                   direction = "y", min.segment.length = 0, box.padding = 0.16,
+                   point.padding = 0, segment.colour = "grey55", segment.size = 0.2,
+                   max.overlaps = Inf, seed = 1L)
+
+  ggplot() +
+    geom_polygon(data = ribs, aes(x, y, group = rib, fill = fill),
+                 alpha = 0.42, colour = NA) +
+    geom_rect(data = nd, aes(xmin = x - bar_w, xmax = x + bar_w,
+                             ymin = y0, ymax = y1, fill = fill),
+              colour = "grey25", linewidth = 0.2) +
+    do.call(geom_text_repel, c(list(
+      data = nd %>% filter(side == "left"),
+      mapping = aes(lab_x, lab_y, label = lab), hjust = 1, xlim = c(NA, -0.02)), rep_args)) +
+    do.call(geom_text_repel, c(list(
+      data = nd %>% filter(side == "right"),
+      mapping = aes(lab_x, lab_y, label = lab), hjust = 0, xlim = c(1.02, NA)), rep_args)) +
+    do.call(geom_text_repel, c(list(
+      data = nd %>% filter(side == "mid"),
+      mapping = aes(lab_x, y0, label = lab), vjust = 1, nudge_y = -0.012), rep_args)) +
+    scale_fill_identity() +
+    scale_y_reverse(expand = expansion(mult = 0.04)) +
+    scale_x_continuous(expand = expansion(mult = 0.19)) +
+    theme_void() +
+    theme(plot.margin = margin(4, 4, 4, 4))
+}
+
+# Balance check for the figure itself: does every mid-chain node close?
+# ExtraNotes: run this before putting a Sankey in a paper. A rendering bug that mis-stacks link
+# offsets produces a diagram that looks plausible and does not conserve, which is the one failure
+# mode a reader would catch and an author would not.
+# ExtraNotes: the default exemptions are the same two declared in BALANCE_EXEMPT in R/run_qc.R --
+# small distributed and backup generation, whose conversion loss cannot be separated from their fuel
+# input because gross generation is reported only for the three large plants. Combined magnitude is
+# about 0.03% of the energy system. They are named here so the check does not raise a known and
+# documented limitation as if it were a defect.
+SANKEY_FIG_EXEMPT <- c("Distributed-scale Generation", "On-Site Backup Generation",
+                       "Distributed Gen.", "On-Site Gen.")
+
+sankey_static_check <- function(file, year, scale = 1, tol = 0.005,
+                                exempt = SANKEY_FIG_EXEMPT) {
+  d <- read_csv(file, show_col_types = FALSE, progress = FALSE) %>%
+    filter(year == !!year) %>% mutate(value = value * scale) %>% pretty_labels()
+  i <- d %>% group_by(node = target) %>% summarise(i = sum(value), .groups = "drop")
+  o <- d %>% group_by(node = source) %>% summarise(o = sum(value), .groups = "drop")
+  full_join(i, o, by = "node") %>%
+    filter(!is.na(i), !is.na(o), !node %in% exempt) %>%
+    mutate(resid = o - i, pct = 100 * resid / pmax(i, 1e-12)) %>%
+    filter(abs(pct) > 100 * tol) %>%
+    arrange(desc(abs(pct)))
+}
+
+# PLOTS.R
+# old plots.R with only maps
+
+# Extra analysis and plotting for Metro Atlanta
+#
+# Hassan Niazi, Sep 2025
+
+# source("functions.R")
+
+# # plot maps
+# sf_counties <- st_read(paste0(DATA_DIR, "geojson-counties-fips.json")) %>% rename_with(tolower)
+
+# sf_counties_GA <- sf_counties %>% filter(state == 13) # GA is 13
+# sf_counties_atlanta <- sf_counties %>% filter(id %in% fips)
+
+# plot(sf_counties_GA$geometry, col = "lightblue", border = "darkblue")
+# plot(sf_counties_atlanta$geometry, col = "lightblue", border = "darkblue")
+
+# county_colors <- rep(brewer.pal(11, "Spectral"), length.out = length(counties))
+# # county_colors <- sample(colors(), length(counties))
+# # county_colors <- viridis_discrete(length(counties), option = "plasma")
+
+# ggplot() +
+#   # geom_sf(data = sf_counties_GA, fill = "gray90", color = "gray") +
+#   geom_sf(data = sf_counties_atlanta, aes(fill = name, color = "white"), alpha = 0.75) +
+#   geom_sf_text(data = sf_counties_atlanta, aes(label = name), size = 3) +
+#   scale_fill_manual(values = county_colors) +
+#   theme_void() +
+#   labs(title = "Atlanta metro-area Counties in Georgia",
+#        caption = "", fill = "County", color = "County")
+
+# # better one (used this)
+# ggplot() +
+#   # geom_sf(data = sf_counties_GA, fill = "gray90", color = "gray") +
+#   geom_sf(data = sf_counties_atlanta, aes(fill = name), color = "white") +
+#   geom_sf_text(data = sf_counties_atlanta, aes(label = name), size = 3) +
+#   scale_fill_d3("category20", alpha = 0.75) +  # D3.js 20-color palette
+#   # or scale_fill_npg() for Nature Publishing Group colors
+#   # or scale_fill_aaas() for Science journal colors
+#   theme_void() +
+#   theme(legend.position = "none")
+
+# # cobb and douglas
+# ggplot() +
+#   # geom_sf(data = sf_counties_GA, fill = "gray90", color = "gray") +
+#   geom_sf(data = sf_counties_atlanta, color = "white") +
+#   geom_sf(data = sf_counties_atlanta %>% filter(name %in% c("Douglas", "Cobb")), aes(fill = name), color = "white") +
+#   geom_sf_text(data = sf_counties_atlanta, aes(label = name), size = 3) +
+#   scale_fill_d3("category20", alpha = 0.75) +  # D3.js 20-color palette
+#   # or scale_fill_npg() for Nature Publishing Group colors
+#   # or scale_fill_aaas() for Science journal colors
+#   theme_void() +
+#   theme(legend.position = "none")
+
+# PREVIEW STYLES ----
+# Render style variants of the three metro diagrams for review.
+#   Rscript R/preview_styles.R
+#   open outputs/style_preview/index.html
+#
+# Node palette and link style are independent, so this writes the full grid. Both are
+# ordinary arguments to plot_sankey_enhanced(), e.g.
+#   plot_sankey_enhanced(df, color_scheme = "signature", link_style = "nexus")
+
+# Sys.setenv(MAWEI_SAVE_FILES = "0", MAWEI_MAKE_PLOT = "0")
+# suppressMessages(suppressWarnings(source("R/flows_energy_water.R")))
+
+# unlink("outputs/style_preview", recursive = TRUE)
+
+# # Energy and water are single-domain, so only the node palette is in question there;
+# # the coupling classes only exist in the combined diagram.
+# preview_sankey_styles(
+#   en_fuel_gen_use_loss_all_trade_metro %>%
+#     group_by(year, source, target, units) %>%
+#     summarise(value = sum(value) * EJ_to_PJ, .groups = "drop"),
+#   label = "energy", units = "PJ", styles = "node",
+#   title = "Metro Atlanta energy")
+
+# preview_sankey_styles(
+#   df_water_metro_linear_wSW_discharge_type,
+#   label = "water", units = "MGD", styles = "node",
+#   title = "Metro Atlanta water")
+
+# preview_sankey_styles(
+#   energy_water, label = "energy-water", units = "auto", alt_units = ew_alt_units,
+#   styles = c("node", "nexus", "domain", "class"),
+#   title = "Metro Atlanta energy-water")
