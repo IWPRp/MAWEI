@@ -17,7 +17,7 @@ const UNITS = {
   MGD: [
     { label: 'MGD',    unit: 'MGD',    factor: 1 },
     { label: 'MG/yr',  unit: 'MG/yr',  factor: 365 },
-    { label: 'af/yr',  unit: 'ac-ft/yr', factor: 365 * 3.06889 }
+    { label: 'AF/yr',  unit: 'ac-ft/yr', factor: 365 * 3.06889 }
   ],
   PJ: [
     { label: 'PJ',  unit: 'PJ',  factor: 1 },
@@ -175,7 +175,7 @@ function updateTitle(d, conv) {
 
   const u = conv ? conv.unit : 'mixed units';
   document.getElementById('caption').textContent =
-    `Ribbon height is proportional to the flows, in ${u} units.`;
+    `Node height is proportional to the flows, in ${u} units`;
 }
 
 function updateStats(d, conv) {

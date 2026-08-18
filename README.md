@@ -5,8 +5,8 @@
 # MAWEI - Metro Atlanta Water Energy Interdependencies
 
 <p align="center">
-Interactive Sankey diagrams quantifying the coupled water and energy flows of the Metro Atlanta region. <br><br> 
-MAWEI web dashboard: <a href="https://iwprp.github.io/MAWEI">iwprp.github.io/MAWEI</a> 
+Interactive Sankey diagrams quantifying the coupled water and energy flows of the Metro Atlanta region. <br>
+MAWEI web dashboard: <a href="https://iwprp.github.io/MAWEI">IWPRp.github.io/MAWEI</a> 
 </p>
 
 ## Overview
@@ -38,7 +38,7 @@ MAWEI processes publicly available and stakeholder-supplied data (not committed 
     - 136 files across resolutions, sectors, data, Sankey diagrams, and variants  
 
 - Interface: open MAWEI.html
-- Web: open https://iwprp.github.io/MAWEI or serve the `web/` folder on a local server using the [serve.command](/web/serve.command) file 
+- Web: open https://IWPRp.github.io/MAWEI or serve the `web/` folder on a local server using the [serve.command](/web/serve.command) file 
 
 ## Repository Structure
 
